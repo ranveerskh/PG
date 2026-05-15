@@ -675,6 +675,27 @@
               </select>
             </div>
 
+            <div class="field">
+              <label>Charge HST?</label>
+              <select id="setChargeHst">
+                <option value="false">No, do not charge HST</option>
+                <option value="true">Yes, charge HST</option>
+              </select>
+              <div class="hint">Turn on only if the business is GST/HST registered.</div>
+            </div>
+
+            <div class="field">
+              <label>HST Rate %</label>
+              <input id="setHstRate" type="number" min="0" step="0.01" placeholder="13">
+              <div class="hint">Ontario HST is usually 13% if HST applies.</div>
+            </div>
+
+            <div class="field">
+              <label>Default Delivery Fee</label>
+              <input id="setDefaultDeliveryFee" type="number" min="0" step="0.01" placeholder="0">
+              <div class="hint">Checkout adds this only when customer selects Delivery.</div>
+            </div>
+
             <div class="field full">
               <label>Same-Day / Urgent Order Message</label>
               <textarea id="setSameDay"></textarea>
@@ -1068,7 +1089,10 @@
     same_day_message: "For today or urgent orders, please contact us directly on WhatsApp.",
     policy_text: "Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp.",
     currency: "$",
-    show_prices: true
+    show_prices: true,
+    charge_hst: false,
+    hst_rate: 13,
+    default_delivery_fee: 0
   };
 
   let currentUser = null;
@@ -1330,6 +1354,9 @@
     $("setHeroSubtitle").value = siteSettings.hero_subtitle || "";
     $("setNoticeHours").value = siteSettings.minimum_notice_hours ?? 24;
     $("setShowPrices").value = String(siteSettings.show_prices !== false);
+    $("setChargeHst").value = String(siteSettings.charge_hst === true);
+    $("setHstRate").value = siteSettings.hst_rate ?? 13;
+    $("setDefaultDeliveryFee").value = siteSettings.default_delivery_fee ?? 0;
     $("setSameDay").value = siteSettings.same_day_message || "";
     $("setPolicy").value = siteSettings.policy_text || "";
   }
@@ -1362,6 +1389,9 @@
         hero_subtitle: $("setHeroSubtitle").value.trim(),
         minimum_notice_hours: Number($("setNoticeHours").value || 24),
         show_prices: $("setShowPrices").value === "true",
+        charge_hst: $("setChargeHst").value === "true",
+        hst_rate: Number($("setHstRate").value || 0),
+        default_delivery_fee: Number($("setDefaultDeliveryFee").value || 0),
         same_day_message: $("setSameDay").value.trim(),
         policy_text: $("setPolicy").value.trim()
       };
