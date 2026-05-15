@@ -16,20 +16,29 @@
       --bg:#100b12;
       --bg2:#19101c;
       --card:#211625;
+      --card2:#2a1b2f;
       --text:#fff7fb;
       --muted:#c9aebd;
-      --line:rgba(255,255,255,.09);
+      --line:rgba(255,255,255,.10);
       --pink:#ff5fa2;
       --pink2:#ff8ac0;
       --cream:#ffe4c7;
       --gold:#ffc86b;
       --green:#39d98a;
       --red:#ff5b6e;
-      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --shadow:0 18px 55px rgba(0,0,0,.36);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-tap-highlight-color:transparent;
+    }
+
     html{scroll-behavior:smooth}
+
     body{
       min-height:100vh;
       background:
@@ -38,134 +47,724 @@
         linear-gradient(180deg, var(--bg), var(--bg2));
       color:var(--text);
     }
+
     a{color:inherit;text-decoration:none}
-    button,input,select,textarea{font:inherit}
+    button,input{font:inherit}
     button{border:none;cursor:pointer}
-    .wrap{width:min(1180px, calc(100% - 28px));margin:auto}
 
-    .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(16,11,18,.80);border-bottom:1px solid var(--line)}
-    .nav{height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
-    .logo{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),var(--gold));box-shadow:0 10px 25px rgba(255,95,162,.25);font-size:21px;overflow:hidden;flex:0 0 auto}
-    .logo img{width:100%;height:100%;object-fit:cover;display:block}
-    .brand h1{font-size:17px;line-height:1;letter-spacing:-.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
-    .brand p{margin-top:4px;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}
-    .navActions{display:flex;align-items:center;gap:8px}
-    .navLink{padding:9px 12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);border-radius:999px;font-size:13px;font-weight:800}
-    .primaryBtn,.ghostBtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:1000;transition:.2s ease}
-    .primaryBtn{padding:11px 15px;background:linear-gradient(135deg,var(--pink),var(--pink2));color:white;box-shadow:0 14px 28px rgba(255,95,162,.24)}
-    .primaryBtn:hover{transform:translateY(-1px);box-shadow:0 18px 34px rgba(255,95,162,.34)}
-    .ghostBtn{padding:10px 13px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text)}
-
-    .hero{padding:24px 0 16px}
-    .heroGrid{display:grid;grid-template-columns:1.04fr .96fr;gap:18px;align-items:stretch}
-    .heroCard{border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border-radius:28px;padding:24px;box-shadow:var(--shadow);overflow:hidden;position:relative}
-    .heroCard:before{content:"";position:absolute;width:230px;height:230px;right:-80px;top:-80px;background:radial-gradient(circle,rgba(255,95,162,.28),transparent 68%);pointer-events:none}
-    .tag{width:max-content;max-width:100%;display:flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;background:rgba(255,228,199,.1);border:1px solid rgba(255,228,199,.16);color:var(--cream);font-size:12px;font-weight:900;margin-bottom:15px}
-    .hero h2{max-width:720px;font-size:clamp(33px,5vw,62px);line-height:.97;letter-spacing:-.07em}
-    .hero h2 span{color:var(--pink2)}
-    .heroText{max-width:620px;margin-top:14px;color:var(--muted);font-size:15px;line-height:1.6}
-    .heroButtons{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
-    .miniStats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:18px}
-    .stat{border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:18px;padding:12px}
-    .stat b{display:block;font-size:18px}
-    .stat span{display:block;color:var(--muted);font-size:11px;margin-top:3px;line-height:1.35}
-    .photoPanel{min-height:365px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.58)),url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80") center/cover;box-shadow:var(--shadow);overflow:hidden;display:flex;align-items:flex-end;padding:16px}
-    .floatingInfo{width:100%;border:1px solid rgba(255,255,255,.14);background:rgba(16,11,18,.72);backdrop-filter:blur(15px);border-radius:22px;padding:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .floatingInfo b{display:block;font-size:14px}
-    .floatingInfo span{display:block;margin-top:3px;color:var(--muted);font-size:12px}
-
-    .sectionHead{margin:22px 0 12px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
-    .sectionHead h3{font-size:23px;letter-spacing:-.045em}
-    .sectionHead p{margin-top:5px;color:var(--muted);font-size:13px}
-    .tools{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:12px}
-    .searchBox{min-width:0;display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06)}
-    .searchBox input{width:100%;border:none;outline:none;background:transparent;color:var(--text);font-weight:800}
-    .searchBox input::placeholder{color:rgba(201,174,189,.75)}
-    .filterRow{display:flex;gap:8px;overflow:auto;padding-bottom:4px;scrollbar-width:none}
-    .filterRow::-webkit-scrollbar{display:none}
-    .chip{flex:0 0 auto;padding:10px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);font-size:13px;font-weight:1000;white-space:nowrap}
-    .chip.active{color:white;border-color:rgba(255,95,162,.55);background:linear-gradient(135deg,rgba(255,95,162,.9),rgba(255,138,192,.75))}
-
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .cakeCard{border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:22px;overflow:hidden;box-shadow:0 14px 35px rgba(0,0,0,.18);transition:.2s ease}
-    .cakeCard:hover{transform:translateY(-3px);background:rgba(255,255,255,.08)}
-    .cakeImg{height:168px;background:#2d1a30;position:relative;overflow:hidden}
-    .cakeImg img{width:100%;height:100%;object-fit:cover;display:block;transition:.3s ease}
-    .cakeCard:hover .cakeImg img{transform:scale(1.045)}
-    .badge{position:absolute;left:10px;top:10px;max-width:calc(100% - 20px);padding:7px 9px;border-radius:999px;background:rgba(0,0,0,.58);backdrop-filter:blur(10px);color:white;font-size:11px;font-weight:1000;border:1px solid rgba(255,255,255,.12);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .cakeBody{padding:12px}
-    .cakeBody h4{font-size:15px;line-height:1.2;letter-spacing:-.025em;margin-bottom:6px}
-    .cakeDesc{color:var(--muted);font-size:12px;line-height:1.45;height:34px;overflow:hidden}
-    .miniTags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-    .miniTag{padding:5px 7px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);font-size:10px;font-weight:900}
-    .cakeMeta{margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-    .price{color:var(--cream);font-size:13px;font-weight:1000;white-space:nowrap}
-    .smallOrderBtn{padding:9px 11px;border-radius:999px;background:rgba(255,95,162,.18);border:1px solid rgba(255,95,162,.34);color:white;font-size:12px;font-weight:1000;white-space:nowrap}
-
-    .compactInfo{margin:20px 0 30px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .infoBox{border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:22px;padding:14px}
-    .infoBox .icon{width:38px;height:38px;display:grid;place-items:center;border-radius:14px;background:rgba(255,95,162,.14);margin-bottom:10px;font-size:18px}
-    .infoBox b{display:block;font-size:14px;margin-bottom:5px}
-    .infoBox span{display:block;color:var(--muted);font-size:12px;line-height:1.45}
-    .contactStrip{margin:0 0 30px;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:22px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .contactStrip b{display:block;font-size:15px}
-    .contactStrip span{display:block;color:var(--muted);margin-top:4px;font-size:12px}
-    .footer{border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-size:12px}
-    .footerInner{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-
-    .modal{position:fixed;inset:0;z-index:100;display:none}
-    .modal.show{display:block}
-    .modalBackdrop{position:absolute;inset:0;background:rgba(0,0,0,.64);backdrop-filter:blur(8px)}
-    .modalPanel{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(720px,calc(100% - 24px));max-height:90vh;overflow:auto;border:1px solid var(--line);background:linear-gradient(180deg,#211625,#160f18);border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.5)}
-    .modalHead{position:sticky;top:0;z-index:3;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(33,22,37,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-    .modalHead h3{font-size:18px;letter-spacing:-.035em}
-    .modalHead p{margin-top:3px;color:var(--muted);font-size:12px}
-    .closeBtn{width:38px;height:38px;border-radius:14px;background:rgba(255,255,255,.08);color:white;font-size:20px;font-weight:1000}
-    .form{padding:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .field{display:flex;flex-direction:column;gap:6px}
-    .field.full{grid-column:1/-1}
-    .field label{color:var(--cream);font-size:12px;font-weight:1000}
-    .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);outline:none;background:rgba(255,255,255,.06);color:var(--text);border-radius:15px;padding:12px;min-height:44px;resize:vertical}
-    .field select option{color:#111}
-    .field textarea{min-height:76px}
-    .selectedPreview{grid-column:1/-1;display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:18px}
-    .selectedPreview img{width:64px;height:64px;object-fit:cover;border-radius:16px;background:#2b1c30}
-    .selectedPreview b{display:block;font-size:14px}
-    .selectedPreview span{display:block;margin-top:4px;color:var(--muted);font-size:12px}
-    .formActions{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
-    .waBtn{flex:1;min-width:210px;padding:13px 16px;border-radius:999px;background:linear-gradient(135deg,#19c463,#39d98a);color:#06160c;font-weight:1000;box-shadow:0 15px 28px rgba(57,217,138,.2)}
-    .waBtn:disabled{opacity:.65;cursor:not-allowed}
-    .clearBtn{padding:13px 16px;border-radius:999px;background:rgba(255,255,255,.08);color:white;font-weight:900;border:1px solid var(--line)}
-    .empty,.loader{grid-column:1/-1;padding:26px 14px;text-align:center;color:var(--muted);border:1px dashed rgba(255,255,255,.18);border-radius:22px;background:rgba(255,255,255,.04)}
-    .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;z-index:200;max-width:min(520px,calc(100% - 24px));border:1px solid var(--line);background:rgba(33,22,37,.96);color:var(--text);backdrop-filter:blur(18px);border-radius:999px;padding:11px 15px;font-size:13px;font-weight:900;box-shadow:0 18px 50px rgba(0,0,0,.38);transition:.2s ease;text-align:center}
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-    @media(max-width:900px){
-      .heroGrid{grid-template-columns:1fr}
-      .photoPanel{min-height:280px}
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .compactInfo{grid-template-columns:1fr}
+    .wrap{
+      width:min(1180px, calc(100% - 28px));
+      margin:auto;
     }
-    @media(max-width:620px){
-      .wrap{width:min(100% - 18px, 1180px)}
-      .nav{height:58px}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(18px);
+      background:rgba(16,11,18,.82);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--pink),var(--gold));
+      box-shadow:0 12px 28px rgba(255,95,162,.25);
+      font-size:22px;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .brand h1{
+      font-size:17px;
+      line-height:1;
+      letter-spacing:-.04em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:250px;
+    }
+
+    .brand p{
+      margin-top:4px;
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:270px;
+    }
+
+    .navActions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .navLink{
+      padding:9px 12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .primaryBtn,.ghostBtn,.cartBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border-radius:999px;
+      font-weight:1000;
+      transition:.2s ease;
+      white-space:nowrap;
+    }
+
+    .primaryBtn{
+      padding:11px 15px;
+      background:linear-gradient(135deg,var(--pink),var(--pink2));
+      color:white;
+      box-shadow:0 14px 30px rgba(255,95,162,.24);
+    }
+
+    .primaryBtn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 18px 36px rgba(255,95,162,.34);
+    }
+
+    .ghostBtn{
+      padding:10px 13px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+    }
+
+    .cartBtn{
+      position:relative;
+      padding:10px 13px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:white;
+      font-size:13px;
+    }
+
+    .cartCount{
+      min-width:20px;
+      height:20px;
+      padding:0 6px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:var(--pink);
+      color:white;
+      font-size:11px;
+      font-weight:1000;
+    }
+
+    .mobileMenuBtn{
+      display:none;
+    }
+
+    .mobileMenu{
+      display:none;
+      border-top:1px solid var(--line);
+      padding:10px 0 12px;
+    }
+
+    .mobileMenu.show{
+      display:grid;
+      gap:8px;
+    }
+
+    .mobileMenu a{
+      padding:11px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      font-weight:900;
+      font-size:13px;
+    }
+
+    .hero{
+      padding:24px 0 16px;
+    }
+
+    .heroGrid{
+      display:grid;
+      grid-template-columns:1.04fr .96fr;
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .heroCard{
+      border:1px solid var(--line);
+      background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
+      border-radius:30px;
+      padding:25px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .heroCard:before{
+      content:"";
+      position:absolute;
+      width:230px;
+      height:230px;
+      right:-80px;
+      top:-80px;
+      background:radial-gradient(circle,rgba(255,95,162,.28),transparent 68%);
+      pointer-events:none;
+    }
+
+    .tag{
+      width:max-content;
+      max-width:100%;
+      display:flex;
+      align-items:center;
+      gap:7px;
+      padding:8px 11px;
+      border-radius:999px;
+      background:rgba(255,228,199,.10);
+      border:1px solid rgba(255,228,199,.16);
+      color:var(--cream);
+      font-size:12px;
+      font-weight:1000;
+      margin-bottom:15px;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero h2{
+      max-width:740px;
+      font-size:clamp(34px,5vw,64px);
+      line-height:.97;
+      letter-spacing:-.075em;
+      position:relative;
+      z-index:1;
+    }
+
+    .hero h2 span{
+      color:var(--pink2);
+    }
+
+    .heroText{
+      max-width:640px;
+      margin-top:14px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.62;
+      position:relative;
+      z-index:1;
+    }
+
+    .heroButtons{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .notice{
+      margin-top:14px;
+      border:1px solid rgba(255,200,107,.20);
+      background:rgba(255,200,107,.08);
+      color:var(--cream);
+      border-radius:18px;
+      padding:12px;
+      font-size:12px;
+      font-weight:800;
+      line-height:1.45;
+      position:relative;
+      z-index:1;
+    }
+
+    .miniStats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:9px;
+      margin-top:16px;
+      position:relative;
+      z-index:1;
+    }
+
+    .stat{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      border-radius:18px;
+      padding:12px;
+    }
+
+    .stat b{
+      display:block;
+      font-size:18px;
+    }
+
+    .stat span{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      margin-top:3px;
+      line-height:1.35;
+    }
+
+    .photoPanel{
+      min-height:390px;
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:
+        linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.62)),
+        url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80") center/cover;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      align-items:flex-end;
+      padding:16px;
+      position:relative;
+    }
+
+    .floatingInfo{
+      width:100%;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(16,11,18,.72);
+      backdrop-filter:blur(15px);
+      border-radius:22px;
+      padding:13px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .floatingInfo b{
+      display:block;
+      font-size:14px;
+    }
+
+    .floatingInfo span{
+      display:block;
+      margin-top:3px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .sectionHead{
+      margin:24px 0 12px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .sectionHead h3{
+      font-size:24px;
+      letter-spacing:-.05em;
+    }
+
+    .sectionHead p{
+      margin-top:5px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .categoryGrid{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:10px;
+    }
+
+    .categoryCard{
+      min-height:138px;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.62)),
+        var(--img) center/cover;
+      border-radius:22px;
+      padding:12px;
+      display:flex;
+      align-items:flex-end;
+      overflow:hidden;
+      box-shadow:0 14px 35px rgba(0,0,0,.16);
+      transition:.2s ease;
+      position:relative;
+    }
+
+    .categoryCard:hover{
+      transform:translateY(-2px);
+      border-color:rgba(255,95,162,.36);
+    }
+
+    .categoryCard b{
+      display:block;
+      font-size:14px;
+      letter-spacing:-.03em;
+    }
+
+    .categoryCard span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.35;
+    }
+
+    .cakesGrid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .cakeCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 14px 35px rgba(0,0,0,.18);
+      transition:.2s ease;
+    }
+
+    .cakeCard:hover{
+      transform:translateY(-3px);
+      background:rgba(255,255,255,.08);
+    }
+
+    .cakeImg{
+      height:168px;
+      background:#2d1a30;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .cakeImg img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:.3s ease;
+    }
+
+    .cakeCard:hover .cakeImg img{
+      transform:scale(1.045);
+    }
+
+    .badge{
+      position:absolute;
+      left:10px;
+      top:10px;
+      max-width:calc(100% - 20px);
+      padding:7px 9px;
+      border-radius:999px;
+      background:rgba(0,0,0,.58);
+      backdrop-filter:blur(10px);
+      color:white;
+      font-size:11px;
+      font-weight:1000;
+      border:1px solid rgba(255,255,255,.12);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .cakeBody{
+      padding:12px;
+    }
+
+    .cakeBody h4{
+      font-size:15px;
+      line-height:1.2;
+      letter-spacing:-.025em;
+      margin-bottom:6px;
+    }
+
+    .cakeDesc{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+      min-height:34px;
+      max-height:36px;
+      overflow:hidden;
+    }
+
+    .miniTags{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top:9px;
+    }
+
+    .miniTag{
+      padding:5px 7px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .cakeMeta{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+
+    .price{
+      color:var(--cream);
+      font-size:13px;
+      font-weight:1000;
+      white-space:nowrap;
+    }
+
+    .smallBtn{
+      padding:9px 11px;
+      border-radius:999px;
+      background:rgba(255,95,162,.18);
+      border:1px solid rgba(255,95,162,.34);
+      color:white;
+      font-size:12px;
+      font-weight:1000;
+      white-space:nowrap;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .stepBox,.trustBox{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      border-radius:22px;
+      padding:15px;
+      box-shadow:0 12px 30px rgba(0,0,0,.12);
+    }
+
+    .stepNum{
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:14px;
+      background:rgba(255,95,162,.14);
+      color:var(--cream);
+      font-weight:1000;
+      margin-bottom:10px;
+    }
+
+    .stepBox b,.trustBox b{
+      display:block;
+      font-size:14px;
+      margin-bottom:6px;
+    }
+
+    .stepBox span,.trustBox span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .customCTA{
+      margin-top:22px;
+      border:1px solid var(--line);
+      background:
+        radial-gradient(circle at 20% 20%,rgba(255,95,162,.24),transparent 30%),
+        linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
+      border-radius:28px;
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      box-shadow:var(--shadow);
+    }
+
+    .customCTA h3{
+      font-size:25px;
+      letter-spacing:-.055em;
+    }
+
+    .customCTA p{
+      margin-top:7px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+      max-width:650px;
+    }
+
+    .trustGrid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .policyStrip{
+      margin:22px 0 0;
+      border:1px solid rgba(255,200,107,.22);
+      background:rgba(255,200,107,.075);
+      border-radius:22px;
+      padding:15px;
+      color:var(--cream);
+      font-size:13px;
+      line-height:1.55;
+      font-weight:800;
+    }
+
+    .galleryGrid{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:9px;
+    }
+
+    .galleryImg{
+      height:120px;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#2d1a30;
+    }
+
+    .galleryImg img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .contactStrip{
+      margin:22px 0 30px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:22px;
+      padding:14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .contactStrip b{
+      display:block;
+      font-size:15px;
+    }
+
+    .contactStrip span{
+      display:block;
+      color:var(--muted);
+      margin-top:4px;
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .footer{
+      border-top:1px solid var(--line);
+      padding:20px 0;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .footerInner{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .footerLinks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .footerLinks a{
+      color:var(--cream);
+      font-weight:800;
+    }
+
+    .empty,.loader{
+      grid-column:1/-1;
+      padding:26px 14px;
+      text-align:center;
+      color:var(--muted);
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:22px;
+      background:rgba(255,255,255,.04);
+      line-height:1.5;
+    }
+
+    @media(max-width:1000px){
+      .heroGrid{grid-template-columns:1fr}
+      .photoPanel{min-height:310px}
+      .categoryGrid{grid-template-columns:repeat(3,1fr)}
+      .cakesGrid{grid-template-columns:repeat(2,1fr)}
+      .steps,.trustGrid{grid-template-columns:repeat(2,1fr)}
+      .galleryGrid{grid-template-columns:repeat(3,1fr)}
+    }
+
+    @media(max-width:720px){
+      .wrap{width:min(100% - 18px,1180px)}
+      .nav{min-height:58px}
       .brand p{display:none}
-      .brand h1{max-width:150px}
+      .brand h1{max-width:160px}
       .navLink{display:none}
+      .mobileMenuBtn{display:inline-flex}
       .primaryBtn{padding:10px 12px;font-size:13px}
+      .cartBtn{padding:10px 11px}
       .hero{padding-top:16px}
       .heroCard{padding:17px;border-radius:24px}
-      .hero h2{font-size:38px}
+      .hero h2{font-size:39px}
       .heroText{font-size:13px}
       .miniStats{grid-template-columns:1fr 1fr 1fr;gap:7px}
       .stat{padding:10px 8px}
       .stat b{font-size:15px}
       .stat span{font-size:10px}
-      .grid{grid-template-columns:1fr}
-      .cakeImg{height:205px}
-      .form{grid-template-columns:1fr}
-      .modalPanel{width:calc(100% - 14px);border-radius:24px}
+      .categoryGrid{grid-template-columns:repeat(2,1fr)}
+      .categoryCard{min-height:120px}
+      .cakesGrid{grid-template-columns:1fr}
+      .cakeImg{height:210px}
+      .steps,.trustGrid{grid-template-columns:1fr}
+      .customCTA{align-items:flex-start;flex-direction:column}
+      .galleryGrid{grid-template-columns:repeat(2,1fr)}
+      .galleryImg{height:135px}
+      .footerLinks{justify-content:flex-start}
     }
   </style>
 </head>
@@ -174,18 +773,34 @@
 
 <header class="topbar">
   <div class="wrap nav">
-    <a href="#" class="brand">
+    <a href="index.html" class="brand">
       <div id="siteLogo" class="logo">🍰</div>
       <div>
         <h1 id="siteBrandName">Cake Studio</h1>
         <p id="siteTagline">Fresh custom cakes & sweet orders</p>
       </div>
     </a>
+
     <div class="navActions">
-      <a class="navLink" href="#cakes">Cakes</a>
-      <a class="navLink" href="#how">How it works</a>
-      <button class="primaryBtn" onclick="openCustomOrder()">Order Now</button>
+      <a class="navLink" href="cakes.html">Cakes</a>
+      <a class="navLink" href="#categories">Categories</a>
+      <a class="navLink" href="cake.html?custom=true">Custom Cake</a>
+
+      <a class="cartBtn" href="cart.html" aria-label="Open cart">
+        🛒 <span class="cartCount" id="cartCount">0</span>
+      </a>
+
+      <button class="ghostBtn mobileMenuBtn" onclick="toggleMobileMenu()">Menu</button>
+      <a class="primaryBtn" id="topWhatsappBtn" href="#" target="_blank">WhatsApp</a>
     </div>
+  </div>
+
+  <div class="wrap mobileMenu" id="mobileMenu">
+    <a href="cakes.html">All Cakes</a>
+    <a href="#categories">Categories</a>
+    <a href="cake.html?custom=true">Create Custom Cake</a>
+    <a href="cart.html">Cart</a>
+    <a href="#how">How It Works</a>
   </div>
 </header>
 
@@ -194,231 +809,284 @@
     <div class="wrap heroGrid">
       <div class="heroCard">
         <div class="tag" id="heroTag">✨ Custom cakes made fresh</div>
-        <h2 id="heroTitle">Beautiful cakes for <span>birthdays, weddings & every sweet moment.</span></h2>
-        <p class="heroText" id="heroSubtitle">Browse cake designs, choose your size, flavour, message, delivery details, and send your order directly on WhatsApp.</p>
+
+        <h2 id="heroTitle">
+          Custom cakes for <span>birthdays, weddings & sweet moments.</span>
+        </h2>
+
+        <p class="heroText" id="heroSubtitle">
+          Browse cakes, customize size, flavour and add-ons, add multiple items to cart, and confirm your order request on WhatsApp.
+        </p>
 
         <div class="heroButtons">
-          <a class="primaryBtn" href="#cakes">View Cakes</a>
-          <button class="ghostBtn" onclick="openCustomOrder()">Custom Request</button>
+          <a class="primaryBtn" href="cakes.html">Browse Cakes</a>
+          <a class="ghostBtn" href="cake.html?custom=true">Create Custom Cake</a>
+          <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank">Need Today?</a>
+        </div>
+
+        <div class="notice" id="sameDayNotice">
+          Online orders require at least 24 hours notice. For same-day or urgent orders, please contact us directly on WhatsApp.
         </div>
 
         <div class="miniStats">
           <div class="stat"><b>Fresh</b><span>Baked on order</span></div>
           <div class="stat"><b>Custom</b><span>Theme & message</span></div>
-          <div class="stat"><b>Easy</b><span>WhatsApp ordering</span></div>
+          <div class="stat"><b>Easy</b><span>Cart + WhatsApp</span></div>
         </div>
       </div>
 
-      <div class="photoPanel">
+      <div id="heroPhoto" class="photoPanel">
         <div class="floatingInfo">
           <div>
             <b>Need a cake urgently?</b>
-            <span>Send your date, theme and serving size.</span>
+            <span id="heroFloatingText">Same-day orders are handled directly on WhatsApp.</span>
           </div>
-          <button class="primaryBtn" onclick="openCustomOrder()">Ask</button>
+          <a class="primaryBtn" id="heroWhatsappBtn" href="#" target="_blank">Ask</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="cakes" class="wrap">
+  <section id="categories" class="wrap">
     <div class="sectionHead">
       <div>
-        <h3>Our Cake Collection</h3>
-        <p>Filter by category or send a custom request.</p>
+        <h3>Shop by Category</h3>
+        <p>Choose a cake type and explore designs made for that occasion.</p>
       </div>
+      <a class="ghostBtn" href="cakes.html">View All</a>
     </div>
 
-    <div class="tools">
-      <div class="searchBox">
-        <span>🔎</span>
-        <input id="searchInput" type="search" placeholder="Search birthday, chocolate, wedding..." oninput="renderCakes()">
-      </div>
-      <div id="filterRow" class="filterRow"><button class="chip active">All Cakes</button></div>
+    <div id="categoryGrid" class="categoryGrid">
+      <div class="loader">Loading categories...</div>
     </div>
-
-    <div id="cakeGrid" class="grid"><div class="loader">Loading cakes...</div></div>
   </section>
 
-  <section id="how" class="wrap compactInfo">
-    <div class="infoBox"><div class="icon">1</div><b>Choose design</b><span>Pick from catalogue or send your own cake idea.</span></div>
-    <div class="infoBox"><div class="icon">2</div><b>Add details</b><span>Select size, flavour, eggless option, date and cake message.</span></div>
-    <div class="infoBox"><div class="icon">3</div><b>Send on WhatsApp</b><span>Your order saves in admin panel and opens WhatsApp.</span></div>
+  <section class="wrap">
+    <div class="sectionHead">
+      <div>
+        <h3>Featured Cakes</h3>
+        <p>Popular designs customers can customize before adding to cart.</p>
+      </div>
+      <a class="ghostBtn" href="cakes.html">All Cakes</a>
+    </div>
+
+    <div id="featuredGrid" class="cakesGrid">
+      <div class="loader">Loading cakes...</div>
+    </div>
+  </section>
+
+  <section id="how" class="wrap">
+    <div class="sectionHead">
+      <div>
+        <h3>How Ordering Works</h3>
+        <p>A simple request flow made for custom cake orders.</p>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="stepBox">
+        <div class="stepNum">1</div>
+        <b>Choose a cake</b>
+        <span>Browse all cakes or open a category like birthday, wedding, kids or cupcakes.</span>
+      </div>
+
+      <div class="stepBox">
+        <div class="stepNum">2</div>
+        <b>Customize details</b>
+        <span>Select size, servings, flavour, eggless option, add-ons and cake message.</span>
+      </div>
+
+      <div class="stepBox">
+        <div class="stepNum">3</div>
+        <b>Add to cart</b>
+        <span>Add one or multiple customized cakes/items into a single order request.</span>
+      </div>
+
+      <div class="stepBox">
+        <div class="stepNum">4</div>
+        <b>Confirm on WhatsApp</b>
+        <span>Submit your request and complete confirmation directly with the shop.</span>
+      </div>
+    </div>
+
+    <div class="policyStrip" id="policyStrip">
+      Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp. Estimated prices may change after design review.
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="customCTA">
+      <div>
+        <h3>Have your own cake idea?</h3>
+        <p>Send your theme, colours, serving size, inspiration photo and special notes. We’ll add it as a custom request and confirm everything on WhatsApp.</p>
+      </div>
+
+      <div class="heroButtons" style="margin-top:0;">
+        <a class="primaryBtn" href="cake.html?custom=true">Start Custom Cake</a>
+        <a class="ghostBtn" id="customWhatsappBtn" href="#" target="_blank">WhatsApp Directly</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="sectionHead">
+      <div>
+        <h3>Why Customers Love Us</h3>
+        <p>Small details that make custom ordering easier.</p>
+      </div>
+    </div>
+
+    <div class="trustGrid">
+      <div class="trustBox">
+        <b>Freshly Baked</b>
+        <span>Every cake is prepared around your selected date and order details.</span>
+      </div>
+
+      <div class="trustBox">
+        <b>Live Estimate</b>
+        <span>Size, flavour and add-ons update your estimated price while customizing.</span>
+      </div>
+
+      <div class="trustBox">
+        <b>Pickup / Delivery</b>
+        <span>Choose pickup or delivery at checkout. Delivery details can be confirmed later.</span>
+      </div>
+
+      <div class="trustBox">
+        <b>24 Hour Notice</b>
+        <span>Tomorrow is the first online order date. Same-day cakes go through WhatsApp.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="gallerySection">
+    <div class="sectionHead">
+      <div>
+        <h3>Sweet Gallery</h3>
+        <p>A small preview of cake styles and dessert inspiration.</p>
+      </div>
+      <a class="ghostBtn" id="instagramBtn" href="#" target="_blank">Instagram</a>
+    </div>
+
+    <div class="galleryGrid">
+      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
+      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
+      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
+      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
+      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
+      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
+    </div>
   </section>
 
   <section class="wrap">
     <div class="contactStrip">
       <div>
-        <b id="contactTitle">Have a custom idea?</b>
-        <span id="contactInfo">Send your theme, date and serving size on WhatsApp.</span>
+        <b id="contactTitle">Have a question before ordering?</b>
+        <span id="contactInfo">For urgent or same-day cakes, contact us directly on WhatsApp.</span>
       </div>
-      <button class="primaryBtn" onclick="openCustomOrder()">Start Order</button>
+
+      <div class="heroButtons" style="margin-top:0;">
+        <a class="primaryBtn" id="bottomWhatsappBtn" href="#" target="_blank">Contact WhatsApp</a>
+        <a class="ghostBtn" href="cart.html">View Cart</a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer class="footer">
   <div class="wrap footerInner">
-    <span>© <span id="year"></span> <span id="footerBrand">Cake Studio</span>. All rights reserved.</span>
-    <span id="footerAddress">Made for easy WhatsApp cake orders.</span>
-  </div>
-</footer>
-
-<div id="orderModal" class="modal">
-  <div class="modalBackdrop" onclick="closeOrderModal()"></div>
-  <div class="modalPanel">
-    <div class="modalHead">
-      <div>
-        <h3>Complete Your Order</h3>
-        <p>Order saves in admin panel, then WhatsApp opens.</p>
-      </div>
-      <button class="closeBtn" onclick="closeOrderModal()">×</button>
+    <div>
+      <span>© <span id="year"></span> <span id="footerBrand">Cake Studio</span>. All rights reserved.</span>
+      <br>
+      <span id="footerAddress">Made for easy WhatsApp cake orders.</span>
     </div>
 
-    <form class="form" onsubmit="sendWhatsAppOrder(event)">
-      <div class="selectedPreview">
-        <img id="selectedCakeImg" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80" alt="Selected cake">
-        <div>
-          <b id="selectedCakeName">Custom Cake Request</b>
-          <span id="selectedCakeCategory">Tell us your cake idea</span>
-        </div>
-      </div>
-
-      <div class="field"><label>Full Name *</label><input id="customerName" required placeholder="Your name"></div>
-      <div class="field"><label>Phone Number *</label><input id="customerPhone" required placeholder="Your phone number"></div>
-      <div class="field"><label>Needed Date *</label><input id="neededDate" required type="date"></div>
-      <div class="field"><label>Needed Time</label><input id="neededTime" type="time"></div>
-
-      <div class="field">
-        <label>Cake Size</label>
-        <select id="cakeSize">
-          <option value="">Select size</option>
-          <option>6 inch</option>
-          <option>8 inch</option>
-          <option>10 inch</option>
-          <option>12 inch</option>
-          <option>1 tier</option>
-          <option>2 tier</option>
-          <option>3 tier</option>
-          <option>Custom size</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Flavour</label>
-        <select id="cakeFlavour"><option value="">Select flavour</option></select>
-      </div>
-
-      <div class="field">
-        <label>Eggless?</label>
-        <select id="eggless"><option>No</option><option>Yes</option><option>Not sure</option></select>
-      </div>
-
-      <div class="field">
-        <label>Pickup or Delivery?</label>
-        <select id="deliveryType"><option>Pickup</option><option>Delivery</option></select>
-      </div>
-
-      <div class="field full"><label>Address / Pickup Note</label><input id="orderAddress" placeholder="Delivery address or pickup note"></div>
-      <div class="field full"><label>Message on Cake</label><input id="cakeMessage" placeholder="Happy Birthday Aanya, Congratulations, etc."></div>
-      <div class="field full"><label>Special Notes</label><textarea id="notes" placeholder="Theme, colours, inspiration photo link, allergies, budget, serving size..."></textarea></div>
-
-      <div class="formActions">
-        <button id="waSubmitBtn" class="waBtn" type="submit">Save & Send on WhatsApp</button>
-        <button class="clearBtn" type="button" onclick="closeOrderModal()">Cancel</button>
-      </div>
-    </form>
+    <div class="footerLinks">
+      <a href="cakes.html">All Cakes</a>
+      <a href="cake.html?custom=true">Custom Cake</a>
+      <a href="cart.html">Cart</a>
+      <a href="#how">Policy</a>
+      <a href="admin.html">Admin</a>
+    </div>
   </div>
-</div>
-
-<div id="toast" class="toast"></div>
+</footer>
 
 <script>
   const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
   const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+  const CART_KEY = "cakeShopCartV1";
+
   const DEFAULT_SETTINGS = {
     brand_name:"Cake Studio",
     tagline:"Fresh custom cakes & sweet orders",
     logo_url:"",
     whatsapp_number:"",
-    hero_title:"Beautiful cakes for birthdays, weddings & every sweet moment.",
-    hero_subtitle:"Browse cake designs, choose your size, flavour, message, delivery details, and send your order directly on WhatsApp.",
     instagram_url:"",
-    address:""
+    address:"",
+    business_hours:"",
+    service_area:"",
+    hero_title:"Custom cakes for birthdays, weddings & sweet moments.",
+    hero_subtitle:"Browse cakes, customize size, flavour and add-ons, add multiple items to cart, and confirm your order request on WhatsApp.",
+    hero_image_url:"",
+    minimum_notice_hours:24,
+    same_day_message:"For today or urgent orders, please contact us directly on WhatsApp.",
+    policy_text:"Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp. Estimated prices may change after design review.",
+    currency:"$",
+    show_prices:true
   };
 
-  const FALLBACK_CAKES = [
-    {id:"demo-1",name:"Chocolate Birthday Cake",category:"Birthday",description:"Rich chocolate layers with smooth cream and custom birthday message.",image_url:"https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80",starting_price:"45",is_featured:true,is_active:true,sort_order:1},
-    {id:"demo-2",name:"Elegant Wedding Cake",category:"Wedding",description:"Premium clean design for weddings, engagements and receptions.",image_url:"https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80",starting_price:"120",is_featured:true,is_active:true,sort_order:2},
-    {id:"demo-3",name:"Kids Theme Cake",category:"Kids",description:"Colourful cake for kids with custom theme and name topper.",image_url:"https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80",starting_price:"55",is_featured:false,is_active:true,sort_order:3},
-    {id:"demo-4",name:"Cupcake Box",category:"Cupcakes",description:"Fresh cupcakes box for parties, gifts and office treats.",image_url:"https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=900&q=80",starting_price:"24",is_featured:false,is_active:true,sort_order:4}
-  ];
-
-  const FALLBACK_FLAVOURS = [
-    {id:"fallback-chocolate", name:"Chocolate"},
-    {id:"fallback-vanilla", name:"Vanilla"},
-    {id:"fallback-red-velvet", name:"Red Velvet"},
-    {id:"fallback-custom", name:"Custom Flavour"}
+  const CATEGORY_FALLBACK_IMAGES = [
+    "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80",
+    "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=900&q=80"
   ];
 
   let siteSettings = {...DEFAULT_SETTINGS};
-  let allCakes = [];
-  let allCategories = [];
-  let allFlavours = [];
-  let cakeCategoryRows = [];
-  let cakeFlavourRows = [];
-  let currentCategoryId = "all";
-  let selectedCake = null;
+  let categories = [];
+  let cakes = [];
+  let cakeCategories = [];
 
   const $ = (id) => document.getElementById(id);
+
   $("year").textContent = new Date().getFullYear();
+
   init();
 
   async function init(){
-    await loadSiteData();
+    updateCartCount();
+    await loadHomeData();
     applySettings();
-    buildFilters();
-    renderCakes();
+    renderCategories();
+    renderFeaturedCakes();
   }
 
-  async function loadSiteData(){
-    $("cakeGrid").innerHTML = `<div class="loader">Loading cakes...</div>`;
-
+  async function loadHomeData(){
     try{
-      const [settingsRes,cakesRes,catsRes,flavoursRes,cakeCatsRes,cakeFlavoursRes] = await Promise.all([
+      const [settingsRes,catsRes,cakesRes,relRes] = await Promise.all([
         supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
-        supabaseClient.from("cakes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
         supabaseClient.from("categories").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
-        supabaseClient.from("flavours").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
-        supabaseClient.from("cake_categories").select("*"),
-        supabaseClient.from("cake_flavours").select("*")
+        supabaseClient.from("cakes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
+        supabaseClient.from("cake_categories").select("*")
       ]);
 
-      const firstError = settingsRes.error || cakesRes.error || catsRes.error || flavoursRes.error || cakeCatsRes.error || cakeFlavoursRes.error;
+      const firstError = settingsRes.error || catsRes.error || cakesRes.error || relRes.error;
       if(firstError) throw firstError;
 
       siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
-      allCakes = Array.isArray(cakesRes.data) && cakesRes.data.length ? cakesRes.data : FALLBACK_CAKES;
-      allCategories = Array.isArray(catsRes.data) ? catsRes.data : [];
-      allFlavours = Array.isArray(flavoursRes.data) && flavoursRes.data.length ? flavoursRes.data : FALLBACK_FLAVOURS;
-      cakeCategoryRows = Array.isArray(cakeCatsRes.data) ? cakeCatsRes.data : [];
-      cakeFlavourRows = Array.isArray(cakeFlavoursRes.data) ? cakeFlavoursRes.data : [];
+      categories = Array.isArray(catsRes.data) ? catsRes.data : [];
+      cakes = Array.isArray(cakesRes.data) ? cakesRes.data : [];
+      cakeCategories = Array.isArray(relRes.data) ? relRes.data : [];
     }catch(err){
-      console.warn("Supabase loading issue:", err.message);
+      console.warn("Homepage load issue:", err.message);
       siteSettings = {...DEFAULT_SETTINGS};
-      allCakes = FALLBACK_CAKES;
-      allCategories = [
-        {id:"fallback-birthday", name:"Birthday"},
-        {id:"fallback-wedding", name:"Wedding"},
-        {id:"fallback-kids", name:"Kids"},
-        {id:"fallback-cupcakes", name:"Cupcakes"}
-      ];
-      allFlavours = FALLBACK_FLAVOURS;
-      cakeCategoryRows = [];
-      cakeFlavourRows = [];
-      showToast("Showing demo cakes. Check Supabase tables/policies.");
+      categories = [];
+      cakes = [];
+      cakeCategories = [];
     }
   }
 
@@ -426,118 +1094,148 @@
     const brand = siteSettings.brand_name || DEFAULT_SETTINGS.brand_name;
     const tagline = siteSettings.tagline || DEFAULT_SETTINGS.tagline;
     const logo = siteSettings.logo_url || "";
+    const heroImage = siteSettings.hero_image_url || "";
+    const whatsapp = normalizePhone(siteSettings.whatsapp_number || "");
+    const instagram = siteSettings.instagram_url || "#";
 
     document.title = brand + " - Custom Cakes & Orders";
+
     $("siteBrandName").textContent = brand;
     $("siteTagline").textContent = tagline;
     $("footerBrand").textContent = brand;
+
     $("heroTag").textContent = "✨ " + tagline;
     $("heroTitle").innerHTML = formatHeroTitle(siteSettings.hero_title || DEFAULT_SETTINGS.hero_title);
     $("heroSubtitle").textContent = siteSettings.hero_subtitle || DEFAULT_SETTINGS.hero_subtitle;
-    $("contactInfo").textContent = siteSettings.address ? siteSettings.address : "Send your theme, date and serving size on WhatsApp.";
-    $("footerAddress").textContent = siteSettings.address || "Made for easy WhatsApp cake orders.";
+
+    $("sameDayNotice").textContent = siteSettings.same_day_message || DEFAULT_SETTINGS.same_day_message;
+    $("policyStrip").textContent = siteSettings.policy_text || DEFAULT_SETTINGS.policy_text;
+
+    $("contactInfo").textContent = siteSettings.address
+      ? `${siteSettings.address}${siteSettings.business_hours ? " · " + siteSettings.business_hours : ""}`
+      : "For urgent or same-day cakes, contact us directly on WhatsApp.";
+
+    $("footerAddress").textContent = buildFooterInfo();
 
     if(logo){
       $("siteLogo").innerHTML = `<img src="${escapeHtml(logo)}" alt="${escapeHtml(brand)}" onerror="this.parentElement.textContent='🍰'">`;
     }else{
       $("siteLogo").textContent = "🍰";
     }
-  }
 
-  function formatHeroTitle(title){
-    const clean = escapeHtml(title || "");
-    const words = clean.split(" ");
-    if(words.length < 6) return clean;
-    const first = words.slice(0, Math.ceil(words.length / 2)).join(" ");
-    const second = words.slice(Math.ceil(words.length / 2)).join(" ");
-    return `${first} <span>${second}</span>`;
-  }
-
-  function buildFilters(){
-    const categoryButtons = allCategories.map(cat => `
-      <button class="chip ${currentCategoryId === cat.id ? "active" : ""}" onclick="setCategory('${escapeForJs(cat.id)}')">
-        ${escapeHtml(cat.name)}
-      </button>
-    `).join("");
-
-    $("filterRow").innerHTML = `
-      <button class="chip ${currentCategoryId === "all" ? "active" : ""}" onclick="setCategory('all')">All Cakes</button>
-      ${categoryButtons}
-    `;
-  }
-
-  function setCategory(categoryId){
-    currentCategoryId = categoryId;
-    buildFilters();
-    renderCakes();
-  }
-
-  function getCakeCategoryIds(cakeId){
-    return cakeCategoryRows.filter(row => String(row.cake_id) === String(cakeId)).map(row => row.category_id);
-  }
-
-  function getCakeFlavourIds(cakeId){
-    return cakeFlavourRows.filter(row => String(row.cake_id) === String(cakeId)).map(row => row.flavour_id);
-  }
-
-  function getCakeCategoryNames(cake){
-    const ids = getCakeCategoryIds(cake.id);
-    const names = ids.map(id => allCategories.find(cat => String(cat.id) === String(id))?.name).filter(Boolean);
-    if(names.length) return names;
-    return cake.category ? [cake.category] : ["Custom"];
-  }
-
-  function getCakeFlavourNames(cake){
-    const ids = getCakeFlavourIds(cake.id);
-    return ids.map(id => allFlavours.find(flav => String(flav.id) === String(id))?.name).filter(Boolean);
-  }
-
-  function getCakePriceText(cake){
-    if(cake && cake.starting_price !== null && cake.starting_price !== undefined && cake.starting_price !== ""){
-      return "$" + Number(cake.starting_price).toFixed(2).replace(".00","");
-    }
-    return "Custom price";
-  }
-
-  function renderCakes(){
-    const grid = $("cakeGrid");
-    const search = $("searchInput").value.trim().toLowerCase();
-    let cakes = [...allCakes];
-
-    if(currentCategoryId !== "all"){
-      cakes = cakes.filter(cake => {
-        const ids = getCakeCategoryIds(cake.id);
-        if(ids.length) return ids.map(String).includes(String(currentCategoryId));
-        const selectedCat = allCategories.find(cat => String(cat.id) === String(currentCategoryId));
-        return selectedCat && String(cake.category || "").toLowerCase() === String(selectedCat.name || "").toLowerCase();
-      });
+    if(heroImage){
+      $("heroPhoto").style.backgroundImage =
+        `linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.62)), url("${escapeCssUrl(heroImage)}")`;
     }
 
-    if(search){
-      cakes = cakes.filter(cake => {
-        const categories = getCakeCategoryNames(cake).join(" ");
-        const flavours = getCakeFlavourNames(cake).join(" ");
-        const combined = `${cake.name || ""} ${cake.category || ""} ${cake.description || ""} ${categories} ${flavours}`.toLowerCase();
-        return combined.includes(search);
-      });
-    }
+    setupWhatsappLinks(whatsapp);
+    setupInstagram(instagram);
+  }
 
-    if(!cakes.length){
-      grid.innerHTML = `<div class="empty">No cakes found. Try another search or send a custom request.<br><br><button class="primaryBtn" onclick="openCustomOrder()">Custom Request</button></div>`;
+  function buildFooterInfo(){
+    const parts = [];
+
+    if(siteSettings.address) parts.push(siteSettings.address);
+    if(siteSettings.service_area) parts.push("Serving " + siteSettings.service_area);
+    if(siteSettings.business_hours) parts.push(siteSettings.business_hours);
+
+    return parts.length ? parts.join(" · ") : "Made for easy WhatsApp cake orders.";
+  }
+
+  function setupWhatsappLinks(phone){
+    const message = "Hi, I want to ask about a cake order.";
+    const urgentMessage = "Hi, I need a same-day or urgent cake order. Can you please confirm availability?";
+
+    const normalUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : "#";
+    const urgentUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(urgentMessage)}` : "#";
+
+    ["topWhatsappBtn","heroWhatsappBtn","customWhatsappBtn","bottomWhatsappBtn"].forEach(id => {
+      $(id).href = normalUrl;
+      $(id).onclick = phone ? null : function(e){
+        e.preventDefault();
+        alert("WhatsApp number is not added yet. Add it in admin settings.");
+      };
+    });
+
+    $("urgentWhatsappBtn").href = urgentUrl;
+    $("urgentWhatsappBtn").onclick = phone ? null : function(e){
+      e.preventDefault();
+      alert("WhatsApp number is not added yet. Add it in admin settings.");
+    };
+  }
+
+  function setupInstagram(url){
+    const btn = $("instagramBtn");
+
+    if(url && url !== "#"){
+      btn.href = url;
+      btn.style.display = "inline-flex";
+    }else{
+      btn.href = "#";
+      btn.style.display = "none";
+    }
+  }
+
+  function renderCategories(){
+    const grid = $("categoryGrid");
+
+    if(!categories.length){
+      grid.innerHTML = `
+        <div class="empty">
+          No active categories found yet.<br>
+          Add categories from admin panel first.
+        </div>
+      `;
       return;
     }
 
-    grid.innerHTML = cakes.map(cake => {
-      const cats = getCakeCategoryNames(cake);
-      const flavs = getCakeFlavourNames(cake);
-      const price = getCakePriceText(cake);
+    const shown = categories.slice(0, 6);
+
+    grid.innerHTML = shown.map((cat, index) => {
+      const image = cat.image_url || CATEGORY_FALLBACK_IMAGES[index % CATEGORY_FALLBACK_IMAGES.length];
+      const slugOrId = cat.slug || cat.id;
+
+      return `
+        <a class="categoryCard" href="category.html?cat=${encodeURIComponent(slugOrId)}" style="--img:url('${escapeCssUrl(image)}')">
+          <div>
+            <b>${escapeHtml(cat.name || "Category")}</b>
+            <span>${escapeHtml(cat.description || "Explore cakes in this category.")}</span>
+          </div>
+        </a>
+      `;
+    }).join("");
+  }
+
+  function renderFeaturedCakes(){
+    const grid = $("featuredGrid");
+
+    let shown = cakes.filter(cake => cake.is_featured === true);
+    if(!shown.length) shown = cakes.slice(0, 8);
+    else shown = shown.slice(0, 8);
+
+    if(!shown.length){
+      grid.innerHTML = `
+        <div class="empty">
+          No active cakes found yet.<br>
+          Add cake products from admin panel to show them here.
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = shown.map(cake => {
+      const cats = getCakeCategoryNames(cake.id);
+      const priceText = getPriceText(cake);
+      const href = `cake.html?id=${encodeURIComponent(cake.id)}`;
 
       return `
         <article class="cakeCard">
-          <div class="cakeImg">
-            <img src="${escapeHtml(cake.image_url || "")}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'">
-            <div class="badge">${escapeHtml(cats[0] || "Cake")}${cake.is_featured ? " · Featured" : ""}</div>
-          </div>
+          <a href="${href}">
+            <div class="cakeImg">
+              <img src="${escapeHtml(cake.image_url || "")}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'">
+              <div class="badge">${escapeHtml(cats[0] || "Cake")}${cake.is_featured ? " · Featured" : ""}</div>
+            </div>
+          </a>
 
           <div class="cakeBody">
             <h4>${escapeHtml(cake.name || "Custom Cake")}</h4>
@@ -545,12 +1243,12 @@
 
             <div class="miniTags">
               ${cats.slice(0,2).map(name => `<span class="miniTag">${escapeHtml(name)}</span>`).join("")}
-              ${flavs.slice(0,1).map(name => `<span class="miniTag">${escapeHtml(name)}</span>`).join("")}
+              <span class="miniTag">${escapeHtml(cake.price_type || "estimated")}</span>
             </div>
 
             <div class="cakeMeta">
-              <div class="price">${price === "Custom price" ? "Custom price" : "From " + price}</div>
-              <button class="smallOrderBtn" onclick="openOrder('${escapeForJs(cake.id)}')">Order</button>
+              <div class="price">${priceText}</div>
+              <a class="smallBtn" href="${href}">Customize</a>
             </div>
           </div>
         </article>
@@ -558,211 +1256,83 @@
     }).join("");
   }
 
-  function openOrder(cakeId){
-    selectedCake = allCakes.find(cake => String(cake.id) === String(cakeId)) || null;
-    updateSelectedPreview();
-    updateFlavourDropdown();
-    $("orderModal").classList.add("show");
-    document.body.style.overflow = "hidden";
+  function getCakeCategoryNames(cakeId){
+    const ids = cakeCategories
+      .filter(row => String(row.cake_id) === String(cakeId))
+      .map(row => row.category_id);
+
+    const names = ids
+      .map(id => categories.find(cat => String(cat.id) === String(id))?.name)
+      .filter(Boolean);
+
+    return names;
   }
 
-  function openCustomOrder(){
-    selectedCake = null;
-    updateSelectedPreview();
-    updateFlavourDropdown();
-    $("orderModal").classList.add("show");
-    document.body.style.overflow = "hidden";
+  function getPriceText(cake){
+    if(siteSettings.show_prices === false) return "Request quote";
+    if(cake.price_type === "quote") return "Request quote";
+
+    const price = Number(cake.starting_price || 0);
+    if(!price) return "Estimate on request";
+
+    const currency = siteSettings.currency || "$";
+
+    if(cake.price_type === "fixed") return currency + price.toFixed(2).replace(".00", "");
+    return "From " + currency + price.toFixed(2).replace(".00", "");
   }
 
-  function closeOrderModal(){
-    $("orderModal").classList.remove("show");
-    document.body.style.overflow = "";
+  function formatHeroTitle(title){
+    const clean = escapeHtml(title || "");
+    const words = clean.split(" ").filter(Boolean);
+
+    if(words.length < 6) return clean;
+
+    const splitAt = Math.ceil(words.length / 2);
+    const first = words.slice(0, splitAt).join(" ");
+    const second = words.slice(splitAt).join(" ");
+
+    return `${first} <span>${second}</span>`;
   }
 
-  function updateSelectedPreview(){
-    if(selectedCake){
-      const cats = getCakeCategoryNames(selectedCake);
-      $("selectedCakeImg").src = selectedCake.image_url || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80";
-      $("selectedCakeName").textContent = selectedCake.name || "Selected Cake";
-      $("selectedCakeCategory").textContent = cats.join(", ");
-    }else{
-      $("selectedCakeImg").src = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80";
-      $("selectedCakeName").textContent = "Custom Cake Request";
-      $("selectedCakeCategory").textContent = "Tell us your cake idea";
-    }
+  function updateCartCount(){
+    const cart = getCart();
+    const count = cart.reduce((sum,item) => sum + Number(item.quantity || 1), 0);
+    $("cartCount").textContent = count;
   }
 
-  function updateFlavourDropdown(){
-    const select = $("cakeFlavour");
-    let flavourList = [];
-
-    if(selectedCake){
-      const ids = getCakeFlavourIds(selectedCake.id);
-      flavourList = ids.map(id => allFlavours.find(flav => String(flav.id) === String(id))).filter(Boolean);
-    }
-
-    if(!flavourList.length) flavourList = allFlavours.length ? allFlavours : FALLBACK_FLAVOURS;
-
-    select.innerHTML = `
-      <option value="">Select flavour</option>
-      ${flavourList.map(flav => `<option>${escapeHtml(flav.name)}</option>`).join("")}
-      <option>Not sure / Need suggestion</option>
-    `;
-  }
-
-  async function sendWhatsAppOrder(event){
-    event.preventDefault();
-
-    const whatsapp = normalizePhone(siteSettings.whatsapp_number || "");
-    if(!whatsapp){
-      showToast("Shop WhatsApp number is missing. Add it in admin settings.", true);
-      return;
-    }
-
-    const btn = $("waSubmitBtn");
-    btn.disabled = true;
-    btn.textContent = "Saving order...";
-
-    const name = getValue("customerName");
-    const phone = getValue("customerPhone");
-    const neededDate = getValue("neededDate");
-    const neededTime = getValue("neededTime");
-    const size = getValue("cakeSize");
-    const flavour = getValue("cakeFlavour");
-    const eggless = getValue("eggless");
-    const deliveryType = getValue("deliveryType");
-    const address = getValue("orderAddress");
-    const cakeMessage = getValue("cakeMessage");
-    const notes = getValue("notes");
-
-    const cakeName = selectedCake ? selectedCake.name : "Custom Cake Request";
-    const cakeCategories = selectedCake ? getCakeCategoryNames(selectedCake).join(", ") : "Custom";
-    const priceText = selectedCake ? getCakePriceText(selectedCake) : "To be confirmed";
-
-    const orderPayload = {
-      cake_id: selectedCake && isUuid(selectedCake.id) ? selectedCake.id : null,
-      cake_name: cakeName,
-      cake_categories: cakeCategories,
-      cake_price: priceText,
-      customer_name: name,
-      customer_phone: phone,
-      needed_date: neededDate,
-      needed_time: neededTime || null,
-      cake_size: size || null,
-      cake_flavour: flavour || null,
-      eggless: eggless || "No",
-      delivery_type: deliveryType || "Pickup",
-      address: address || null,
-      cake_message: cakeMessage || null,
-      notes: notes || null,
-      status: "pending"
-    };
-
-    let savedOrderId = "";
-    let saveOk = false;
-
+  function getCart(){
     try{
-      const { data, error } = await supabaseClient
-        .from("orders")
-        .insert(orderPayload)
-        .select("id")
-        .single();
-
-      if(error) throw error;
-      savedOrderId = data?.id || "";
-      saveOk = true;
-    }catch(err){
-      console.warn("Order save failed:", err.message);
-      showToast("Order could not save in admin, but WhatsApp will open.", true);
+      const raw = localStorage.getItem(CART_KEY);
+      const parsed = JSON.parse(raw || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    }catch{
+      return [];
     }
-
-    const message = buildWhatsAppMessage({
-      savedOrderId,
-      saveOk,
-      name,
-      phone,
-      cakeName,
-      cakeCategories,
-      priceText,
-      size,
-      flavour,
-      eggless,
-      cakeMessage,
-      neededDate,
-      neededTime,
-      deliveryType,
-      address,
-      notes
-    });
-
-    btn.disabled = false;
-    btn.textContent = "Save & Send on WhatsApp";
-
-    const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
-
-    if(saveOk) showToast("Order saved. WhatsApp opened.");
   }
 
-  function buildWhatsAppMessage(o){
-    return `🍰 NEW CAKE ORDER
-────────────────
-
-👤 CUSTOMER
-Name: ${o.name}
-Phone: ${o.phone}
-
-🎂 CAKE DETAILS
-Cake: ${o.cakeName}
-Category: ${o.cakeCategories}
-Price: ${o.priceText}
-Size: ${o.size || "Not selected"}
-Flavour: ${o.flavour || "Not selected"}
-Eggless: ${o.eggless || "No"}
-Message on Cake: ${o.cakeMessage || "No message"}
-
-📅 DATE & DELIVERY
-Needed Date: ${o.neededDate}
-Needed Time: ${o.neededTime || "Not selected"}
-Order Type: ${o.deliveryType}
-Address / Note: ${o.address || "Not provided"}
-
-📝 SPECIAL NOTES
-${o.notes || "No extra notes"}
-
-📌 ORDER STATUS
-Status: Pending
-${o.saveOk ? "Saved in admin panel: Yes" : "Saved in admin panel: No"}
-${o.savedOrderId ? "Order ID: " + o.savedOrderId.slice(0, 8).toUpperCase() : ""}
-
-Thank you.`;
+  function toggleMobileMenu(){
+    $("mobileMenu").classList.toggle("show");
   }
 
-  function getValue(id){return $(id).value.trim()}
-  function normalizePhone(value){return String(value || "").replace(/[^\d]/g, "")}
-  function isUuid(value){return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || ""))}
-
-  function showToast(message, isError = false){
-    const toast = $("toast");
-    toast.textContent = message;
-    toast.style.borderColor = isError ? "rgba(255,91,110,.35)" : "rgba(255,255,255,.09)";
-    toast.style.color = isError ? "#ffdce1" : "var(--text)";
-    toast.classList.add("show");
-    clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+  function normalizePhone(value){
+    return String(value || "").replace(/[^\d]/g, "");
   }
 
   function escapeHtml(value){
-    return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
   }
 
-  function escapeForJs(value){
-    return String(value ?? "").replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll("\n"," ");
+  function escapeCssUrl(value){
+    return String(value ?? "")
+      .replaceAll("\\","\\\\")
+      .replaceAll('"','\\"')
+      .replaceAll("'","\\'");
   }
-
-  document.addEventListener("keydown", function(e){
-    if(e.key === "Escape") closeOrderModal();
-  });
 </script>
 
 </body>
