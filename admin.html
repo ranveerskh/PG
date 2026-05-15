@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Cake Studio Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cake Shop Admin</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,408 +12,804 @@
 
   <style>
     :root{
-      --bg:#100b12;
-      --bg2:#19101c;
+      --bg:#0f0a12;
+      --bg2:#18101c;
+      --card:#211625;
+      --card2:#281b2d;
       --text:#fff7fb;
       --muted:#c9aebd;
-      --line:rgba(255,255,255,.09);
+      --line:rgba(255,255,255,.10);
       --pink:#ff5fa2;
       --pink2:#ff8ac0;
       --cream:#ffe4c7;
       --gold:#ffc86b;
       --green:#39d98a;
       --red:#ff5b6e;
-      --blue:#67b7ff;
-      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --blue:#72a7ff;
+      --shadow:0 18px 60px rgba(0,0,0,.36);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     body{
       min-height:100vh;
       background:
-        radial-gradient(circle at top left, rgba(255,95,162,.24), transparent 32%),
-        radial-gradient(circle at 90% 10%, rgba(255,200,107,.13), transparent 28%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+        radial-gradient(circle at top left, rgba(255,95,162,.20), transparent 35%),
+        radial-gradient(circle at top right, rgba(255,200,107,.12), transparent 30%),
+        linear-gradient(180deg,var(--bg),var(--bg2));
       color:var(--text);
     }
-    button,input,textarea,select{font:inherit}
-    button{border:none;cursor:pointer}
+
+    button,input,select,textarea{font:inherit}
+    button{border:0;cursor:pointer}
     a{color:inherit;text-decoration:none}
-    .wrap{width:min(1180px, calc(100% - 26px));margin:auto}
-    .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(16,11,18,.84);border-bottom:1px solid var(--line)}
-    .nav{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0}
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
-    .logo{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),var(--gold));box-shadow:0 10px 25px rgba(255,95,162,.25);font-size:20px;overflow:hidden;flex:0 0 auto}
-    .logo img{width:100%;height:100%;object-fit:cover;display:block}
-    .brand h1{font-size:17px;letter-spacing:-.04em;line-height:1;white-space:nowrap}
-    .brand p{margin-top:4px;color:var(--muted);font-size:11px;white-space:nowrap}
-    .navActions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-    .pill{padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.055);color:var(--muted);font-size:12px;font-weight:800;max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font-weight:900;font-size:13px;transition:.18s ease}
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.09)}
-    .btn.primary{border-color:transparent;background:linear-gradient(135deg,var(--pink),var(--pink2));color:white;box-shadow:0 14px 28px rgba(255,95,162,.24)}
-    .btn.green{border-color:transparent;background:linear-gradient(135deg,#19c463,#39d98a);color:#06160c}
-    .btn.red{border-color:rgba(255,91,110,.28);background:rgba(255,91,110,.13);color:#ffdce1}
-    .btn.small{padding:8px 10px;font-size:12px}
-    .btn:disabled{opacity:.6;cursor:not-allowed}
 
-    .screen{display:none}
-    .screen.show{display:block}
-    .loginShell{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:30px 0}
-    .loginCard{width:min(460px,100%);border:1px solid var(--line);border-radius:28px;padding:20px;background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.035));box-shadow:var(--shadow)}
-    .bigIcon{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),var(--gold));font-size:26px;margin-bottom:14px}
-    .loginCard h2{font-size:28px;letter-spacing:-.06em;line-height:1}
-    .loginCard p{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.5}
+    .wrap{width:min(1280px,calc(100% - 24px));margin:auto}
 
-    .main{padding:18px 0 34px}
-    .tabs{display:flex;gap:8px;overflow:auto;padding-bottom:8px;margin-bottom:10px;scrollbar-width:none}
-    .tabs::-webkit-scrollbar{display:none}
-    .tab{flex:0 0 auto;padding:10px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.055);color:var(--muted);font-size:13px;font-weight:1000}
-    .tab.active{color:white;border-color:rgba(255,95,162,.45);background:linear-gradient(135deg,rgba(255,95,162,.88),rgba(255,138,192,.72))}
-    .tabPanel{display:none}
-    .tabPanel.show{display:block}
-    .grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}
-    .panel{border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border-radius:24px;padding:14px;box-shadow:0 16px 45px rgba(0,0,0,.22)}
-    .panelHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
-    .panelHead h2,.panelHead h3{font-size:20px;letter-spacing:-.05em;line-height:1.1}
-    .panelHead p{margin-top:5px;color:var(--muted);font-size:12px;line-height:1.4}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-    .stat{border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:18px;padding:12px}
-    .stat b{display:block;font-size:20px;line-height:1}
-    .stat span{display:block;margin-top:5px;color:var(--muted);font-size:11px;font-weight:800}
-    .notice{border:1px solid rgba(255,200,107,.22);background:rgba(255,200,107,.08);border-radius:18px;padding:12px;color:var(--cream);font-size:12px;line-height:1.5;margin-top:10px}
-
-    .formGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .formGrid.one{grid-template-columns:1fr}
-    .field{display:flex;flex-direction:column;gap:6px}
-    .field.full{grid-column:1/-1}
-    .field label{color:var(--cream);font-size:12px;font-weight:900}
-    .field input,.field textarea,.field select{width:100%;min-height:44px;outline:none;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);border-radius:15px;padding:11px 12px;resize:vertical}
-    .field textarea{min-height:78px}
-    .field select option,.selectMini option{color:#111}
-    .checkBox{display:flex;align-items:center;gap:9px;padding:11px;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:15px;color:var(--text);font-size:13px;font-weight:900}
-    .checkBox input{width:18px;height:18px;accent-color:var(--pink)}
-    .multiBox{grid-column:1/-1;display:grid;gap:8px}
-    .multiTitle{color:var(--cream);font-size:12px;font-weight:900}
-    .multiGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-    .multiItem{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:14px;color:var(--text);font-size:12px;font-weight:900}
-    .multiItem input{width:17px;height:17px;accent-color:var(--pink)}
-    .formActions{grid-column:1/-1;display:flex;gap:9px;flex-wrap:wrap;margin-top:2px}
-    .imagePreview{grid-column:1/-1;display:none;align-items:center;gap:10px;border:1px solid var(--line);background:rgba(255,255,255,.045);padding:10px;border-radius:18px}
-    .imagePreview.show{display:flex}
-    .imagePreview img{width:74px;height:74px;object-fit:cover;border-radius:16px;background:#2b1c30}
-    .imagePreview b{display:block;font-size:13px}
-    .imagePreview span{display:block;color:var(--muted);font-size:12px;margin-top:4px;word-break:break-all}
-
-    .toolbar{display:grid;grid-template-columns:1fr auto auto;gap:9px;margin:12px 0}
-    .toolbar.four{grid-template-columns:1fr auto auto auto}
-    .searchBox{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.055)}
-    .searchBox input{width:100%;border:none;outline:none;background:transparent;color:var(--text);font-weight:800}
-    .searchBox input::placeholder{color:rgba(201,174,189,.75)}
-    .selectMini{min-height:44px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.055);color:var(--text);padding:0 12px;outline:none;font-weight:900;font-size:13px}
-    .list{display:grid;gap:10px}
-
-    .cakeItem,.simpleItem,.orderItem{border:1px solid var(--line);background:rgba(255,255,255,.052);border-radius:20px;overflow:hidden}
-    .cakeTop{display:grid;grid-template-columns:82px 1fr auto;gap:12px;align-items:center;padding:10px}
-    .cakeTop img{width:82px;height:82px;object-fit:cover;border-radius:16px;background:#2b1c30}
-    .cakeInfo{min-width:0}
-    .cakeInfo h4{font-size:15px;letter-spacing:-.025em;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .cakeInfo p{margin-top:5px;color:var(--muted);font-size:12px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-    .badge{padding:6px 8px;border-radius:999px;font-size:10px;font-weight:1000;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--muted)}
-    .badge.active{color:#d9ffe9;border-color:rgba(57,217,138,.25);background:rgba(57,217,138,.1)}
-    .badge.inactive{color:#ffdce1;border-color:rgba(255,91,110,.25);background:rgba(255,91,110,.1)}
-    .badge.featured{color:#fff2cf;border-color:rgba(255,200,107,.25);background:rgba(255,200,107,.1)}
-    .itemActions{display:flex;flex-direction:column;gap:7px;align-items:flex-end}
-
-    .simpleRow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:11px}
-    .simpleRow h4{font-size:14px;letter-spacing:-.025em}
-    .simpleRow p{color:var(--muted);font-size:12px;margin-top:5px}
-    .simpleActions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
-
-    .orderTop{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px;align-items:start}
-    .orderTitle{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-    .orderTitle h4{font-size:15px;letter-spacing:-.02em}
-    .orderDetails{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-    .orderMini{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:14px;padding:9px}
-    .orderMini b{display:block;font-size:11px;color:var(--cream);margin-bottom:3px}
-    .orderMini span{font-size:12px;color:var(--muted);word-break:break-word}
-    .orderNote{margin-top:10px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:14px;padding:10px;color:var(--muted);font-size:12px;line-height:1.45;white-space:pre-wrap}
-    .statusSelect{min-height:38px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.07);color:var(--text);padding:0 10px;font-weight:900;font-size:12px}
-    .statusSelect option{color:#111}
-    .statusPill{text-transform:capitalize}
-    .status-pending{color:#fff2cf;border-color:rgba(255,200,107,.28);background:rgba(255,200,107,.1)}
-    .status-confirmed,.status-completed{color:#d9ffe9;border-color:rgba(57,217,138,.28);background:rgba(57,217,138,.1)}
-    .status-cancelled{color:#ffdce1;border-color:rgba(255,91,110,.28);background:rgba(255,91,110,.1)}
-    .status-preparing,.status-ready_for_pickup,.status-out_for_delivery{color:#d9efff;border-color:rgba(103,183,255,.28);background:rgba(103,183,255,.1)}
-
-    .empty{padding:28px 14px;text-align:center;color:var(--muted);border:1px dashed rgba(255,255,255,.18);border-radius:20px;background:rgba(255,255,255,.035)}
-    .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;z-index:200;max-width:min(520px,calc(100% - 24px));border:1px solid var(--line);background:rgba(33,22,37,.96);color:var(--text);backdrop-filter:blur(18px);border-radius:999px;padding:11px 15px;font-size:13px;font-weight:900;box-shadow:0 18px 50px rgba(0,0,0,.38);transition:.2s ease;text-align:center}
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-    .muted{color:var(--muted)}
-    .dangerText{color:#ffdce1!important}
-
-    @media(max-width:930px){
-      .grid2{grid-template-columns:1fr}
-      .stats{grid-template-columns:repeat(2,1fr)}
-      .toolbar,.toolbar.four{grid-template-columns:1fr}
-      .multiGrid{grid-template-columns:repeat(2,1fr)}
-      .orderDetails{grid-template-columns:1fr 1fr}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(15,10,18,.82);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--line);
     }
-    @media(max-width:640px){
-      .wrap{width:min(100% - 18px,1180px)}
-      .brand p,.pill{display:none}
-      .panel{padding:12px;border-radius:22px}
+
+    .nav{
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--pink),var(--gold));
+      box-shadow:0 12px 26px rgba(255,95,162,.22);
+      font-size:21px;
+      flex:0 0 auto;
+    }
+    .brand h1{font-size:17px;letter-spacing:-.04em;white-space:nowrap}
+    .brand p{margin-top:3px;color:var(--muted);font-size:11px;white-space:nowrap}
+
+    .navActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 13px;
+      border-radius:999px;
+      color:white;
+      font-weight:900;
+      background:rgba(255,255,255,.08);
+      border:1px solid var(--line);
+      transition:.18s ease;
+    }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12)}
+    .btn.primary{background:linear-gradient(135deg,var(--pink),var(--pink2));border-color:rgba(255,95,162,.45)}
+    .btn.green{background:rgba(57,217,138,.15);border-color:rgba(57,217,138,.32);color:#d7ffe9}
+    .btn.red{background:rgba(255,91,110,.14);border-color:rgba(255,91,110,.32);color:#ffe0e5}
+    .btn.small{padding:8px 10px;font-size:12px}
+    .btn.block{width:100%}
+
+    .loginScreen{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+    .loginCard{
+      width:min(430px,100%);
+      border:1px solid var(--line);
+      background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+      border-radius:28px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .loginCard h2{font-size:28px;letter-spacing:-.06em;margin-bottom:8px}
+    .loginCard p{color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:16px}
+
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+    .field label{font-size:12px;color:var(--cream);font-weight:900}
+    .field input,.field select,.field textarea{
+      width:100%;
+      min-height:43px;
+      border:1px solid var(--line);
+      outline:none;
+      border-radius:15px;
+      background:rgba(255,255,255,.07);
+      color:var(--text);
+      padding:11px 12px;
+    }
+    .field textarea{min-height:86px;resize:vertical}
+    .field select option{color:#111}
+    .hint{font-size:11px;color:var(--muted);line-height:1.45}
+
+    .app{display:none}
+    .app.show{display:block}
+
+    .main{padding:18px 0 32px}
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding-bottom:8px;
+      margin-bottom:14px;
+      scrollbar-width:none;
+    }
+    .tabs::-webkit-scrollbar{display:none}
+
+    .tabBtn{
+      flex:0 0 auto;
+      padding:10px 13px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--muted);
+      font-weight:1000;
+      font-size:13px;
+    }
+    .tabBtn.active{
+      color:white;
+      background:linear-gradient(135deg,rgba(255,95,162,.92),rgba(255,138,192,.72));
+      border-color:rgba(255,95,162,.45);
+    }
+
+    .panel{display:none}
+    .panel.active{display:block}
+
+    .gridStats{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .stat{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      border-radius:20px;
+      padding:14px;
+      box-shadow:0 12px 30px rgba(0,0,0,.16);
+    }
+    .stat b{display:block;font-size:24px;letter-spacing:-.05em}
+    .stat span{display:block;margin-top:5px;color:var(--muted);font-size:12px}
+
+    .layout2{display:grid;grid-template-columns:380px 1fr;gap:14px;align-items:start}
+    .layout3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+
+    .card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      border-radius:24px;
+      box-shadow:0 14px 36px rgba(0,0,0,.18);
+      overflow:hidden;
+    }
+    .cardHead{
+      padding:14px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .cardHead h3{font-size:17px;letter-spacing:-.04em}
+    .cardHead p{margin-top:4px;font-size:12px;color:var(--muted);line-height:1.4}
+    .cardBody{padding:14px}
+
+    .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .full{grid-column:1/-1}
+
+    .checkRow{display:flex;align-items:center;gap:8px;margin:8px 0 10px;color:var(--muted);font-size:13px;font-weight:800}
+    .checkRow input{width:17px;height:17px;accent-color:var(--pink)}
+
+    .list{display:grid;gap:8px}
+    .item{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:18px;
+      padding:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .itemTitle{font-weight:1000;font-size:14px}
+    .itemMeta{margin-top:5px;color:var(--muted);font-size:11px;line-height:1.45}
+    .itemActions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+
+    .productCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:20px;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:150px 1fr;
+      min-height:150px;
+    }
+    .productCard img{width:100%;height:100%;object-fit:cover;background:#2b1d30}
+    .productInfo{padding:12px}
+    .productInfo h4{font-size:16px;margin-bottom:5px}
+    .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+    .tag{
+      padding:5px 7px;
+      border-radius:999px;
+      background:rgba(255,255,255,.07);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .multiSelect{
+      min-height:118px!important;
+      padding:8px!important;
+    }
+
+    .searchRow{
+      display:flex;
+      gap:8px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+    .searchRow input,.searchRow select{
+      min-height:42px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.07);
+      color:var(--text);
+      border-radius:999px;
+      padding:0 13px;
+      outline:none;
+    }
+    .searchRow input{flex:1;min-width:210px}
+    .searchRow select option{color:#111}
+
+    .orderCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      border-radius:20px;
+      overflow:hidden;
+    }
+    .orderTop{
+      padding:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      border-bottom:1px solid var(--line);
+    }
+    .orderTop h4{font-size:15px;margin-bottom:4px}
+    .orderTop p{color:var(--muted);font-size:12px;line-height:1.45}
+    .status{
+      padding:7px 9px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:1000;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.07);
+      white-space:nowrap;
+    }
+    .status.Pending{color:var(--gold)}
+    .status.Confirmed{color:var(--blue)}
+    .status.Ready,.status.Completed{color:var(--green)}
+    .status.Cancelled{color:var(--red)}
+    .orderBody{padding:12px;display:none}
+    .orderCard.open .orderBody{display:block}
+
+    .orderItems{display:grid;gap:8px;margin-top:10px}
+    .orderItem{
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.12);
+      border-radius:16px;
+      padding:10px;
+      font-size:12px;
+      line-height:1.55;
+      color:var(--muted);
+    }
+    .orderItem b{color:var(--text)}
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%) translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      z-index:200;
+      max-width:min(560px,calc(100% - 24px));
+      border:1px solid var(--line);
+      background:rgba(33,22,37,.96);
+      color:var(--text);
+      backdrop-filter:blur(18px);
+      border-radius:999px;
+      padding:11px 15px;
+      font-size:13px;
+      font-weight:900;
+      box-shadow:0 18px 50px rgba(0,0,0,.38);
+      transition:.2s ease;
+      text-align:center;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    .loading{
+      padding:22px;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:18px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    @media(max-width:1050px){
+      .gridStats{grid-template-columns:repeat(3,1fr)}
+      .layout2,.layout3{grid-template-columns:1fr}
+    }
+
+    @media(max-width:650px){
+      .wrap{width:min(100% - 16px,1280px)}
+      .nav{align-items:flex-start;flex-direction:column;padding:10px 0}
+      .navActions{width:100%;justify-content:flex-start}
+      .gridStats{grid-template-columns:repeat(2,1fr)}
       .formGrid{grid-template-columns:1fr}
-      .multiGrid{grid-template-columns:1fr}
-      .cakeTop{grid-template-columns:70px 1fr}
-      .cakeTop img{width:70px;height:70px}
-      .itemActions{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:flex-end}
-      .simpleRow,.orderTop{grid-template-columns:1fr}
-      .simpleActions{justify-content:flex-start}
-      .orderDetails{grid-template-columns:1fr}
+      .productCard{grid-template-columns:1fr}
+      .productCard img{height:190px}
     }
   </style>
 </head>
 
 <body>
 
-<header class="topbar">
-  <div class="wrap nav">
-    <a class="brand" href="index.html">
-      <div id="adminTopLogo" class="logo">🍰</div>
-      <div>
-        <h1 id="adminTopBrand">Cake Studio Admin</h1>
-        <p>Manage catalogue, orders & settings</p>
-      </div>
-    </a>
+<section id="loginScreen" class="loginScreen">
+  <div class="loginCard">
+    <div class="logo" style="margin-bottom:14px;">🍰</div>
+    <h2>Admin Login</h2>
+    <p>Login to manage cakes, categories, sizes, flavours, add-ons, settings and orders.</p>
 
-    <div class="navActions">
-      <span id="adminEmailPill" class="pill">Not logged in</span>
-      <a class="btn small" href="index.html" target="_blank">Open Site</a>
-      <button id="signOutBtn" class="btn red small" style="display:none" onclick="signOut()">Sign Out</button>
+    <div class="field">
+      <label>Email</label>
+      <input id="loginEmail" type="email" placeholder="admin@email.com">
     </div>
-  </div>
-</header>
 
-<section id="loginScreen" class="screen show">
-  <div class="wrap loginShell">
-    <div class="loginCard">
-      <div class="bigIcon">🔐</div>
-      <h2>Admin Login</h2>
-      <p>Use the same email added in Supabase SQL and Authentication Users.</p>
-
-      <form class="formGrid one" onsubmit="loginAdmin(event)">
-        <div class="field"><label>Email</label><input id="loginEmail" type="email" required placeholder="admin@example.com"></div>
-        <div class="field"><label>Password</label><input id="loginPassword" type="password" required placeholder="Your password"></div>
-        <button class="btn primary" type="submit">Login</button>
-        <p id="loginMsg" class="muted"></p>
-      </form>
+    <div class="field">
+      <label>Password</label>
+      <input id="loginPassword" type="password" placeholder="Password">
     </div>
+
+    <button class="btn primary block" onclick="loginAdmin()">Login</button>
+
+    <p class="hint" style="margin-top:12px;">
+      Make sure this email user exists in Supabase Authentication and its User ID is added inside admin_users table.
+    </p>
   </div>
 </section>
 
-<section id="adminScreen" class="screen">
+<div id="app" class="app">
+  <header class="topbar">
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo">🍰</div>
+        <div>
+          <h1>Cake Shop Admin</h1>
+          <p id="adminEmailText">Managing website</p>
+        </div>
+      </div>
+
+      <div class="navActions">
+        <a class="btn small" href="index.html" target="_blank">View Site</a>
+        <button class="btn red small" onclick="logoutAdmin()">Sign Out</button>
+      </div>
+    </div>
+  </header>
+
   <main class="wrap main">
-
     <div class="tabs">
-      <button class="tab active" onclick="showTab('cakes', this)">Cakes</button>
-      <button class="tab" onclick="showTab('orders', this)">Orders</button>
-      <button class="tab" onclick="showTab('categories', this)">Categories</button>
-      <button class="tab" onclick="showTab('flavours', this)">Flavours</button>
-      <button class="tab" onclick="showTab('settings', this)">Settings</button>
+      <button class="tabBtn active" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</button>
+      <button class="tabBtn" data-tab="settings" onclick="showTab('settings')">Settings</button>
+      <button class="tabBtn" data-tab="catalog" onclick="showTab('catalog')">Categories / Prices</button>
+      <button class="tabBtn" data-tab="cakes" onclick="showTab('cakes')">Cakes</button>
+      <button class="tabBtn" data-tab="orders" onclick="showTab('orders')">Orders</button>
     </div>
 
-    <section id="tab-cakes" class="tabPanel show">
-      <div class="grid2">
-        <div class="panel">
-          <div class="panelHead">
+    <section id="dashboardPanel" class="panel active">
+      <div id="statsGrid" class="gridStats"></div>
+
+      <div class="layout2">
+        <div class="card">
+          <div class="cardHead">
             <div>
-              <h2 id="cakeFormTitle">Add New Cake</h2>
-              <p>Add cake photo, categories, flavours and details.</p>
+              <h3>Next Things To Do</h3>
+              <p>Setup these before customer pages go live.</p>
             </div>
-            <button class="btn small" onclick="resetCakeForm()">Clear</button>
           </div>
+          <div class="cardBody">
+            <div class="list">
+              <div class="item"><div><div class="itemTitle">1. Add WhatsApp number</div><div class="itemMeta">Go to Settings and save business WhatsApp number.</div></div></div>
+              <div class="item"><div><div class="itemTitle">2. Check sizes and prices</div><div class="itemMeta">Customer price estimate depends on sizes, flavours, options and add-ons.</div></div></div>
+              <div class="item"><div><div class="itemTitle">3. Add real cake products</div><div class="itemMeta">Upload image URLs and assign categories/options.</div></div></div>
+              <div class="item"><div><div class="itemTitle">4. Test one full order</div><div class="itemMeta">Add to cart → checkout → save order → WhatsApp message.</div></div></div>
+            </div>
+          </div>
+        </div>
 
-          <form class="formGrid" onsubmit="saveCake(event)">
-            <input type="hidden" id="cakeId">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Recent Orders</h3>
+              <p>Latest order requests from customers.</p>
+            </div>
+            <button class="btn small" onclick="showTab('orders')">Open Orders</button>
+          </div>
+          <div class="cardBody">
+            <div id="recentOrdersList" class="list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <div class="field"><label>Cake Name *</label><input id="cakeName" required placeholder="Chocolate Birthday Cake"></div>
-            <div class="field"><label>Starting Price</label><input id="cakePrice" type="number" min="0" step="0.01" placeholder="45"></div>
-            <div class="field full"><label>Image URL *</label><input id="cakeImage" required placeholder="https://..." oninput="previewCakeImage()"></div>
+    <section id="settingsPanel" class="panel">
+      <div class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Website Settings</h3>
+            <p>These details appear on homepage, checkout, footer and WhatsApp order flow.</p>
+          </div>
+        </div>
 
-            <div id="cakeImagePreviewBox" class="imagePreview">
-              <img id="cakeImagePreview" src="" alt="Cake preview">
-              <div><b>Image preview</b><span id="cakeImagePreviewUrl"></span></div>
+        <div class="cardBody">
+          <form id="settingsForm" class="formGrid">
+            <div class="field">
+              <label>Brand Name</label>
+              <input id="setBrandName" placeholder="Cake Studio">
             </div>
 
-            <div class="field"><label>Sort Order</label><input id="cakeSortOrder" type="number" min="0" step="1" placeholder="0"></div>
-            <label class="checkBox"><input id="cakeActive" type="checkbox" checked> Active / Show</label>
-            <label class="checkBox"><input id="cakeFeatured" type="checkbox"> Featured cake</label>
-            <div class="field full"><label>Description</label><textarea id="cakeDescription" placeholder="Short cake details..."></textarea></div>
-
-            <div class="multiBox">
-              <div class="multiTitle">Select Categories</div>
-              <div id="cakeCategoryChecks" class="multiGrid"></div>
+            <div class="field">
+              <label>Tagline</label>
+              <input id="setTagline" placeholder="Fresh custom cakes & sweet orders">
             </div>
 
-            <div class="multiBox">
-              <div class="multiTitle">Select Available Flavours</div>
-              <div id="cakeFlavourChecks" class="multiGrid"></div>
+            <div class="field">
+              <label>Logo URL</label>
+              <input id="setLogoUrl" placeholder="https://...">
             </div>
 
-            <div class="formActions">
-              <button class="btn green" type="submit" id="saveCakeBtn">Save Cake</button>
-              <button class="btn" type="button" onclick="resetCakeForm()">Cancel Edit</button>
+            <div class="field">
+              <label>Hero Image URL</label>
+              <input id="setHeroImage" placeholder="https://...">
+            </div>
+
+            <div class="field">
+              <label>WhatsApp Number</label>
+              <input id="setWhatsapp" placeholder="15195555555">
+              <div class="hint">Use country code. Example Canada: 15195555555</div>
+            </div>
+
+            <div class="field">
+              <label>Instagram URL</label>
+              <input id="setInstagram" placeholder="https://instagram.com/...">
+            </div>
+
+            <div class="field">
+              <label>Address</label>
+              <input id="setAddress" placeholder="City / Pickup address">
+            </div>
+
+            <div class="field">
+              <label>Business Hours</label>
+              <input id="setHours" placeholder="Mon-Sat 10 AM - 7 PM">
+            </div>
+
+            <div class="field">
+              <label>Service Area</label>
+              <input id="setServiceArea" placeholder="London, St. Thomas, nearby areas">
+            </div>
+
+            <div class="field">
+              <label>Currency Symbol</label>
+              <input id="setCurrency" placeholder="$">
+            </div>
+
+            <div class="field full">
+              <label>Hero Title</label>
+              <input id="setHeroTitle">
+            </div>
+
+            <div class="field full">
+              <label>Hero Subtitle</label>
+              <textarea id="setHeroSubtitle"></textarea>
+            </div>
+
+            <div class="field">
+              <label>Minimum Notice Hours</label>
+              <input id="setNoticeHours" type="number" min="0">
+              <div class="hint">24 means online orders start from tomorrow.</div>
+            </div>
+
+            <div class="field">
+              <label>Show Prices?</label>
+              <select id="setShowPrices">
+                <option value="true">Yes, show estimated prices</option>
+                <option value="false">No, show request quote</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label>Same-Day / Urgent Order Message</label>
+              <textarea id="setSameDay"></textarea>
+            </div>
+
+            <div class="field full">
+              <label>Policy Text</label>
+              <textarea id="setPolicy"></textarea>
+            </div>
+
+            <div class="full">
+              <button class="btn primary" type="submit">Save Settings</button>
             </div>
           </form>
         </div>
-
-        <div class="panel">
-          <div class="panelHead">
-            <div><h3>Dashboard</h3><p>Quick business status.</p></div>
-          </div>
-
-          <div class="stats">
-            <div class="stat"><b id="totalCount">0</b><span>Total Cakes</span></div>
-            <div class="stat"><b id="activeCount">0</b><span>Active</span></div>
-            <div class="stat"><b id="pendingOrdersCount">0</b><span>Pending Orders</span></div>
-            <div class="stat"><b id="todayOrdersCount">0</b><span>Today Orders</span></div>
-          </div>
-
-          <div class="notice"><b>Order flow:</b> Customer submits form → order saves here as Pending → WhatsApp opens with clean order slip.</div>
-        </div>
-      </div>
-
-      <section class="panel" style="margin-top:12px">
-        <div class="panelHead">
-          <div><h3>All Cakes</h3><p>Edit, hide, feature or delete cakes.</p></div>
-          <button class="btn small" onclick="loadAllData()">Refresh</button>
-        </div>
-
-        <div class="toolbar">
-          <div class="searchBox"><span>🔎</span><input id="cakeSearchInput" placeholder="Search cake, category, flavour..." oninput="renderCakes()"></div>
-          <select id="cakeStatusFilter" class="selectMini" onchange="renderCakes()">
-            <option value="all">All Status</option><option value="active">Active Only</option><option value="hidden">Hidden Only</option><option value="featured">Featured Only</option>
-          </select>
-          <select id="cakeSortFilter" class="selectMini" onchange="renderCakes()">
-            <option value="newest">Newest</option><option value="oldest">Oldest</option><option value="sort_order">Sort Order</option><option value="name">Name A-Z</option><option value="price_low">Price Low</option><option value="price_high">Price High</option>
-          </select>
-        </div>
-
-        <div id="cakeList" class="list"><div class="empty">Loading cakes...</div></div>
-      </section>
-    </section>
-
-    <section id="tab-orders" class="tabPanel">
-      <section class="panel">
-        <div class="panelHead">
-          <div><h2>Order History</h2><p>Manage pending, confirmed, preparing, completed and cancelled orders.</p></div>
-          <button class="btn small" onclick="loadAllData()">Refresh</button>
-        </div>
-
-        <div class="toolbar four">
-          <div class="searchBox"><span>🔎</span><input id="orderSearchInput" placeholder="Search name, phone, cake, date..." oninput="renderOrders()"></div>
-          <select id="orderStatusFilter" class="selectMini" onchange="renderOrders()">
-            <option value="all">All Status</option>
-            <option value="pending">Pending</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="preparing">Preparing</option>
-            <option value="ready_for_pickup">Ready for Pickup</option>
-            <option value="out_for_delivery">Out for Delivery</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-          <select id="orderDateFilter" class="selectMini" onchange="renderOrders()">
-            <option value="all">All Dates</option>
-            <option value="today">Today Created</option>
-            <option value="needed_today">Needed Today</option>
-            <option value="upcoming">Upcoming</option>
-          </select>
-          <select id="orderSortFilter" class="selectMini" onchange="renderOrders()">
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-            <option value="needed_date">Needed Date</option>
-          </select>
-        </div>
-
-        <div id="orderList" class="list"><div class="empty">Loading orders...</div></div>
-      </section>
-    </section>
-
-    <section id="tab-categories" class="tabPanel">
-      <div class="grid2">
-        <div class="panel">
-          <div class="panelHead">
-            <div><h2 id="categoryFormTitle">Add Category</h2><p>Examples: Birthday, Wedding, Kids, Cupcakes.</p></div>
-            <button class="btn small" onclick="resetCategoryForm()">Clear</button>
-          </div>
-          <form class="formGrid one" onsubmit="saveCategory(event)">
-            <input type="hidden" id="categoryId">
-            <div class="field"><label>Category Name *</label><input id="categoryName" required placeholder="Birthday"></div>
-            <div class="field"><label>Sort Order</label><input id="categorySortOrder" type="number" min="0" step="1" placeholder="0"></div>
-            <label class="checkBox"><input id="categoryActive" type="checkbox" checked> Active / Show on website</label>
-            <div class="formActions"><button class="btn green" type="submit" id="saveCategoryBtn">Save Category</button><button class="btn" type="button" onclick="resetCategoryForm()">Cancel Edit</button></div>
-          </form>
-        </div>
-
-        <div class="panel">
-          <div class="panelHead"><div><h3>Category List</h3><p>Delete carefully. It removes category from linked cakes.</p></div></div>
-          <div id="categoryList" class="list"></div>
-        </div>
       </div>
     </section>
 
-    <section id="tab-flavours" class="tabPanel">
-      <div class="grid2">
-        <div class="panel">
-          <div class="panelHead">
-            <div><h2 id="flavourFormTitle">Add Flavour</h2><p>Examples: Chocolate, Vanilla, Rasmalai, Mango.</p></div>
-            <button class="btn small" onclick="resetFlavourForm()">Clear</button>
+    <section id="catalogPanel" class="panel">
+      <div class="layout3">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Categories</h3>
+              <p>Birthday, Wedding, Kids, Cupcakes, etc.</p>
+            </div>
           </div>
-          <form class="formGrid one" onsubmit="saveFlavour(event)">
-            <input type="hidden" id="flavourId">
-            <div class="field"><label>Flavour Name *</label><input id="flavourName" required placeholder="Chocolate"></div>
-            <div class="field"><label>Sort Order</label><input id="flavourSortOrder" type="number" min="0" step="1" placeholder="0"></div>
-            <label class="checkBox"><input id="flavourActive" type="checkbox" checked> Active / Show in order form</label>
-            <div class="formActions"><button class="btn green" type="submit" id="saveFlavourBtn">Save Flavour</button><button class="btn" type="button" onclick="resetFlavourForm()">Cancel Edit</button></div>
-          </form>
+          <div class="cardBody">
+            <form id="categoryForm">
+              <input type="hidden" id="categoryId">
+              <div class="field"><label>Name</label><input id="categoryName" required></div>
+              <div class="field"><label>Slug</label><input id="categorySlug" placeholder="birthday-cakes"></div>
+              <div class="field"><label>Image URL</label><input id="categoryImage"></div>
+              <div class="field"><label>Description</label><textarea id="categoryDesc"></textarea></div>
+              <div class="field"><label>Sort Order</label><input id="categorySort" type="number" value="0"></div>
+              <label class="checkRow"><input id="categoryActive" type="checkbox" checked> Active</label>
+              <button class="btn primary block" type="submit">Save Category</button>
+              <button class="btn block" type="button" onclick="resetCategoryForm()" style="margin-top:8px;">Clear</button>
+            </form>
+            <div id="categoryList" class="list" style="margin-top:14px;"></div>
+          </div>
         </div>
 
-        <div class="panel">
-          <div class="panelHead"><div><h3>Flavour List</h3><p>Delete carefully. It removes flavour from linked cakes.</p></div></div>
-          <div id="flavourList" class="list"></div>
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Sizes & Servings</h3>
+              <p>Customer sees servings and live price.</p>
+            </div>
+          </div>
+          <div class="cardBody">
+            <form id="sizeForm">
+              <input type="hidden" id="sizeId">
+              <div class="field"><label>Size Name</label><input id="sizeName" required placeholder="8 inch"></div>
+              <div class="field"><label>Servings</label><input id="sizeServings" placeholder="Serves 10-14 people"></div>
+              <div class="field"><label>Price</label><input id="sizePrice" type="number" step="0.01" value="0"></div>
+              <div class="field"><label>Sort Order</label><input id="sizeSort" type="number" value="0"></div>
+              <label class="checkRow"><input id="sizeQuote" type="checkbox"> Quote Required</label>
+              <label class="checkRow"><input id="sizeActive" type="checkbox" checked> Active</label>
+              <button class="btn primary block" type="submit">Save Size</button>
+              <button class="btn block" type="button" onclick="resetSizeForm()" style="margin-top:8px;">Clear</button>
+            </form>
+            <div id="sizeList" class="list" style="margin-top:14px;"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Flavours</h3>
+              <p>Flavour can add extra price.</p>
+            </div>
+          </div>
+          <div class="cardBody">
+            <form id="flavourForm">
+              <input type="hidden" id="flavourId">
+              <div class="field"><label>Name</label><input id="flavourName" required placeholder="Rasmalai"></div>
+              <div class="field"><label>Extra Price</label><input id="flavourPrice" type="number" step="0.01" value="0"></div>
+              <div class="field"><label>Sort Order</label><input id="flavourSort" type="number" value="0"></div>
+              <label class="checkRow"><input id="flavourQuote" type="checkbox"> Quote Required</label>
+              <label class="checkRow"><input id="flavourActive" type="checkbox" checked> Active</label>
+              <button class="btn primary block" type="submit">Save Flavour</button>
+              <button class="btn block" type="button" onclick="resetFlavourForm()" style="margin-top:8px;">Clear</button>
+            </form>
+            <div id="flavourList" class="list" style="margin-top:14px;"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Options</h3>
+              <p>Regular, eggless, vegan, gluten-free.</p>
+            </div>
+          </div>
+          <div class="cardBody">
+            <form id="optionForm">
+              <input type="hidden" id="optionId">
+              <div class="field"><label>Name</label><input id="optionName" required placeholder="Eggless"></div>
+              <div class="field"><label>Type</label><input id="optionType" value="diet"></div>
+              <div class="field"><label>Extra Price</label><input id="optionPrice" type="number" step="0.01" value="0"></div>
+              <div class="field"><label>Sort Order</label><input id="optionSort" type="number" value="0"></div>
+              <label class="checkRow"><input id="optionQuote" type="checkbox"> Quote Required</label>
+              <label class="checkRow"><input id="optionActive" type="checkbox" checked> Active</label>
+              <button class="btn primary block" type="submit">Save Option</button>
+              <button class="btn block" type="button" onclick="resetOptionForm()" style="margin-top:8px;">Clear</button>
+            </form>
+            <div id="optionList" class="list" style="margin-top:14px;"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Add-ons</h3>
+              <p>Toppers, flowers, gold leaf, decoration.</p>
+            </div>
+          </div>
+          <div class="cardBody">
+            <form id="addonForm">
+              <input type="hidden" id="addonId">
+              <div class="field"><label>Name</label><input id="addonName" required placeholder="Name Topper"></div>
+              <div class="field"><label>Description</label><textarea id="addonDesc"></textarea></div>
+              <div class="field"><label>Price</label><input id="addonPrice" type="number" step="0.01" value="0"></div>
+              <div class="field"><label>Sort Order</label><input id="addonSort" type="number" value="0"></div>
+              <label class="checkRow"><input id="addonQuote" type="checkbox"> Quote Required</label>
+              <label class="checkRow"><input id="addonActive" type="checkbox" checked> Active</label>
+              <button class="btn primary block" type="submit">Save Add-on</button>
+              <button class="btn block" type="button" onclick="resetAddonForm()" style="margin-top:8px;">Clear</button>
+            </form>
+            <div id="addonList" class="list" style="margin-top:14px;"></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="tab-settings" class="tabPanel">
-      <div class="panel">
-        <div class="panelHead"><div><h2>Site Settings</h2><p>Edit brand, logo, WhatsApp and homepage hero text.</p></div></div>
-
-        <form class="formGrid" onsubmit="saveSettings(event)">
-          <div class="field"><label>Brand Name</label><input id="brandName" placeholder="Cake Studio"></div>
-          <div class="field"><label>Tagline</label><input id="tagline" placeholder="Fresh custom cakes & sweet orders"></div>
-          <div class="field full"><label>Logo Image URL</label><input id="logoUrl" placeholder="https://..." oninput="previewLogoImage()"></div>
-
-          <div id="logoPreviewBox" class="imagePreview">
-            <img id="logoPreview" src="" alt="Logo preview">
-            <div><b>Logo preview</b><span id="logoPreviewUrl"></span></div>
+    <section id="cakesPanel" class="panel">
+      <div class="layout2">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Add / Edit Cake</h3>
+              <p>Assign categories, sizes, flavours and add-ons.</p>
+            </div>
           </div>
+          <div class="cardBody">
+            <form id="cakeForm">
+              <input type="hidden" id="cakeId">
 
-          <div class="field"><label>WhatsApp Number</label><input id="whatsappNumber" placeholder="16475551234"></div>
-          <div class="field"><label>Instagram URL</label><input id="instagramUrl" placeholder="https://instagram.com/..."></div>
-          <div class="field full"><label>Hero Title</label><textarea id="heroTitle" placeholder="Beautiful cakes for birthdays, weddings & every sweet moment."></textarea></div>
-          <div class="field full"><label>Hero Subtitle</label><textarea id="heroSubtitle" placeholder="Browse cake designs..."></textarea></div>
-          <div class="field full"><label>Address</label><input id="address" placeholder="Shop address or service area"></div>
+              <div class="field">
+                <label>Cake Name</label>
+                <input id="cakeName" required placeholder="Chocolate Birthday Cake">
+              </div>
 
-          <div class="formActions"><button class="btn green" type="submit">Save Settings</button></div>
-        </form>
+              <div class="field">
+                <label>Slug</label>
+                <input id="cakeSlug" placeholder="chocolate-birthday-cake">
+              </div>
+
+              <div class="field">
+                <label>Description</label>
+                <textarea id="cakeDesc"></textarea>
+              </div>
+
+              <div class="field">
+                <label>Image URL</label>
+                <input id="cakeImage" placeholder="https://...">
+              </div>
+
+              <div class="field">
+                <label>Starting Price</label>
+                <input id="cakeStartingPrice" type="number" step="0.01" value="0">
+              </div>
+
+              <div class="field">
+                <label>Price Type</label>
+                <select id="cakePriceType">
+                  <option value="estimated">Estimated</option>
+                  <option value="fixed">Fixed</option>
+                  <option value="quote">Quote Required</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label>Sort Order</label>
+                <input id="cakeSort" type="number" value="0">
+              </div>
+
+              <label class="checkRow"><input id="cakeFeatured" type="checkbox"> Featured</label>
+              <label class="checkRow"><input id="cakeActive" type="checkbox" checked> Active</label>
+
+              <div class="field">
+                <label>Categories</label>
+                <select id="cakeCategoriesSelect" class="multiSelect" multiple></select>
+              </div>
+
+              <div class="field">
+                <label>Available Sizes</label>
+                <select id="cakeSizesSelect" class="multiSelect" multiple></select>
+              </div>
+
+              <div class="field">
+                <label>Available Flavours</label>
+                <select id="cakeFlavoursSelect" class="multiSelect" multiple></select>
+              </div>
+
+              <div class="field">
+                <label>Available Add-ons</label>
+                <select id="cakeAddonsSelect" class="multiSelect" multiple></select>
+              </div>
+
+              <button class="btn primary block" type="submit">Save Cake</button>
+              <button class="btn block" type="button" onclick="resetCakeForm()" style="margin-top:8px;">Clear</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Cake Products</h3>
+              <p>Customer will see active cakes on website.</p>
+            </div>
+            <button class="btn small" onclick="loadAll()">Refresh</button>
+          </div>
+          <div class="cardBody">
+            <div class="searchRow">
+              <input id="cakeSearch" placeholder="Search cakes..." oninput="renderCakes()">
+              <select id="cakeFilterStatus" onchange="renderCakes()">
+                <option value="all">All</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="featured">Featured</option>
+              </select>
+            </div>
+
+            <div id="cakeList" class="list"></div>
+          </div>
+        </div>
       </div>
     </section>
 
+    <section id="ordersPanel" class="panel">
+      <div class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Orders</h3>
+            <p>Manage customer order requests and status.</p>
+          </div>
+          <button class="btn small" onclick="loadAll()">Refresh</button>
+        </div>
+
+        <div class="cardBody">
+          <div class="searchRow">
+            <input id="orderSearch" placeholder="Search name, phone, order id..." oninput="renderOrders()">
+            <select id="orderStatusFilter" onchange="renderOrders()">
+              <option value="all">All Statuses</option>
+              <option>Pending</option>
+              <option>Confirmed</option>
+              <option>In Progress</option>
+              <option>Ready</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+
+          <div id="ordersList" class="list"></div>
+        </div>
+      </div>
+    </section>
   </main>
-</section>
+</div>
 
 <div id="toast" class="toast"></div>
 
@@ -423,41 +818,62 @@
   const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  const ORDER_STATUSES = [
-    ["pending", "Pending"],
-    ["confirmed", "Confirmed"],
-    ["preparing", "Preparing"],
-    ["ready_for_pickup", "Ready for Pickup"],
-    ["out_for_delivery", "Out for Delivery"],
-    ["completed", "Completed"],
-    ["cancelled", "Cancelled"]
-  ];
-
-  let currentUser = null;
-  let allCakes = [];
-  let allCategories = [];
-  let allFlavours = [];
-  let cakeCategoryRows = [];
-  let cakeFlavourRows = [];
-  let allOrders = [];
-  let siteSettings = null;
   const $ = (id) => document.getElementById(id);
 
-  init();
+  const DEFAULT_SETTINGS = {
+    id: 1,
+    brand_name: "Cake Studio",
+    tagline: "Fresh custom cakes & sweet orders",
+    logo_url: "",
+    whatsapp_number: "",
+    instagram_url: "",
+    address: "",
+    business_hours: "",
+    service_area: "",
+    hero_title: "Beautiful cakes for birthdays, weddings & every sweet moment.",
+    hero_subtitle: "Browse cakes, customize your order, add multiple items to cart, and confirm on WhatsApp.",
+    hero_image_url: "",
+    minimum_notice_hours: 24,
+    same_day_message: "For today or urgent orders, please contact us directly on WhatsApp.",
+    policy_text: "Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp.",
+    currency: "$",
+    show_prices: true
+  };
 
-  async function init(){
+  let currentUser = null;
+  let siteSettings = {...DEFAULT_SETTINGS};
+
+  let categories = [];
+  let sizes = [];
+  let flavours = [];
+  let options = [];
+  let addons = [];
+  let cakes = [];
+
+  let cakeCategories = [];
+  let cakeSizes = [];
+  let cakeFlavours = [];
+  let cakeAddons = [];
+
+  let orders = [];
+  let orderItems = [];
+
+  initAuth();
+
+  async function initAuth(){
     const { data } = await supabaseClient.auth.getSession();
-    if(data.session && data.session.user){
+
+    if(data.session?.user){
       currentUser = data.session.user;
-      await verifyAdminAndLoad();
+      await verifyAndOpen();
     }else{
       showLogin();
     }
 
     supabaseClient.auth.onAuthStateChange(async (_event, session) => {
-      if(session && session.user){
+      if(session?.user){
         currentUser = session.user;
-        await verifyAdminAndLoad();
+        await verifyAndOpen();
       }else{
         currentUser = null;
         showLogin();
@@ -465,701 +881,995 @@
     });
   }
 
-  function showLogin(){
-    $("loginScreen").classList.add("show");
-    $("adminScreen").classList.remove("show");
-    $("signOutBtn").style.display = "none";
-    $("adminEmailPill").textContent = "Not logged in";
-  }
-
-  function showAdmin(){
-    $("loginScreen").classList.remove("show");
-    $("adminScreen").classList.add("show");
-    $("signOutBtn").style.display = "inline-flex";
-    $("adminEmailPill").textContent = currentUser?.email || "Admin";
-  }
-
-  async function loginAdmin(event){
-    event.preventDefault();
+  async function loginAdmin(){
     const email = $("loginEmail").value.trim();
     const password = $("loginPassword").value;
-    $("loginMsg").textContent = "Logging in...";
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if(!email || !password){
+      showToast("Enter admin email and password.", true);
+      return;
+    }
+
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
     if(error){
-      $("loginMsg").textContent = error.message;
       showToast(error.message, true);
       return;
     }
 
-    currentUser = data.user;
-    await verifyAdminAndLoad();
+    showToast("Logged in.");
   }
 
-  async function verifyAdminAndLoad(){
-    if(!currentUser){ showLogin(); return; }
+  async function logoutAdmin(){
+    await supabaseClient.auth.signOut();
+    showToast("Signed out.");
+  }
+
+  async function verifyAndOpen(){
+    const { data, error } = await supabaseClient.rpc("is_admin");
+
+    if(error || data !== true){
+      await supabaseClient.auth.signOut();
+      showToast("This user is not added as admin in admin_users table.", true);
+      return;
+    }
+
+    $("loginScreen").style.display = "none";
+    $("app").classList.add("show");
+    $("adminEmailText").textContent = currentUser.email || "Admin";
+
+    bindForms();
+    await loadAll();
+  }
+
+  function showLogin(){
+    $("loginScreen").style.display = "grid";
+    $("app").classList.remove("show");
+  }
+
+  let formsBound = false;
+
+  function bindForms(){
+    if(formsBound) return;
+    formsBound = true;
+
+    $("settingsForm").addEventListener("submit", saveSettings);
+    $("categoryForm").addEventListener("submit", saveCategory);
+    $("sizeForm").addEventListener("submit", saveSize);
+    $("flavourForm").addEventListener("submit", saveFlavour);
+    $("optionForm").addEventListener("submit", saveOption);
+    $("addonForm").addEventListener("submit", saveAddon);
+    $("cakeForm").addEventListener("submit", saveCake);
+  }
+
+  async function loadAll(){
+    showToast("Loading admin data...");
 
     try{
-      const { data, error } = await supabaseClient.from("app_admins").select("email").limit(1);
-      if(error) throw error;
+      const [
+        settingsRes,
+        categoriesRes,
+        sizesRes,
+        flavoursRes,
+        optionsRes,
+        addonsRes,
+        cakesRes,
+        cakeCategoriesRes,
+        cakeSizesRes,
+        cakeFlavoursRes,
+        cakeAddonsRes,
+        ordersRes,
+        orderItemsRes
+      ] = await Promise.all([
+        supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
+        supabaseClient.from("categories").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("sizes").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("flavours").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("cake_options").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("addons").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("cakes").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
+        supabaseClient.from("cake_categories").select("*"),
+        supabaseClient.from("cake_sizes").select("*"),
+        supabaseClient.from("cake_flavours").select("*"),
+        supabaseClient.from("cake_addons").select("*"),
+        supabaseClient.from("orders").select("*").order("created_at", { ascending:false }),
+        supabaseClient.from("order_items").select("*").order("created_at", { ascending:true })
+      ]);
 
-      if(!data || !data.length){
-        showToast("This email is not added as admin in app_admins table.", true);
-        await supabaseClient.auth.signOut();
-        showLogin();
-        return;
-      }
+      const firstError =
+        settingsRes.error ||
+        categoriesRes.error ||
+        sizesRes.error ||
+        flavoursRes.error ||
+        optionsRes.error ||
+        addonsRes.error ||
+        cakesRes.error ||
+        cakeCategoriesRes.error ||
+        cakeSizesRes.error ||
+        cakeFlavoursRes.error ||
+        cakeAddonsRes.error ||
+        ordersRes.error ||
+        orderItemsRes.error;
 
-      showAdmin();
-      await loadAllData();
+      if(firstError) throw firstError;
+
+      siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
+      categories = categoriesRes.data || [];
+      sizes = sizesRes.data || [];
+      flavours = flavoursRes.data || [];
+      options = optionsRes.data || [];
+      addons = addonsRes.data || [];
+      cakes = cakesRes.data || [];
+
+      cakeCategories = cakeCategoriesRes.data || [];
+      cakeSizes = cakeSizesRes.data || [];
+      cakeFlavours = cakeFlavoursRes.data || [];
+      cakeAddons = cakeAddonsRes.data || [];
+
+      orders = ordersRes.data || [];
+      orderItems = orderItemsRes.data || [];
+
+      renderAll();
+      showToast("Admin data loaded.");
     }catch(err){
-      showToast("Admin check failed: " + err.message, true);
       console.error(err);
+      showToast(err.message || "Failed to load data.", true);
     }
   }
 
-  async function signOut(){
-    await supabaseClient.auth.signOut();
-    resetCakeForm();
-    showLogin();
-    showToast("Signed out");
-  }
-
-  function showTab(name, btn){
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tabPanel").forEach(p => p.classList.remove("show"));
-    btn.classList.add("active");
-    $("tab-" + name).classList.add("show");
-  }
-
-  async function loadAllData(){
-    $("cakeList").innerHTML = `<div class="empty">Loading cakes...</div>`;
-    $("orderList").innerHTML = `<div class="empty">Loading orders...</div>`;
-
-    const [cakesRes,catsRes,flavoursRes,cakeCatsRes,cakeFlavoursRes,settingsRes,ordersRes] = await Promise.all([
-      supabaseClient.from("cakes").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
-      supabaseClient.from("categories").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
-      supabaseClient.from("flavours").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
-      supabaseClient.from("cake_categories").select("*"),
-      supabaseClient.from("cake_flavours").select("*"),
-      supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
-      supabaseClient.from("orders").select("*").order("created_at", { ascending:false })
-    ]);
-
-    const firstError = cakesRes.error || catsRes.error || flavoursRes.error || cakeCatsRes.error || cakeFlavoursRes.error || settingsRes.error || ordersRes.error;
-    if(firstError){
-      showToast(firstError.message, true);
-      console.error(firstError);
-      return;
-    }
-
-    allCakes = cakesRes.data || [];
-    allCategories = catsRes.data || [];
-    allFlavours = flavoursRes.data || [];
-    cakeCategoryRows = cakeCatsRes.data || [];
-    cakeFlavourRows = cakeFlavoursRes.data || [];
-    siteSettings = settingsRes.data || null;
-    allOrders = ordersRes.data || [];
-
-    updateTopBrand();
+  function renderAll(){
+    renderStats();
+    renderRecentOrders();
     fillSettingsForm();
-    renderCakeFormOptions();
+    renderCatalogLists();
+    fillCakeSelects();
     renderCakes();
     renderOrders();
-    renderCategories();
-    renderFlavours();
-    updateStats();
   }
 
-  function updateTopBrand(){
-    const name = siteSettings?.brand_name || "Cake Studio";
-    const logo = siteSettings?.logo_url || "";
-    $("adminTopBrand").textContent = name + " Admin";
-    if(logo){
-      $("adminTopLogo").innerHTML = `<img src="${escapeHtml(logo)}" alt="Logo" onerror="this.parentElement.textContent='🍰'">`;
-    }else{
-      $("adminTopLogo").textContent = "🍰";
-    }
+  function showTab(tab){
+    document.querySelectorAll(".tabBtn").forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tab));
+    document.querySelectorAll(".panel").forEach(panel => panel.classList.remove("active"));
+    $(tab + "Panel").classList.add("active");
   }
 
-  function updateStats(){
-    const today = todayStr();
-    $("totalCount").textContent = allCakes.length;
-    $("activeCount").textContent = allCakes.filter(c => c.is_active).length;
-    $("pendingOrdersCount").textContent = allOrders.filter(o => o.status === "pending").length;
-    $("todayOrdersCount").textContent = allOrders.filter(o => String(o.created_at || "").startsWith(today)).length;
+  function renderStats(){
+    const statusCount = (status) => orders.filter(o => o.status === status).length;
+
+    const html = `
+      <div class="stat"><b>${orders.length}</b><span>Total Orders</span></div>
+      <div class="stat"><b>${statusCount("Pending")}</b><span>Pending</span></div>
+      <div class="stat"><b>${statusCount("Confirmed")}</b><span>Confirmed</span></div>
+      <div class="stat"><b>${statusCount("In Progress")}</b><span>In Progress</span></div>
+      <div class="stat"><b>${statusCount("Ready")}</b><span>Ready</span></div>
+      <div class="stat"><b>${statusCount("Completed")}</b><span>Completed</span></div>
+    `;
+
+    $("statsGrid").innerHTML = html;
   }
 
-  function renderCakeFormOptions(){
-    const activeCats = allCategories.filter(c => c.is_active);
-    const activeFlavs = allFlavours.filter(f => f.is_active);
+  function renderRecentOrders(){
+    const recent = orders.slice(0, 5);
 
-    $("cakeCategoryChecks").innerHTML = activeCats.length ? activeCats.map(cat => `
-      <label class="multiItem"><input type="checkbox" name="cakeCategory" value="${cat.id}">${escapeHtml(cat.name)}</label>
-    `).join("") : `<div class="empty">No active categories. Add category first.</div>`;
-
-    $("cakeFlavourChecks").innerHTML = activeFlavs.length ? activeFlavs.map(flav => `
-      <label class="multiItem"><input type="checkbox" name="cakeFlavour" value="${flav.id}">${escapeHtml(flav.name)}</label>
-    `).join("") : `<div class="empty">No active flavours. Add flavour first.</div>`;
-  }
-
-  function getCakeCategoryIds(cakeId){return cakeCategoryRows.filter(row => row.cake_id === cakeId).map(row => row.category_id)}
-  function getCakeFlavourIds(cakeId){return cakeFlavourRows.filter(row => row.cake_id === cakeId).map(row => row.flavour_id)}
-  function getCakeCategoryNames(cakeId){return getCakeCategoryIds(cakeId).map(id => allCategories.find(c => c.id === id)?.name).filter(Boolean)}
-  function getCakeFlavourNames(cakeId){return getCakeFlavourIds(cakeId).map(id => allFlavours.find(f => f.id === id)?.name).filter(Boolean)}
-
-  function renderCakes(){
-    const search = $("cakeSearchInput").value.trim().toLowerCase();
-    const status = $("cakeStatusFilter").value;
-    const sort = $("cakeSortFilter").value;
-    let cakes = [...allCakes];
-
-    if(search){
-      cakes = cakes.filter(c => {
-        const categories = getCakeCategoryNames(c.id).join(" ");
-        const flavours = getCakeFlavourNames(c.id).join(" ");
-        const combined = `${c.name || ""} ${c.category || ""} ${c.description || ""} ${categories} ${flavours}`.toLowerCase();
-        return combined.includes(search);
-      });
-    }
-
-    if(status === "active") cakes = cakes.filter(c => c.is_active);
-    if(status === "hidden") cakes = cakes.filter(c => !c.is_active);
-    if(status === "featured") cakes = cakes.filter(c => c.is_featured);
-
-    cakes.sort((a,b) => {
-      if(sort === "oldest") return new Date(a.created_at || 0) - new Date(b.created_at || 0);
-      if(sort === "sort_order") return Number(a.sort_order || 0) - Number(b.sort_order || 0);
-      if(sort === "name") return String(a.name || "").localeCompare(String(b.name || ""));
-      if(sort === "price_low") return Number(a.starting_price || 0) - Number(b.starting_price || 0);
-      if(sort === "price_high") return Number(b.starting_price || 0) - Number(a.starting_price || 0);
-      return new Date(b.created_at || 0) - new Date(a.created_at || 0);
-    });
-
-    if(!cakes.length){
-      $("cakeList").innerHTML = `<div class="empty">No cakes found.</div>`;
+    if(!recent.length){
+      $("recentOrdersList").innerHTML = `<div class="loading">No orders yet.</div>`;
       return;
     }
 
-    $("cakeList").innerHTML = cakes.map(cake => {
-      const price = cake.starting_price === null || cake.starting_price === undefined || cake.starting_price === "" ? "Custom price" : "$" + Number(cake.starting_price).toFixed(2).replace(".00","");
-      const cats = getCakeCategoryNames(cake.id);
-      const flavs = getCakeFlavourNames(cake.id);
-
-      return `
-        <article class="cakeItem">
-          <div class="cakeTop">
-            <img src="${escapeHtml(cake.image_url || "")}" alt="${escapeHtml(cake.name || "Cake")}" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80'">
-            <div class="cakeInfo">
-              <h4>${escapeHtml(cake.name || "Untitled Cake")}</h4>
-              <p>${escapeHtml(cake.description || "No description")}</p>
-              <div class="badges">
-                <span class="badge">${price}</span>
-                <span class="badge ${cake.is_active ? "active" : "inactive"}">${cake.is_active ? "Active" : "Hidden"}</span>
-                ${cake.is_featured ? `<span class="badge featured">Featured</span>` : ""}
-                <span class="badge">Sort ${Number(cake.sort_order || 0)}</span>
-                ${cats.map(name => `<span class="badge">${escapeHtml(name)}</span>`).join("")}
-                ${flavs.map(name => `<span class="badge">${escapeHtml(name)}</span>`).join("")}
-              </div>
-            </div>
-            <div class="itemActions">
-              <button class="btn small" onclick="editCake('${cake.id}')">Edit</button>
-              <button class="btn small" onclick="toggleCakeActive('${cake.id}', ${cake.is_active ? "false" : "true"})">${cake.is_active ? "Hide" : "Show"}</button>
-              <button class="btn red small" onclick="deleteCake('${cake.id}')">Delete</button>
-            </div>
-          </div>
-        </article>
-      `;
-    }).join("");
-  }
-
-  async function saveCake(event){
-    event.preventDefault();
-    const id = $("cakeId").value.trim();
-    const selectedCategoryIds = getCheckedValues("cakeCategory");
-    const selectedFlavourIds = getCheckedValues("cakeFlavour");
-
-    if(!selectedCategoryIds.length){ showToast("Select at least one category.", true); return; }
-
-    const firstCategoryName = allCategories.find(c => c.id === selectedCategoryIds[0])?.name || "Custom";
-    const payload = {
-      name: $("cakeName").value.trim(),
-      category: firstCategoryName,
-      description: $("cakeDescription").value.trim(),
-      image_url: $("cakeImage").value.trim(),
-      starting_price: $("cakePrice").value === "" ? null : Number($("cakePrice").value),
-      sort_order: $("cakeSortOrder").value === "" ? 0 : Number($("cakeSortOrder").value),
-      is_active: $("cakeActive").checked,
-      is_featured: $("cakeFeatured").checked
-    };
-
-    if(!payload.name || !payload.image_url){ showToast("Cake name and image URL are required.", true); return; }
-
-    $("saveCakeBtn").textContent = id ? "Updating..." : "Saving...";
-    $("saveCakeBtn").disabled = true;
-
-    const result = id
-      ? await supabaseClient.from("cakes").update(payload).eq("id", id).select().single()
-      : await supabaseClient.from("cakes").insert(payload).select().single();
-
-    if(result.error){
-      $("saveCakeBtn").disabled = false;
-      $("saveCakeBtn").textContent = "Save Cake";
-      showToast(result.error.message, true);
-      return;
-    }
-
-    const relOk = await saveCakeRelations(result.data.id, selectedCategoryIds, selectedFlavourIds);
-    $("saveCakeBtn").disabled = false;
-    $("saveCakeBtn").textContent = "Save Cake";
-    if(!relOk) return;
-
-    showToast(id ? "Cake updated" : "Cake added");
-    resetCakeForm();
-    await loadAllData();
-  }
-
-  async function saveCakeRelations(cakeId, categoryIds, flavourIds){
-    const deleteCats = await supabaseClient.from("cake_categories").delete().eq("cake_id", cakeId);
-    if(deleteCats.error){ showToast(deleteCats.error.message, true); return false; }
-
-    const deleteFlavs = await supabaseClient.from("cake_flavours").delete().eq("cake_id", cakeId);
-    if(deleteFlavs.error){ showToast(deleteFlavs.error.message, true); return false; }
-
-    if(categoryIds.length){
-      const rows = categoryIds.map(category_id => ({ cake_id:cakeId, category_id }));
-      const insertCats = await supabaseClient.from("cake_categories").insert(rows);
-      if(insertCats.error){ showToast(insertCats.error.message, true); return false; }
-    }
-
-    if(flavourIds.length){
-      const rows = flavourIds.map(flavour_id => ({ cake_id:cakeId, flavour_id }));
-      const insertFlavs = await supabaseClient.from("cake_flavours").insert(rows);
-      if(insertFlavs.error){ showToast(insertFlavs.error.message, true); return false; }
-    }
-
-    return true;
-  }
-
-  function editCake(id){
-    const cake = allCakes.find(c => c.id === id);
-    if(!cake) return;
-
-    $("cakeId").value = cake.id;
-    $("cakeName").value = cake.name || "";
-    $("cakeImage").value = cake.image_url || "";
-    $("cakePrice").value = cake.starting_price ?? "";
-    $("cakeSortOrder").value = cake.sort_order ?? 0;
-    $("cakeDescription").value = cake.description || "";
-    $("cakeActive").checked = !!cake.is_active;
-    $("cakeFeatured").checked = !!cake.is_featured;
-
-    const catIds = getCakeCategoryIds(cake.id);
-    const flavIds = getCakeFlavourIds(cake.id);
-
-    document.querySelectorAll("input[name='cakeCategory']").forEach(cb => cb.checked = catIds.includes(cb.value));
-    document.querySelectorAll("input[name='cakeFlavour']").forEach(cb => cb.checked = flavIds.includes(cb.value));
-
-    $("cakeFormTitle").textContent = "Edit Cake";
-    $("saveCakeBtn").textContent = "Update Cake";
-    previewCakeImage();
-    window.scrollTo({ top:0, behavior:"smooth" });
-  }
-
-  async function toggleCakeActive(id, nextValue){
-    const { error } = await supabaseClient.from("cakes").update({ is_active: nextValue }).eq("id", id);
-    if(error){ showToast(error.message, true); return; }
-    showToast(nextValue ? "Cake is visible now" : "Cake hidden from website");
-    await loadAllData();
-  }
-
-  async function deleteCake(id){
-    const cake = allCakes.find(c => c.id === id);
-    if(!confirm(`Delete "${cake?.name || "this cake"}" permanently?`)) return;
-
-    const { error } = await supabaseClient.from("cakes").delete().eq("id", id);
-    if(error){ showToast(error.message, true); return; }
-    if($("cakeId").value === id) resetCakeForm();
-    showToast("Cake deleted");
-    await loadAllData();
-  }
-
-  function resetCakeForm(){
-    $("cakeId").value = "";
-    $("cakeName").value = "";
-    $("cakeImage").value = "";
-    $("cakePrice").value = "";
-    $("cakeSortOrder").value = "";
-    $("cakeDescription").value = "";
-    $("cakeActive").checked = true;
-    $("cakeFeatured").checked = false;
-    $("cakeFormTitle").textContent = "Add New Cake";
-    $("saveCakeBtn").textContent = "Save Cake";
-    $("saveCakeBtn").disabled = false;
-    document.querySelectorAll("input[name='cakeCategory'], input[name='cakeFlavour']").forEach(cb => cb.checked = false);
-    $("cakeImagePreviewBox").classList.remove("show");
-    $("cakeImagePreview").src = "";
-    $("cakeImagePreviewUrl").textContent = "";
-  }
-
-  function previewCakeImage(){
-    const url = $("cakeImage").value.trim();
-    if(!url){ $("cakeImagePreviewBox").classList.remove("show"); return; }
-    $("cakeImagePreview").src = url;
-    $("cakeImagePreviewUrl").textContent = url;
-    $("cakeImagePreviewBox").classList.add("show");
-  }
-
-  function renderOrders(){
-    const search = $("orderSearchInput").value.trim().toLowerCase();
-    const status = $("orderStatusFilter").value;
-    const dateFilter = $("orderDateFilter").value;
-    const sort = $("orderSortFilter").value;
-    const today = todayStr();
-
-    let orders = [...allOrders];
-
-    if(search){
-      orders = orders.filter(o => {
-        const combined = `${o.customer_name || ""} ${o.customer_phone || ""} ${o.cake_name || ""} ${o.cake_categories || ""} ${o.needed_date || ""} ${o.cake_flavour || ""}`.toLowerCase();
-        return combined.includes(search);
-      });
-    }
-
-    if(status !== "all") orders = orders.filter(o => o.status === status);
-    if(dateFilter === "today") orders = orders.filter(o => String(o.created_at || "").startsWith(today));
-    if(dateFilter === "needed_today") orders = orders.filter(o => String(o.needed_date || "") === today);
-    if(dateFilter === "upcoming") orders = orders.filter(o => String(o.needed_date || "") >= today && o.status !== "completed" && o.status !== "cancelled");
-
-    orders.sort((a,b) => {
-      if(sort === "oldest") return new Date(a.created_at || 0) - new Date(b.created_at || 0);
-      if(sort === "needed_date") return String(a.needed_date || "").localeCompare(String(b.needed_date || ""));
-      return new Date(b.created_at || 0) - new Date(a.created_at || 0);
-    });
-
-    if(!orders.length){
-      $("orderList").innerHTML = `<div class="empty">No orders found.</div>`;
-      return;
-    }
-
-    $("orderList").innerHTML = orders.map(o => {
-      const statusLabel = statusText(o.status);
-      return `
-        <article class="orderItem">
-          <div class="orderTop">
-            <div>
-              <div class="orderTitle">
-                <h4>${escapeHtml(o.customer_name || "Customer")} · ${escapeHtml(o.cake_name || "Cake Order")}</h4>
-                <span class="badge statusPill status-${escapeHtml(o.status || "pending")}">${escapeHtml(statusLabel)}</span>
-                <span class="badge">${formatDateTime(o.created_at)}</span>
-              </div>
-
-              <div class="badges">
-                <span class="badge">${escapeHtml(o.cake_categories || "Custom")}</span>
-                <span class="badge">${escapeHtml(o.cake_price || "Price not set")}</span>
-                <span class="badge">Order ID ${escapeHtml(String(o.id || "").slice(0,8).toUpperCase())}</span>
-              </div>
-
-              <div class="orderDetails">
-                <div class="orderMini"><b>Phone</b><span>${escapeHtml(o.customer_phone || "-")}</span></div>
-                <div class="orderMini"><b>Needed Date</b><span>${escapeHtml(o.needed_date || "-")}</span></div>
-                <div class="orderMini"><b>Needed Time</b><span>${escapeHtml(o.needed_time || "-")}</span></div>
-                <div class="orderMini"><b>Size</b><span>${escapeHtml(o.cake_size || "-")}</span></div>
-                <div class="orderMini"><b>Flavour</b><span>${escapeHtml(o.cake_flavour || "-")}</span></div>
-                <div class="orderMini"><b>Eggless</b><span>${escapeHtml(o.eggless || "No")}</span></div>
-                <div class="orderMini"><b>Type</b><span>${escapeHtml(o.delivery_type || "Pickup")}</span></div>
-                <div class="orderMini"><b>Address / Note</b><span>${escapeHtml(o.address || "-")}</span></div>
-                <div class="orderMini"><b>Cake Message</b><span>${escapeHtml(o.cake_message || "-")}</span></div>
-              </div>
-
-              <div class="orderNote"><b>Special Notes:</b><br>${escapeHtml(o.notes || "No extra notes")}</div>
-            </div>
-
-            <div class="itemActions">
-              <select class="statusSelect" onchange="updateOrderStatus('${o.id}', this.value)">
-                ${ORDER_STATUSES.map(([value,label]) => `<option value="${value}" ${o.status === value ? "selected" : ""}>${label}</option>`).join("")}
-              </select>
-              <button class="btn small" onclick="copyOrderText('${o.id}')">Copy</button>
-              <button class="btn red small" onclick="deleteOrder('${o.id}')">Delete</button>
-            </div>
-          </div>
-        </article>
-      `;
-    }).join("");
-  }
-
-  async function updateOrderStatus(id, status){
-    const { error } = await supabaseClient.from("orders").update({ status }).eq("id", id);
-    if(error){ showToast(error.message, true); return; }
-    showToast("Order status updated");
-    await loadAllData();
-  }
-
-  async function deleteOrder(id){
-    if(!confirm("Delete this order permanently?")) return;
-    const { error } = await supabaseClient.from("orders").delete().eq("id", id);
-    if(error){ showToast(error.message, true); return; }
-    showToast("Order deleted");
-    await loadAllData();
-  }
-
-  function copyOrderText(id){
-    const o = allOrders.find(x => x.id === id);
-    if(!o) return;
-
-    const text = `🍰 CAKE ORDER
-Status: ${statusText(o.status)}
-Order ID: ${String(o.id || "").slice(0,8).toUpperCase()}
-
-Customer: ${o.customer_name || ""}
-Phone: ${o.customer_phone || ""}
-
-Cake: ${o.cake_name || ""}
-Category: ${o.cake_categories || ""}
-Price: ${o.cake_price || ""}
-
-Size: ${o.cake_size || ""}
-Flavour: ${o.cake_flavour || ""}
-Eggless: ${o.eggless || ""}
-
-Needed Date: ${o.needed_date || ""}
-Needed Time: ${o.needed_time || ""}
-Type: ${o.delivery_type || ""}
-Address / Note: ${o.address || ""}
-
-Message on Cake: ${o.cake_message || ""}
-Notes: ${o.notes || ""}`;
-
-    navigator.clipboard.writeText(text).then(() => showToast("Order copied"));
-  }
-
-  function statusText(status){
-    return ORDER_STATUSES.find(([value]) => value === status)?.[1] || "Pending";
-  }
-
-  function renderCategories(){
-    if(!allCategories.length){ $("categoryList").innerHTML = `<div class="empty">No categories yet.</div>`; return; }
-    $("categoryList").innerHTML = allCategories.map(cat => `
-      <article class="simpleItem">
-        <div class="simpleRow">
-          <div><h4>${escapeHtml(cat.name)}</h4><p>Sort ${Number(cat.sort_order || 0)} · ${cat.is_active ? "Active" : "Hidden"}</p></div>
-          <div class="simpleActions">
-            <button class="btn small" onclick="editCategory('${cat.id}')">Edit</button>
-            <button class="btn small" onclick="toggleCategoryActive('${cat.id}', ${cat.is_active ? "false" : "true"})">${cat.is_active ? "Hide" : "Show"}</button>
-            <button class="btn red small" onclick="deleteCategory('${cat.id}')">Delete</button>
+    $("recentOrdersList").innerHTML = recent.map(order => `
+      <div class="item">
+        <div>
+          <div class="itemTitle">${escapeHtml(order.customer_name || "Customer")}</div>
+          <div class="itemMeta">
+            ${escapeHtml(order.customer_phone || "")}<br>
+            Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
+            Total: ${money(order.estimated_total)}
           </div>
         </div>
-      </article>
+        <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status)}</span>
+      </div>
+    `).join("");
+  }
+
+  function fillSettingsForm(){
+    $("setBrandName").value = siteSettings.brand_name || "";
+    $("setTagline").value = siteSettings.tagline || "";
+    $("setLogoUrl").value = siteSettings.logo_url || "";
+    $("setHeroImage").value = siteSettings.hero_image_url || "";
+    $("setWhatsapp").value = siteSettings.whatsapp_number || "";
+    $("setInstagram").value = siteSettings.instagram_url || "";
+    $("setAddress").value = siteSettings.address || "";
+    $("setHours").value = siteSettings.business_hours || "";
+    $("setServiceArea").value = siteSettings.service_area || "";
+    $("setCurrency").value = siteSettings.currency || "$";
+    $("setHeroTitle").value = siteSettings.hero_title || "";
+    $("setHeroSubtitle").value = siteSettings.hero_subtitle || "";
+    $("setNoticeHours").value = siteSettings.minimum_notice_hours ?? 24;
+    $("setShowPrices").value = String(siteSettings.show_prices !== false);
+    $("setSameDay").value = siteSettings.same_day_message || "";
+    $("setPolicy").value = siteSettings.policy_text || "";
+  }
+
+  async function saveSettings(event){
+    event.preventDefault();
+
+    const payload = {
+      id: 1,
+      brand_name: $("setBrandName").value.trim() || "Cake Studio",
+      tagline: $("setTagline").value.trim(),
+      logo_url: $("setLogoUrl").value.trim(),
+      hero_image_url: $("setHeroImage").value.trim(),
+      whatsapp_number: $("setWhatsapp").value.trim(),
+      instagram_url: $("setInstagram").value.trim(),
+      address: $("setAddress").value.trim(),
+      business_hours: $("setHours").value.trim(),
+      service_area: $("setServiceArea").value.trim(),
+      currency: $("setCurrency").value.trim() || "$",
+      hero_title: $("setHeroTitle").value.trim(),
+      hero_subtitle: $("setHeroSubtitle").value.trim(),
+      minimum_notice_hours: Number($("setNoticeHours").value || 24),
+      show_prices: $("setShowPrices").value === "true",
+      same_day_message: $("setSameDay").value.trim(),
+      policy_text: $("setPolicy").value.trim()
+    };
+
+    const { error } = await supabaseClient
+      .from("site_settings")
+      .upsert(payload, { onConflict: "id" });
+
+    if(error){
+      showToast(error.message, true);
+      return;
+    }
+
+    siteSettings = {...siteSettings, ...payload};
+    showToast("Settings saved.");
+  }
+
+  function renderCatalogLists(){
+    renderSimpleList("categoryList", categories, editCategory, deleteCategory, item => {
+      return `${item.slug || ""}<br>${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}`;
+    });
+
+    renderSimpleList("sizeList", sizes, editSize, deleteSize, item => {
+      return `${item.servings || ""}<br>${money(item.price)} ${item.quote_required ? "· Quote required" : ""} · ${item.is_active ? "Active" : "Inactive"}`;
+    });
+
+    renderSimpleList("flavourList", flavours, editFlavour, deleteFlavour, item => {
+      return `Extra: ${money(item.extra_price)} ${item.quote_required ? "· Quote required" : ""}<br>${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}`;
+    });
+
+    renderSimpleList("optionList", options, editOption, deleteOption, item => {
+      return `${item.option_type || "option"} · Extra: ${money(item.extra_price)} ${item.quote_required ? "· Quote required" : ""}<br>${item.is_active ? "Active" : "Inactive"}`;
+    });
+
+    renderSimpleList("addonList", addons, editAddon, deleteAddon, item => {
+      return `${item.description || ""}<br>${money(item.price)} ${item.quote_required ? "· Quote required" : ""} · ${item.is_active ? "Active" : "Inactive"}`;
+    });
+  }
+
+  function renderSimpleList(containerId, rows, editFn, deleteFn, metaFn){
+    const box = $(containerId);
+
+    if(!rows.length){
+      box.innerHTML = `<div class="loading">No items yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = rows.map(row => `
+      <div class="item">
+        <div>
+          <div class="itemTitle">${escapeHtml(row.name)}</div>
+          <div class="itemMeta">${metaFn(row)}</div>
+        </div>
+        <div class="itemActions">
+          <button class="btn small" onclick="${editFn.name}('${row.id}')">Edit</button>
+          <button class="btn red small" onclick="${deleteFn.name}('${row.id}')">Delete</button>
+        </div>
+      </div>
     `).join("");
   }
 
   async function saveCategory(event){
     event.preventDefault();
-    const id = $("categoryId").value.trim();
+
+    const id = $("categoryId").value;
     const name = $("categoryName").value.trim();
-    if(!name){ showToast("Category name required.", true); return; }
 
-    const payload = { name, slug: slugify(name), sort_order: $("categorySortOrder").value === "" ? 0 : Number($("categorySortOrder").value), is_active: $("categoryActive").checked };
-    $("saveCategoryBtn").disabled = true;
-    $("saveCategoryBtn").textContent = id ? "Updating..." : "Saving...";
+    const payload = {
+      name,
+      slug: $("categorySlug").value.trim() || slugify(name),
+      description: $("categoryDesc").value.trim(),
+      image_url: $("categoryImage").value.trim(),
+      sort_order: Number($("categorySort").value || 0),
+      is_active: $("categoryActive").checked
+    };
 
-    const result = id ? await supabaseClient.from("categories").update(payload).eq("id", id) : await supabaseClient.from("categories").insert(payload);
-    $("saveCategoryBtn").disabled = false;
-    $("saveCategoryBtn").textContent = "Save Category";
+    const { error } = id
+      ? await supabaseClient.from("categories").update(payload).eq("id", id)
+      : await supabaseClient.from("categories").insert(payload);
 
-    if(result.error){ showToast(result.error.message, true); return; }
-    showToast(id ? "Category updated" : "Category added");
+    if(error) return showToast(error.message, true);
+
     resetCategoryForm();
-    await loadAllData();
+    await loadAll();
+    showToast("Category saved.");
   }
 
   function editCategory(id){
-    const cat = allCategories.find(c => c.id === id);
-    if(!cat) return;
-    $("categoryId").value = cat.id;
-    $("categoryName").value = cat.name || "";
-    $("categorySortOrder").value = cat.sort_order ?? 0;
-    $("categoryActive").checked = !!cat.is_active;
-    $("categoryFormTitle").textContent = "Edit Category";
-    $("saveCategoryBtn").textContent = "Update Category";
-  }
+    const item = categories.find(x => x.id === id);
+    if(!item) return;
 
-  async function toggleCategoryActive(id, nextValue){
-    const { error } = await supabaseClient.from("categories").update({ is_active: nextValue }).eq("id", id);
-    if(error){ showToast(error.message, true); return; }
-    showToast(nextValue ? "Category active" : "Category hidden");
-    await loadAllData();
-  }
-
-  async function deleteCategory(id){
-    const cat = allCategories.find(c => c.id === id);
-    if(!confirm(`Delete category "${cat?.name || "this category"}"?`)) return;
-    const { error } = await supabaseClient.from("categories").delete().eq("id", id);
-    if(error){ showToast(error.message, true); return; }
-    showToast("Category deleted");
-    resetCategoryForm();
-    await loadAllData();
+    $("categoryId").value = item.id;
+    $("categoryName").value = item.name || "";
+    $("categorySlug").value = item.slug || "";
+    $("categoryDesc").value = item.description || "";
+    $("categoryImage").value = item.image_url || "";
+    $("categorySort").value = item.sort_order ?? 0;
+    $("categoryActive").checked = item.is_active !== false;
+    showTab("catalog");
   }
 
   function resetCategoryForm(){
+    $("categoryForm").reset();
     $("categoryId").value = "";
-    $("categoryName").value = "";
-    $("categorySortOrder").value = "";
     $("categoryActive").checked = true;
-    $("categoryFormTitle").textContent = "Add Category";
-    $("saveCategoryBtn").textContent = "Save Category";
-    $("saveCategoryBtn").disabled = false;
+    $("categorySort").value = 0;
   }
 
-  function renderFlavours(){
-    if(!allFlavours.length){ $("flavourList").innerHTML = `<div class="empty">No flavours yet.</div>`; return; }
-    $("flavourList").innerHTML = allFlavours.map(flav => `
-      <article class="simpleItem">
-        <div class="simpleRow">
-          <div><h4>${escapeHtml(flav.name)}</h4><p>Sort ${Number(flav.sort_order || 0)} · ${flav.is_active ? "Active" : "Hidden"}</p></div>
-          <div class="simpleActions">
-            <button class="btn small" onclick="editFlavour('${flav.id}')">Edit</button>
-            <button class="btn small" onclick="toggleFlavourActive('${flav.id}', ${flav.is_active ? "false" : "true"})">${flav.is_active ? "Hide" : "Show"}</button>
-            <button class="btn red small" onclick="deleteFlavour('${flav.id}')">Delete</button>
-          </div>
-        </div>
-      </article>
-    `).join("");
+  async function deleteCategory(id){
+    if(!confirm("Delete this category?")) return;
+    const { error } = await supabaseClient.from("categories").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+    await loadAll();
+    showToast("Category deleted.");
+  }
+
+  async function saveSize(event){
+    event.preventDefault();
+
+    const id = $("sizeId").value;
+    const payload = {
+      name: $("sizeName").value.trim(),
+      servings: $("sizeServings").value.trim(),
+      price: Number($("sizePrice").value || 0),
+      quote_required: $("sizeQuote").checked,
+      is_active: $("sizeActive").checked,
+      sort_order: Number($("sizeSort").value || 0)
+    };
+
+    const { error } = id
+      ? await supabaseClient.from("sizes").update(payload).eq("id", id)
+      : await supabaseClient.from("sizes").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetSizeForm();
+    await loadAll();
+    showToast("Size saved.");
+  }
+
+  function editSize(id){
+    const item = sizes.find(x => x.id === id);
+    if(!item) return;
+
+    $("sizeId").value = item.id;
+    $("sizeName").value = item.name || "";
+    $("sizeServings").value = item.servings || "";
+    $("sizePrice").value = item.price ?? 0;
+    $("sizeQuote").checked = item.quote_required === true;
+    $("sizeActive").checked = item.is_active !== false;
+    $("sizeSort").value = item.sort_order ?? 0;
+    showTab("catalog");
+  }
+
+  function resetSizeForm(){
+    $("sizeForm").reset();
+    $("sizeId").value = "";
+    $("sizePrice").value = 0;
+    $("sizeSort").value = 0;
+    $("sizeActive").checked = true;
+  }
+
+  async function deleteSize(id){
+    if(!confirm("Delete this size?")) return;
+    const { error } = await supabaseClient.from("sizes").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+    await loadAll();
+    showToast("Size deleted.");
   }
 
   async function saveFlavour(event){
     event.preventDefault();
-    const id = $("flavourId").value.trim();
-    const name = $("flavourName").value.trim();
-    if(!name){ showToast("Flavour name required.", true); return; }
 
-    const payload = { name, slug: slugify(name), sort_order: $("flavourSortOrder").value === "" ? 0 : Number($("flavourSortOrder").value), is_active: $("flavourActive").checked };
-    $("saveFlavourBtn").disabled = true;
-    $("saveFlavourBtn").textContent = id ? "Updating..." : "Saving...";
+    const id = $("flavourId").value;
+    const payload = {
+      name: $("flavourName").value.trim(),
+      extra_price: Number($("flavourPrice").value || 0),
+      quote_required: $("flavourQuote").checked,
+      is_active: $("flavourActive").checked,
+      sort_order: Number($("flavourSort").value || 0)
+    };
 
-    const result = id ? await supabaseClient.from("flavours").update(payload).eq("id", id) : await supabaseClient.from("flavours").insert(payload);
-    $("saveFlavourBtn").disabled = false;
-    $("saveFlavourBtn").textContent = "Save Flavour";
+    const { error } = id
+      ? await supabaseClient.from("flavours").update(payload).eq("id", id)
+      : await supabaseClient.from("flavours").insert(payload);
 
-    if(result.error){ showToast(result.error.message, true); return; }
-    showToast(id ? "Flavour updated" : "Flavour added");
+    if(error) return showToast(error.message, true);
+
     resetFlavourForm();
-    await loadAllData();
+    await loadAll();
+    showToast("Flavour saved.");
   }
 
   function editFlavour(id){
-    const flav = allFlavours.find(f => f.id === id);
-    if(!flav) return;
-    $("flavourId").value = flav.id;
-    $("flavourName").value = flav.name || "";
-    $("flavourSortOrder").value = flav.sort_order ?? 0;
-    $("flavourActive").checked = !!flav.is_active;
-    $("flavourFormTitle").textContent = "Edit Flavour";
-    $("saveFlavourBtn").textContent = "Update Flavour";
-  }
+    const item = flavours.find(x => x.id === id);
+    if(!item) return;
 
-  async function toggleFlavourActive(id, nextValue){
-    const { error } = await supabaseClient.from("flavours").update({ is_active: nextValue }).eq("id", id);
-    if(error){ showToast(error.message, true); return; }
-    showToast(nextValue ? "Flavour active" : "Flavour hidden");
-    await loadAllData();
-  }
-
-  async function deleteFlavour(id){
-    const flav = allFlavours.find(f => f.id === id);
-    if(!confirm(`Delete flavour "${flav?.name || "this flavour"}"?`)) return;
-    const { error } = await supabaseClient.from("flavours").delete().eq("id", id);
-    if(error){ showToast(error.message, true); return; }
-    showToast("Flavour deleted");
-    resetFlavourForm();
-    await loadAllData();
+    $("flavourId").value = item.id;
+    $("flavourName").value = item.name || "";
+    $("flavourPrice").value = item.extra_price ?? 0;
+    $("flavourQuote").checked = item.quote_required === true;
+    $("flavourActive").checked = item.is_active !== false;
+    $("flavourSort").value = item.sort_order ?? 0;
+    showTab("catalog");
   }
 
   function resetFlavourForm(){
+    $("flavourForm").reset();
     $("flavourId").value = "";
-    $("flavourName").value = "";
-    $("flavourSortOrder").value = "";
+    $("flavourPrice").value = 0;
+    $("flavourSort").value = 0;
     $("flavourActive").checked = true;
-    $("flavourFormTitle").textContent = "Add Flavour";
-    $("saveFlavourBtn").textContent = "Save Flavour";
-    $("saveFlavourBtn").disabled = false;
   }
 
-  function fillSettingsForm(){
-    if(!siteSettings) return;
-    $("brandName").value = siteSettings.brand_name || "";
-    $("tagline").value = siteSettings.tagline || "";
-    $("logoUrl").value = siteSettings.logo_url || "";
-    $("whatsappNumber").value = siteSettings.whatsapp_number || "";
-    $("heroTitle").value = siteSettings.hero_title || "";
-    $("heroSubtitle").value = siteSettings.hero_subtitle || "";
-    $("instagramUrl").value = siteSettings.instagram_url || "";
-    $("address").value = siteSettings.address || "";
-    previewLogoImage();
+  async function deleteFlavour(id){
+    if(!confirm("Delete this flavour?")) return;
+    const { error } = await supabaseClient.from("flavours").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+    await loadAll();
+    showToast("Flavour deleted.");
   }
 
-  async function saveSettings(event){
+  async function saveOption(event){
     event.preventDefault();
+
+    const id = $("optionId").value;
     const payload = {
-      brand_name: $("brandName").value.trim() || "Cake Studio",
-      tagline: $("tagline").value.trim(),
-      logo_url: $("logoUrl").value.trim(),
-      whatsapp_number: $("whatsappNumber").value.trim(),
-      hero_title: $("heroTitle").value.trim(),
-      hero_subtitle: $("heroSubtitle").value.trim(),
-      instagram_url: $("instagramUrl").value.trim(),
-      address: $("address").value.trim()
+      name: $("optionName").value.trim(),
+      option_type: $("optionType").value.trim() || "diet",
+      extra_price: Number($("optionPrice").value || 0),
+      quote_required: $("optionQuote").checked,
+      is_active: $("optionActive").checked,
+      sort_order: Number($("optionSort").value || 0)
     };
 
-    const { error } = await supabaseClient.from("site_settings").update(payload).eq("id", 1);
-    if(error){ showToast(error.message, true); return; }
-    showToast("Settings saved");
-    await loadAllData();
+    const { error } = id
+      ? await supabaseClient.from("cake_options").update(payload).eq("id", id)
+      : await supabaseClient.from("cake_options").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetOptionForm();
+    await loadAll();
+    showToast("Option saved.");
   }
 
-  function previewLogoImage(){
-    const url = $("logoUrl").value.trim();
-    if(!url){ $("logoPreviewBox").classList.remove("show"); return; }
-    $("logoPreview").src = url;
-    $("logoPreviewUrl").textContent = url;
-    $("logoPreviewBox").classList.add("show");
+  function editOption(id){
+    const item = options.find(x => x.id === id);
+    if(!item) return;
+
+    $("optionId").value = item.id;
+    $("optionName").value = item.name || "";
+    $("optionType").value = item.option_type || "diet";
+    $("optionPrice").value = item.extra_price ?? 0;
+    $("optionQuote").checked = item.quote_required === true;
+    $("optionActive").checked = item.is_active !== false;
+    $("optionSort").value = item.sort_order ?? 0;
+    showTab("catalog");
   }
 
-  function getCheckedValues(name){
-    return Array.from(document.querySelectorAll(`input[name='${name}']:checked`)).map(cb => cb.value);
+  function resetOptionForm(){
+    $("optionForm").reset();
+    $("optionId").value = "";
+    $("optionType").value = "diet";
+    $("optionPrice").value = 0;
+    $("optionSort").value = 0;
+    $("optionActive").checked = true;
+  }
+
+  async function deleteOption(id){
+    if(!confirm("Delete this option?")) return;
+    const { error } = await supabaseClient.from("cake_options").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+    await loadAll();
+    showToast("Option deleted.");
+  }
+
+  async function saveAddon(event){
+    event.preventDefault();
+
+    const id = $("addonId").value;
+    const payload = {
+      name: $("addonName").value.trim(),
+      description: $("addonDesc").value.trim(),
+      price: Number($("addonPrice").value || 0),
+      quote_required: $("addonQuote").checked,
+      is_active: $("addonActive").checked,
+      sort_order: Number($("addonSort").value || 0)
+    };
+
+    const { error } = id
+      ? await supabaseClient.from("addons").update(payload).eq("id", id)
+      : await supabaseClient.from("addons").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetAddonForm();
+    await loadAll();
+    showToast("Add-on saved.");
+  }
+
+  function editAddon(id){
+    const item = addons.find(x => x.id === id);
+    if(!item) return;
+
+    $("addonId").value = item.id;
+    $("addonName").value = item.name || "";
+    $("addonDesc").value = item.description || "";
+    $("addonPrice").value = item.price ?? 0;
+    $("addonQuote").checked = item.quote_required === true;
+    $("addonActive").checked = item.is_active !== false;
+    $("addonSort").value = item.sort_order ?? 0;
+    showTab("catalog");
+  }
+
+  function resetAddonForm(){
+    $("addonForm").reset();
+    $("addonId").value = "";
+    $("addonPrice").value = 0;
+    $("addonSort").value = 0;
+    $("addonActive").checked = true;
+  }
+
+  async function deleteAddon(id){
+    if(!confirm("Delete this add-on?")) return;
+    const { error } = await supabaseClient.from("addons").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+    await loadAll();
+    showToast("Add-on deleted.");
+  }
+
+  function fillCakeSelects(){
+    fillMulti("cakeCategoriesSelect", categories, "name");
+    fillMulti("cakeSizesSelect", sizes, item => `${item.name} - ${item.servings || ""} - ${money(item.price)}${item.quote_required ? " - Quote" : ""}`);
+    fillMulti("cakeFlavoursSelect", flavours, item => `${item.name} - +${money(item.extra_price)}${item.quote_required ? " - Quote" : ""}`);
+    fillMulti("cakeAddonsSelect", addons, item => `${item.name} - ${money(item.price)}${item.quote_required ? " - Quote" : ""}`);
+  }
+
+  function fillMulti(id, rows, labelKey){
+    const labelFn = typeof labelKey === "function" ? labelKey : (item) => item[labelKey];
+    $(id).innerHTML = rows.map(row => `
+      <option value="${row.id}">${escapeHtml(labelFn(row))}</option>
+    `).join("");
+  }
+
+  async function saveCake(event){
+    event.preventDefault();
+
+    const existingId = $("cakeId").value;
+    const name = $("cakeName").value.trim();
+
+    const payload = {
+      name,
+      slug: $("cakeSlug").value.trim() || slugify(name),
+      description: $("cakeDesc").value.trim(),
+      image_url: $("cakeImage").value.trim(),
+      starting_price: Number($("cakeStartingPrice").value || 0),
+      price_type: $("cakePriceType").value,
+      sort_order: Number($("cakeSort").value || 0),
+      is_featured: $("cakeFeatured").checked,
+      is_active: $("cakeActive").checked
+    };
+
+    let cakeId = existingId;
+
+    if(existingId){
+      const { error } = await supabaseClient.from("cakes").update(payload).eq("id", existingId);
+      if(error) return showToast(error.message, true);
+    }else{
+      const { data, error } = await supabaseClient.from("cakes").insert(payload).select("id").single();
+      if(error) return showToast(error.message, true);
+      cakeId = data.id;
+    }
+
+    const selectedCategories = getSelectedValues("cakeCategoriesSelect");
+    const selectedSizes = getSelectedValues("cakeSizesSelect");
+    const selectedFlavours = getSelectedValues("cakeFlavoursSelect");
+    const selectedAddons = getSelectedValues("cakeAddonsSelect");
+
+    const relationTasks = [
+      replaceRelations("cake_categories", "cake_id", cakeId, "category_id", selectedCategories),
+      replaceRelations("cake_sizes", "cake_id", cakeId, "size_id", selectedSizes),
+      replaceRelations("cake_flavours", "cake_id", cakeId, "flavour_id", selectedFlavours),
+      replaceRelations("cake_addons", "cake_id", cakeId, "addon_id", selectedAddons)
+    ];
+
+    const results = await Promise.all(relationTasks);
+    const relError = results.find(r => r?.error)?.error;
+
+    if(relError) return showToast(relError.message, true);
+
+    resetCakeForm();
+    await loadAll();
+    showToast("Cake saved.");
+  }
+
+  async function replaceRelations(table, parentCol, parentId, childCol, ids){
+    const del = await supabaseClient.from(table).delete().eq(parentCol, parentId);
+    if(del.error) return del;
+
+    if(!ids.length) return { error:null };
+
+    const rows = ids.map(id => ({
+      [parentCol]: parentId,
+      [childCol]: id
+    }));
+
+    return await supabaseClient.from(table).insert(rows);
+  }
+
+  function renderCakes(){
+    const box = $("cakeList");
+    const search = ($("cakeSearch")?.value || "").trim().toLowerCase();
+    const filter = $("cakeFilterStatus")?.value || "all";
+
+    let rows = [...cakes];
+
+    if(filter === "active") rows = rows.filter(c => c.is_active !== false);
+    if(filter === "inactive") rows = rows.filter(c => c.is_active === false);
+    if(filter === "featured") rows = rows.filter(c => c.is_featured === true);
+
+    if(search){
+      rows = rows.filter(c => `${c.name || ""} ${c.description || ""}`.toLowerCase().includes(search));
+    }
+
+    if(!rows.length){
+      box.innerHTML = `<div class="loading">No cakes found.</div>`;
+      return;
+    }
+
+    box.innerHTML = rows.map(cake => {
+      const cats = getCakeRelationNames(cake.id, cakeCategories, categories, "category_id");
+      const cakeSizeNames = getCakeRelationNames(cake.id, cakeSizes, sizes, "size_id");
+      const flavs = getCakeRelationNames(cake.id, cakeFlavours, flavours, "flavour_id");
+
+      return `
+        <div class="productCard">
+          <img src="${escapeHtml(cake.image_url || "")}" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'" alt="">
+          <div class="productInfo">
+            <h4>${escapeHtml(cake.name || "Cake")}</h4>
+            <div class="itemMeta">
+              ${escapeHtml(cake.description || "")}<br>
+              Starting: ${money(cake.starting_price)} · ${escapeHtml(cake.price_type || "estimated")} · ${cake.is_active ? "Active" : "Inactive"} ${cake.is_featured ? "· Featured" : ""}
+            </div>
+
+            <div class="tags">
+              ${cats.slice(0,3).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+              ${cakeSizeNames.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+              ${flavs.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+            </div>
+
+            <div class="itemActions" style="margin-top:12px;justify-content:flex-start;">
+              <button class="btn small" onclick="editCake('${cake.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteCake('${cake.id}')">Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function editCake(id){
+    const cake = cakes.find(c => c.id === id);
+    if(!cake) return;
+
+    $("cakeId").value = cake.id;
+    $("cakeName").value = cake.name || "";
+    $("cakeSlug").value = cake.slug || "";
+    $("cakeDesc").value = cake.description || "";
+    $("cakeImage").value = cake.image_url || "";
+    $("cakeStartingPrice").value = cake.starting_price ?? 0;
+    $("cakePriceType").value = cake.price_type || "estimated";
+    $("cakeSort").value = cake.sort_order ?? 0;
+    $("cakeFeatured").checked = cake.is_featured === true;
+    $("cakeActive").checked = cake.is_active !== false;
+
+    setSelectedValues("cakeCategoriesSelect", cakeCategories.filter(r => r.cake_id === id).map(r => r.category_id));
+    setSelectedValues("cakeSizesSelect", cakeSizes.filter(r => r.cake_id === id).map(r => r.size_id));
+    setSelectedValues("cakeFlavoursSelect", cakeFlavours.filter(r => r.cake_id === id).map(r => r.flavour_id));
+    setSelectedValues("cakeAddonsSelect", cakeAddons.filter(r => r.cake_id === id).map(r => r.addon_id));
+
+    showTab("cakes");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function resetCakeForm(){
+    $("cakeForm").reset();
+    $("cakeId").value = "";
+    $("cakeStartingPrice").value = 0;
+    $("cakeSort").value = 0;
+    $("cakePriceType").value = "estimated";
+    $("cakeActive").checked = true;
+    setSelectedValues("cakeCategoriesSelect", []);
+    setSelectedValues("cakeSizesSelect", []);
+    setSelectedValues("cakeFlavoursSelect", []);
+    setSelectedValues("cakeAddonsSelect", []);
+  }
+
+  async function deleteCake(id){
+    if(!confirm("Delete this cake? This will remove its category/size/flavour/add-on links too.")) return;
+
+    const { error } = await supabaseClient.from("cakes").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+
+    await loadAll();
+    showToast("Cake deleted.");
+  }
+
+  function renderOrders(){
+    const box = $("ordersList");
+    const search = ($("orderSearch")?.value || "").trim().toLowerCase();
+    const filter = $("orderStatusFilter")?.value || "all";
+
+    let rows = [...orders];
+
+    if(filter !== "all"){
+      rows = rows.filter(o => o.status === filter);
+    }
+
+    if(search){
+      rows = rows.filter(o => {
+        const combined = `${o.id || ""} ${o.customer_name || ""} ${o.customer_phone || ""} ${o.customer_email || ""}`.toLowerCase();
+        return combined.includes(search);
+      });
+    }
+
+    if(!rows.length){
+      box.innerHTML = `<div class="loading">No orders found.</div>`;
+      return;
+    }
+
+    box.innerHTML = rows.map(order => {
+      const items = orderItems.filter(item => item.order_id === order.id);
+
+      return `
+        <div class="orderCard" id="order-${order.id}">
+          <div class="orderTop">
+            <div>
+              <h4>${escapeHtml(order.customer_name || "Customer")} · ${money(order.estimated_total)}</h4>
+              <p>
+                ${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}<br>
+                Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
+                Order ID: ${escapeHtml(String(order.id).slice(0,8).toUpperCase())}
+              </p>
+            </div>
+            <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;">
+              <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status)}</span>
+              <button class="btn small" onclick="toggleOrder('${order.id}')">Details</button>
+            </div>
+          </div>
+
+          <div class="orderBody">
+            <div class="formGrid">
+              <div class="field">
+                <label>Status</label>
+                <select id="status-${order.id}">
+                  ${["Pending","Confirmed","In Progress","Ready","Completed","Cancelled"].map(s => `
+                    <option ${order.status === s ? "selected" : ""}>${s}</option>
+                  `).join("")}
+                </select>
+              </div>
+
+              <div class="field">
+                <label>Actions</label>
+                <button class="btn green" onclick="updateOrderStatus('${order.id}')">Update Status</button>
+              </div>
+
+              <div class="field full">
+                <label>Customer / Delivery Info</label>
+                <div class="orderItem">
+                  <b>Name:</b> ${escapeHtml(order.customer_name || "")}<br>
+                  <b>Phone:</b> ${escapeHtml(order.customer_phone || "")}<br>
+                  <b>Email:</b> ${escapeHtml(order.customer_email || "")}<br>
+                  <b>Needed Date:</b> ${formatDate(order.needed_date)}<br>
+                  <b>Needed Time:</b> ${escapeHtml(order.needed_time || "Not selected")}<br>
+                  <b>Type:</b> ${escapeHtml(order.delivery_type || "")}<br>
+                  <b>Address:</b> ${escapeHtml(order.address || "")}<br>
+                  <b>City:</b> ${escapeHtml(order.city || "")}<br>
+                  <b>Postal:</b> ${escapeHtml(order.postal_code || "")}<br>
+                  <b>Instructions:</b> ${escapeHtml(order.delivery_instructions || "")}<br>
+                  <b>Note:</b> ${escapeHtml(order.order_note || "")}
+                </div>
+              </div>
+            </div>
+
+            <div class="orderItems">
+              ${items.length ? items.map(item => `
+                <div class="orderItem">
+                  <b>${escapeHtml(item.cake_name || "Cake")}</b><br>
+                  Size: ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""} · ${money(item.size_price)}<br>
+                  Flavour: ${escapeHtml(item.flavour_name || "")} · +${money(item.flavour_extra_price)}<br>
+                  Option: ${escapeHtml(item.option_name || "")} · +${money(item.option_extra_price)}<br>
+                  Quantity: ${item.quantity || 1}<br>
+                  Message on cake: ${escapeHtml(item.message_on_cake || "")}<br>
+                  Theme notes: ${escapeHtml(item.theme_notes || "")}<br>
+                  Inspiration: ${escapeHtml(item.inspiration_photo_link || "")}<br>
+                  Special notes: ${escapeHtml(item.special_notes || "")}<br>
+                  Add-ons: ${formatAddons(item.addons_json)}<br>
+                  <b>Item Estimated Total:</b> ${money(item.estimated_item_total)}
+                </div>
+              `).join("") : `<div class="loading">No order items found.</div>`}
+            </div>
+
+            <div class="itemActions" style="margin-top:12px;justify-content:flex-start;">
+              <button class="btn green small" onclick="whatsappCustomer('${order.id}')">Message Customer</button>
+              <button class="btn small" onclick="printOrder('${order.id}')">Print</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function toggleOrder(id){
+    const el = $("order-" + id);
+    if(el) el.classList.toggle("open");
+  }
+
+  async function updateOrderStatus(id){
+    const status = $("status-" + id).value;
+
+    const { error } = await supabaseClient
+      .from("orders")
+      .update({ status })
+      .eq("id", id);
+
+    if(error) return showToast(error.message, true);
+
+    const order = orders.find(o => o.id === id);
+    if(order) order.status = status;
+
+    renderStats();
+    renderRecentOrders();
+    renderOrders();
+    showToast("Order status updated.");
+  }
+
+  function whatsappCustomer(id){
+    const order = orders.find(o => o.id === id);
+    if(!order) return;
+
+    const phone = normalizePhone(order.customer_phone || "");
+    if(!phone){
+      showToast("Customer phone number missing.", true);
+      return;
+    }
+
+    const msg = `Hi ${order.customer_name || ""}, your cake order for ${formatDate(order.needed_date)} is currently: ${order.status}.`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  function printOrder(id){
+    const card = $("order-" + id);
+    if(!card) return;
+
+    const printWindow = window.open("", "_blank");
+    printWindow.document.write(`
+      <html>
+      <head>
+        <title>Print Order</title>
+        <style>
+          body{font-family:Arial,sans-serif;padding:20px;color:#111}
+          .btn,button{display:none!important}
+          .orderBody{display:block!important}
+          .orderCard{border:1px solid #ddd;padding:15px;border-radius:12px}
+          .orderItem{border:1px solid #ddd;padding:10px;margin:8px 0;border-radius:10px}
+        </style>
+      </head>
+      <body>${card.outerHTML}</body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  }
+
+  function getCakeRelationNames(cakeId, relationRows, sourceRows, sourceKey){
+    const ids = relationRows
+      .filter(row => String(row.cake_id) === String(cakeId))
+      .map(row => row[sourceKey]);
+
+    return ids
+      .map(id => sourceRows.find(row => String(row.id) === String(id))?.name)
+      .filter(Boolean);
+  }
+
+  function getSelectedValues(id){
+    return Array.from($(id).selectedOptions).map(option => option.value);
+  }
+
+  function setSelectedValues(id, values){
+    const set = new Set(values.map(String));
+    Array.from($(id).options).forEach(option => {
+      option.selected = set.has(String(option.value));
+    });
+  }
+
+  function money(value){
+    const symbol = siteSettings.currency || "$";
+    const num = Number(value || 0);
+    return symbol + num.toFixed(2).replace(".00", "");
+  }
+
+  function formatDate(value){
+    if(!value) return "Not selected";
+    try{
+      const d = new Date(value + "T00:00:00");
+      return d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
+    }catch{
+      return value;
+    }
+  }
+
+  function formatAddons(value){
+    let arr = [];
+    try{
+      arr = Array.isArray(value) ? value : JSON.parse(value || "[]");
+    }catch{
+      arr = [];
+    }
+
+    if(!arr.length) return "None";
+
+    return arr.map(a => {
+      if(typeof a === "string") return escapeHtml(a);
+      return `${escapeHtml(a.name || "Add-on")} ${a.price ? "(" + money(a.price) + ")" : ""}`;
+    }).join(", ");
+  }
+
+  function normalizePhone(value){
+    return String(value || "").replace(/[^\d]/g, "");
   }
 
   function slugify(value){
-    return String(value || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || crypto.randomUUID();
+    return String(value || "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   }
 
-  function todayStr(){
-    const d = new Date();
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${y}-${m}-${day}`;
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
   }
 
-  function formatDateTime(value){
-    if(!value) return "-";
-    const d = new Date(value);
-    if(Number.isNaN(d.getTime())) return value;
-    return d.toLocaleString([], { year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" });
+  function escapeClass(value){
+    return String(value || "").replace(/[^a-zA-Z0-9_-]/g, "");
   }
 
   function showToast(message, isError = false){
     const toast = $("toast");
     toast.textContent = message;
-    toast.style.borderColor = isError ? "rgba(255,91,110,.35)" : "rgba(255,255,255,.09)";
+    toast.style.borderColor = isError ? "rgba(255,91,110,.35)" : "rgba(255,255,255,.10)";
     toast.style.color = isError ? "#ffdce1" : "var(--text)";
     toast.classList.add("show");
     clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
-  }
-
-  function escapeHtml(value){
-    return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
   }
 </script>
 
