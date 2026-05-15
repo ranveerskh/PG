@@ -908,16 +908,6 @@
               </div>
 
               <div class="field full">
-                <label>Theme / Colours</label>
-                <input id="themeInput" placeholder="Pink theme, floral, car theme, simple elegant, etc.">
-              </div>
-
-              <div class="field full">
-                <label>Inspiration Photo Link</label>
-                <input id="inspirationInput" placeholder="Paste Instagram/Pinterest/image link if available">
-              </div>
-
-              <div class="field full">
                 <label>Special Notes</label>
                 <textarea id="notesInput" placeholder="Allergies, design details, budget range, serving notes, pickup notes..."></textarea>
               </div>
@@ -1241,8 +1231,8 @@
       })),
 
       message_on_cake: $("cakeMessageInput").value.trim(),
-      theme_notes: $("themeInput").value.trim(),
-      inspiration_photo_link: $("inspirationInput").value.trim(),
+      theme_notes: "",
+inspiration_photo_link: "",
       special_notes: $("notesInput").value.trim(),
 
       quantity: priceData.quantity,
