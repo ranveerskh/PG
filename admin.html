@@ -686,7 +686,7 @@
             </div>
 
             <div class="full">
-              <button class="btn primary" type="submit">Save Settings</button>
+              <button class="btn primary" type="button" onclick="saveSettings(event)">Save Settings</button>
             </div>
           </form>
         </div>
@@ -1335,39 +1335,64 @@
   }
 
   async function saveSettings(event){
-    event.preventDefault();
+    if(event) event.preventDefault();
 
-    const payload = {
-      id: 1,
-      brand_name: $("setBrandName").value.trim() || "Cake Studio",
-      tagline: $("setTagline").value.trim(),
-      logo_url: $("setLogoUrl").value.trim(),
-      hero_image_url: $("setHeroImage").value.trim(),
-      whatsapp_number: $("setWhatsapp").value.trim(),
-      instagram_url: $("setInstagram").value.trim(),
-      address: $("setAddress").value.trim(),
-      business_hours: $("setHours").value.trim(),
-      service_area: $("setServiceArea").value.trim(),
-      currency: $("setCurrency").value.trim() || "$",
-      hero_title: $("setHeroTitle").value.trim(),
-      hero_subtitle: $("setHeroSubtitle").value.trim(),
-      minimum_notice_hours: Number($("setNoticeHours").value || 24),
-      show_prices: $("setShowPrices").value === "true",
-      same_day_message: $("setSameDay").value.trim(),
-      policy_text: $("setPolicy").value.trim()
-    };
+    const btn = event?.target?.tagName === "BUTTON" ? event.target : document.querySelector("#settingsForm button[onclick*='saveSettings']");
+    const oldText = btn ? btn.textContent : "Save Settings";
 
-    const { error } = await supabaseClient
-      .from("site_settings")
-      .upsert(payload, { onConflict: "id" });
+    try{
+      if(btn){
+        btn.disabled = true;
+        btn.textContent = "Saving...";
+      }
 
-    if(error){
-      showToast(error.message, true);
-      return;
+      const payload = {
+        id: 1,
+        brand_name: $("setBrandName").value.trim() || "Cake Studio",
+        tagline: $("setTagline").value.trim(),
+        logo_url: $("setLogoUrl").value.trim(),
+        hero_image_url: $("setHeroImage").value.trim(),
+        whatsapp_number: $("setWhatsapp").value.trim(),
+        instagram_url: $("setInstagram").value.trim(),
+        address: $("setAddress").value.trim(),
+        business_hours: $("setHours").value.trim(),
+        service_area: $("setServiceArea").value.trim(),
+        currency: $("setCurrency").value.trim() || "$",
+        hero_title: $("setHeroTitle").value.trim(),
+        hero_subtitle: $("setHeroSubtitle").value.trim(),
+        minimum_notice_hours: Number($("setNoticeHours").value || 24),
+        show_prices: $("setShowPrices").value === "true",
+        same_day_message: $("setSameDay").value.trim(),
+        policy_text: $("setPolicy").value.trim()
+      };
+
+      console.log("Saving settings payload:", payload);
+
+      const { data, error } = await supabaseClient
+        .from("site_settings")
+        .upsert(payload, { onConflict: "id" })
+        .select()
+        .single();
+
+      if(error){
+        console.error("Settings save error:", error);
+        showToast(error.message, true);
+        return;
+      }
+
+      siteSettings = {...siteSettings, ...(data || payload)};
+      fillSettingsForm();
+      showToast("Settings saved.");
+
+    }catch(err){
+      console.error("Save settings failed:", err);
+      showToast(err.message || "Settings save failed.", true);
+    }finally{
+      if(btn){
+        btn.disabled = false;
+        btn.textContent = oldText;
+      }
     }
-
-    siteSettings = {...siteSettings, ...payload};
-    showToast("Settings saved.");
   }
 
   async function uploadAndSet(fileInputId, targetInputId, folder){
