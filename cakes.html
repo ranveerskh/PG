@@ -16,7 +16,6 @@
       --bg:#100b12;
       --bg2:#19101c;
       --card:#211625;
-      --card2:#2a1b2f;
       --text:#fff7fb;
       --muted:#c9aebd;
       --line:rgba(255,255,255,.10);
@@ -24,7 +23,6 @@
       --pink2:#ff8ac0;
       --cream:#ffe4c7;
       --gold:#ffc86b;
-      --green:#39d98a;
       --red:#ff5b6e;
       --shadow:0 18px 55px rgba(0,0,0,.36);
     }
@@ -524,6 +522,10 @@
       line-height:1.5;
     }
 
+    .empty strong{
+      color:var(--cream);
+    }
+
     .footer{
       border-top:1px solid var(--line);
       padding:20px 0;
@@ -728,13 +730,20 @@
   let currentCategoryId = "all";
 
   const $ = (id) => document.getElementById(id);
-  $("year").textContent = new Date().getFullYear();
 
-  init();
+  document.addEventListener("DOMContentLoaded", () => {
+    init().catch(err => {
+      console.error("Init failed:", err);
+      showPageError(err.message || "Unknown page error");
+    });
+  });
 
   async function init(){
+    $("year").textContent = new Date().getFullYear();
+
     updateCartCount();
     await loadData();
+
     readCategoryFromUrl();
     applySettings();
     buildFilters();
@@ -742,28 +751,79 @@
   }
 
   async function loadData(){
-    try{
-      const [settingsRes,catsRes,cakesRes,relRes] = await Promise.all([
-        supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
-        supabaseClient.from("categories").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
-        supabaseClient.from("cakes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
-        supabaseClient.from("cake_categories").select("*")
-      ]);
+    const settingsPromise = supabaseClient
+      .from("site_settings")
+      .select("*")
+      .eq("id", 1)
+      .maybeSingle();
 
-      const firstError = settingsRes.error || catsRes.error || cakesRes.error || relRes.error;
-      if(firstError) throw firstError;
+    const categoriesPromise = supabaseClient
+      .from("categories")
+      .select("*")
+      .eq("is_active", true)
+      .order("sort_order", { ascending:true })
+      .order("name", { ascending:true });
 
+    const cakesPromise = supabaseClient
+      .from("cakes")
+      .select("*")
+      .eq("is_active", true)
+      .order("sort_order", { ascending:true })
+      .order("created_at", { ascending:false });
+
+    const relationPromise = supabaseClient
+      .from("cake_categories")
+      .select("*");
+
+    const [settingsRes, categoriesRes, cakesRes, relationRes] = await Promise.all([
+      settingsPromise,
+      categoriesPromise,
+      cakesPromise,
+      relationPromise
+    ]);
+
+    if(settingsRes.error){
+      console.warn("Settings load error:", settingsRes.error.message);
+    }else{
       siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
-      categories = Array.isArray(catsRes.data) ? catsRes.data : [];
-      cakes = Array.isArray(cakesRes.data) ? cakesRes.data : [];
-      cakeCategories = Array.isArray(relRes.data) ? relRes.data : [];
-    }catch(err){
-      console.warn("Cakes page load issue:", err.message);
-      siteSettings = {...DEFAULT_SETTINGS};
+    }
+
+    if(categoriesRes.error){
+      console.warn("Categories load error:", categoriesRes.error.message);
       categories = [];
-      cakes = [];
+    }else{
+      categories = Array.isArray(categoriesRes.data) ? categoriesRes.data : [];
+    }
+
+    if(cakesRes.error){
+      throw new Error("Cakes table error: " + cakesRes.error.message);
+    }else{
+      cakes = Array.isArray(cakesRes.data) ? cakesRes.data : [];
+    }
+
+    if(relationRes.error){
+      console.warn("Cake categories relation error:", relationRes.error.message);
       cakeCategories = [];
-      $("cakeGrid").innerHTML = `<div class="empty">Could not load cakes. Please check Supabase tables and policies.</div>`;
+    }else{
+      cakeCategories = Array.isArray(relationRes.data) ? relationRes.data : [];
+    }
+
+    console.log("Loaded settings:", siteSettings);
+    console.log("Loaded categories:", categories);
+    console.log("Loaded cakes:", cakes);
+    console.log("Loaded cake_categories:", cakeCategories);
+  }
+
+  function showPageError(message){
+    const grid = $("cakeGrid");
+    if(grid){
+      grid.innerHTML = `
+        <div class="empty">
+          <strong>Page error</strong><br>
+          ${escapeHtml(message)}<br><br>
+          Open browser console for details.
+        </div>
+      `;
     }
   }
 
@@ -815,22 +875,26 @@
   }
 
   function setupWhatsappLinks(phone){
-    const message = "Hi, I want to ask about a cake order.";
+    const normalMessage = "Hi, I want to ask about a cake order.";
     const urgentMessage = "Hi, I need a same-day or urgent cake order. Can you please confirm availability?";
 
-    const normalUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : "#";
+    const normalUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(normalMessage)}` : "#";
     const urgentUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(urgentMessage)}` : "#";
 
     ["topWhatsappBtn","customWhatsappBtn"].forEach(id => {
-      $(id).href = normalUrl;
-      $(id).onclick = phone ? null : function(e){
+      const el = $(id);
+      if(!el) return;
+
+      el.href = normalUrl;
+      el.onclick = phone ? null : function(e){
         e.preventDefault();
         alert("WhatsApp number is not added yet. Add it in admin settings.");
       };
     });
 
-    $("urgentWhatsappBtn").href = urgentUrl;
-    $("urgentWhatsappBtn").onclick = phone ? null : function(e){
+    const urgent = $("urgentWhatsappBtn");
+    urgent.href = urgentUrl;
+    urgent.onclick = phone ? null : function(e){
       e.preventDefault();
       alert("WhatsApp number is not added yet. Add it in admin settings.");
     };
@@ -855,18 +919,20 @@
     renderCakes();
 
     const url = new URL(window.location.href);
+
     if(categoryId === "all"){
       url.searchParams.delete("cat");
     }else{
       const cat = categories.find(c => c.id === categoryId);
       url.searchParams.set("cat", cat?.slug || categoryId);
     }
+
     history.replaceState(null, "", url.toString());
   }
 
   function renderCakes(){
     const grid = $("cakeGrid");
-    const search = $("searchInput").value.trim().toLowerCase();
+    const search = ($("searchInput").value || "").trim().toLowerCase();
     const sort = $("sortSelect").value;
 
     let rows = [...cakes];
@@ -899,11 +965,21 @@
 
     $("resultCount").textContent = `${rows.length} ${rows.length === 1 ? "cake" : "cakes"}`;
 
+    if(!cakes.length){
+      grid.innerHTML = `
+        <div class="empty">
+          No active cakes found.<br>
+          Add active cakes from admin panel first.
+        </div>
+      `;
+      return;
+    }
+
     if(!rows.length){
       grid.innerHTML = `
         <div class="empty">
-          No cakes found.<br>
-          Try another search/category or create a custom cake request.<br><br>
+          No cakes found for this search/category.<br>
+          Try another search or create a custom cake request.<br><br>
           <a class="primaryBtn" href="cake.html?custom=true">Custom Cake Request</a>
         </div>
       `;
@@ -914,12 +990,13 @@
       const cats = getCakeCategoryNames(cake.id);
       const priceText = getPriceText(cake);
       const href = `cake.html?id=${encodeURIComponent(cake.id)}`;
+      const img = cake.image_url || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80";
 
       return `
         <article class="cakeCard">
           <a href="${href}">
             <div class="cakeImg">
-              <img src="${escapeHtml(cake.image_url || "")}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'">
+              <img src="${escapeHtml(img)}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'">
               <div class="badge">${escapeHtml(cats[0] || "Cake")}${cake.is_featured ? " · Featured" : ""}</div>
             </div>
           </a>
@@ -984,8 +1061,8 @@
 
     const currency = siteSettings.currency || "$";
 
-    if(cake.price_type === "fixed") return currency + price.toFixed(2).replace(".00", "");
-    return "From " + currency + price.toFixed(2).replace(".00", "");
+    if(cake.price_type === "fixed") return currency + price.toFixed(2).replace(".00","");
+    return "From " + currency + price.toFixed(2).replace(".00","");
   }
 
   function updateCartCount(){
