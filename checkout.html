@@ -27,13 +27,7 @@
       --shadow:0 18px 55px rgba(0,0,0,.36);
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      -webkit-tap-highlight-color:transparent;
-    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
 
     body{
       min-height:100vh;
@@ -48,168 +42,34 @@
     button,input,select,textarea{font:inherit}
     button{border:none;cursor:pointer}
 
-    .wrap{
-      width:min(1180px, calc(100% - 28px));
-      margin:auto;
-    }
+    .wrap{width:min(1180px, calc(100% - 28px));margin:auto}
 
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter:blur(18px);
-      background:rgba(16,11,18,.82);
-      border-bottom:1px solid var(--line);
-    }
+    .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(16,11,18,.82);border-bottom:1px solid var(--line)}
+    .nav{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .logo{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--pink),var(--gold));box-shadow:0 12px 28px rgba(255,95,162,.25);font-size:22px;overflow:hidden;flex:0 0 auto}
+    .logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .brand h1{font-size:17px;line-height:1;letter-spacing:-.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px}
+    .brand p{margin-top:4px;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:270px}
+    .navActions{display:flex;align-items:center;gap:8px}
+    .navLink{padding:9px 12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);border-radius:999px;font-size:13px;font-weight:900}
 
-    .nav{
-      min-height:64px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-
-    .logo{
-      width:42px;
-      height:42px;
-      border-radius:15px;
-      display:grid;
-      place-items:center;
-      background:linear-gradient(135deg,var(--pink),var(--gold));
-      box-shadow:0 12px 28px rgba(255,95,162,.25);
-      font-size:22px;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-
-    .logo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .brand h1{
-      font-size:17px;
-      line-height:1;
-      letter-spacing:-.04em;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:250px;
-    }
-
-    .brand p{
-      margin-top:4px;
-      font-size:11px;
-      color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:270px;
-    }
-
-    .navActions{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .navLink{
-      padding:9px 12px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      border-radius:999px;
-      font-size:13px;
-      font-weight:900;
-    }
-
-    .primaryBtn,.ghostBtn,.cartBtn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      border-radius:999px;
-      font-weight:1000;
-      transition:.2s ease;
-      white-space:nowrap;
-    }
-
-    .primaryBtn{
-      padding:11px 15px;
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
-      color:white;
-      box-shadow:0 14px 30px rgba(255,95,162,.24);
-    }
-
-    .ghostBtn{
-      padding:10px 13px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-    }
-
-    .cartBtn{
-      padding:10px 13px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:white;
-      font-size:13px;
-    }
-
-    .cartCount{
-      min-width:20px;
-      height:20px;
-      padding:0 6px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      background:var(--pink);
-      color:white;
-      font-size:11px;
-      font-weight:1000;
-    }
+    .primaryBtn,.ghostBtn,.cartBtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:1000;transition:.2s ease;white-space:nowrap}
+    .primaryBtn{padding:11px 15px;background:linear-gradient(135deg,var(--pink),var(--pink2));color:white;box-shadow:0 14px 30px rgba(255,95,162,.24)}
+    .ghostBtn{padding:10px 13px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text)}
+    .cartBtn{padding:10px 13px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:white;font-size:13px}
+    .cartCount{min-width:20px;height:20px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:var(--pink);color:white;font-size:11px;font-weight:1000}
 
     .mobileMenuBtn{display:none}
+    .mobileMenu{display:none;border-top:1px solid var(--line);padding:10px 0 12px}
+    .mobileMenu.show{display:grid;gap:8px}
+    .mobileMenu a{padding:11px 12px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.055);font-weight:900;font-size:13px}
 
-    .mobileMenu{
-      display:none;
-      border-top:1px solid var(--line);
-      padding:10px 0 12px;
-    }
-
-    .mobileMenu.show{
-      display:grid;
-      gap:8px;
-    }
-
-    .mobileMenu a{
-      padding:11px 12px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.055);
-      font-weight:900;
-      font-size:13px;
-    }
-
-    .page{
-      padding:24px 0 32px;
-    }
+    .page{padding:24px 0 32px}
 
     .heroBox{
       border:1px solid var(--line);
-      background:
-        radial-gradient(circle at 15% 20%,rgba(255,95,162,.26),transparent 32%),
-        linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
+      background:radial-gradient(circle at 15% 20%,rgba(255,95,162,.26),transparent 32%),linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
       border-radius:30px;
       padding:24px;
       box-shadow:var(--shadow);
@@ -220,403 +80,80 @@
       margin-bottom:15px;
     }
 
-    .heroBox h2{
-      max-width:760px;
-      font-size:clamp(34px,5vw,58px);
-      line-height:.98;
-      letter-spacing:-.075em;
-    }
+    .heroBox h2{max-width:760px;font-size:clamp(34px,5vw,58px);line-height:.98;letter-spacing:-.075em}
+    .heroBox h2 span{color:var(--pink2)}
+    .heroBox p{max-width:720px;margin-top:12px;color:var(--muted);font-size:14px;line-height:1.6}
 
-    .heroBox h2 span{
-      color:var(--pink2);
-    }
+    .layout{display:grid;grid-template-columns:1fr 390px;gap:14px;align-items:start}
 
-    .heroBox p{
-      max-width:720px;
-      margin-top:12px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
-    }
+    .card{border:1px solid var(--line);background:rgba(255,255,255,.055);border-radius:26px;box-shadow:0 14px 38px rgba(0,0,0,.18);overflow:hidden}
+    .cardHead{padding:15px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .cardHead h3{font-size:20px;letter-spacing:-.05em}
+    .cardHead p{margin-top:5px;color:var(--muted);font-size:12px;line-height:1.45}
+    .cardBody{padding:15px}
 
-    .layout{
-      display:grid;
-      grid-template-columns:1fr 390px;
-      gap:14px;
-      align-items:start;
-    }
+    .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field.full{grid-column:1/-1}
+    .field label{color:var(--cream);font-size:12px;font-weight:1000}
+    .field input,.field select,.field textarea{width:100%;border:1px solid var(--line);outline:none;background:rgba(255,255,255,.07);color:var(--text);border-radius:15px;padding:12px;min-height:45px;resize:vertical}
+    .field textarea{min-height:88px}
+    .field select option{color:#111}
+    .hint{color:var(--muted);font-size:11px;line-height:1.45}
 
-    .card{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.055);
-      border-radius:26px;
-      box-shadow:0 14px 38px rgba(0,0,0,.18);
-      overflow:hidden;
-    }
+    .deliveryFields{display:none;grid-column:1/-1;grid-template-columns:repeat(2,1fr);gap:11px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:20px;padding:12px}
+    .deliveryFields.show{display:grid}
+    .pickupBox{display:block;grid-column:1/-1;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:20px;padding:12px}
+    .pickupBox.hide{display:none}
 
-    .cardHead{
-      padding:15px;
-      border-bottom:1px solid var(--line);
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-    }
+    .checkRow{grid-column:1/-1;display:flex;gap:9px;align-items:flex-start;border:1px solid rgba(255,200,107,.20);background:rgba(255,200,107,.08);color:var(--cream);border-radius:18px;padding:12px;font-size:12px;font-weight:850;line-height:1.45}
+    .checkRow input{margin-top:2px;accent-color:var(--pink);width:18px;height:18px;flex:0 0 auto}
 
-    .cardHead h3{
-      font-size:20px;
-      letter-spacing:-.05em;
-    }
+    .submitBtn{width:100%;padding:14px 16px;border-radius:999px;background:linear-gradient(135deg,var(--pink),var(--pink2));color:white;font-weight:1000;box-shadow:0 15px 30px rgba(255,95,162,.22)}
+    .submitBtn:disabled{opacity:.65;cursor:not-allowed}
 
-    .cardHead p{
-      margin-top:5px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
-    }
+    .secondaryBtn{width:100%;padding:13px 16px;border-radius:999px;background:rgba(255,255,255,.08);color:white;font-weight:900;border:1px solid var(--line);text-align:center;display:inline-flex;justify-content:center;align-items:center}
 
-    .cardBody{
-      padding:15px;
-    }
+    .summary{position:sticky;top:82px}
+    .summaryItem{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:18px;padding:10px;margin-bottom:8px}
+    .summaryItemTop{display:flex;gap:10px;align-items:flex-start}
+    .summaryItem img{width:56px;height:56px;border-radius:14px;object-fit:cover;background:#2d1a30;flex:0 0 auto}
+    .summaryItem h4{font-size:13px;line-height:1.2;margin-bottom:4px}
+    .summaryItem p{color:var(--muted);font-size:11px;line-height:1.45}
 
-    .formGrid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:11px;
-    }
+    .summaryLine{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+    .summaryLine b{color:var(--text)}
 
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
+    .paymentBox{margin-top:12px;border:1px solid rgba(255,200,107,.22);background:rgba(255,200,107,.08);border-radius:20px;padding:14px}
+    .paymentBox h4{font-size:15px;margin-bottom:8px;letter-spacing:-.03em}
+    .paymentLine{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.10);font-size:13px;color:var(--cream)}
+    .paymentLine:last-child{border-bottom:none}
+    .paymentLine.total{font-size:18px;font-weight:1000;color:white;padding-top:12px}
+    .paymentLine span:last-child{text-align:right;font-weight:1000}
 
-    .field.full{
-      grid-column:1/-1;
-    }
+    .policyNote{margin-top:11px;border:1px solid rgba(255,200,107,.20);background:rgba(255,200,107,.08);color:var(--cream);border-radius:18px;padding:12px;font-size:12px;font-weight:800;line-height:1.45}
+    .quoteNote{margin-top:11px;border:1px solid rgba(255,95,162,.22);background:rgba(255,95,162,.08);color:#ffd5e7;border-radius:18px;padding:12px;font-size:12px;font-weight:800;line-height:1.45;display:none}
+    .quoteNote.show{display:block}
 
-    .field label{
-      color:var(--cream);
-      font-size:12px;
-      font-weight:1000;
-    }
+    .empty{border:1px dashed rgba(255,255,255,.18);background:rgba(255,255,255,.04);border-radius:24px;padding:34px 18px;color:var(--muted);text-align:center;line-height:1.55}
+    .empty h3{color:var(--text);font-size:24px;letter-spacing:-.05em;margin-bottom:8px}
+    .emptyActions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 
-    .field input,.field select,.field textarea{
-      width:100%;
-      border:1px solid var(--line);
-      outline:none;
-      background:rgba(255,255,255,.07);
-      color:var(--text);
-      border-radius:15px;
-      padding:12px;
-      min-height:45px;
-      resize:vertical;
-    }
+    .successBox{border:1px solid rgba(57,217,138,.22);background:rgba(57,217,138,.08);color:#d8ffe9;border-radius:24px;padding:22px;line-height:1.55}
+    .successBox h3{color:white;font-size:26px;letter-spacing:-.05em;margin-bottom:8px}
 
-    .field textarea{
-      min-height:88px;
-    }
+    .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;z-index:200;max-width:min(560px,calc(100% - 24px));border:1px solid var(--line);background:rgba(33,22,37,.96);color:var(--text);backdrop-filter:blur(18px);border-radius:999px;padding:11px 15px;font-size:13px;font-weight:900;box-shadow:0 18px 50px rgba(0,0,0,.38);transition:.2s ease;text-align:center}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-    .field select option{
-      color:#111;
-    }
-
-    .hint{
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.45;
-    }
-
-    .deliveryFields{
-      display:none;
-      grid-column:1/-1;
-      grid-template-columns:repeat(2,1fr);
-      gap:11px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.035);
-      border-radius:20px;
-      padding:12px;
-    }
-
-    .deliveryFields.show{
-      display:grid;
-    }
-
-    .pickupBox{
-      display:block;
-      grid-column:1/-1;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.035);
-      border-radius:20px;
-      padding:12px;
-    }
-
-    .pickupBox.hide{
-      display:none;
-    }
-
-    .checkRow{
-      grid-column:1/-1;
-      display:flex;
-      gap:9px;
-      align-items:flex-start;
-      border:1px solid rgba(255,200,107,.20);
-      background:rgba(255,200,107,.08);
-      color:var(--cream);
-      border-radius:18px;
-      padding:12px;
-      font-size:12px;
-      font-weight:850;
-      line-height:1.45;
-    }
-
-    .checkRow input{
-      margin-top:2px;
-      accent-color:var(--pink);
-      width:18px;
-      height:18px;
-      flex:0 0 auto;
-    }
-
-    .submitBtn{
-      width:100%;
-      padding:14px 16px;
-      border-radius:999px;
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
-      color:white;
-      font-weight:1000;
-      box-shadow:0 15px 30px rgba(255,95,162,.22);
-    }
-
-    .submitBtn:disabled{
-      opacity:.65;
-      cursor:not-allowed;
-    }
-
-    .secondaryBtn{
-      width:100%;
-      padding:13px 16px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      color:white;
-      font-weight:900;
-      border:1px solid var(--line);
-      text-align:center;
-    }
-
-    .summary{
-      position:sticky;
-      top:82px;
-    }
-
-    .summaryItem{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      border-radius:18px;
-      padding:10px;
-      margin-bottom:8px;
-    }
-
-    .summaryItemTop{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-    }
-
-    .summaryItem img{
-      width:56px;
-      height:56px;
-      border-radius:14px;
-      object-fit:cover;
-      background:#2d1a30;
-      flex:0 0 auto;
-    }
-
-    .summaryItem h4{
-      font-size:13px;
-      line-height:1.2;
-      margin-bottom:4px;
-    }
-
-    .summaryItem p{
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.45;
-    }
-
-    .summaryLine{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px 0;
-      border-bottom:1px solid var(--line);
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .summaryLine b{
-      color:var(--text);
-    }
-
-    .totalBox{
-      margin-top:12px;
-      border:1px solid rgba(255,200,107,.22);
-      background:rgba(255,200,107,.08);
-      border-radius:20px;
-      padding:14px;
-    }
-
-    .totalBox span{
-      display:block;
-      color:var(--cream);
-      font-size:12px;
-      font-weight:1000;
-      margin-bottom:5px;
-    }
-
-    .totalBox b{
-      display:block;
-      font-size:34px;
-      letter-spacing:-.06em;
-    }
-
-    .policyNote{
-      margin-top:11px;
-      border:1px solid rgba(255,200,107,.20);
-      background:rgba(255,200,107,.08);
-      color:var(--cream);
-      border-radius:18px;
-      padding:12px;
-      font-size:12px;
-      font-weight:800;
-      line-height:1.45;
-    }
-
-    .quoteNote{
-      margin-top:11px;
-      border:1px solid rgba(255,95,162,.22);
-      background:rgba(255,95,162,.08);
-      color:#ffd5e7;
-      border-radius:18px;
-      padding:12px;
-      font-size:12px;
-      font-weight:800;
-      line-height:1.45;
-      display:none;
-    }
-
-    .quoteNote.show{
-      display:block;
-    }
-
-    .empty{
-      border:1px dashed rgba(255,255,255,.18);
-      background:rgba(255,255,255,.04);
-      border-radius:24px;
-      padding:34px 18px;
-      color:var(--muted);
-      text-align:center;
-      line-height:1.55;
-    }
-
-    .empty h3{
-      color:var(--text);
-      font-size:24px;
-      letter-spacing:-.05em;
-      margin-bottom:8px;
-    }
-
-    .emptyActions{
-      margin-top:16px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-
-    .successBox{
-      border:1px solid rgba(57,217,138,.22);
-      background:rgba(57,217,138,.08);
-      color:#d8ffe9;
-      border-radius:24px;
-      padding:22px;
-      line-height:1.55;
-    }
-
-    .successBox h3{
-      color:white;
-      font-size:26px;
-      letter-spacing:-.05em;
-      margin-bottom:8px;
-    }
-
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform:translateX(-50%) translateY(20px);
-      opacity:0;
-      pointer-events:none;
-      z-index:200;
-      max-width:min(560px,calc(100% - 24px));
-      border:1px solid var(--line);
-      background:rgba(33,22,37,.96);
-      color:var(--text);
-      backdrop-filter:blur(18px);
-      border-radius:999px;
-      padding:11px 15px;
-      font-size:13px;
-      font-weight:900;
-      box-shadow:0 18px 50px rgba(0,0,0,.38);
-      transition:.2s ease;
-      text-align:center;
-    }
-
-    .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(0);
-    }
-
-    .footer{
-      border-top:1px solid var(--line);
-      padding:20px 0;
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    .footerInner{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    .footerLinks{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .footerLinks a{
-      color:var(--cream);
-      font-weight:800;
-    }
+    .footer{border-top:1px solid var(--line);padding:20px 0;color:var(--muted);font-size:12px}
+    .footerInner{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+    .footerLinks{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .footerLinks a{color:var(--cream);font-weight:800}
 
     @media(max-width:980px){
-      .layout{
-        grid-template-columns:1fr;
-      }
-
-      .summary{
-        position:static;
-      }
-
-      .heroBox{
-        align-items:flex-start;
-        flex-direction:column;
-      }
+      .layout{grid-template-columns:1fr}
+      .summary{position:static}
+      .heroBox{align-items:flex-start;flex-direction:column}
     }
 
     @media(max-width:720px){
@@ -630,9 +167,7 @@
       .cartBtn{padding:10px 11px}
       .heroBox{padding:18px;border-radius:24px}
       .heroBox h2{font-size:39px}
-      .formGrid,.deliveryFields{
-        grid-template-columns:1fr;
-      }
+      .formGrid,.deliveryFields{grid-template-columns:1fr}
       .footerLinks{justify-content:flex-start}
     }
   </style>
@@ -675,8 +210,8 @@
 <main class="wrap page">
   <section class="heroBox">
     <div>
-      <h2>Place your order, <span>confirm on WhatsApp.</span></h2>
-      <p>Submit your cake request with customer details, pickup/delivery info, and preferred date. Online orders start from tomorrow. Same-day orders should contact WhatsApp directly.</p>
+      <h2>Place your order, <span>see estimated payment.</span></h2>
+      <p>Submit your cake order request with customer details and estimated payable total. This is not a final invoice. Final confirmation and invoice can be sent later from admin after payment/completion.</p>
     </div>
 
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
@@ -731,10 +266,14 @@
     same_day_message:"For today or urgent orders, please contact us directly on WhatsApp.",
     policy_text:"Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp. Estimated prices may change after design review.",
     currency:"$",
-    show_prices:true
+    show_prices:true,
+    charge_hst:false,
+    hst_rate:13,
+    default_delivery_fee:0
   };
 
   let siteSettings = {...DEFAULT_SETTINGS};
+  let currentCart = [];
 
   const $ = (id) => document.getElementById(id);
 
@@ -747,7 +286,6 @@
 
   async function init(){
     $("year").textContent = new Date().getFullYear();
-
     await loadSettings();
     applySettings();
     renderCheckout();
@@ -792,9 +330,9 @@
   }
 
   function renderCheckout(){
-    const cart = getCart();
+    currentCart = getCart();
 
-    if(!cart.length){
+    if(!currentCart.length){
       $("checkoutArea").className = "";
       $("checkoutArea").innerHTML = `
         <div class="empty">
@@ -810,8 +348,6 @@
     }
 
     $("checkoutArea").className = "layout";
-
-    const totals = calculateTotals(cart);
 
     $("checkoutArea").innerHTML = `
       <section class="card">
@@ -836,7 +372,7 @@
 
             <div class="field">
               <label>Email</label>
-              <input id="customerEmail" type="email" placeholder="Optional for future confirmation">
+              <input id="customerEmail" type="email" placeholder="Optional">
             </div>
 
             <div class="field">
@@ -852,7 +388,7 @@
 
             <div class="field">
               <label>Pickup or Delivery? *</label>
-              <select id="deliveryType" required onchange="toggleDeliveryFields()">
+              <select id="deliveryType" required onchange="toggleDeliveryFields(); updatePaymentBox();">
                 <option>Pickup</option>
                 <option>Delivery</option>
               </select>
@@ -890,18 +426,18 @@
 
             <div class="field full">
               <label>Overall Order Note</label>
-              <textarea id="orderNote" placeholder="Any note for the full order, budget range, allergy warning, timing request..."></textarea>
+              <textarea id="orderNote" placeholder="Any note for the full order, allergy warning, timing request, budget note..."></textarea>
             </div>
 
             <label class="checkRow">
               <input id="confirmPolicy" type="checkbox" required>
               <span>
-                I understand this is an order request, not a confirmed order. My order is confirmed only after the shop replies on WhatsApp. Estimated pricing may change after design review.
+                I understand this is an order request, not a confirmed order or final invoice. Estimated total payable may change after shop review. Final invoice can be sent after payment/completion.
               </span>
             </label>
 
             <div class="field full">
-              <button id="submitBtn" class="submitBtn" type="submit">Submit Order & Open WhatsApp</button>
+              <button id="submitBtn" class="submitBtn" type="submit">Submit Order Request & Open WhatsApp</button>
             </div>
           </form>
         </div>
@@ -912,37 +448,34 @@
           <div class="cardHead">
             <div>
               <h3>Order Review</h3>
-              <p>Review items before submitting.</p>
+              <p>Estimated payment before final shop confirmation.</p>
             </div>
           </div>
 
           <div class="cardBody">
             <div id="summaryItems">
-              ${cart.map(item => renderSummaryItem(item)).join("")}
+              ${currentCart.map(item => renderSummaryItem(item)).join("")}
             </div>
 
             <div class="summaryLine">
               <span>Total items</span>
-              <b>${totals.totalQuantity}</b>
+              <b id="sumTotalItems">0</b>
             </div>
 
             <div class="summaryLine">
               <span>Cart lines</span>
-              <b>${cart.length}</b>
+              <b id="sumCartLines">0</b>
             </div>
 
             <div class="summaryLine">
               <span>Quote items</span>
-              <b>${totals.quoteItems}</b>
+              <b id="sumQuoteItems">0</b>
             </div>
 
-            <div class="totalBox">
-              <span>Estimated Order Total</span>
-              <b>${totals.hasQuote ? "Quote" : money(totals.estimatedTotal)}</b>
-            </div>
+            <div id="paymentBox" class="paymentBox"></div>
 
-            <div class="quoteNote ${totals.hasQuote ? "show" : ""}">
-              Some selected items/options require a custom quote. The shop will confirm final pricing on WhatsApp.
+            <div id="quoteNote" class="quoteNote">
+              Some selected items/options require a custom quote. HST and final payment can be calculated after final price confirmation.
             </div>
 
             <div class="policyNote">
@@ -961,6 +494,7 @@
     `;
 
     toggleDeliveryFields();
+    updatePaymentBox();
   }
 
   function renderSummaryItem(item){
@@ -1008,6 +542,80 @@
     });
   }
 
+  function calculatePayment(){
+    const cart = getCart();
+    const deliveryType = $("deliveryType")?.value || "Pickup";
+
+    let subtotal = 0;
+    let totalQuantity = 0;
+    let quoteItems = 0;
+
+    cart.forEach(item => {
+      const qty = Math.max(1, Number(item.quantity || 1));
+      totalQuantity += qty;
+
+      if(item.quote_required === true){
+        quoteItems += 1;
+      }else{
+        subtotal += Number(item.estimated_item_total || 0);
+      }
+    });
+
+    const hasQuote = quoteItems > 0;
+    const deliveryFee = deliveryType === "Delivery" ? Number(siteSettings.default_delivery_fee || 0) : 0;
+    const hstRate = Number(siteSettings.hst_rate || 13);
+    const chargeHst = siteSettings.charge_hst === true;
+
+    const taxableAmount = subtotal + deliveryFee;
+    const hstAmount = chargeHst && !hasQuote ? taxableAmount * (hstRate / 100) : 0;
+    const totalPayable = subtotal + deliveryFee + hstAmount;
+
+    return {
+      cart,
+      subtotal,
+      totalQuantity,
+      cartLines: cart.length,
+      quoteItems,
+      hasQuote,
+      deliveryType,
+      deliveryFee,
+      hstRate,
+      chargeHst,
+      hstAmount,
+      totalPayable
+    };
+  }
+
+  function updatePaymentBox(){
+    const data = calculatePayment();
+
+    $("sumTotalItems").textContent = data.totalQuantity;
+    $("sumCartLines").textContent = data.cartLines;
+    $("sumQuoteItems").textContent = data.quoteItems;
+
+    $("quoteNote").classList.toggle("show", data.hasQuote);
+
+    const hstLabel = data.chargeHst
+      ? `HST ${Number(data.hstRate || 0).toFixed(2).replace(".00","")}%`
+      : "HST";
+
+    $("paymentBox").innerHTML = data.hasQuote
+      ? `
+        <h4>Estimated Payment</h4>
+        <div class="paymentLine"><span>Subtotal</span><span>Quote required</span></div>
+        <div class="paymentLine"><span>Delivery Fee</span><span>${data.deliveryType === "Delivery" ? "To be confirmed" : money(0)}</span></div>
+        <div class="paymentLine"><span>${escapeHtml(hstLabel)}</span><span>${data.chargeHst ? "Calculated after final price" : "Not charged"}</span></div>
+        <div class="paymentLine total"><span>Estimated Total Payable</span><span>Quote required</span></div>
+      `
+      : `
+        <h4>Estimated Payment</h4>
+        <div class="paymentLine"><span>Subtotal</span><span>${money(data.subtotal)}</span></div>
+        <div class="paymentLine"><span>Delivery Fee</span><span>${money(data.deliveryFee)}</span></div>
+        <div class="paymentLine"><span>${escapeHtml(hstLabel)}</span><span>${data.chargeHst ? money(data.hstAmount) : "Not charged"}</span></div>
+        <div class="paymentLine total"><span>Estimated Total Payable</span><span>${money(data.totalPayable)}</span></div>
+      `;
+  }
+
   async function submitOrder(event){
     event.preventDefault();
 
@@ -1034,8 +642,7 @@
 
     const deliveryType = getValue("deliveryType");
     const isDelivery = deliveryType === "Delivery";
-
-    const totals = calculateTotals(cart);
+    const totals = calculatePayment();
     const orderId = createId();
 
     const pickupNote = getValue("pickupNote");
@@ -1044,7 +651,15 @@
 
     const combinedNote = [
       pickupNote ? "Pickup note: " + pickupNote : "",
-      orderNote ? "Order note: " + orderNote : ""
+      orderNote ? "Order note: " + orderNote : "",
+      "",
+      "ESTIMATED PAYMENT BREAKDOWN",
+      totals.hasQuote ? "Subtotal: Quote required" : "Subtotal: " + money(totals.subtotal),
+      "Delivery Fee: " + (totals.hasQuote && deliveryType === "Delivery" ? "To be confirmed" : money(totals.deliveryFee)),
+      totals.chargeHst
+        ? `HST ${totals.hstRate}%: ${totals.hasQuote ? "Calculated after final price" : money(totals.hstAmount)}`
+        : "HST: Not charged",
+      totals.hasQuote ? "Estimated Total Payable: Quote required" : "Estimated Total Payable: " + money(totals.totalPayable)
     ].filter(Boolean).join("\n");
 
     const orderPayload = {
@@ -1060,7 +675,7 @@
       postal_code: isDelivery ? getValue("postalCode") : "",
       delivery_instructions: isDelivery ? deliveryInstructions : "",
       order_note: combinedNote,
-      estimated_total: Number(totals.estimatedTotal || 0),
+      estimated_total: Number(totals.totalPayable || 0),
       status: "Pending",
       whatsapp_message: ""
     };
@@ -1082,6 +697,8 @@
       option_extra_price: Number(item.option_extra_price || 0),
       addons_json: Array.isArray(item.selected_addons) ? item.selected_addons : [],
       message_on_cake: item.message_on_cake || "",
+      theme_notes: "",
+      inspiration_photo_link: "",
       special_notes: item.special_notes || "",
       quantity: Math.max(1, Number(item.quantity || 1)),
       estimated_item_total: Number(item.estimated_item_total || 0)
@@ -1089,7 +706,7 @@
 
     const btn = $("submitBtn");
     btn.disabled = true;
-    btn.textContent = "Saving order...";
+    btn.textContent = "Saving order request...";
 
     try{
       const orderInsert = await supabaseClient.from("orders").insert(orderPayload);
@@ -1115,7 +732,7 @@
       console.error(err);
       showToast(err.message || "Could not save order.", true);
       btn.disabled = false;
-      btn.textContent = "Submit Order & Open WhatsApp";
+      btn.textContent = "Submit Order Request & Open WhatsApp";
     }
   }
 
@@ -1127,66 +744,112 @@
         ? item.selected_addons.map(a => `${a.name}${a.quote_required ? " (Quote)" : " (" + money(a.price) + ")"}`).join(", ")
         : "None";
 
-      return `ITEM ${index + 1}
-Cake: ${item.cake_name || "Cake"}
-Type: ${item.is_custom ? "Custom Request" : "Catalogue Cake"}
-Size: ${item.selected_size_name || "Not selected"}
-Servings: ${item.selected_servings || "Not selected"}
-Size Price: ${item.size_quote_required ? "Quote" : money(item.selected_size_price || 0)}
-Flavour: ${item.selected_flavour_name || "Not selected"}
-Flavour Extra: ${item.flavour_quote_required ? "Quote" : money(item.flavour_extra_price || 0)}
-Option: ${item.selected_option_name || "Not selected"}
-Option Extra: ${item.option_quote_required ? "Quote" : money(item.option_extra_price || 0)}
-Quantity: ${item.quantity || 1}
-Message on Cake: ${item.message_on_cake || "No message"}
-Theme / Colours: ${item.theme_notes || "Not provided"}
-Inspiration Link: ${item.inspiration_photo_link || "Not provided"}
-Special Notes: ${item.special_notes || "No notes"}
-Add-ons: ${addons}
-Estimated Item Total: ${item.quote_required ? "Quote" : money(item.estimated_item_total || 0)}`;
-    }).join(`\n\n--------------------\n\n`);
+      return [
+        `ITEM ${index + 1}`,
+        `Cake: ${item.cake_name || "Cake"}`,
+        `Type: ${item.is_custom ? "Custom Request" : "Catalogue Cake"}`,
+        `Size: ${item.selected_size_name || "Not selected"}`,
+        `Servings: ${item.selected_servings || "Not selected"}`,
+        `Size Price: ${item.size_quote_required ? "Quote" : money(item.selected_size_price || 0)}`,
+        `Flavour: ${item.selected_flavour_name || "Not selected"}`,
+        `Flavour Extra: ${item.flavour_quote_required ? "Quote" : money(item.flavour_extra_price || 0)}`,
+        `Option: ${item.selected_option_name || "Not selected"}`,
+        `Option Extra: ${item.option_quote_required ? "Quote" : money(item.option_extra_price || 0)}`,
+        `Quantity: ${item.quantity || 1}`,
+        `Message on Cake: ${item.message_on_cake || "No message"}`,
+        `Special Notes: ${item.special_notes || "No notes"}`,
+        `Add-ons: ${addons}`,
+        `Estimated Item Total: ${item.quote_required ? "Quote" : money(item.estimated_item_total || 0)}`
+      ].join("\n");
+    }).join("\n\n--------------------\n\n");
 
-    return `🍰 NEW CAKE ORDER REQUEST
-Order ID: ${shortId}
+    const customerBlock = [
+      "CUSTOMER",
+      `Name: ${order.customer_name}`,
+      `Phone: ${order.customer_phone}`,
+      `Email: ${order.customer_email || "Not provided"}`
+    ].join("\n");
 
-CUSTOMER
-Name: ${order.customer_name}
-Phone: ${order.customer_phone}
-Email: ${order.customer_email || "Not provided"}
+    const dateBlock = [
+      "DATE & ORDER TYPE",
+      `Needed Date: ${order.needed_date}`,
+      `Needed Time: ${order.needed_time || "Not selected"}`,
+      `Order Type: ${order.delivery_type}`
+    ].join("\n");
 
-DATE & ORDER TYPE
-Needed Date: ${order.needed_date}
-Needed Time: ${order.needed_time || "Not selected"}
-Order Type: ${order.delivery_type}
+    const locationBlock = order.delivery_type === "Delivery"
+      ? [
+          "DELIVERY",
+          `Address: ${order.address}`,
+          `City: ${order.city}`,
+          `Postal Code: ${order.postal_code}`,
+          `Instructions: ${order.delivery_instructions || "None"}`
+        ].join("\n")
+      : [
+          "PICKUP",
+          `Pickup Note: ${getValue("pickupNote") || "None"}`
+        ].join("\n");
 
-${order.delivery_type === "Delivery" ? `DELIVERY
-Address: ${order.address}
-City: ${order.city}
-Postal Code: ${order.postal_code}
-Instructions: ${order.delivery_instructions || "None"}` : `PICKUP
-Pickup note: ${getValue("pickupNote") || "None"}`}
+    const paymentBlock = totals.hasQuote
+      ? [
+          "ESTIMATED PAYMENT",
+          "Subtotal: Quote required",
+          `Delivery Fee: ${totals.deliveryType === "Delivery" ? "To be confirmed" : money(0)}`,
+          totals.chargeHst
+            ? `HST ${totals.hstRate}%: Calculated after final price`
+            : "HST: Not charged",
+          "Estimated Total Payable: Quote required"
+        ].join("\n")
+      : [
+          "ESTIMATED PAYMENT",
+          `Subtotal: ${money(totals.subtotal)}`,
+          `Delivery Fee: ${money(totals.deliveryFee)}`,
+          totals.chargeHst
+            ? `HST ${totals.hstRate}%: ${money(totals.hstAmount)}`
+            : "HST: Not charged",
+          `Estimated Total Payable: ${money(totals.totalPayable)}`
+        ].join("\n");
 
-ITEMS
---------------------
+    const summaryBlock = [
+      "ORDER SUMMARY",
+      `Total Items: ${totals.totalQuantity}`,
+      `Cart Lines: ${cart.length}`,
+      `Quote Items: ${totals.quoteItems}`,
+      `Status: Pending`
+    ].join("\n");
 
-${itemLines}
+    const noteBlock = [
+      "ORDER NOTE",
+      `${getValue("orderNote") || "No overall note"}`
+    ].join("\n");
 
---------------------
-
-ORDER SUMMARY
-Total Items: ${totals.totalQuantity}
-Cart Lines: ${cart.length}
-Quote Items: ${totals.quoteItems}
-Estimated Order Total: ${totals.hasQuote ? "Quote required" : money(totals.estimatedTotal)}
-
-ORDER NOTE
-${getValue("orderNote") || "No overall note"}
-
-STATUS
-Pending
-
-NOTE
-This is an order request. Final price and confirmation will be provided by the shop.`;
+    return [
+      "🍰 NEW CAKE ORDER REQUEST",
+      `Order ID: ${shortId}`,
+      "",
+      customerBlock,
+      "",
+      dateBlock,
+      "",
+      locationBlock,
+      "",
+      "ITEMS",
+      "--------------------",
+      "",
+      itemLines,
+      "",
+      "--------------------",
+      "",
+      paymentBlock,
+      "",
+      summaryBlock,
+      "",
+      noteBlock,
+      "",
+      "NOTE",
+      "This is an order request, not a final invoice.",
+      "Final confirmation and invoice can be provided by the shop after review/payment."
+    ].join("\n");
   }
 
   function showSuccess(orderId){
@@ -1200,7 +863,9 @@ This is an order request. Final price and confirmation will be provided by the s
         <br><br>
         <b>Order ID:</b> ${escapeHtml(shortId)}
         <br><br>
-        Please complete/send the WhatsApp message to confirm with the shop. Your order is confirmed only after the shop replies.
+        Please complete/send the WhatsApp message to confirm with the shop.
+        <br>
+        This is not a final invoice. Invoice can be sent later after payment/completion.
         <div class="emptyActions" style="justify-content:flex-start;">
           <a class="primaryBtn" href="index.html">Back to Home</a>
           <a class="ghostBtn" href="cakes.html">Browse More Cakes</a>
@@ -1209,30 +874,10 @@ This is an order request. Final price and confirmation will be provided by the s
     `;
 
     showToast("Order saved. WhatsApp opened.");
-  }
 
-  function calculateTotals(cart){
-    let estimatedTotal = 0;
-    let totalQuantity = 0;
-    let quoteItems = 0;
-
-    cart.forEach(item => {
-      const qty = Math.max(1, Number(item.quantity || 1));
-      totalQuantity += qty;
-
-      if(item.quote_required === true){
-        quoteItems += 1;
-      }else{
-        estimatedTotal += Number(item.estimated_item_total || 0);
-      }
-    });
-
-    return {
-      estimatedTotal,
-      totalQuantity,
-      quoteItems,
-      hasQuote: quoteItems > 0
-    };
+    setTimeout(() => {
+      window.location.href = "thank-you.html?order=" + encodeURIComponent(orderId);
+    }, 1400);
   }
 
   function getTomorrowDate(){
@@ -1289,11 +934,9 @@ This is an order request. Final price and confirmation will be provided by the s
 
   function buildFooterInfo(){
     const parts = [];
-
     if(siteSettings.address) parts.push(siteSettings.address);
     if(siteSettings.service_area) parts.push("Serving " + siteSettings.service_area);
     if(siteSettings.business_hours) parts.push(siteSettings.business_hours);
-
     return parts.length ? parts.join(" · ") : "Made for easy WhatsApp cake orders.";
   }
 
