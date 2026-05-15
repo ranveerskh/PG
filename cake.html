@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Customize Cake - Cake Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --bg:#100b12;
+      --bg2:#19101c;
+      --text:#fff7fb;
+      --muted:#c9aebd;
+      --line:rgba(255,255,255,.10);
+      --pink:#ff5fa2;
+      --pink2:#ff8ac0;
+      --cream:#ffe4c7;
+      --gold:#ffc86b;
+      --green:#39d98a;
+      --red:#ff5b6e;
+      --shadow:0 18px 55px rgba(0,0,0,.36);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255,95,162,.22), transparent 34%),
+        radial-gradient(circle at 90% 10%, rgba(255,200,107,.12), transparent 28%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color:var(--text);
+    }
+
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    button{border:none;cursor:pointer}
+
+    .wrap{
+      width:min(1180px, calc(100% - 28px));
+      margin:auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(18px);
+      background:rgba(16,11,18,.82);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:15px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--pink),var(--gold));
+      box-shadow:0 12px 28px rgba(255,95,162,.25);
+      font-size:22px;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .brand h1{
+      font-size:17px;
+      line-height:1;
+      letter-spacing:-.04em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:250px;
+    }
+
+    .brand p{
+      margin-top:4px;
+      font-size:11px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:270px;
+    }
+
+    .navActions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .navLink{
+      padding:9px 12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .primaryBtn,.ghostBtn,.cartBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border-radius:999px;
+      font-weight:1000;
+      transition:.2s ease;
+      white-space:nowrap;
+    }
+
+    .primaryBtn{
+      padding:11px 15px;
+      background:linear-gradient(135deg,var(--pink),var(--pink2));
+      color:white;
+      box-shadow:0 14px 30px rgba(255,95,162,.24);
+    }
+
+    .primaryBtn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 18px 36px rgba(255,95,162,.34);
+    }
+
+    .ghostBtn{
+      padding:10px 13px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+    }
+
+    .cartBtn{
+      padding:10px 13px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.06);
+      color:white;
+      font-size:13px;
+    }
+
+    .cartCount{
+      min-width:20px;
+      height:20px;
+      padding:0 6px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:var(--pink);
+      color:white;
+      font-size:11px;
+      font-weight:1000;
+    }
+
+    .mobileMenuBtn{display:none}
+
+    .mobileMenu{
+      display:none;
+      border-top:1px solid var(--line);
+      padding:10px 0 12px;
+    }
+
+    .mobileMenu.show{
+      display:grid;
+      gap:8px;
+    }
+
+    .mobileMenu a{
+      padding:11px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      font-weight:900;
+      font-size:13px;
+    }
+
+    .page{
+      padding:24px 0 32px;
+    }
+
+    .detailGrid{
+      display:grid;
+      grid-template-columns:.95fr 1.05fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    .imageCard,.formCard,.priceCard,.infoCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .imageBox{
+      height:520px;
+      background:#2d1a30;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .imageBox img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .badge{
+      position:absolute;
+      left:14px;
+      top:14px;
+      max-width:calc(100% - 28px);
+      padding:8px 11px;
+      border-radius:999px;
+      background:rgba(0,0,0,.58);
+      backdrop-filter:blur(10px);
+      color:white;
+      font-size:12px;
+      font-weight:1000;
+      border:1px solid rgba(255,255,255,.12);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .imageInfo{
+      padding:15px;
+    }
+
+    .imageInfo h2{
+      font-size:30px;
+      letter-spacing:-.06em;
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .imageInfo p{
+      color:var(--muted);
+      line-height:1.55;
+      font-size:13px;
+    }
+
+    .tags{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .tag{
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--muted);
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .cardHead{
+      padding:15px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .cardHead h3{
+      font-size:20px;
+      letter-spacing:-.05em;
+    }
+
+    .cardHead p{
+      margin-top:5px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .cardBody{
+      padding:15px;
+    }
+
+    .formGrid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:11px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .field.full{
+      grid-column:1/-1;
+    }
+
+    .field label{
+      color:var(--cream);
+      font-size:12px;
+      font-weight:1000;
+    }
+
+    .field input,.field select,.field textarea{
+      width:100%;
+      border:1px solid var(--line);
+      outline:none;
+      background:rgba(255,255,255,.07);
+      color:var(--text);
+      border-radius:15px;
+      padding:12px;
+      min-height:45px;
+      resize:vertical;
+    }
+
+    .field textarea{
+      min-height:82px;
+    }
+
+    .field select option{
+      color:#111;
+    }
+
+    .hint{
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.45;
+    }
+
+    .addonsGrid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:8px;
+    }
+
+    .addonChoice{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:16px;
+      padding:10px;
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      cursor:pointer;
+    }
+
+    .addonChoice input{
+      margin-top:2px;
+      accent-color:var(--pink);
+    }
+
+    .addonChoice b{
+      display:block;
+      font-size:12px;
+      margin-bottom:3px;
+    }
+
+    .addonChoice span{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.35;
+    }
+
+    .sideStack{
+      display:grid;
+      gap:12px;
+      position:sticky;
+      top:82px;
+    }
+
+    .priceLine{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 0;
+      border-bottom:1px solid var(--line);
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .priceLine b{
+      color:var(--text);
+    }
+
+    .totalBox{
+      margin-top:12px;
+      border:1px solid rgba(255,200,107,.22);
+      background:rgba(255,200,107,.08);
+      border-radius:20px;
+      padding:14px;
+    }
+
+    .totalBox span{
+      display:block;
+      color:var(--cream);
+      font-size:12px;
+      font-weight:1000;
+      margin-bottom:5px;
+    }
+
+    .totalBox b{
+      display:block;
+      font-size:34px;
+      letter-spacing:-.06em;
+    }
+
+    .quoteNote{
+      margin-top:10px;
+      border:1px solid rgba(255,95,162,.22);
+      background:rgba(255,95,162,.08);
+      color:#ffd5e7;
+      border-radius:16px;
+      padding:11px;
+      font-size:12px;
+      font-weight:800;
+      line-height:1.45;
+      display:none;
+    }
+
+    .quoteNote.show{
+      display:block;
+    }
+
+    .policyNote{
+      border:1px solid rgba(255,200,107,.20);
+      background:rgba(255,200,107,.08);
+      color:var(--cream);
+      border-radius:18px;
+      padding:12px;
+      font-size:12px;
+      font-weight:800;
+      line-height:1.45;
+    }
+
+    .actionRow{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:9px;
+      margin-top:12px;
+    }
+
+    .addBtn{
+      width:100%;
+      padding:14px 16px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--pink),var(--pink2));
+      color:white;
+      font-weight:1000;
+      box-shadow:0 15px 30px rgba(255,95,162,.22);
+    }
+
+    .addBtn:hover{
+      transform:translateY(-1px);
+    }
+
+    .secondaryBtn{
+      width:100%;
+      padding:13px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      color:white;
+      font-weight:900;
+      border:1px solid var(--line);
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%) translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      z-index:200;
+      max-width:min(560px,calc(100% - 24px));
+      border:1px solid var(--line);
+      background:rgba(33,22,37,.96);
+      color:var(--text);
+      backdrop-filter:blur(18px);
+      border-radius:999px;
+      padding:11px 15px;
+      font-size:13px;
+      font-weight:900;
+      box-shadow:0 18px 50px rgba(0,0,0,.38);
+      transition:.2s ease;
+      text-align:center;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .empty{
+      border:1px dashed rgba(255,255,255,.18);
+      background:rgba(255,255,255,.04);
+      border-radius:24px;
+      padding:28px;
+      color:var(--muted);
+      text-align:center;
+      line-height:1.55;
+      grid-column:1/-1;
+    }
+
+    .footer{
+      border-top:1px solid var(--line);
+      padding:20px 0;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .footerInner{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .footerLinks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .footerLinks a{
+      color:var(--cream);
+      font-weight:800;
+    }
+
+    @media(max-width:980px){
+      .detailGrid{
+        grid-template-columns:1fr;
+      }
+
+      .sideStack{
+        position:static;
+      }
+
+      .imageBox{
+        height:390px;
+      }
+    }
+
+    @media(max-width:720px){
+      .wrap{width:min(100% - 18px,1180px)}
+      .nav{min-height:58px}
+      .brand p{display:none}
+      .brand h1{max-width:160px}
+      .navLink{display:none}
+      .mobileMenuBtn{display:inline-flex}
+      .primaryBtn{padding:10px 12px;font-size:13px}
+      .cartBtn{padding:10px 11px}
+      .formGrid,.addonsGrid{
+        grid-template-columns:1fr;
+      }
+      .imageBox{
+        height:310px;
+      }
+      .imageInfo h2{
+        font-size:26px;
+      }
+      .footerLinks{justify-content:flex-start}
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <div id="siteLogo" class="logo">🍰</div>
+      <div>
+        <h1 id="siteBrandName">Cake Studio</h1>
+        <p id="siteTagline">Fresh custom cakes & sweet orders</p>
+      </div>
+    </a>
+
+    <div class="navActions">
+      <a class="navLink" href="index.html">Home</a>
+      <a class="navLink" href="cakes.html">Cakes</a>
+      <a class="navLink" href="cake.html?custom=true">Custom Cake</a>
+
+      <a class="cartBtn" href="cart.html" aria-label="Open cart">
+        🛒 <span class="cartCount" id="cartCount">0</span>
+      </a>
+
+      <button class="ghostBtn mobileMenuBtn" onclick="toggleMobileMenu()">Menu</button>
+      <a class="primaryBtn" id="topWhatsappBtn" href="#" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="wrap mobileMenu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="cakes.html">All Cakes</a>
+    <a href="cake.html?custom=true">Create Custom Cake</a>
+    <a href="cart.html">Cart</a>
+  </div>
+</header>
+
+<main class="wrap page">
+  <div id="mainContent" class="detailGrid">
+    <div class="empty">Loading cake details...</div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footerInner">
+    <div>
+      <span>© <span id="year"></span> <span id="footerBrand">Cake Studio</span>. All rights reserved.</span>
+      <br>
+      <span id="footerAddress">Made for easy WhatsApp cake orders.</span>
+    </div>
+
+    <div class="footerLinks">
+      <a href="index.html">Home</a>
+      <a href="cakes.html">All Cakes</a>
+      <a href="cake.html?custom=true">Custom Cake</a>
+      <a href="cart.html">Cart</a>
+      <a href="admin.html">Admin</a>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script>
+  const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const CART_KEY = "cakeShopCartV1";
+  const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80";
+
+  const DEFAULT_SETTINGS = {
+    brand_name:"Cake Studio",
+    tagline:"Fresh custom cakes & sweet orders",
+    logo_url:"",
+    whatsapp_number:"",
+    instagram_url:"",
+    address:"",
+    business_hours:"",
+    service_area:"",
+    minimum_notice_hours:24,
+    same_day_message:"For today or urgent orders, please contact us directly on WhatsApp.",
+    policy_text:"Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp. Estimated prices may change after design review.",
+    currency:"$",
+    show_prices:true
+  };
+
+  let siteSettings = {...DEFAULT_SETTINGS};
+
+  let currentCake = null;
+  let isCustomCake = false;
+
+  let categories = [];
+  let sizes = [];
+  let flavours = [];
+  let options = [];
+  let addons = [];
+
+  let cakeCategories = [];
+  let cakeSizes = [];
+  let cakeFlavours = [];
+  let cakeAddons = [];
+
+  const $ = (id) => document.getElementById(id);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    init().catch(err => {
+      console.error("Cake page init failed:", err);
+      showPageError(err.message || "Unknown cake page error");
+    });
+  });
+
+  async function init(){
+    $("year").textContent = new Date().getFullYear();
+
+    updateCartCount();
+
+    const params = new URLSearchParams(window.location.search);
+    const cakeId = params.get("id");
+    isCustomCake = params.get("custom") === "true" || params.get("type") === "custom";
+
+    await loadData(cakeId);
+
+    applySettings();
+
+    if(!isCustomCake && !currentCake){
+      showNotFound();
+      return;
+    }
+
+    renderPage();
+    updatePrice();
+  }
+
+  async function loadData(cakeId){
+    const queries = [
+      supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
+      supabaseClient.from("categories").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
+      supabaseClient.from("sizes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
+      supabaseClient.from("flavours").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
+      supabaseClient.from("cake_options").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
+      supabaseClient.from("addons").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
+      supabaseClient.from("cake_categories").select("*"),
+      supabaseClient.from("cake_sizes").select("*"),
+      supabaseClient.from("cake_flavours").select("*"),
+      supabaseClient.from("cake_addons").select("*")
+    ];
+
+    if(cakeId && !isCustomCake){
+      queries.push(
+        supabaseClient.from("cakes").select("*").eq("id", cakeId).eq("is_active", true).maybeSingle()
+      );
+    }
+
+    const results = await Promise.all(queries);
+
+    const [
+      settingsRes,
+      categoriesRes,
+      sizesRes,
+      flavoursRes,
+      optionsRes,
+      addonsRes,
+      cakeCategoriesRes,
+      cakeSizesRes,
+      cakeFlavoursRes,
+      cakeAddonsRes,
+      cakeRes
+    ] = results;
+
+    if(settingsRes.error) console.warn("Settings load error:", settingsRes.error.message);
+    else siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
+
+    if(categoriesRes.error) throw new Error("Categories error: " + categoriesRes.error.message);
+    if(sizesRes.error) throw new Error("Sizes error: " + sizesRes.error.message);
+    if(flavoursRes.error) throw new Error("Flavours error: " + flavoursRes.error.message);
+    if(optionsRes.error) throw new Error("Options error: " + optionsRes.error.message);
+    if(addonsRes.error) throw new Error("Add-ons error: " + addonsRes.error.message);
+
+    categories = categoriesRes.data || [];
+    sizes = sizesRes.data || [];
+    flavours = flavoursRes.data || [];
+    options = optionsRes.data || [];
+    addons = addonsRes.data || [];
+
+    cakeCategories = cakeCategoriesRes.error ? [] : (cakeCategoriesRes.data || []);
+    cakeSizes = cakeSizesRes.error ? [] : (cakeSizesRes.data || []);
+    cakeFlavours = cakeFlavoursRes.error ? [] : (cakeFlavoursRes.data || []);
+    cakeAddons = cakeAddonsRes.error ? [] : (cakeAddonsRes.data || []);
+
+    if(cakeRes){
+      if(cakeRes.error) throw new Error("Cake error: " + cakeRes.error.message);
+      currentCake = cakeRes.data || null;
+    }
+
+    console.log("Cake page loaded:", {
+      siteSettings,
+      currentCake,
+      sizes,
+      flavours,
+      options,
+      addons,
+      cakeSizes,
+      cakeFlavours,
+      cakeAddons
+    });
+  }
+
+  function applySettings(){
+    const brand = siteSettings.brand_name || DEFAULT_SETTINGS.brand_name;
+    const tagline = siteSettings.tagline || DEFAULT_SETTINGS.tagline;
+    const logo = siteSettings.logo_url || "";
+    const whatsapp = normalizePhone(siteSettings.whatsapp_number || "");
+
+    $("siteBrandName").textContent = brand;
+    $("siteTagline").textContent = tagline;
+    $("footerBrand").textContent = brand;
+    $("footerAddress").textContent = buildFooterInfo();
+
+    if(logo){
+      $("siteLogo").innerHTML = `<img src="${escapeHtml(logo)}" alt="${escapeHtml(brand)}" onerror="this.parentElement.textContent='🍰'">`;
+    }else{
+      $("siteLogo").textContent = "🍰";
+    }
+
+    setupWhatsappLinks(whatsapp);
+  }
+
+  function renderPage(){
+    const cakeName = isCustomCake ? "Custom Cake Request" : (currentCake.name || "Custom Cake");
+    const cakeDescription = isCustomCake
+      ? "Create your own custom cake request. Add theme, colours, servings, message and inspiration photo."
+      : (currentCake.description || "Fresh custom cake made on order.");
+
+    const cakeImage = isCustomCake ? FALLBACK_IMAGE : (currentCake.image_url || FALLBACK_IMAGE);
+    const catNames = isCustomCake ? ["Custom Cake"] : getCakeCategoryNames(currentCake.id);
+
+    document.title = `${cakeName} - ${siteSettings.brand_name || "Cake Studio"}`;
+
+    $("mainContent").innerHTML = `
+      <section class="imageCard">
+        <div class="imageBox">
+          <img id="cakeImagePreview" src="${escapeHtml(cakeImage)}" alt="${escapeHtml(cakeName)}" onerror="this.src='${FALLBACK_IMAGE}'">
+          <div class="badge">${escapeHtml(catNames[0] || "Cake")}${!isCustomCake && currentCake.is_featured ? " · Featured" : ""}</div>
+        </div>
+
+        <div class="imageInfo">
+          <h2>${escapeHtml(cakeName)}</h2>
+          <p>${escapeHtml(cakeDescription)}</p>
+
+          <div class="tags">
+            ${catNames.slice(0,3).map(name => `<span class="tag">${escapeHtml(name)}</span>`).join("")}
+            <span class="tag">${isCustomCake ? "quote request" : escapeHtml(currentCake.price_type || "estimated")}</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="formCard">
+          <div class="cardHead">
+            <div>
+              <h3>Customize Your Cake</h3>
+              <p>Select size, servings, flavour, option, add-ons and notes. Estimated price updates live.</p>
+            </div>
+          </div>
+
+          <div class="cardBody">
+            <form id="customForm" class="formGrid">
+              ${isCustomCake ? `
+                <div class="field full">
+                  <label>Custom Cake Title *</label>
+                  <input id="customCakeTitle" required placeholder="Pink princess cake, car theme cake, engagement cake...">
+                </div>
+              ` : ""}
+
+              <div class="field">
+                <label>Cake Size *</label>
+                <select id="sizeSelect" required onchange="updatePrice()">
+                  ${buildSizeOptions()}
+                </select>
+                <div class="hint">Servings and base price are controlled by admin.</div>
+              </div>
+
+              <div class="field">
+                <label>Flavour</label>
+                <select id="flavourSelect" onchange="updatePrice()">
+                  ${buildFlavourOptions()}
+                </select>
+              </div>
+
+              <div class="field">
+                <label>Option</label>
+                <select id="optionSelect" onchange="updatePrice()">
+                  ${buildOptionOptions()}
+                </select>
+              </div>
+
+              <div class="field">
+                <label>Quantity</label>
+                <input id="quantityInput" type="number" min="1" value="1" oninput="updatePrice()">
+              </div>
+
+              <div class="field full">
+                <label>Message on Cake</label>
+                <input id="cakeMessageInput" placeholder="Happy Birthday Aanya, Congratulations, etc.">
+              </div>
+
+              <div class="field full">
+                <label>Theme / Colours</label>
+                <input id="themeInput" placeholder="Pink theme, floral, car theme, simple elegant, etc.">
+              </div>
+
+              <div class="field full">
+                <label>Inspiration Photo Link</label>
+                <input id="inspirationInput" placeholder="Paste Instagram/Pinterest/image link if available">
+              </div>
+
+              <div class="field full">
+                <label>Special Notes</label>
+                <textarea id="notesInput" placeholder="Allergies, design details, budget range, serving notes, pickup notes..."></textarea>
+              </div>
+
+              <div class="field full">
+                <label>Add-ons</label>
+                <div id="addonsGrid" class="addonsGrid">
+                  ${buildAddonChoices()}
+                </div>
+                <div class="hint">Add-ons are controlled by admin. Quote-required add-ons may change final price.</div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sideStack">
+        <div class="priceCard">
+          <div class="cardHead">
+            <div>
+              <h3>Estimated Price</h3>
+              <p>This is not final confirmation. Shop will review and confirm on WhatsApp.</p>
+            </div>
+          </div>
+
+          <div class="cardBody">
+            <div id="priceBreakdown"></div>
+
+            <div class="totalBox">
+              <span>Estimated Item Total</span>
+              <b id="estimatedTotal">$0</b>
+            </div>
+
+            <div id="quoteNote" class="quoteNote">
+              Some selected options require a custom quote. Final price will be confirmed by the shop.
+            </div>
+
+            <div class="actionRow">
+              <button class="addBtn" onclick="addToCart()">Add to Cart</button>
+              <button class="secondaryBtn" onclick="addToCart(true)">Add & Go to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="infoCard">
+          <div class="cardBody">
+            <div class="policyNote">
+              ${escapeHtml(siteSettings.policy_text || DEFAULT_SETTINGS.policy_text)}
+              <br><br>
+              ${escapeHtml(siteSettings.same_day_message || DEFAULT_SETTINGS.same_day_message)}
+            </div>
+
+            <div class="actionRow">
+              <a class="secondaryBtn" id="sideWhatsappBtn" href="#" target="_blank" style="text-align:center;">Need Today? WhatsApp</a>
+              <a class="secondaryBtn" href="cakes.html" style="text-align:center;">Back to Cakes</a>
+            </div>
+          </div>
+        </div>
+      </aside>
+    `;
+
+    const sideWhatsapp = $("sideWhatsappBtn");
+    const phone = normalizePhone(siteSettings.whatsapp_number || "");
+    if(phone){
+      sideWhatsapp.href = `https://wa.me/${phone}?text=${encodeURIComponent("Hi, I need a same-day or urgent cake order. Can you please confirm availability?")}`;
+    }else{
+      sideWhatsapp.href = "#";
+      sideWhatsapp.onclick = function(e){
+        e.preventDefault();
+        showToast("WhatsApp number is not added yet.", true);
+      };
+    }
+  }
+
+  function buildSizeOptions(){
+    const availableSizes = getAvailableSizes();
+
+    if(!availableSizes.length){
+      return `<option value="">No sizes available</option>`;
+    }
+
+    return `
+      <option value="">Select size</option>
+      ${availableSizes.map(size => {
+        const price = Number(size.price || 0);
+        const priceText = size.quote_required ? "Quote required" : money(price);
+        const label = `${size.name}${size.servings ? " — " + size.servings : ""} — ${priceText}`;
+        return `<option value="${escapeHtml(size.id)}">${escapeHtml(label)}</option>`;
+      }).join("")}
+    `;
+  }
+
+  function buildFlavourOptions(){
+    const availableFlavours = getAvailableFlavours();
+
+    if(!availableFlavours.length){
+      return `<option value="">No flavours available</option>`;
+    }
+
+    return `
+      <option value="">Select flavour</option>
+      ${availableFlavours.map(flavour => {
+        const extra = Number(flavour.extra_price || 0);
+        const priceText = flavour.quote_required ? "Quote required" : (extra ? "+" + money(extra) : "+$0");
+        return `<option value="${escapeHtml(flavour.id)}">${escapeHtml(flavour.name + " — " + priceText)}</option>`;
+      }).join("")}
+      <option value="not_sure">Not sure / Need suggestion</option>
+    `;
+  }
+
+  function buildOptionOptions(){
+    if(!options.length){
+      return `<option value="">No options available</option>`;
+    }
+
+    return `
+      ${options.map(option => {
+        const extra = Number(option.extra_price || 0);
+        const priceText = option.quote_required ? "Quote required" : (extra ? "+" + money(extra) : "+$0");
+        return `<option value="${escapeHtml(option.id)}">${escapeHtml(option.name + " — " + priceText)}</option>`;
+      }).join("")}
+    `;
+  }
+
+  function buildAddonChoices(){
+    const availableAddons = getAvailableAddons();
+
+    if(!availableAddons.length){
+      return `<div class="hint">No add-ons available.</div>`;
+    }
+
+    return availableAddons.map(addon => {
+      const price = Number(addon.price || 0);
+      const priceText = addon.quote_required ? "Quote required" : (price ? "+" + money(price) : "+$0");
+
+      return `
+        <label class="addonChoice">
+          <input type="checkbox" value="${escapeHtml(addon.id)}" onchange="updatePrice()">
+          <div>
+            <b>${escapeHtml(addon.name)} · ${escapeHtml(priceText)}</b>
+            <span>${escapeHtml(addon.description || "Optional add-on")}</span>
+          </div>
+        </label>
+      `;
+    }).join("");
+  }
+
+  function getAvailableSizes(){
+    if(isCustomCake) return sizes;
+
+    const ids = cakeSizes
+      .filter(row => String(row.cake_id) === String(currentCake.id))
+      .map(row => String(row.size_id));
+
+    if(!ids.length) return sizes;
+
+    return sizes.filter(size => ids.includes(String(size.id)));
+  }
+
+  function getAvailableFlavours(){
+    if(isCustomCake) return flavours;
+
+    const ids = cakeFlavours
+      .filter(row => String(row.cake_id) === String(currentCake.id))
+      .map(row => String(row.flavour_id));
+
+    if(!ids.length) return flavours;
+
+    return flavours.filter(flavour => ids.includes(String(flavour.id)));
+  }
+
+  function getAvailableAddons(){
+    if(isCustomCake) return addons;
+
+    const ids = cakeAddons
+      .filter(row => String(row.cake_id) === String(currentCake.id))
+      .map(row => String(row.addon_id));
+
+    if(!ids.length) return addons;
+
+    return addons.filter(addon => ids.includes(String(addon.id)));
+  }
+
+  function updatePrice(){
+    const selectedSize = getSelectedSize();
+    const selectedFlavour = getSelectedFlavour();
+    const selectedOption = getSelectedOption();
+    const selectedAddons = getSelectedAddons();
+    const quantity = Math.max(1, Number($("quantityInput")?.value || 1));
+
+    const sizePrice = selectedSize ? Number(selectedSize.price || 0) : 0;
+    const flavourExtra = selectedFlavour ? Number(selectedFlavour.extra_price || 0) : 0;
+    const optionExtra = selectedOption ? Number(selectedOption.extra_price || 0) : 0;
+    const addonTotal = selectedAddons.reduce((sum, addon) => sum + Number(addon.price || 0), 0);
+
+    const unitTotal = sizePrice + flavourExtra + optionExtra + addonTotal;
+    const estimatedTotal = unitTotal * quantity;
+
+    const quoteRequired =
+      (selectedSize && selectedSize.quote_required) ||
+      (selectedFlavour && selectedFlavour.quote_required) ||
+      (selectedOption && selectedOption.quote_required) ||
+      selectedAddons.some(addon => addon.quote_required) ||
+      (!selectedSize);
+
+    const rows = [];
+
+    rows.push({
+      label: selectedSize
+        ? `${selectedSize.name}${selectedSize.servings ? " · " + selectedSize.servings : ""}`
+        : "Cake size",
+      value: selectedSize ? (selectedSize.quote_required ? "Quote" : money(sizePrice)) : "Select"
+    });
+
+    rows.push({
+      label: selectedFlavour ? selectedFlavour.name : "Flavour",
+      value: selectedFlavour ? (selectedFlavour.quote_required ? "Quote" : "+" + money(flavourExtra)) : "Not selected"
+    });
+
+    rows.push({
+      label: selectedOption ? selectedOption.name : "Option",
+      value: selectedOption ? (selectedOption.quote_required ? "Quote" : "+" + money(optionExtra)) : "Not selected"
+    });
+
+    if(selectedAddons.length){
+      selectedAddons.forEach(addon => {
+        rows.push({
+          label: addon.name,
+          value: addon.quote_required ? "Quote" : "+" + money(addon.price)
+        });
+      });
+    }else{
+      rows.push({
+        label: "Add-ons",
+        value: "None"
+      });
+    }
+
+    rows.push({
+      label: "Quantity",
+      value: "× " + quantity
+    });
+
+    $("priceBreakdown").innerHTML = rows.map(row => `
+      <div class="priceLine">
+        <span>${escapeHtml(row.label)}</span>
+        <b>${escapeHtml(row.value)}</b>
+      </div>
+    `).join("");
+
+    $("estimatedTotal").textContent = quoteRequired
+      ? "Quote"
+      : money(estimatedTotal);
+
+    $("quoteNote").classList.toggle("show", quoteRequired);
+
+    return {
+      selectedSize,
+      selectedFlavour,
+      selectedOption,
+      selectedAddons,
+      quantity,
+      sizePrice,
+      flavourExtra,
+      optionExtra,
+      addonTotal,
+      estimatedTotal,
+      quoteRequired
+    };
+  }
+
+  function addToCart(goToCart = false){
+    const priceData = updatePrice();
+
+    if(!priceData.selectedSize){
+      showToast("Please select cake size first.", true);
+      return;
+    }
+
+    const customTitleInput = $("customCakeTitle");
+    const cakeName = isCustomCake
+      ? (customTitleInput?.value.trim() || "")
+      : (currentCake.name || "Cake");
+
+    if(isCustomCake && !cakeName){
+      showToast("Please enter custom cake title.", true);
+      customTitleInput.focus();
+      return;
+    }
+
+    const cart = getCart();
+
+    const item = {
+      cart_item_id: createId(),
+      cake_id: isCustomCake ? null : currentCake.id,
+      cake_name: cakeName,
+      cake_image: isCustomCake ? FALLBACK_IMAGE : (currentCake.image_url || FALLBACK_IMAGE),
+      is_custom: isCustomCake,
+
+      selected_size_id: priceData.selectedSize?.id || "",
+      selected_size_name: priceData.selectedSize?.name || "",
+      selected_servings: priceData.selectedSize?.servings || "",
+      selected_size_price: Number(priceData.sizePrice || 0),
+      size_quote_required: priceData.selectedSize?.quote_required === true,
+
+      selected_flavour_id: priceData.selectedFlavour?.id || "",
+      selected_flavour_name: priceData.selectedFlavour?.name || "",
+      flavour_extra_price: Number(priceData.flavourExtra || 0),
+      flavour_quote_required: priceData.selectedFlavour?.quote_required === true,
+
+      selected_option_id: priceData.selectedOption?.id || "",
+      selected_option_name: priceData.selectedOption?.name || "",
+      option_extra_price: Number(priceData.optionExtra || 0),
+      option_quote_required: priceData.selectedOption?.quote_required === true,
+
+      selected_addons: priceData.selectedAddons.map(addon => ({
+        id: addon.id,
+        name: addon.name,
+        price: Number(addon.price || 0),
+        quote_required: addon.quote_required === true
+      })),
+
+      message_on_cake: $("cakeMessageInput").value.trim(),
+      theme_notes: $("themeInput").value.trim(),
+      inspiration_photo_link: $("inspirationInput").value.trim(),
+      special_notes: $("notesInput").value.trim(),
+
+      quantity: priceData.quantity,
+      estimated_item_total: Number(priceData.estimatedTotal || 0),
+      quote_required: priceData.quoteRequired === true,
+      added_at: new Date().toISOString()
+    };
+
+    cart.push(item);
+    saveCart(cart);
+    updateCartCount();
+
+    showToast("Added to cart.");
+
+    if(goToCart){
+      window.location.href = "cart.html";
+    }
+  }
+
+  function getSelectedSize(){
+    const value = $("sizeSelect")?.value || "";
+    return sizes.find(size => String(size.id) === String(value)) || null;
+  }
+
+  function getSelectedFlavour(){
+    const value = $("flavourSelect")?.value || "";
+    if(!value || value === "not_sure") return null;
+    return flavours.find(flavour => String(flavour.id) === String(value)) || null;
+  }
+
+  function getSelectedOption(){
+    const value = $("optionSelect")?.value || "";
+    return options.find(option => String(option.id) === String(value)) || null;
+  }
+
+  function getSelectedAddons(){
+    const checked = Array.from(document.querySelectorAll("#addonsGrid input[type='checkbox']:checked")).map(input => input.value);
+    return addons.filter(addon => checked.includes(String(addon.id)));
+  }
+
+  function getCakeCategoryNames(cakeId){
+    const ids = cakeCategories
+      .filter(row => String(row.cake_id) === String(cakeId))
+      .map(row => row.category_id);
+
+    return ids
+      .map(id => categories.find(cat => String(cat.id) === String(id))?.name)
+      .filter(Boolean);
+  }
+
+  function showNotFound(){
+    $("mainContent").innerHTML = `
+      <div class="empty">
+        <strong>Cake not found.</strong><br>
+        This cake does not exist or is currently inactive.<br><br>
+        <a class="primaryBtn" href="cakes.html">View All Cakes</a>
+      </div>
+    `;
+  }
+
+  function showPageError(message){
+    $("mainContent").innerHTML = `
+      <div class="empty">
+        <strong>Page error</strong><br>
+        ${escapeHtml(message)}<br><br>
+        Open browser console for details.
+      </div>
+    `;
+  }
+
+  function setupWhatsappLinks(phone){
+    const normalMessage = "Hi, I want to ask about a cake order.";
+    const normalUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(normalMessage)}` : "#";
+
+    const top = $("topWhatsappBtn");
+    top.href = normalUrl;
+    top.onclick = phone ? null : function(e){
+      e.preventDefault();
+      showToast("WhatsApp number is not added yet.", true);
+    };
+  }
+
+  function buildFooterInfo(){
+    const parts = [];
+
+    if(siteSettings.address) parts.push(siteSettings.address);
+    if(siteSettings.service_area) parts.push("Serving " + siteSettings.service_area);
+    if(siteSettings.business_hours) parts.push(siteSettings.business_hours);
+
+    return parts.length ? parts.join(" · ") : "Made for easy WhatsApp cake orders.";
+  }
+
+  function getCart(){
+    try{
+      const raw = localStorage.getItem(CART_KEY);
+      const parsed = JSON.parse(raw || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    }catch{
+      return [];
+    }
+  }
+
+  function saveCart(cart){
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
+
+  function updateCartCount(){
+    const cart = getCart();
+    const count = cart.reduce((sum,item) => sum + Number(item.quantity || 1), 0);
+    $("cartCount").textContent = count;
+  }
+
+  function money(value){
+    const symbol = siteSettings.currency || "$";
+    const num = Number(value || 0);
+    return symbol + num.toFixed(2).replace(".00","");
+  }
+
+  function createId(){
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "cart-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+  }
+
+  function toggleMobileMenu(){
+    $("mobileMenu").classList.toggle("show");
+  }
+
+  function normalizePhone(value){
+    return String(value || "").replace(/[^\d]/g, "");
+  }
+
+  function showToast(message, isError = false){
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.style.borderColor = isError ? "rgba(255,91,110,.35)" : "rgba(255,255,255,.10)";
+    toast.style.color = isError ? "#ffdce1" : "var(--text)";
+    toast.classList.add("show");
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+  }
+
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+</script>
+
+</body>
+</html>
