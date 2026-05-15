@@ -73,6 +73,7 @@
       box-shadow:0 12px 26px rgba(255,95,162,.22);
       font-size:21px;
       flex:0 0 auto;
+      overflow:hidden;
     }
     .brand h1{font-size:17px;letter-spacing:-.04em;white-space:nowrap}
     .brand p{margin-top:3px;color:var(--muted);font-size:11px;white-space:nowrap}
@@ -96,6 +97,7 @@
     .btn.primary{background:linear-gradient(135deg,var(--pink),var(--pink2));border-color:rgba(255,95,162,.45)}
     .btn.green{background:rgba(57,217,138,.15);border-color:rgba(57,217,138,.32);color:#d7ffe9}
     .btn.red{background:rgba(255,91,110,.14);border-color:rgba(255,91,110,.32);color:#ffe0e5}
+    .btn.gold{background:rgba(255,200,107,.14);border-color:rgba(255,200,107,.32);color:var(--cream)}
     .btn.small{padding:8px 10px;font-size:12px}
     .btn.block{width:100%}
 
@@ -131,6 +133,7 @@
     .field textarea{min-height:86px;resize:vertical}
     .field select option{color:#111}
     .hint{font-size:11px;color:var(--muted);line-height:1.45}
+    .dangerText{font-size:11px;color:#ffdce1;line-height:1.45}
 
     .app{display:none}
     .app.show{display:block}
@@ -183,7 +186,8 @@
     .stat span{display:block;margin-top:5px;color:var(--muted);font-size:12px}
 
     .layout2{display:grid;grid-template-columns:380px 1fr;gap:14px;align-items:start}
-    .layout3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
+    .layoutWide{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
+    .catalogGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;align-items:start}
 
     .card{
       border:1px solid var(--line);
@@ -207,37 +211,93 @@
     .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
     .full{grid-column:1/-1}
 
+    .formPanel{
+      display:none;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.13);
+      border-radius:22px;
+      padding:14px;
+      margin-bottom:14px;
+    }
+    .formPanel.open{display:block}
+    .formPanelTitle{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .formPanelTitle h4{font-size:16px;letter-spacing:-.04em}
+    .formPanelTitle p{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4}
+
     .checkRow{display:flex;align-items:center;gap:8px;margin:8px 0 10px;color:var(--muted);font-size:13px;font-weight:800}
     .checkRow input{width:17px;height:17px;accent-color:var(--pink)}
 
     .list{display:grid;gap:8px}
-    .item{
+    .compactItem{
       border:1px solid var(--line);
       background:rgba(255,255,255,.045);
       border-radius:18px;
+      overflow:hidden;
+    }
+    .compactTop{
       padding:12px;
       display:flex;
       justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
+      gap:12px;
+      align-items:center;
+      cursor:pointer;
     }
-    .itemTitle{font-weight:1000;font-size:14px}
-    .itemMeta{margin-top:5px;color:var(--muted);font-size:11px;line-height:1.45}
-    .itemActions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-
-    .productCard{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.045);
-      border-radius:20px;
+    .compactMain{min-width:0}
+    .itemTitle{
+      font-weight:1000;
+      font-size:14px;
       overflow:hidden;
-      display:grid;
-      grid-template-columns:150px 1fr;
-      min-height:150px;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
-    .productCard img{width:100%;height:100%;object-fit:cover;background:#2b1d30}
-    .productInfo{padding:12px}
-    .productInfo h4{font-size:16px;margin-bottom:5px}
-    .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+    .itemMeta{
+      margin-top:5px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.45;
+    }
+    .itemActions{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+      flex:0 0 auto;
+    }
+    .compactDetails{
+      display:none;
+      padding:12px;
+      border-top:1px solid var(--line);
+      background:rgba(0,0,0,.12);
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.55;
+    }
+    .compactItem.open .compactDetails{display:block}
+
+    .miniPreview{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      object-fit:cover;
+      background:#2b1d30;
+      border:1px solid var(--line);
+      flex:0 0 auto;
+    }
+    .rowWithImage{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
     .tag{
       padding:5px 7px;
       border-radius:999px;
@@ -271,6 +331,36 @@
     .searchRow input{flex:1;min-width:210px}
     .searchRow select option{color:#111}
 
+    .imageBox{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      border-radius:18px;
+      padding:10px;
+      display:grid;
+      gap:8px;
+    }
+    .uploadRow{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .uploadRow input[type=file]{
+      flex:1;
+      min-width:180px;
+      padding:9px;
+    }
+    .imagePreview{
+      width:100%;
+      height:120px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      object-fit:cover;
+      background:#2b1d30;
+      display:none;
+    }
+    .imagePreview.show{display:block}
+
     .orderCard{
       border:1px solid var(--line);
       background:rgba(255,255,255,.05);
@@ -283,8 +373,10 @@
       justify-content:space-between;
       gap:10px;
       align-items:flex-start;
-      border-bottom:1px solid var(--line);
+      border-bottom:1px solid transparent;
+      cursor:pointer;
     }
+    .orderCard.open .orderTop{border-bottom-color:var(--line)}
     .orderTop h4{font-size:15px;margin-bottom:4px}
     .orderTop p{color:var(--muted);font-size:12px;line-height:1.45}
     .status{
@@ -298,6 +390,7 @@
     }
     .status.Pending{color:var(--gold)}
     .status.Confirmed{color:var(--blue)}
+    .status.InProgress{color:#b7cfff}
     .status.Ready,.status.Completed{color:var(--green)}
     .status.Cancelled{color:var(--red)}
     .orderBody{padding:12px;display:none}
@@ -348,7 +441,7 @@
 
     @media(max-width:1050px){
       .gridStats{grid-template-columns:repeat(3,1fr)}
-      .layout2,.layout3{grid-template-columns:1fr}
+      .layout2,.catalogGrid{grid-template-columns:1fr}
     }
 
     @media(max-width:650px){
@@ -357,8 +450,9 @@
       .navActions{width:100%;justify-content:flex-start}
       .gridStats{grid-template-columns:repeat(2,1fr)}
       .formGrid{grid-template-columns:1fr}
-      .productCard{grid-template-columns:1fr}
-      .productCard img{height:190px}
+      .compactTop{align-items:flex-start;flex-direction:column}
+      .itemActions{justify-content:flex-start}
+      .rowWithImage{width:100%}
     }
   </style>
 </head>
@@ -402,6 +496,7 @@
 
       <div class="navActions">
         <a class="btn small" href="index.html" target="_blank">View Site</a>
+        <button class="btn small" onclick="loadAll()">Refresh</button>
         <button class="btn red small" onclick="logoutAdmin()">Sign Out</button>
       </div>
     </div>
@@ -423,16 +518,44 @@
         <div class="card">
           <div class="cardHead">
             <div>
-              <h3>Next Things To Do</h3>
-              <p>Setup these before customer pages go live.</p>
+              <h3>Admin Setup</h3>
+              <p>Useful steps before handing the website to the client.</p>
             </div>
           </div>
           <div class="cardBody">
             <div class="list">
-              <div class="item"><div><div class="itemTitle">1. Add WhatsApp number</div><div class="itemMeta">Go to Settings and save business WhatsApp number.</div></div></div>
-              <div class="item"><div><div class="itemTitle">2. Check sizes and prices</div><div class="itemMeta">Customer price estimate depends on sizes, flavours, options and add-ons.</div></div></div>
-              <div class="item"><div><div class="itemTitle">3. Add real cake products</div><div class="itemMeta">Upload image URLs and assign categories/options.</div></div></div>
-              <div class="item"><div><div class="itemTitle">4. Test one full order</div><div class="itemMeta">Add to cart → checkout → save order → WhatsApp message.</div></div></div>
+              <div class="compactItem open">
+                <div class="compactTop">
+                  <div>
+                    <div class="itemTitle">1. Add WhatsApp number</div>
+                    <div class="itemMeta">Settings → WhatsApp number with country code.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="compactItem open">
+                <div class="compactTop">
+                  <div>
+                    <div class="itemTitle">2. Add prices</div>
+                    <div class="itemMeta">Sizes, flavours, options and add-ons control customer live estimate.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="compactItem open">
+                <div class="compactTop">
+                  <div>
+                    <div class="itemTitle">3. Add cakes</div>
+                    <div class="itemMeta">Use image link or upload image, then assign categories/prices/options.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="compactItem open">
+                <div class="compactTop">
+                  <div>
+                    <div class="itemTitle">4. Test full order</div>
+                    <div class="itemMeta">Cake → Cart → Checkout → WhatsApp → Admin Orders.</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -457,7 +580,7 @@
         <div class="cardHead">
           <div>
             <h3>Website Settings</h3>
-            <p>These details appear on homepage, checkout, footer and WhatsApp order flow.</p>
+            <p>Branding, WhatsApp, hero, policy and public website information.</p>
           </div>
         </div>
 
@@ -473,14 +596,28 @@
               <input id="setTagline" placeholder="Fresh custom cakes & sweet orders">
             </div>
 
-            <div class="field">
-              <label>Logo URL</label>
-              <input id="setLogoUrl" placeholder="https://...">
+            <div class="field full">
+              <label>Logo Image</label>
+              <div class="imageBox">
+                <input id="setLogoUrl" placeholder="Paste logo image link or upload image">
+                <div class="uploadRow">
+                  <input id="setLogoFile" type="file" accept="image/png,image/jpeg,image/webp">
+                  <button class="btn small" type="button" onclick="uploadAndSet('setLogoFile','setLogoUrl','settings')">Upload Logo</button>
+                </div>
+                <div class="hint">Use image link OR upload image. Max 3MB: JPG, PNG, WEBP.</div>
+              </div>
             </div>
 
-            <div class="field">
-              <label>Hero Image URL</label>
-              <input id="setHeroImage" placeholder="https://...">
+            <div class="field full">
+              <label>Hero Image</label>
+              <div class="imageBox">
+                <input id="setHeroImage" placeholder="Paste hero image link or upload image">
+                <div class="uploadRow">
+                  <input id="setHeroFile" type="file" accept="image/png,image/jpeg,image/webp">
+                  <button class="btn small" type="button" onclick="uploadAndSet('setHeroFile','setHeroImage','settings')">Upload Hero</button>
+                </div>
+                <div class="hint">This image appears on homepage hero.</div>
+              </div>
             </div>
 
             <div class="field">
@@ -557,27 +694,53 @@
     </section>
 
     <section id="catalogPanel" class="panel">
-      <div class="layout3">
+      <div class="catalogGrid">
+
         <div class="card">
           <div class="cardHead">
             <div>
               <h3>Categories</h3>
-              <p>Birthday, Wedding, Kids, Cupcakes, etc.</p>
+              <p>Collapsed by default. Click a row to view details.</p>
             </div>
+            <button class="btn primary small" onclick="openCategoryForm()">+ Add Category</button>
           </div>
           <div class="cardBody">
-            <form id="categoryForm">
-              <input type="hidden" id="categoryId">
-              <div class="field"><label>Name</label><input id="categoryName" required></div>
-              <div class="field"><label>Slug</label><input id="categorySlug" placeholder="birthday-cakes"></div>
-              <div class="field"><label>Image URL</label><input id="categoryImage"></div>
-              <div class="field"><label>Description</label><textarea id="categoryDesc"></textarea></div>
-              <div class="field"><label>Sort Order</label><input id="categorySort" type="number" value="0"></div>
-              <label class="checkRow"><input id="categoryActive" type="checkbox" checked> Active</label>
-              <button class="btn primary block" type="submit">Save Category</button>
-              <button class="btn block" type="button" onclick="resetCategoryForm()" style="margin-top:8px;">Clear</button>
-            </form>
-            <div id="categoryList" class="list" style="margin-top:14px;"></div>
+            <div id="categoryFormPanel" class="formPanel">
+              <div class="formPanelTitle">
+                <div>
+                  <h4 id="categoryFormTitle">Add Category</h4>
+                  <p>Use image link or upload image.</p>
+                </div>
+                <button class="btn small" type="button" onclick="closePanel('categoryFormPanel')">Close</button>
+              </div>
+
+              <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+
+                <div class="field"><label>Name</label><input id="categoryName" required></div>
+                <div class="field"><label>Slug</label><input id="categorySlug" placeholder="birthday-cakes"></div>
+
+                <div class="field">
+                  <label>Category Image</label>
+                  <div class="imageBox">
+                    <input id="categoryImage" placeholder="Paste image link or upload image">
+                    <div class="uploadRow">
+                      <input id="categoryImageFile" type="file" accept="image/png,image/jpeg,image/webp">
+                      <button class="btn small" type="button" onclick="uploadAndSet('categoryImageFile','categoryImage','categories')">Upload Image</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field"><label>Description</label><textarea id="categoryDesc"></textarea></div>
+                <div class="field"><label>Sort Order</label><input id="categorySort" type="number" value="0"></div>
+                <label class="checkRow"><input id="categoryActive" type="checkbox" checked> Active</label>
+
+                <button class="btn primary block" type="submit">Save Category</button>
+                <button class="btn block" type="button" onclick="resetCategoryForm(false)" style="margin-top:8px;">Clear</button>
+              </form>
+            </div>
+
+            <div id="categoryList" class="list"></div>
           </div>
         </div>
 
@@ -585,22 +748,34 @@
           <div class="cardHead">
             <div>
               <h3>Sizes & Servings</h3>
-              <p>Customer sees servings and live price.</p>
+              <p>Customer sees these with live pricing.</p>
             </div>
+            <button class="btn primary small" onclick="openSizeForm()">+ Add Size</button>
           </div>
           <div class="cardBody">
-            <form id="sizeForm">
-              <input type="hidden" id="sizeId">
-              <div class="field"><label>Size Name</label><input id="sizeName" required placeholder="8 inch"></div>
-              <div class="field"><label>Servings</label><input id="sizeServings" placeholder="Serves 10-14 people"></div>
-              <div class="field"><label>Price</label><input id="sizePrice" type="number" step="0.01" value="0"></div>
-              <div class="field"><label>Sort Order</label><input id="sizeSort" type="number" value="0"></div>
-              <label class="checkRow"><input id="sizeQuote" type="checkbox"> Quote Required</label>
-              <label class="checkRow"><input id="sizeActive" type="checkbox" checked> Active</label>
-              <button class="btn primary block" type="submit">Save Size</button>
-              <button class="btn block" type="button" onclick="resetSizeForm()" style="margin-top:8px;">Clear</button>
-            </form>
-            <div id="sizeList" class="list" style="margin-top:14px;"></div>
+            <div id="sizeFormPanel" class="formPanel">
+              <div class="formPanelTitle">
+                <div>
+                  <h4 id="sizeFormTitle">Add Size</h4>
+                  <p>Example: 8 inch — serves 10-14 people — $65.</p>
+                </div>
+                <button class="btn small" type="button" onclick="closePanel('sizeFormPanel')">Close</button>
+              </div>
+
+              <form id="sizeForm">
+                <input type="hidden" id="sizeId">
+                <div class="field"><label>Size Name</label><input id="sizeName" required placeholder="8 inch"></div>
+                <div class="field"><label>Servings</label><input id="sizeServings" placeholder="Serves 10-14 people"></div>
+                <div class="field"><label>Price</label><input id="sizePrice" type="number" step="0.01" value="0"></div>
+                <div class="field"><label>Sort Order</label><input id="sizeSort" type="number" value="0"></div>
+                <label class="checkRow"><input id="sizeQuote" type="checkbox"> Quote Required</label>
+                <label class="checkRow"><input id="sizeActive" type="checkbox" checked> Active</label>
+                <button class="btn primary block" type="submit">Save Size</button>
+                <button class="btn block" type="button" onclick="resetSizeForm(false)" style="margin-top:8px;">Clear</button>
+              </form>
+            </div>
+
+            <div id="sizeList" class="list"></div>
           </div>
         </div>
 
@@ -610,19 +785,31 @@
               <h3>Flavours</h3>
               <p>Flavour can add extra price.</p>
             </div>
+            <button class="btn primary small" onclick="openFlavourForm()">+ Add Flavour</button>
           </div>
           <div class="cardBody">
-            <form id="flavourForm">
-              <input type="hidden" id="flavourId">
-              <div class="field"><label>Name</label><input id="flavourName" required placeholder="Rasmalai"></div>
-              <div class="field"><label>Extra Price</label><input id="flavourPrice" type="number" step="0.01" value="0"></div>
-              <div class="field"><label>Sort Order</label><input id="flavourSort" type="number" value="0"></div>
-              <label class="checkRow"><input id="flavourQuote" type="checkbox"> Quote Required</label>
-              <label class="checkRow"><input id="flavourActive" type="checkbox" checked> Active</label>
-              <button class="btn primary block" type="submit">Save Flavour</button>
-              <button class="btn block" type="button" onclick="resetFlavourForm()" style="margin-top:8px;">Clear</button>
-            </form>
-            <div id="flavourList" class="list" style="margin-top:14px;"></div>
+            <div id="flavourFormPanel" class="formPanel">
+              <div class="formPanelTitle">
+                <div>
+                  <h4 id="flavourFormTitle">Add Flavour</h4>
+                  <p>Example: Rasmalai +$10.</p>
+                </div>
+                <button class="btn small" type="button" onclick="closePanel('flavourFormPanel')">Close</button>
+              </div>
+
+              <form id="flavourForm">
+                <input type="hidden" id="flavourId">
+                <div class="field"><label>Name</label><input id="flavourName" required placeholder="Rasmalai"></div>
+                <div class="field"><label>Extra Price</label><input id="flavourPrice" type="number" step="0.01" value="0"></div>
+                <div class="field"><label>Sort Order</label><input id="flavourSort" type="number" value="0"></div>
+                <label class="checkRow"><input id="flavourQuote" type="checkbox"> Quote Required</label>
+                <label class="checkRow"><input id="flavourActive" type="checkbox" checked> Active</label>
+                <button class="btn primary block" type="submit">Save Flavour</button>
+                <button class="btn block" type="button" onclick="resetFlavourForm(false)" style="margin-top:8px;">Clear</button>
+              </form>
+            </div>
+
+            <div id="flavourList" class="list"></div>
           </div>
         </div>
 
@@ -632,20 +819,32 @@
               <h3>Options</h3>
               <p>Regular, eggless, vegan, gluten-free.</p>
             </div>
+            <button class="btn primary small" onclick="openOptionForm()">+ Add Option</button>
           </div>
           <div class="cardBody">
-            <form id="optionForm">
-              <input type="hidden" id="optionId">
-              <div class="field"><label>Name</label><input id="optionName" required placeholder="Eggless"></div>
-              <div class="field"><label>Type</label><input id="optionType" value="diet"></div>
-              <div class="field"><label>Extra Price</label><input id="optionPrice" type="number" step="0.01" value="0"></div>
-              <div class="field"><label>Sort Order</label><input id="optionSort" type="number" value="0"></div>
-              <label class="checkRow"><input id="optionQuote" type="checkbox"> Quote Required</label>
-              <label class="checkRow"><input id="optionActive" type="checkbox" checked> Active</label>
-              <button class="btn primary block" type="submit">Save Option</button>
-              <button class="btn block" type="button" onclick="resetOptionForm()" style="margin-top:8px;">Clear</button>
-            </form>
-            <div id="optionList" class="list" style="margin-top:14px;"></div>
+            <div id="optionFormPanel" class="formPanel">
+              <div class="formPanelTitle">
+                <div>
+                  <h4 id="optionFormTitle">Add Option</h4>
+                  <p>These appear in customization page.</p>
+                </div>
+                <button class="btn small" type="button" onclick="closePanel('optionFormPanel')">Close</button>
+              </div>
+
+              <form id="optionForm">
+                <input type="hidden" id="optionId">
+                <div class="field"><label>Name</label><input id="optionName" required placeholder="Eggless"></div>
+                <div class="field"><label>Type</label><input id="optionType" value="diet"></div>
+                <div class="field"><label>Extra Price</label><input id="optionPrice" type="number" step="0.01" value="0"></div>
+                <div class="field"><label>Sort Order</label><input id="optionSort" type="number" value="0"></div>
+                <label class="checkRow"><input id="optionQuote" type="checkbox"> Quote Required</label>
+                <label class="checkRow"><input id="optionActive" type="checkbox" checked> Active</label>
+                <button class="btn primary block" type="submit">Save Option</button>
+                <button class="btn block" type="button" onclick="resetOptionForm(false)" style="margin-top:8px;">Clear</button>
+              </form>
+            </div>
+
+            <div id="optionList" class="list"></div>
           </div>
         </div>
 
@@ -655,115 +854,146 @@
               <h3>Add-ons</h3>
               <p>Toppers, flowers, gold leaf, decoration.</p>
             </div>
+            <button class="btn primary small" onclick="openAddonForm()">+ Add Add-on</button>
           </div>
           <div class="cardBody">
-            <form id="addonForm">
-              <input type="hidden" id="addonId">
-              <div class="field"><label>Name</label><input id="addonName" required placeholder="Name Topper"></div>
-              <div class="field"><label>Description</label><textarea id="addonDesc"></textarea></div>
-              <div class="field"><label>Price</label><input id="addonPrice" type="number" step="0.01" value="0"></div>
-              <div class="field"><label>Sort Order</label><input id="addonSort" type="number" value="0"></div>
-              <label class="checkRow"><input id="addonQuote" type="checkbox"> Quote Required</label>
-              <label class="checkRow"><input id="addonActive" type="checkbox" checked> Active</label>
-              <button class="btn primary block" type="submit">Save Add-on</button>
-              <button class="btn block" type="button" onclick="resetAddonForm()" style="margin-top:8px;">Clear</button>
-            </form>
-            <div id="addonList" class="list" style="margin-top:14px;"></div>
+            <div id="addonFormPanel" class="formPanel">
+              <div class="formPanelTitle">
+                <div>
+                  <h4 id="addonFormTitle">Add Add-on</h4>
+                  <p>Add-ons can be selected by customers.</p>
+                </div>
+                <button class="btn small" type="button" onclick="closePanel('addonFormPanel')">Close</button>
+              </div>
+
+              <form id="addonForm">
+                <input type="hidden" id="addonId">
+                <div class="field"><label>Name</label><input id="addonName" required placeholder="Name Topper"></div>
+                <div class="field"><label>Description</label><textarea id="addonDesc"></textarea></div>
+                <div class="field"><label>Price</label><input id="addonPrice" type="number" step="0.01" value="0"></div>
+                <div class="field"><label>Sort Order</label><input id="addonSort" type="number" value="0"></div>
+                <label class="checkRow"><input id="addonQuote" type="checkbox"> Quote Required</label>
+                <label class="checkRow"><input id="addonActive" type="checkbox" checked> Active</label>
+                <button class="btn primary block" type="submit">Save Add-on</button>
+                <button class="btn block" type="button" onclick="resetAddonForm(false)" style="margin-top:8px;">Clear</button>
+              </form>
+            </div>
+
+            <div id="addonList" class="list"></div>
           </div>
         </div>
+
       </div>
     </section>
 
     <section id="cakesPanel" class="panel">
-      <div class="layout2">
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h3>Add / Edit Cake</h3>
-              <p>Assign categories, sizes, flavours and add-ons.</p>
-            </div>
-          </div>
-          <div class="cardBody">
-            <form id="cakeForm">
-              <input type="hidden" id="cakeId">
-
-              <div class="field">
-                <label>Cake Name</label>
-                <input id="cakeName" required placeholder="Chocolate Birthday Cake">
-              </div>
-
-              <div class="field">
-                <label>Slug</label>
-                <input id="cakeSlug" placeholder="chocolate-birthday-cake">
-              </div>
-
-              <div class="field">
-                <label>Description</label>
-                <textarea id="cakeDesc"></textarea>
-              </div>
-
-              <div class="field">
-                <label>Image URL</label>
-                <input id="cakeImage" placeholder="https://...">
-              </div>
-
-              <div class="field">
-                <label>Starting Price</label>
-                <input id="cakeStartingPrice" type="number" step="0.01" value="0">
-              </div>
-
-              <div class="field">
-                <label>Price Type</label>
-                <select id="cakePriceType">
-                  <option value="estimated">Estimated</option>
-                  <option value="fixed">Fixed</option>
-                  <option value="quote">Quote Required</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label>Sort Order</label>
-                <input id="cakeSort" type="number" value="0">
-              </div>
-
-              <label class="checkRow"><input id="cakeFeatured" type="checkbox"> Featured</label>
-              <label class="checkRow"><input id="cakeActive" type="checkbox" checked> Active</label>
-
-              <div class="field">
-                <label>Categories</label>
-                <select id="cakeCategoriesSelect" class="multiSelect" multiple></select>
-              </div>
-
-              <div class="field">
-                <label>Available Sizes</label>
-                <select id="cakeSizesSelect" class="multiSelect" multiple></select>
-              </div>
-
-              <div class="field">
-                <label>Available Flavours</label>
-                <select id="cakeFlavoursSelect" class="multiSelect" multiple></select>
-              </div>
-
-              <div class="field">
-                <label>Available Add-ons</label>
-                <select id="cakeAddonsSelect" class="multiSelect" multiple></select>
-              </div>
-
-              <button class="btn primary block" type="submit">Save Cake</button>
-              <button class="btn block" type="button" onclick="resetCakeForm()" style="margin-top:8px;">Clear</button>
-            </form>
-          </div>
-        </div>
-
+      <div class="layoutWide">
         <div class="card">
           <div class="cardHead">
             <div>
               <h3>Cake Products</h3>
-              <p>Customer will see active cakes on website.</p>
+              <p>Forms stay closed. Click “Add New Cake” or “Edit” to open the form.</p>
             </div>
-            <button class="btn small" onclick="loadAll()">Refresh</button>
+            <div class="itemActions">
+              <button class="btn primary small" onclick="openCakeForm()">+ Add New Cake</button>
+              <button class="btn small" onclick="loadAll()">Refresh</button>
+            </div>
           </div>
+
           <div class="cardBody">
+            <div id="cakeFormPanel" class="formPanel">
+              <div class="formPanelTitle">
+                <div>
+                  <h4 id="cakeFormTitle">Add New Cake</h4>
+                  <p>Paste image link or upload image, then assign categories, sizes, flavours and add-ons.</p>
+                </div>
+                <button class="btn small" type="button" onclick="closePanel('cakeFormPanel')">Close</button>
+              </div>
+
+              <form id="cakeForm">
+                <input type="hidden" id="cakeId">
+
+                <div class="formGrid">
+                  <div class="field">
+                    <label>Cake Name</label>
+                    <input id="cakeName" required placeholder="Chocolate Birthday Cake">
+                  </div>
+
+                  <div class="field">
+                    <label>Slug</label>
+                    <input id="cakeSlug" placeholder="chocolate-birthday-cake">
+                  </div>
+
+                  <div class="field full">
+                    <label>Description</label>
+                    <textarea id="cakeDesc"></textarea>
+                  </div>
+
+                  <div class="field full">
+                    <label>Cake Image</label>
+                    <div class="imageBox">
+                      <input id="cakeImage" placeholder="Paste cake image link or upload image">
+                      <div class="uploadRow">
+                        <input id="cakeImageFile" type="file" accept="image/png,image/jpeg,image/webp">
+                        <button class="btn small" type="button" onclick="uploadAndSet('cakeImageFile','cakeImage','cakes')">Upload Cake Image</button>
+                      </div>
+                      <div class="hint">Use image link OR upload image. Max 3MB: JPG, PNG, WEBP.</div>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label>Starting Price</label>
+                    <input id="cakeStartingPrice" type="number" step="0.01" value="0">
+                  </div>
+
+                  <div class="field">
+                    <label>Price Type</label>
+                    <select id="cakePriceType">
+                      <option value="estimated">Estimated</option>
+                      <option value="fixed">Fixed</option>
+                      <option value="quote">Quote Required</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label>Sort Order</label>
+                    <input id="cakeSort" type="number" value="0">
+                  </div>
+
+                  <div class="field">
+                    <label>Visibility</label>
+                    <label class="checkRow"><input id="cakeFeatured" type="checkbox"> Featured</label>
+                    <label class="checkRow"><input id="cakeActive" type="checkbox" checked> Active</label>
+                  </div>
+
+                  <div class="field">
+                    <label>Categories</label>
+                    <select id="cakeCategoriesSelect" class="multiSelect" multiple></select>
+                  </div>
+
+                  <div class="field">
+                    <label>Available Sizes</label>
+                    <select id="cakeSizesSelect" class="multiSelect" multiple></select>
+                  </div>
+
+                  <div class="field">
+                    <label>Available Flavours</label>
+                    <select id="cakeFlavoursSelect" class="multiSelect" multiple></select>
+                  </div>
+
+                  <div class="field">
+                    <label>Available Add-ons</label>
+                    <select id="cakeAddonsSelect" class="multiSelect" multiple></select>
+                  </div>
+
+                  <div class="full">
+                    <button class="btn primary" type="submit">Save Cake</button>
+                    <button class="btn" type="button" onclick="resetCakeForm(false)" style="margin-left:8px;">Clear</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
             <div class="searchRow">
               <input id="cakeSearch" placeholder="Search cakes..." oninput="renderCakes()">
               <select id="cakeFilterStatus" onchange="renderCakes()">
@@ -785,7 +1015,7 @@
         <div class="cardHead">
           <div>
             <h3>Orders</h3>
-            <p>Manage customer order requests and status.</p>
+            <p>Orders are collapsed by default. Click an order row to expand.</p>
           </div>
           <button class="btn small" onclick="loadAll()">Refresh</button>
         </div>
@@ -816,8 +1046,9 @@
 <script>
   const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
   const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const STORAGE_BUCKET = "cake-images";
 
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   const $ = (id) => document.getElementById(id);
 
   const DEFAULT_SETTINGS = {
@@ -1033,10 +1264,23 @@
     $(tab + "Panel").classList.add("active");
   }
 
+  function openPanel(id){
+    $(id).classList.add("open");
+  }
+
+  function closePanel(id){
+    $(id).classList.remove("open");
+  }
+
+  function toggleCompact(id){
+    const el = $(id);
+    if(el) el.classList.toggle("open");
+  }
+
   function renderStats(){
     const statusCount = (status) => orders.filter(o => o.status === status).length;
 
-    const html = `
+    $("statsGrid").innerHTML = `
       <div class="stat"><b>${orders.length}</b><span>Total Orders</span></div>
       <div class="stat"><b>${statusCount("Pending")}</b><span>Pending</span></div>
       <div class="stat"><b>${statusCount("Confirmed")}</b><span>Confirmed</span></div>
@@ -1044,8 +1288,6 @@
       <div class="stat"><b>${statusCount("Ready")}</b><span>Ready</span></div>
       <div class="stat"><b>${statusCount("Completed")}</b><span>Completed</span></div>
     `;
-
-    $("statsGrid").innerHTML = html;
   }
 
   function renderRecentOrders(){
@@ -1057,16 +1299,18 @@
     }
 
     $("recentOrdersList").innerHTML = recent.map(order => `
-      <div class="item">
-        <div>
-          <div class="itemTitle">${escapeHtml(order.customer_name || "Customer")}</div>
-          <div class="itemMeta">
-            ${escapeHtml(order.customer_phone || "")}<br>
-            Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
-            Total: ${money(order.estimated_total)}
+      <div class="compactItem">
+        <div class="compactTop">
+          <div>
+            <div class="itemTitle">${escapeHtml(order.customer_name || "Customer")}</div>
+            <div class="itemMeta">
+              ${escapeHtml(order.customer_phone || "")}<br>
+              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
+              Total: ${money(order.estimated_total)}
+            </div>
           </div>
+          <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status)}</span>
         </div>
-        <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status)}</span>
       </div>
     `).join("");
   }
@@ -1126,48 +1370,233 @@
     showToast("Settings saved.");
   }
 
-  function renderCatalogLists(){
-    renderSimpleList("categoryList", categories, editCategory, deleteCategory, item => {
-      return `${item.slug || ""}<br>${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}`;
-    });
+  async function uploadAndSet(fileInputId, targetInputId, folder){
+    const fileInput = $(fileInputId);
+    const targetInput = $(targetInputId);
 
-    renderSimpleList("sizeList", sizes, editSize, deleteSize, item => {
-      return `${item.servings || ""}<br>${money(item.price)} ${item.quote_required ? "· Quote required" : ""} · ${item.is_active ? "Active" : "Inactive"}`;
-    });
-
-    renderSimpleList("flavourList", flavours, editFlavour, deleteFlavour, item => {
-      return `Extra: ${money(item.extra_price)} ${item.quote_required ? "· Quote required" : ""}<br>${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}`;
-    });
-
-    renderSimpleList("optionList", options, editOption, deleteOption, item => {
-      return `${item.option_type || "option"} · Extra: ${money(item.extra_price)} ${item.quote_required ? "· Quote required" : ""}<br>${item.is_active ? "Active" : "Inactive"}`;
-    });
-
-    renderSimpleList("addonList", addons, editAddon, deleteAddon, item => {
-      return `${item.description || ""}<br>${money(item.price)} ${item.quote_required ? "· Quote required" : ""} · ${item.is_active ? "Active" : "Inactive"}`;
-    });
-  }
-
-  function renderSimpleList(containerId, rows, editFn, deleteFn, metaFn){
-    const box = $(containerId);
-
-    if(!rows.length){
-      box.innerHTML = `<div class="loading">No items yet.</div>`;
+    if(!fileInput || !fileInput.files || !fileInput.files[0]){
+      showToast("Choose an image first.", true);
       return;
     }
 
-    box.innerHTML = rows.map(row => `
-      <div class="item">
-        <div>
-          <div class="itemTitle">${escapeHtml(row.name)}</div>
-          <div class="itemMeta">${metaFn(row)}</div>
+    const file = fileInput.files[0];
+
+    if(!file.type.startsWith("image/")){
+      showToast("Only image files are allowed.", true);
+      return;
+    }
+
+    const maxMb = 3;
+    if(file.size > maxMb * 1024 * 1024){
+      showToast(`Image must be less than ${maxMb}MB.`, true);
+      return;
+    }
+
+    try{
+      showToast("Uploading image...");
+
+      const ext = file.name.split(".").pop().toLowerCase();
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+      const path = `${folder}/${Date.now()}-${Math.random().toString(16).slice(2)}-${safeName}`;
+
+      const { error } = await supabaseClient.storage
+        .from(STORAGE_BUCKET)
+        .upload(path, file, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: file.type
+        });
+
+      if(error) throw error;
+
+      const { data } = supabaseClient.storage
+        .from(STORAGE_BUCKET)
+        .getPublicUrl(path);
+
+      targetInput.value = data.publicUrl;
+      fileInput.value = "";
+
+      showToast("Image uploaded and URL added.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Image upload failed.", true);
+    }
+  }
+
+  function renderCatalogLists(){
+    renderCategoryList();
+    renderSizeList();
+    renderFlavourList();
+    renderOptionList();
+    renderAddonList();
+  }
+
+  function renderCategoryList(){
+    const box = $("categoryList");
+    if(!categories.length){
+      box.innerHTML = `<div class="loading">No categories yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = categories.map(item => {
+      const domId = "category-" + item.id;
+      const img = item.image_url || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80";
+
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="rowWithImage">
+              <img class="miniPreview" src="${escapeHtml(img)}" onerror="this.style.display='none'">
+              <div class="compactMain">
+                <div class="itemTitle">${escapeHtml(item.name)}</div>
+                <div class="itemMeta">${escapeHtml(item.slug || "")} · ${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}</div>
+              </div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editCategory('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteCategory('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Description:</b> ${escapeHtml(item.description || "No description")}<br>
+            <b>Image:</b> ${escapeHtml(item.image_url || "No image")}<br>
+            <b>Status:</b> ${item.is_active ? "Active" : "Inactive"}
+          </div>
         </div>
-        <div class="itemActions">
-          <button class="btn small" onclick="${editFn.name}('${row.id}')">Edit</button>
-          <button class="btn red small" onclick="${deleteFn.name}('${row.id}')">Delete</button>
+      `;
+    }).join("");
+  }
+
+  function renderSizeList(){
+    const box = $("sizeList");
+    if(!sizes.length){
+      box.innerHTML = `<div class="loading">No sizes yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = sizes.map(item => {
+      const domId = "size-" + item.id;
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(item.name)} · ${money(item.price)}</div>
+              <div class="itemMeta">${escapeHtml(item.servings || "No servings")} · ${item.quote_required ? "Quote required" : "Fixed price"} · ${item.is_active ? "Active" : "Inactive"}</div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editSize('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteSize('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Servings:</b> ${escapeHtml(item.servings || "No servings")}<br>
+            <b>Price:</b> ${money(item.price)}<br>
+            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
+            <b>Sort:</b> ${item.sort_order ?? 0}
+          </div>
         </div>
-      </div>
-    `).join("");
+      `;
+    }).join("");
+  }
+
+  function renderFlavourList(){
+    const box = $("flavourList");
+    if(!flavours.length){
+      box.innerHTML = `<div class="loading">No flavours yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = flavours.map(item => {
+      const domId = "flavour-" + item.id;
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(item.name)} · +${money(item.extra_price)}</div>
+              <div class="itemMeta">${item.quote_required ? "Quote required" : "Fixed extra"} · ${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}</div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editFlavour('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteFlavour('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Extra Price:</b> ${money(item.extra_price)}<br>
+            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
+            <b>Status:</b> ${item.is_active ? "Active" : "Inactive"}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderOptionList(){
+    const box = $("optionList");
+    if(!options.length){
+      box.innerHTML = `<div class="loading">No options yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = options.map(item => {
+      const domId = "option-" + item.id;
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(item.name)} · +${money(item.extra_price)}</div>
+              <div class="itemMeta">${escapeHtml(item.option_type || "option")} · ${item.quote_required ? "Quote required" : "Fixed extra"} · ${item.is_active ? "Active" : "Inactive"}</div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editOption('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteOption('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Type:</b> ${escapeHtml(item.option_type || "option")}<br>
+            <b>Extra Price:</b> ${money(item.extra_price)}<br>
+            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderAddonList(){
+    const box = $("addonList");
+    if(!addons.length){
+      box.innerHTML = `<div class="loading">No add-ons yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = addons.map(item => {
+      const domId = "addon-" + item.id;
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : money(item.price)}</div>
+              <div class="itemMeta">${escapeHtml(item.description || "No description")} · ${item.is_active ? "Active" : "Inactive"}</div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editAddon('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteAddon('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Description:</b> ${escapeHtml(item.description || "No description")}<br>
+            <b>Price:</b> ${money(item.price)}<br>
+            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
+            <b>Status:</b> ${item.is_active ? "Active" : "Inactive"}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function openCategoryForm(){
+    resetCategoryForm(false);
+    $("categoryFormTitle").textContent = "Add Category";
+    openPanel("categoryFormPanel");
   }
 
   async function saveCategory(event){
@@ -1191,7 +1620,7 @@
 
     if(error) return showToast(error.message, true);
 
-    resetCategoryForm();
+    resetCategoryForm(true);
     await loadAll();
     showToast("Category saved.");
   }
@@ -1200,6 +1629,7 @@
     const item = categories.find(x => x.id === id);
     if(!item) return;
 
+    $("categoryFormTitle").textContent = "Edit Category";
     $("categoryId").value = item.id;
     $("categoryName").value = item.name || "";
     $("categorySlug").value = item.slug || "";
@@ -1207,14 +1637,19 @@
     $("categoryImage").value = item.image_url || "";
     $("categorySort").value = item.sort_order ?? 0;
     $("categoryActive").checked = item.is_active !== false;
+
+    openPanel("categoryFormPanel");
     showTab("catalog");
+    window.scrollTo({top:0, behavior:"smooth"});
   }
 
-  function resetCategoryForm(){
+  function resetCategoryForm(close = false){
     $("categoryForm").reset();
     $("categoryId").value = "";
     $("categoryActive").checked = true;
     $("categorySort").value = 0;
+    $("categoryFormTitle").textContent = "Add Category";
+    if(close) closePanel("categoryFormPanel");
   }
 
   async function deleteCategory(id){
@@ -1223,6 +1658,12 @@
     if(error) return showToast(error.message, true);
     await loadAll();
     showToast("Category deleted.");
+  }
+
+  function openSizeForm(){
+    resetSizeForm(false);
+    $("sizeFormTitle").textContent = "Add Size";
+    openPanel("sizeFormPanel");
   }
 
   async function saveSize(event){
@@ -1244,7 +1685,7 @@
 
     if(error) return showToast(error.message, true);
 
-    resetSizeForm();
+    resetSizeForm(true);
     await loadAll();
     showToast("Size saved.");
   }
@@ -1253,6 +1694,7 @@
     const item = sizes.find(x => x.id === id);
     if(!item) return;
 
+    $("sizeFormTitle").textContent = "Edit Size";
     $("sizeId").value = item.id;
     $("sizeName").value = item.name || "";
     $("sizeServings").value = item.servings || "";
@@ -1260,15 +1702,20 @@
     $("sizeQuote").checked = item.quote_required === true;
     $("sizeActive").checked = item.is_active !== false;
     $("sizeSort").value = item.sort_order ?? 0;
+
+    openPanel("sizeFormPanel");
     showTab("catalog");
+    window.scrollTo({top:0, behavior:"smooth"});
   }
 
-  function resetSizeForm(){
+  function resetSizeForm(close = false){
     $("sizeForm").reset();
     $("sizeId").value = "";
     $("sizePrice").value = 0;
     $("sizeSort").value = 0;
     $("sizeActive").checked = true;
+    $("sizeFormTitle").textContent = "Add Size";
+    if(close) closePanel("sizeFormPanel");
   }
 
   async function deleteSize(id){
@@ -1277,6 +1724,12 @@
     if(error) return showToast(error.message, true);
     await loadAll();
     showToast("Size deleted.");
+  }
+
+  function openFlavourForm(){
+    resetFlavourForm(false);
+    $("flavourFormTitle").textContent = "Add Flavour";
+    openPanel("flavourFormPanel");
   }
 
   async function saveFlavour(event){
@@ -1297,7 +1750,7 @@
 
     if(error) return showToast(error.message, true);
 
-    resetFlavourForm();
+    resetFlavourForm(true);
     await loadAll();
     showToast("Flavour saved.");
   }
@@ -1306,21 +1759,27 @@
     const item = flavours.find(x => x.id === id);
     if(!item) return;
 
+    $("flavourFormTitle").textContent = "Edit Flavour";
     $("flavourId").value = item.id;
     $("flavourName").value = item.name || "";
     $("flavourPrice").value = item.extra_price ?? 0;
     $("flavourQuote").checked = item.quote_required === true;
     $("flavourActive").checked = item.is_active !== false;
     $("flavourSort").value = item.sort_order ?? 0;
+
+    openPanel("flavourFormPanel");
     showTab("catalog");
+    window.scrollTo({top:0, behavior:"smooth"});
   }
 
-  function resetFlavourForm(){
+  function resetFlavourForm(close = false){
     $("flavourForm").reset();
     $("flavourId").value = "";
     $("flavourPrice").value = 0;
     $("flavourSort").value = 0;
     $("flavourActive").checked = true;
+    $("flavourFormTitle").textContent = "Add Flavour";
+    if(close) closePanel("flavourFormPanel");
   }
 
   async function deleteFlavour(id){
@@ -1329,6 +1788,12 @@
     if(error) return showToast(error.message, true);
     await loadAll();
     showToast("Flavour deleted.");
+  }
+
+  function openOptionForm(){
+    resetOptionForm(false);
+    $("optionFormTitle").textContent = "Add Option";
+    openPanel("optionFormPanel");
   }
 
   async function saveOption(event){
@@ -1350,7 +1815,7 @@
 
     if(error) return showToast(error.message, true);
 
-    resetOptionForm();
+    resetOptionForm(true);
     await loadAll();
     showToast("Option saved.");
   }
@@ -1359,6 +1824,7 @@
     const item = options.find(x => x.id === id);
     if(!item) return;
 
+    $("optionFormTitle").textContent = "Edit Option";
     $("optionId").value = item.id;
     $("optionName").value = item.name || "";
     $("optionType").value = item.option_type || "diet";
@@ -1366,16 +1832,21 @@
     $("optionQuote").checked = item.quote_required === true;
     $("optionActive").checked = item.is_active !== false;
     $("optionSort").value = item.sort_order ?? 0;
+
+    openPanel("optionFormPanel");
     showTab("catalog");
+    window.scrollTo({top:0, behavior:"smooth"});
   }
 
-  function resetOptionForm(){
+  function resetOptionForm(close = false){
     $("optionForm").reset();
     $("optionId").value = "";
     $("optionType").value = "diet";
     $("optionPrice").value = 0;
     $("optionSort").value = 0;
     $("optionActive").checked = true;
+    $("optionFormTitle").textContent = "Add Option";
+    if(close) closePanel("optionFormPanel");
   }
 
   async function deleteOption(id){
@@ -1384,6 +1855,12 @@
     if(error) return showToast(error.message, true);
     await loadAll();
     showToast("Option deleted.");
+  }
+
+  function openAddonForm(){
+    resetAddonForm(false);
+    $("addonFormTitle").textContent = "Add Add-on";
+    openPanel("addonFormPanel");
   }
 
   async function saveAddon(event){
@@ -1405,7 +1882,7 @@
 
     if(error) return showToast(error.message, true);
 
-    resetAddonForm();
+    resetAddonForm(true);
     await loadAll();
     showToast("Add-on saved.");
   }
@@ -1414,6 +1891,7 @@
     const item = addons.find(x => x.id === id);
     if(!item) return;
 
+    $("addonFormTitle").textContent = "Edit Add-on";
     $("addonId").value = item.id;
     $("addonName").value = item.name || "";
     $("addonDesc").value = item.description || "";
@@ -1421,15 +1899,20 @@
     $("addonQuote").checked = item.quote_required === true;
     $("addonActive").checked = item.is_active !== false;
     $("addonSort").value = item.sort_order ?? 0;
+
+    openPanel("addonFormPanel");
     showTab("catalog");
+    window.scrollTo({top:0, behavior:"smooth"});
   }
 
-  function resetAddonForm(){
+  function resetAddonForm(close = false){
     $("addonForm").reset();
     $("addonId").value = "";
     $("addonPrice").value = 0;
     $("addonSort").value = 0;
     $("addonActive").checked = true;
+    $("addonFormTitle").textContent = "Add Add-on";
+    if(close) closePanel("addonFormPanel");
   }
 
   async function deleteAddon(id){
@@ -1452,6 +1935,13 @@
     $(id).innerHTML = rows.map(row => `
       <option value="${row.id}">${escapeHtml(labelFn(row))}</option>
     `).join("");
+  }
+
+  function openCakeForm(){
+    resetCakeForm(false);
+    $("cakeFormTitle").textContent = "Add New Cake";
+    openPanel("cakeFormPanel");
+    showTab("cakes");
   }
 
   async function saveCake(event){
@@ -1488,19 +1978,17 @@
     const selectedFlavours = getSelectedValues("cakeFlavoursSelect");
     const selectedAddons = getSelectedValues("cakeAddonsSelect");
 
-    const relationTasks = [
+    const results = await Promise.all([
       replaceRelations("cake_categories", "cake_id", cakeId, "category_id", selectedCategories),
       replaceRelations("cake_sizes", "cake_id", cakeId, "size_id", selectedSizes),
       replaceRelations("cake_flavours", "cake_id", cakeId, "flavour_id", selectedFlavours),
       replaceRelations("cake_addons", "cake_id", cakeId, "addon_id", selectedAddons)
-    ];
+    ]);
 
-    const results = await Promise.all(relationTasks);
     const relError = results.find(r => r?.error)?.error;
-
     if(relError) return showToast(relError.message, true);
 
-    resetCakeForm();
+    resetCakeForm(true);
     await loadAll();
     showToast("Cake saved.");
   }
@@ -1540,30 +2028,43 @@
     }
 
     box.innerHTML = rows.map(cake => {
+      const domId = "cake-" + cake.id;
       const cats = getCakeRelationNames(cake.id, cakeCategories, categories, "category_id");
       const cakeSizeNames = getCakeRelationNames(cake.id, cakeSizes, sizes, "size_id");
       const flavs = getCakeRelationNames(cake.id, cakeFlavours, flavours, "flavour_id");
+      const cakeAddonNames = getCakeRelationNames(cake.id, cakeAddons, addons, "addon_id");
+      const img = cake.image_url || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80";
 
       return `
-        <div class="productCard">
-          <img src="${escapeHtml(cake.image_url || "")}" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'" alt="">
-          <div class="productInfo">
-            <h4>${escapeHtml(cake.name || "Cake")}</h4>
-            <div class="itemMeta">
-              ${escapeHtml(cake.description || "")}<br>
-              Starting: ${money(cake.starting_price)} · ${escapeHtml(cake.price_type || "estimated")} · ${cake.is_active ? "Active" : "Inactive"} ${cake.is_featured ? "· Featured" : ""}
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="rowWithImage">
+              <img class="miniPreview" src="${escapeHtml(img)}" onerror="this.style.display='none'">
+              <div class="compactMain">
+                <div class="itemTitle">${escapeHtml(cake.name || "Cake")}</div>
+                <div class="itemMeta">
+                  Starting: ${money(cake.starting_price)} · ${escapeHtml(cake.price_type || "estimated")} · ${cake.is_active ? "Active" : "Inactive"} ${cake.is_featured ? "· Featured" : ""}
+                </div>
+                <div class="tags">
+                  ${cats.slice(0,3).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+                  ${cakeSizeNames.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+                  ${flavs.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+                </div>
+              </div>
             </div>
-
-            <div class="tags">
-              ${cats.slice(0,3).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
-              ${cakeSizeNames.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
-              ${flavs.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
-            </div>
-
-            <div class="itemActions" style="margin-top:12px;justify-content:flex-start;">
+            <div class="itemActions" onclick="event.stopPropagation()">
               <button class="btn small" onclick="editCake('${cake.id}')">Edit</button>
               <button class="btn red small" onclick="deleteCake('${cake.id}')">Delete</button>
             </div>
+          </div>
+          <div class="compactDetails">
+            <b>Description:</b> ${escapeHtml(cake.description || "No description")}<br>
+            <b>Image:</b> ${escapeHtml(cake.image_url || "No image")}<br>
+            <b>Categories:</b> ${cats.length ? escapeHtml(cats.join(", ")) : "None"}<br>
+            <b>Sizes:</b> ${cakeSizeNames.length ? escapeHtml(cakeSizeNames.join(", ")) : "All/None selected"}<br>
+            <b>Flavours:</b> ${flavs.length ? escapeHtml(flavs.join(", ")) : "All/None selected"}<br>
+            <b>Add-ons:</b> ${cakeAddonNames.length ? escapeHtml(cakeAddonNames.join(", ")) : "All/None selected"}<br>
+            <b>Sort:</b> ${cake.sort_order ?? 0}
           </div>
         </div>
       `;
@@ -1574,6 +2075,7 @@
     const cake = cakes.find(c => c.id === id);
     if(!cake) return;
 
+    $("cakeFormTitle").textContent = "Edit Cake";
     $("cakeId").value = cake.id;
     $("cakeName").value = cake.name || "";
     $("cakeSlug").value = cake.slug || "";
@@ -1590,21 +2092,25 @@
     setSelectedValues("cakeFlavoursSelect", cakeFlavours.filter(r => r.cake_id === id).map(r => r.flavour_id));
     setSelectedValues("cakeAddonsSelect", cakeAddons.filter(r => r.cake_id === id).map(r => r.addon_id));
 
+    openPanel("cakeFormPanel");
     showTab("cakes");
     window.scrollTo({top:0, behavior:"smooth"});
   }
 
-  function resetCakeForm(){
+  function resetCakeForm(close = false){
     $("cakeForm").reset();
     $("cakeId").value = "";
     $("cakeStartingPrice").value = 0;
     $("cakeSort").value = 0;
     $("cakePriceType").value = "estimated";
     $("cakeActive").checked = true;
+    $("cakeFeatured").checked = false;
+    $("cakeFormTitle").textContent = "Add New Cake";
     setSelectedValues("cakeCategoriesSelect", []);
     setSelectedValues("cakeSizesSelect", []);
     setSelectedValues("cakeFlavoursSelect", []);
     setSelectedValues("cakeAddonsSelect", []);
+    if(close) closePanel("cakeFormPanel");
   }
 
   async function deleteCake(id){
@@ -1642,12 +2148,14 @@
 
     box.innerHTML = rows.map(order => {
       const items = orderItems.filter(item => item.order_id === order.id);
+      const domId = "order-" + order.id;
+      const hasQuote = items.some(item => Number(item.estimated_item_total || 0) === 0);
 
       return `
-        <div class="orderCard" id="order-${order.id}">
-          <div class="orderTop">
+        <div class="orderCard" id="${domId}">
+          <div class="orderTop" onclick="toggleOrder('${order.id}')">
             <div>
-              <h4>${escapeHtml(order.customer_name || "Customer")} · ${money(order.estimated_total)}</h4>
+              <h4>${escapeHtml(order.customer_name || "Customer")} · ${hasQuote ? "Quote" : money(order.estimated_total)}</h4>
               <p>
                 ${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}<br>
                 Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
@@ -1656,7 +2164,7 @@
             </div>
             <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;">
               <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status)}</span>
-              <button class="btn small" onclick="toggleOrder('${order.id}')">Details</button>
+              <span class="btn small">Details</span>
             </div>
           </div>
 
@@ -1703,11 +2211,9 @@
                   Option: ${escapeHtml(item.option_name || "")} · +${money(item.option_extra_price)}<br>
                   Quantity: ${item.quantity || 1}<br>
                   Message on cake: ${escapeHtml(item.message_on_cake || "")}<br>
-                  Theme notes: ${escapeHtml(item.theme_notes || "")}<br>
-                  Inspiration: ${escapeHtml(item.inspiration_photo_link || "")}<br>
                   Special notes: ${escapeHtml(item.special_notes || "")}<br>
                   Add-ons: ${formatAddons(item.addons_json)}<br>
-                  <b>Item Estimated Total:</b> ${money(item.estimated_item_total)}
+                  <b>Item Estimated Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}
                 </div>
               `).join("") : `<div class="loading">No order items found.</div>`}
             </div>
@@ -1833,7 +2339,7 @@
 
     return arr.map(a => {
       if(typeof a === "string") return escapeHtml(a);
-      return `${escapeHtml(a.name || "Add-on")} ${a.price ? "(" + money(a.price) + ")" : ""}`;
+      return `${escapeHtml(a.name || "Add-on")} ${a.quote_required ? "(Quote)" : a.price ? "(" + money(a.price) + ")" : ""}`;
     }).join(", ");
   }
 
