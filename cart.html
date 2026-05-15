@@ -944,13 +944,11 @@
             ${addons.length ? addons.slice(0,4).map(addon => `<span class="pill">${escapeHtml(addon.name)}${addon.quote_required ? " · Quote" : " · " + money(addon.price)}</span>`).join("") : `<span class="pill">No add-ons</span>`}
           </div>
 
-          ${item.theme_notes || item.inspiration_photo_link || item.special_notes ? `
-            <div class="itemMeta">
-              ${item.theme_notes ? `<b>Theme:</b> ${escapeHtml(item.theme_notes)}<br>` : ""}
-              ${item.inspiration_photo_link ? `<b>Inspiration:</b> ${escapeHtml(item.inspiration_photo_link)}<br>` : ""}
-              ${item.special_notes ? `<b>Notes:</b> ${escapeHtml(item.special_notes)}` : ""}
-            </div>
-          ` : ""}
+          ${item.special_notes ? `
+  <div class="itemMeta">
+    <b>Notes:</b> ${escapeHtml(item.special_notes)}
+  </div>
+` : ""}
 
           <div class="itemActions">
             <div class="qtyBox">
