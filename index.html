@@ -43,9 +43,7 @@
       -webkit-tap-highlight-color:transparent;
     }
 
-    html{
-      scroll-behavior:smooth;
-    }
+    html{scroll-behavior:smooth}
 
     body{
       min-height:100vh;
@@ -56,19 +54,9 @@
       color:var(--text);
     }
 
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
-
-    button,input{
-      font:inherit;
-    }
-
-    button{
-      border:none;
-      cursor:pointer;
-    }
+    a{color:inherit;text-decoration:none}
+    button,input,select{font:inherit}
+    button{border:none;cursor:pointer}
 
     .wrap{
       width:min(1280px, calc(100% - 32px));
@@ -165,7 +153,7 @@
       border-color:rgba(100,13,107,.12);
     }
 
-    .primaryBtn,.ghostBtn,.cartBtn{
+    .primaryBtn,.ghostBtn,.cartBtn,.smallBtn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -223,9 +211,7 @@
       font-weight:1000;
     }
 
-    .mobileMenuBtn{
-      display:none;
-    }
+    .mobileMenuBtn{display:none}
 
     .mobileMenu{
       display:none;
@@ -527,6 +513,126 @@
       overflow:hidden;
     }
 
+    .quickDessertGrid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .dessertCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:var(--shadow2);
+      transition:.18s ease;
+    }
+
+    .dessertCard:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 36px rgba(100,13,107,.13);
+      border-color:rgba(100,13,107,.26);
+    }
+
+    .dessertTop{
+      min-height:128px;
+      padding:14px;
+      background:
+        radial-gradient(circle at 20% 18%,rgba(255,255,255,.16),transparent 30%),
+        linear-gradient(135deg,var(--purple),var(--purple2));
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .dessertTop::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(circle at 18px 18px,rgba(255,255,255,.11) 1px,transparent 1px);
+      background-size:35px 35px;
+      opacity:.18;
+      pointer-events:none;
+    }
+
+    .dessertTopContent{
+      position:relative;
+      z-index:1;
+    }
+
+    .dessertTop b{
+      display:block;
+      font-size:19px;
+      letter-spacing:-.045em;
+    }
+
+    .dessertTop span{
+      display:block;
+      margin-top:6px;
+      color:rgba(255,255,255,.82);
+      font-size:12px;
+      line-height:1.4;
+    }
+
+    .dessertBody{
+      padding:12px;
+      display:grid;
+      gap:9px;
+    }
+
+    .quickField{
+      display:grid;
+      gap:5px;
+    }
+
+    .quickField label{
+      color:var(--purple);
+      font-size:11px;
+      font-weight:1000;
+    }
+
+    .quickField select,
+    .quickField input{
+      width:100%;
+      min-height:40px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:white;
+      color:var(--text);
+      outline:none;
+      padding:9px 10px;
+      font-weight:800;
+      font-size:13px;
+    }
+
+    .quoteLine{
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.4;
+      font-weight:700;
+    }
+
+    .quickAddBtn{
+      width:100%;
+      padding:11px 12px;
+      border-radius:999px;
+      background:rgba(100,13,107,.09);
+      border:1px solid rgba(100,13,107,.14);
+      color:var(--purple);
+      font-size:13px;
+      font-weight:1000;
+      transition:.18s ease;
+    }
+
+    .quickAddBtn:hover{
+      background:var(--purple);
+      color:white;
+    }
+
     .cakesGrid{
       display:grid;
       grid-template-columns:repeat(4,1fr);
@@ -640,14 +746,10 @@
 
     .smallBtn{
       padding:9px 11px;
-      border-radius:999px;
       background:rgba(100,13,107,.09);
       border:1px solid rgba(100,13,107,.14);
       color:var(--purple);
       font-size:12px;
-      font-weight:1000;
-      white-space:nowrap;
-      transition:.18s ease;
     }
 
     .smallBtn:hover{
@@ -817,6 +919,33 @@
       line-height:1.5;
     }
 
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%) translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      z-index:200;
+      max-width:min(560px,calc(100% - 24px));
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.96);
+      color:var(--purple);
+      backdrop-filter:blur(18px);
+      border-radius:999px;
+      padding:11px 15px;
+      font-size:13px;
+      font-weight:1000;
+      box-shadow:0 18px 50px rgba(100,13,107,.18);
+      transition:.2s ease;
+      text-align:center;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
     @media(max-width:1040px){
       .heroGrid{
         grid-template-columns:1fr;
@@ -835,6 +964,7 @@
         grid-template-columns:repeat(3,1fr);
       }
 
+      .quickDessertGrid,
       .cakesGrid{
         grid-template-columns:repeat(2,1fr);
       }
@@ -926,6 +1056,7 @@
         min-height:108px;
       }
 
+      .quickDessertGrid,
       .cakesGrid{
         grid-template-columns:1fr;
       }
@@ -966,7 +1097,8 @@
 
     <div class="navActions">
       <a class="navLink" href="cakes.html">Cakes</a>
-      <a class="navLink" href="#categories">Categories</a>
+      <a class="navLink" href="#cakeCategories">Cake Categories</a>
+      <a class="navLink" href="#desserts">Desserts</a>
       <a class="navLink" href="cake.html?custom=true">Custom Cake</a>
 
       <a class="cartBtn" href="cart.html" aria-label="Open cart">
@@ -979,8 +1111,9 @@
   </div>
 
   <div class="wrap mobileMenu" id="mobileMenu">
-    <a href="cakes.html">All Cakes</a>
-    <a href="#categories">Categories</a>
+    <a href="cakes.html">All Customizable Cakes</a>
+    <a href="#cakeCategories">Cake Categories</a>
+    <a href="#desserts">Quick Add Desserts</a>
     <a href="cake.html?custom=true">Create Custom Cake</a>
     <a href="cart.html">Cart</a>
     <a href="#how">How It Works</a>
@@ -999,12 +1132,12 @@
           </h2>
 
           <p class="heroText" id="heroSubtitle">
-            Browse cake designs, choose your size, flavour, message and delivery details, then send your order request directly on WhatsApp.
+            Customize cakes with size, flavour, message and add-ons. Add cupcakes, muffins, brownies or baklava directly to cart.
           </p>
 
           <div class="heroButtons">
-            <a class="primaryBtn" href="cakes.html">Browse Cakes</a>
-            <a class="ghostBtn" href="cake.html?custom=true">Custom Cake</a>
+            <a class="primaryBtn" href="cakes.html">Customize Cakes</a>
+            <a class="ghostBtn" href="#desserts">Quick Add Desserts</a>
             <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank">Need Today?</a>
           </div>
 
@@ -1019,7 +1152,7 @@
           <div class="photoInfo">
             <div>
               <b>Fresh custom orders</b>
-              <span id="heroFloatingText">Birthdays, weddings, cupcakes, brownies and more.</span>
+              <span id="heroFloatingText">Cakes are customizable. Desserts are quick-add items.</span>
             </div>
             <a class="primaryBtn" id="heroWhatsappBtn" href="#" target="_blank">Ask</a>
           </div>
@@ -1030,22 +1163,22 @@
           <div class="menuList">
             <a class="menuItem" href="cakes.html">
               <b>Cakes</b>
-              <span>Rasmalai, chocolate, vanilla, red velvet</span>
+              <span>Customize size, flavour, message and add-ons</span>
             </a>
 
-            <a class="menuItem" href="cakes.html">
+            <a class="menuItem" href="#desserts">
               <b>Cupcakes</b>
               <span>Chocolate, vanilla, red velvet, marble</span>
             </a>
 
-            <a class="menuItem" href="cakes.html">
+            <a class="menuItem" href="#desserts">
               <b>Brownies</b>
               <span>Triple chocolate, Oreo, Lotus, Ferrero</span>
             </a>
 
-            <a class="menuItem" href="cake.html?custom=true">
-              <b>Custom</b>
-              <span>Your theme, message, flavour and add-ons</span>
+            <a class="menuItem" href="#desserts">
+              <b>Baklava</b>
+              <span>Crispy layers with pistachios/walnuts</span>
             </a>
           </div>
         </div>
@@ -1053,25 +1186,37 @@
     </div>
   </section>
 
-  <section id="categories" class="wrap">
+  <section id="cakeCategories" class="wrap">
     <div class="sectionHead">
       <div>
-        <h3>Shop by Category</h3>
-        <p>Choose the type first, then customize size, flavour and message.</p>
+        <h3>Cake Categories</h3>
+        <p>Cakes are customizable. Choose a cake category or start from all cakes.</p>
       </div>
-      <a class="ghostBtn" href="cakes.html">View All</a>
+      <a class="ghostBtn" href="cakes.html">View All Cakes</a>
     </div>
 
     <div id="categoryGrid" class="categoryGrid">
-      <div class="loader">Loading categories...</div>
+      <div class="loader">Loading cake categories...</div>
     </div>
+  </section>
+
+  <section id="desserts" class="wrap">
+    <div class="sectionHead">
+      <div>
+        <h3>Quick Add Desserts</h3>
+        <p>Cupcakes, muffins, brownies and baklava can be added directly to cart. Final price is confirmed on WhatsApp.</p>
+      </div>
+      <a class="ghostBtn" href="cart.html">View Cart</a>
+    </div>
+
+    <div id="quickDessertGrid" class="quickDessertGrid"></div>
   </section>
 
   <section class="wrap">
     <div class="sectionHead">
       <div>
-        <h3>Featured Cakes</h3>
-        <p>Popular cakes customers can customize and add to cart.</p>
+        <h3>Featured Custom Cakes</h3>
+        <p>Popular cake designs customers can customize before adding to cart.</p>
       </div>
       <a class="ghostBtn" href="cakes.html">All Cakes</a>
     </div>
@@ -1085,7 +1230,7 @@
     <div class="sectionHead">
       <div>
         <h3>How Ordering Works</h3>
-        <p>Simple order request flow. Final confirmation happens on WhatsApp.</p>
+        <p>Cakes and desserts have different ordering paths, but checkout stays simple.</p>
       </div>
     </div>
 
@@ -1093,24 +1238,24 @@
       <div class="step">
         <div class="stepNum">1</div>
         <div>
-          <b>Choose</b>
-          <span>Pick a cake or start a custom cake request.</span>
+          <b>Customize cake</b>
+          <span>Cakes include size, flavour, options, add-ons and message.</span>
         </div>
       </div>
 
       <div class="step">
         <div class="stepNum">2</div>
         <div>
-          <b>Customize</b>
-          <span>Select size, flavour, options, add-ons and message.</span>
+          <b>Quick add desserts</b>
+          <span>Cupcakes, muffins, brownies and baklava go directly to cart.</span>
         </div>
       </div>
 
       <div class="step">
         <div class="stepNum">3</div>
         <div>
-          <b>Confirm</b>
-          <span>Submit request and confirm final details on WhatsApp.</span>
+          <b>Confirm on WhatsApp</b>
+          <span>Submit request and confirm final details, price and timing.</span>
         </div>
       </div>
     </div>
@@ -1140,12 +1285,15 @@
 
     <div class="footerLinks">
       <a href="cakes.html">All Cakes</a>
+      <a href="#desserts">Desserts</a>
       <a href="cake.html?custom=true">Custom Cake</a>
       <a href="cart.html">Cart</a>
       <a href="#how">How It Works</a>
     </div>
   </div>
 </footer>
+
+<div id="toast" class="toast"></div>
 
 <script>
   const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
@@ -1164,7 +1312,7 @@
     business_hours:"",
     service_area:"",
     hero_title:"Custom cakes for your sweetest moments.",
-    hero_subtitle:"Browse cake designs, choose your size, flavour, message and delivery details, then send your order request directly on WhatsApp.",
+    hero_subtitle:"Customize cakes with size, flavour, message and add-ons. Add cupcakes, muffins, brownies or baklava directly to cart.",
     hero_image_url:"",
     minimum_notice_hours:24,
     same_day_message:"Online orders require at least 24 hours notice. For same-day or urgent orders, please contact us directly on WhatsApp.",
@@ -1179,6 +1327,37 @@
     "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80",
     "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=900&q=80",
     "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80"
+  ];
+
+  const QUICK_DESSERTS = [
+    {
+      key:"cupcakes",
+      name:"Cupcakes",
+      subtitle:"Quick add cupcakes to your order.",
+      flavours:["Chocolate","Vanilla","Red Velvet","Marble"],
+      note:"Final cupcake price and quantity details confirmed on WhatsApp."
+    },
+    {
+      key:"muffins",
+      name:"Muffins",
+      subtitle:"Fresh muffins for simple dessert orders.",
+      flavours:["Banana Walnut","Raspberry","Chocolate Chip"],
+      note:"Final muffin price and quantity details confirmed on WhatsApp."
+    },
+    {
+      key:"brownies",
+      name:"Brownies",
+      subtitle:"Rich brownie flavours from the menu.",
+      flavours:["Triple Chocolate","Triple Choco Walnut","Lotus Biscoff","Oreo","Hazelnut","Ferrero Rocher","Reese’s","M&M"],
+      note:"Final brownie price and quantity details confirmed on WhatsApp."
+    },
+    {
+      key:"baklava",
+      name:"Baklava",
+      subtitle:"Crispy layers with pistachios/walnuts and honey syrup.",
+      flavours:["Pistachio/Walnut Honey Syrup"],
+      note:"Final baklava price and quantity details confirmed on WhatsApp."
+    }
   ];
 
   let siteSettings = {...DEFAULT_SETTINGS};
@@ -1199,6 +1378,7 @@
 
   async function init(){
     updateCartCount();
+    renderQuickDesserts();
     await loadHomeData();
     applySettings();
     renderCategories();
@@ -1307,17 +1487,19 @@
   function renderCategories(){
     const grid = $("categoryGrid");
 
-    if(!categories.length){
+    const cakeOnlyCategories = categories.filter(cat => !isQuickDessertCategory(cat.name || cat.slug || ""));
+
+    if(!cakeOnlyCategories.length){
       grid.innerHTML = `
         <div class="empty">
-          No active categories found yet.<br>
-          Add categories from admin panel first.
+          No active cake categories found yet.<br>
+          Add cake categories like Birthday, Wedding, Kids or Anniversary from admin.
         </div>
       `;
       return;
     }
 
-    const shown = categories.slice(0, 5);
+    const shown = cakeOnlyCategories.slice(0, 5);
 
     grid.innerHTML = shown.map((cat, index) => {
       const image = cat.image_url || CATEGORY_FALLBACK_IMAGES[index % CATEGORY_FALLBACK_IMAGES.length];
@@ -1327,11 +1509,88 @@
         <a class="categoryCard" href="category.html?cat=${encodeURIComponent(slugOrId)}" style="--img:url('${escapeCssUrl(image)}')">
           <div>
             <b>${escapeHtml(cat.name || "Category")}</b>
-            <span>${escapeHtml(cat.description || "Explore cakes in this category.")}</span>
+            <span>${escapeHtml(cat.description || "Customize cakes in this category.")}</span>
           </div>
         </a>
       `;
     }).join("");
+  }
+
+  function renderQuickDesserts(){
+    const grid = $("quickDessertGrid");
+
+    grid.innerHTML = QUICK_DESSERTS.map(item => `
+      <article class="dessertCard">
+        <div class="dessertTop">
+          <div class="dessertTopContent">
+            <b>${escapeHtml(item.name)}</b>
+            <span>${escapeHtml(item.subtitle)}</span>
+          </div>
+        </div>
+
+        <div class="dessertBody">
+          <div class="quickField">
+            <label>Flavour</label>
+            <select id="${item.key}Flavour">
+              ${item.flavours.map(flavour => `<option value="${escapeHtml(flavour)}">${escapeHtml(flavour)}</option>`).join("")}
+            </select>
+          </div>
+
+          <div class="quickField">
+            <label>Quantity</label>
+            <input id="${item.key}Qty" type="number" min="1" value="1">
+          </div>
+
+          <div class="quoteLine">${escapeHtml(item.note)}</div>
+
+          <button class="quickAddBtn" onclick="addQuickDessert('${item.key}')">
+            Add to Cart
+          </button>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function addQuickDessert(key){
+    const item = QUICK_DESSERTS.find(x => x.key === key);
+    if(!item) return;
+
+    const flavour = $(key + "Flavour")?.value || item.flavours[0] || "Selected";
+    const qty = Math.max(1, Number($(key + "Qty")?.value || 1));
+
+    const cart = getCart();
+
+    const cartItem = {
+      cart_item_id: createId(),
+      item_type: "quick_dessert",
+      is_custom: false,
+      cake_id: null,
+      cake_name: `${item.name} - ${flavour}`,
+      cake_image: "",
+      selected_size_name: "Quick Add Dessert",
+      selected_servings: "",
+      selected_size_price: 0,
+      size_quote_required: true,
+      selected_flavour_name: flavour,
+      flavour_extra_price: 0,
+      flavour_quote_required: false,
+      selected_option_name: "Quick Add",
+      option_extra_price: 0,
+      option_quote_required: false,
+      selected_addons: [],
+      message_on_cake: "",
+      theme_notes: "",
+      inspiration_photo_link: "",
+      special_notes: `${item.name} quick add item. Final price confirmed on WhatsApp.`,
+      quantity: qty,
+      estimated_item_total: 0,
+      quote_required: true
+    };
+
+    cart.push(cartItem);
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartCount();
+    showToast(`${item.name} added to cart.`);
   }
 
   function renderFeaturedCakes(){
@@ -1362,7 +1621,7 @@
           <a href="${href}">
             <div class="cakeImg">
               <img src="${escapeHtml(image)}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'">
-              <div class="badge">${escapeHtml(cats[0] || "Cake")}${cake.is_featured ? " · Featured" : ""}</div>
+              <div class="badge">${escapeHtml(cats[0] || "Custom Cake")}${cake.is_featured ? " · Featured" : ""}</div>
             </div>
           </a>
 
@@ -1372,7 +1631,7 @@
 
             <div class="miniTags">
               ${cats.slice(0,2).map(name => `<span class="miniTag">${escapeHtml(name)}</span>`).join("")}
-              <span class="miniTag">${escapeHtml(cake.price_type || "estimated")}</span>
+              <span class="miniTag">customizable</span>
             </div>
 
             <div class="cakeMeta">
@@ -1408,6 +1667,19 @@
     return "From " + currency + price.toFixed(2).replace(".00", "");
   }
 
+  function isQuickDessertCategory(value){
+    const text = String(value || "").toLowerCase();
+    return (
+      text.includes("cupcake") ||
+      text.includes("cup cake") ||
+      text.includes("muffin") ||
+      text.includes("brownie") ||
+      text.includes("brownies") ||
+      text.includes("baklava") ||
+      text.includes("baklawa")
+    );
+  }
+
   function formatHeroTitle(title){
     const clean = escapeHtml(title || "");
     const words = clean.split(" ").filter(Boolean);
@@ -1434,6 +1706,11 @@
     }
   }
 
+  function createId(){
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "item-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+  }
+
   function toggleMobileMenu(){
     $("mobileMenu").classList.toggle("show");
   }
@@ -1445,6 +1722,14 @@
     $("featuredGrid").innerHTML = `
       <div class="empty">Could not load cakes. Please check Supabase settings.</div>
     `;
+  }
+
+  function showToast(message){
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
   }
 
   function normalizePhone(value){
