@@ -4,29 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Cake Studio - Custom Cakes & Orders</title>
+  <title>Siffat Cakes - Custom Cakes & Desserts</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
-      --bg:#100b12;
-      --bg2:#19101c;
-      --card:#211625;
-      --card2:#2a1b2f;
-      --text:#fff7fb;
-      --muted:#c9aebd;
-      --line:rgba(255,255,255,.10);
-      --pink:#ff5fa2;
-      --pink2:#ff8ac0;
-      --cream:#ffe4c7;
-      --gold:#ffc86b;
-      --green:#39d98a;
-      --red:#ff5b6e;
-      --shadow:0 18px 55px rgba(0,0,0,.36);
+      --bg:#fbf3fb;
+      --bg2:#ffffff;
+      --card:#ffffff;
+      --card2:#fff8ff;
+
+      --text:#191019;
+      --muted:#725b75;
+      --soft:#f3e4f4;
+
+      --purple:#6b0a74;
+      --purple2:#85118d;
+      --purple3:#a237a8;
+      --line:rgba(107,10,116,.16);
+
+      --cream:#fff3ff;
+      --gold:#d6a83f;
+      --green:#159463;
+      --red:#d13d54;
+
+      --shadow:0 18px 45px rgba(107,10,116,.13);
+      --shadow2:0 10px 25px rgba(107,10,116,.10);
     }
 
     *{
@@ -42,18 +49,28 @@
     body{
       min-height:100vh;
       background:
-        radial-gradient(circle at top left, rgba(255,95,162,.25), transparent 34%),
-        radial-gradient(circle at 90% 10%, rgba(255,200,107,.14), transparent 28%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+        radial-gradient(circle at 8% 0%, rgba(107,10,116,.10), transparent 32%),
+        radial-gradient(circle at 92% 4%, rgba(162,55,168,.10), transparent 28%),
+        linear-gradient(180deg,var(--bg),#fff);
       color:var(--text);
     }
 
-    a{color:inherit;text-decoration:none}
-    button,input{font:inherit}
-    button{border:none;cursor:pointer}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,input{
+      font:inherit;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+    }
 
     .wrap{
-      width:min(1180px, calc(100% - 28px));
+      width:min(1160px, calc(100% - 28px));
       margin:auto;
     }
 
@@ -61,17 +78,17 @@
       position:sticky;
       top:0;
       z-index:50;
+      background:rgba(255,255,255,.86);
       backdrop-filter:blur(18px);
-      background:rgba(16,11,18,.82);
       border-bottom:1px solid var(--line);
     }
 
     .nav{
-      min-height:64px;
+      min-height:62px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap:12px;
     }
 
     .brand{
@@ -84,14 +101,16 @@
     .logo{
       width:42px;
       height:42px;
-      border-radius:15px;
+      border-radius:50%;
       display:grid;
       place-items:center;
-      background:linear-gradient(135deg,var(--pink),var(--gold));
-      box-shadow:0 12px 28px rgba(255,95,162,.25);
-      font-size:22px;
+      background:var(--purple);
+      color:white;
+      box-shadow:0 12px 28px rgba(107,10,116,.22);
+      font-size:20px;
       overflow:hidden;
       flex:0 0 auto;
+      border:2px solid rgba(255,255,255,.8);
     }
 
     .logo img{
@@ -99,12 +118,14 @@
       height:100%;
       object-fit:cover;
       display:block;
+      background:white;
     }
 
     .brand h1{
-      font-size:17px;
+      font-size:18px;
       line-height:1;
       letter-spacing:-.04em;
+      color:var(--purple);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -118,7 +139,7 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:270px;
+      max-width:280px;
     }
 
     .navActions{
@@ -128,13 +149,19 @@
     }
 
     .navLink{
-      padding:9px 12px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
+      padding:9px 11px;
+      border:1px solid transparent;
+      color:var(--muted);
       border-radius:999px;
       font-size:13px;
       font-weight:900;
+      transition:.18s ease;
+    }
+
+    .navLink:hover{
+      color:var(--purple);
+      background:rgba(107,10,116,.07);
+      border-color:rgba(107,10,116,.12);
     }
 
     .primaryBtn,.ghostBtn,.cartBtn{
@@ -144,36 +171,43 @@
       gap:8px;
       border-radius:999px;
       font-weight:1000;
-      transition:.2s ease;
+      transition:.18s ease;
       white-space:nowrap;
     }
 
     .primaryBtn{
       padding:11px 15px;
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
       color:white;
-      box-shadow:0 14px 30px rgba(255,95,162,.24);
+      box-shadow:0 12px 28px rgba(107,10,116,.24);
     }
 
     .primaryBtn:hover{
       transform:translateY(-1px);
-      box-shadow:0 18px 36px rgba(255,95,162,.34);
+      box-shadow:0 16px 34px rgba(107,10,116,.30);
     }
 
     .ghostBtn{
       padding:10px 13px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
+      background:white;
+      color:var(--purple);
+      box-shadow:0 8px 18px rgba(107,10,116,.06);
+    }
+
+    .ghostBtn:hover{
+      background:#fff7ff;
+      transform:translateY(-1px);
     }
 
     .cartBtn{
       position:relative;
-      padding:10px 13px;
+      padding:10px 12px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:white;
+      background:#fff;
+      color:var(--purple);
       font-size:13px;
+      box-shadow:0 8px 18px rgba(107,10,116,.06);
     }
 
     .cartCount{
@@ -183,7 +217,7 @@
       border-radius:999px;
       display:grid;
       place-items:center;
-      background:var(--pink);
+      background:var(--purple);
       color:white;
       font-size:11px;
       font-weight:1000;
@@ -197,6 +231,7 @@
       display:none;
       border-top:1px solid var(--line);
       padding:10px 0 12px;
+      background:rgba(255,255,255,.88);
     }
 
     .mobileMenu.show{
@@ -208,178 +243,235 @@
       padding:11px 12px;
       border-radius:16px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.055);
+      background:#fff;
       font-weight:900;
       font-size:13px;
+      color:var(--purple);
     }
 
     .hero{
-      padding:24px 0 16px;
+      padding:18px 0 12px;
     }
 
-    .heroGrid{
+    .heroShell{
+      min-height:430px;
       display:grid;
-      grid-template-columns:1.04fr .96fr;
-      gap:18px;
+      grid-template-columns:1.02fr .98fr;
+      gap:14px;
       align-items:stretch;
     }
 
-    .heroCard{
-      border:1px solid var(--line);
-      background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
-      border-radius:30px;
-      padding:25px;
-      box-shadow:var(--shadow);
-      overflow:hidden;
+    .heroMain{
       position:relative;
+      overflow:hidden;
+      border-radius:30px;
+      padding:28px;
+      background:
+        radial-gradient(circle at 18% 18%,rgba(255,255,255,.18),transparent 28%),
+        linear-gradient(135deg,var(--purple),var(--purple2));
+      color:white;
+      box-shadow:var(--shadow);
+      isolation:isolate;
     }
 
-    .heroCard:before{
+    .heroMain::before{
       content:"";
       position:absolute;
-      width:230px;
-      height:230px;
-      right:-80px;
-      top:-80px;
-      background:radial-gradient(circle,rgba(255,95,162,.28),transparent 68%);
-      pointer-events:none;
+      inset:auto -12% -80px -12%;
+      height:155px;
+      background:white;
+      border-radius:50% 50% 0 0;
+      opacity:.96;
+      z-index:-1;
     }
 
-    .tag{
+    .heroMain::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(circle at 18px 18px,rgba(255,255,255,.12) 1px,transparent 1px);
+      background-size:38px 38px;
+      opacity:.22;
+      pointer-events:none;
+      z-index:-2;
+    }
+
+    .brandPill{
       width:max-content;
       max-width:100%;
       display:flex;
       align-items:center;
-      gap:7px;
-      padding:8px 11px;
+      gap:8px;
+      padding:8px 12px;
       border-radius:999px;
-      background:rgba(255,228,199,.10);
-      border:1px solid rgba(255,228,199,.16);
-      color:var(--cream);
+      background:rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
       font-size:12px;
       font-weight:1000;
-      margin-bottom:15px;
-      position:relative;
-      z-index:1;
+      margin-bottom:18px;
     }
 
     .hero h2{
-      max-width:740px;
-      font-size:clamp(34px,5vw,64px);
-      line-height:.97;
-      letter-spacing:-.075em;
-      position:relative;
-      z-index:1;
+      max-width:690px;
+      font-size:clamp(40px,5.6vw,70px);
+      line-height:.92;
+      letter-spacing:-.08em;
     }
 
-    .hero h2 span{
-      color:var(--pink2);
+    .hero h2 .script{
+      display:inline-block;
+      font-family:Pacifico,cursive;
+      letter-spacing:0;
+      font-weight:400;
+      color:white;
+      text-shadow:0 10px 30px rgba(0,0,0,.18);
     }
 
     .heroText{
-      max-width:640px;
-      margin-top:14px;
-      color:var(--muted);
+      max-width:610px;
+      margin-top:16px;
+      color:rgba(255,255,255,.83);
       font-size:15px;
       line-height:1.62;
-      position:relative;
-      z-index:1;
     }
 
     .heroButtons{
-      margin-top:18px;
+      margin-top:20px;
       display:flex;
       flex-wrap:wrap;
       gap:10px;
-      position:relative;
-      z-index:1;
+    }
+
+    .heroMain .ghostBtn{
+      background:rgba(255,255,255,.12);
+      color:white;
+      border-color:rgba(255,255,255,.22);
+      box-shadow:none;
+    }
+
+    .heroMain .primaryBtn{
+      background:white;
+      color:var(--purple);
+      box-shadow:0 14px 30px rgba(0,0,0,.14);
     }
 
     .notice{
-      margin-top:14px;
-      border:1px solid rgba(255,200,107,.20);
-      background:rgba(255,200,107,.08);
-      color:var(--cream);
-      border-radius:18px;
-      padding:12px;
-      font-size:12px;
-      font-weight:800;
-      line-height:1.45;
-      position:relative;
-      z-index:1;
-    }
-
-    .miniStats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:9px;
       margin-top:16px;
-      position:relative;
-      z-index:1;
-    }
-
-    .stat{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.10);
+      color:rgba(255,255,255,.88);
       border-radius:18px;
-      padding:12px;
+      padding:11px 12px;
+      font-size:12px;
+      font-weight:850;
+      line-height:1.45;
+      max-width:660px;
     }
 
-    .stat b{
-      display:block;
-      font-size:18px;
-    }
-
-    .stat span{
-      display:block;
-      color:var(--muted);
-      font-size:11px;
-      margin-top:3px;
-      line-height:1.35;
+    .heroSide{
+      display:grid;
+      gap:14px;
     }
 
     .photoPanel{
-      min-height:390px;
+      min-height:292px;
       border:1px solid var(--line);
       border-radius:30px;
       background:
-        linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.62)),
+        linear-gradient(180deg,rgba(107,10,116,.03),rgba(107,10,116,.50)),
         url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80") center/cover;
       box-shadow:var(--shadow);
       overflow:hidden;
       display:flex;
       align-items:flex-end;
-      padding:16px;
-      position:relative;
+      padding:14px;
     }
 
-    .floatingInfo{
+    .photoInfo{
       width:100%;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(16,11,18,.72);
-      backdrop-filter:blur(15px);
-      border-radius:22px;
-      padding:13px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
       gap:12px;
+      align-items:center;
+      padding:13px;
+      border-radius:22px;
+      background:rgba(255,255,255,.88);
+      border:1px solid rgba(255,255,255,.70);
+      backdrop-filter:blur(14px);
+      box-shadow:0 12px 30px rgba(0,0,0,.12);
     }
 
-    .floatingInfo b{
+    .photoInfo b{
       display:block;
+      color:var(--purple);
       font-size:14px;
+      line-height:1.2;
     }
 
-    .floatingInfo span{
+    .photoInfo span{
       display:block;
-      margin-top:3px;
+      margin-top:4px;
       color:var(--muted);
       font-size:12px;
+      line-height:1.35;
+    }
+
+    .quickMenu{
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:rgba(255,255,255,.84);
+      box-shadow:var(--shadow2);
+      padding:14px;
+      overflow:hidden;
+    }
+
+    .quickMenu h3{
+      color:var(--purple);
+      font-size:19px;
+      letter-spacing:-.045em;
+      margin-bottom:10px;
+    }
+
+    .menuList{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+    }
+
+    .menuItem{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:18px;
+      padding:12px;
+      min-height:72px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition:.18s ease;
+    }
+
+    .menuItem:hover{
+      transform:translateY(-1px);
+      border-color:rgba(107,10,116,.28);
+      box-shadow:0 12px 20px rgba(107,10,116,.09);
+    }
+
+    .menuItem b{
+      font-size:13px;
+      color:var(--text);
+    }
+
+    .menuItem span{
+      margin-top:6px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.35;
     }
 
     .sectionHead{
-      margin:24px 0 12px;
+      margin:20px 0 10px;
       display:flex;
       align-items:flex-end;
       justify-content:space-between;
@@ -387,56 +479,61 @@
     }
 
     .sectionHead h3{
+      color:var(--purple);
       font-size:24px;
-      letter-spacing:-.05em;
+      letter-spacing:-.055em;
     }
 
     .sectionHead p{
-      margin-top:5px;
+      margin-top:4px;
       color:var(--muted);
       font-size:13px;
-      line-height:1.45;
+      line-height:1.42;
     }
 
     .categoryGrid{
       display:grid;
-      grid-template-columns:repeat(6,1fr);
+      grid-template-columns:repeat(5,1fr);
       gap:10px;
     }
 
     .categoryCard{
-      min-height:138px;
+      min-height:112px;
+      position:relative;
+      overflow:hidden;
       border:1px solid var(--line);
-      background:
-        linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.62)),
-        var(--img) center/cover;
       border-radius:22px;
-      padding:12px;
+      background:
+        linear-gradient(180deg,rgba(107,10,116,.02),rgba(107,10,116,.72)),
+        var(--img) center/cover;
+      box-shadow:var(--shadow2);
       display:flex;
       align-items:flex-end;
-      overflow:hidden;
-      box-shadow:0 14px 35px rgba(0,0,0,.16);
-      transition:.2s ease;
-      position:relative;
+      padding:12px;
+      transition:.18s ease;
     }
 
     .categoryCard:hover{
       transform:translateY(-2px);
-      border-color:rgba(255,95,162,.36);
+      box-shadow:0 16px 30px rgba(107,10,116,.16);
     }
 
     .categoryCard b{
       display:block;
+      color:white;
       font-size:14px;
       letter-spacing:-.03em;
+      text-shadow:0 8px 18px rgba(0,0,0,.28);
     }
 
     .categoryCard span{
       display:block;
-      margin-top:4px;
-      color:var(--muted);
+      margin-top:3px;
+      color:rgba(255,255,255,.83);
       font-size:11px;
       line-height:1.35;
+      max-height:30px;
+      overflow:hidden;
     }
 
     .cakesGrid{
@@ -447,21 +544,22 @@
 
     .cakeCard{
       border:1px solid var(--line);
-      background:rgba(255,255,255,.055);
-      border-radius:22px;
+      background:rgba(255,255,255,.90);
+      border-radius:24px;
       overflow:hidden;
-      box-shadow:0 14px 35px rgba(0,0,0,.18);
-      transition:.2s ease;
+      box-shadow:var(--shadow2);
+      transition:.18s ease;
     }
 
     .cakeCard:hover{
       transform:translateY(-3px);
-      background:rgba(255,255,255,.08);
+      box-shadow:0 18px 36px rgba(107,10,116,.14);
+      border-color:rgba(107,10,116,.26);
     }
 
     .cakeImg{
-      height:168px;
-      background:#2d1a30;
+      height:165px;
+      background:#f1e4f2;
       position:relative;
       overflow:hidden;
     }
@@ -471,11 +569,11 @@
       height:100%;
       object-fit:cover;
       display:block;
-      transition:.3s ease;
+      transition:.28s ease;
     }
 
     .cakeCard:hover .cakeImg img{
-      transform:scale(1.045);
+      transform:scale(1.035);
     }
 
     .badge{
@@ -485,12 +583,12 @@
       max-width:calc(100% - 20px);
       padding:7px 9px;
       border-radius:999px;
-      background:rgba(0,0,0,.58);
+      background:rgba(255,255,255,.88);
       backdrop-filter:blur(10px);
-      color:white;
+      color:var(--purple);
       font-size:11px;
       font-weight:1000;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(107,10,116,.13);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -503,8 +601,9 @@
     .cakeBody h4{
       font-size:15px;
       line-height:1.2;
-      letter-spacing:-.025em;
+      letter-spacing:-.03em;
       margin-bottom:6px;
+      color:var(--text);
     }
 
     .cakeDesc{
@@ -527,7 +626,7 @@
       padding:5px 7px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
+      background:#fff7ff;
       color:var(--muted);
       font-size:10px;
       font-weight:900;
@@ -542,7 +641,7 @@
     }
 
     .price{
-      color:var(--cream);
+      color:var(--purple);
       font-size:13px;
       font-weight:1000;
       white-space:nowrap;
@@ -551,150 +650,141 @@
     .smallBtn{
       padding:9px 11px;
       border-radius:999px;
-      background:rgba(255,95,162,.18);
-      border:1px solid rgba(255,95,162,.34);
-      color:white;
+      background:rgba(107,10,116,.09);
+      border:1px solid rgba(107,10,116,.14);
+      color:var(--purple);
       font-size:12px;
       font-weight:1000;
       white-space:nowrap;
+      transition:.18s ease;
     }
 
-    .steps{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
+    .smallBtn:hover{
+      background:var(--purple);
+      color:white;
     }
 
-    .stepBox,.trustBox{
+    .howStrip{
+      margin-top:12px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      border-radius:22px;
-      padding:15px;
-      box-shadow:0 12px 30px rgba(0,0,0,.12);
+      background:rgba(255,255,255,.82);
+      border-radius:28px;
+      box-shadow:var(--shadow2);
+      padding:14px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .step{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:20px;
+      background:#fff8ff;
+      border:1px solid rgba(107,10,116,.10);
     }
 
     .stepNum{
-      width:38px;
-      height:38px;
+      width:34px;
+      height:34px;
+      border-radius:14px;
       display:grid;
       place-items:center;
-      border-radius:14px;
-      background:rgba(255,95,162,.14);
-      color:var(--cream);
+      flex:0 0 auto;
+      background:var(--purple);
+      color:white;
       font-weight:1000;
-      margin-bottom:10px;
+      box-shadow:0 10px 20px rgba(107,10,116,.18);
     }
 
-    .stepBox b,.trustBox b{
+    .step b{
       display:block;
-      font-size:14px;
-      margin-bottom:6px;
+      font-size:13px;
+      color:var(--text);
+      margin-bottom:4px;
     }
 
-    .stepBox span,.trustBox span{
+    .step span{
       display:block;
       color:var(--muted);
       font-size:12px;
-      line-height:1.45;
+      line-height:1.42;
     }
 
-    .customCTA{
-      margin-top:22px;
+    .bottomCTA{
+      margin:20px 0 28px;
       border:1px solid var(--line);
       background:
-        radial-gradient(circle at 20% 20%,rgba(255,95,162,.24),transparent 30%),
-        linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
-      border-radius:28px;
-      padding:20px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
+        radial-gradient(circle at 12% 18%,rgba(255,255,255,.14),transparent 32%),
+        linear-gradient(135deg,var(--purple),var(--purple2));
+      color:white;
+      border-radius:30px;
       box-shadow:var(--shadow);
-    }
-
-    .customCTA h3{
-      font-size:25px;
-      letter-spacing:-.055em;
-    }
-
-    .customCTA p{
-      margin-top:7px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-      max-width:650px;
-    }
-
-    .trustGrid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-      margin-top:12px;
-    }
-
-    .policyStrip{
-      margin:22px 0 0;
-      border:1px solid rgba(255,200,107,.22);
-      background:rgba(255,200,107,.075);
-      border-radius:22px;
-      padding:15px;
-      color:var(--cream);
-      font-size:13px;
-      line-height:1.55;
-      font-weight:800;
-    }
-
-    .galleryGrid{
-      display:grid;
-      grid-template-columns:repeat(6,1fr);
-      gap:9px;
-    }
-
-    .galleryImg{
-      height:120px;
-      border-radius:20px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:#2d1a30;
-    }
-
-    .galleryImg img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .contactStrip{
-      margin:22px 0 30px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.045);
-      border-radius:22px;
-      padding:14px;
+      padding:18px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
+      gap:14px;
+      overflow:hidden;
+      position:relative;
     }
 
-    .contactStrip b{
-      display:block;
-      font-size:15px;
+    .bottomCTA::after{
+      content:"";
+      position:absolute;
+      width:180px;
+      height:180px;
+      right:-60px;
+      top:-70px;
+      border-radius:50%;
+      background:rgba(255,255,255,.10);
+      pointer-events:none;
     }
 
-    .contactStrip span{
+    .bottomCTA b{
       display:block;
-      color:var(--muted);
-      margin-top:4px;
-      font-size:12px;
+      font-size:20px;
+      letter-spacing:-.045em;
+      position:relative;
+      z-index:1;
+    }
+
+    .bottomCTA span{
+      display:block;
+      margin-top:5px;
+      color:rgba(255,255,255,.80);
+      font-size:13px;
       line-height:1.45;
+      max-width:680px;
+      position:relative;
+      z-index:1;
+    }
+
+    .bottomCTA .heroButtons{
+      margin-top:0;
+      position:relative;
+      z-index:1;
+    }
+
+    .bottomCTA .primaryBtn{
+      background:white;
+      color:var(--purple);
+      box-shadow:0 14px 30px rgba(0,0,0,.12);
+    }
+
+    .bottomCTA .ghostBtn{
+      background:rgba(255,255,255,.11);
+      border-color:rgba(255,255,255,.20);
+      color:white;
+      box-shadow:none;
     }
 
     .footer{
       border-top:1px solid var(--line);
-      padding:20px 0;
+      background:rgba(255,255,255,.70);
+      padding:18px 0;
       color:var(--muted);
       font-size:12px;
     }
@@ -707,6 +797,12 @@
       flex-wrap:wrap;
     }
 
+    .footerBrand{
+      color:var(--purple);
+      font-weight:1000;
+      font-size:13px;
+    }
+
     .footerLinks{
       display:flex;
       gap:10px;
@@ -715,56 +811,150 @@
     }
 
     .footerLinks a{
-      color:var(--cream);
-      font-weight:800;
+      color:var(--purple);
+      font-weight:900;
     }
 
     .empty,.loader{
       grid-column:1/-1;
-      padding:26px 14px;
+      padding:22px 14px;
       text-align:center;
       color:var(--muted);
-      border:1px dashed rgba(255,255,255,.18);
+      border:1px dashed rgba(107,10,116,.20);
       border-radius:22px;
-      background:rgba(255,255,255,.04);
+      background:rgba(255,255,255,.65);
       line-height:1.5;
     }
 
-    @media(max-width:1000px){
-      .heroGrid{grid-template-columns:1fr}
-      .photoPanel{min-height:310px}
-      .categoryGrid{grid-template-columns:repeat(3,1fr)}
-      .cakesGrid{grid-template-columns:repeat(2,1fr)}
-      .steps,.trustGrid{grid-template-columns:repeat(2,1fr)}
-      .galleryGrid{grid-template-columns:repeat(3,1fr)}
+    @media(max-width:1040px){
+      .heroShell{
+        grid-template-columns:1fr;
+      }
+
+      .heroSide{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .photoPanel{
+        min-height:260px;
+      }
+
+      .categoryGrid{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .cakesGrid{
+        grid-template-columns:repeat(2,1fr);
+      }
     }
 
-    @media(max-width:720px){
-      .wrap{width:min(100% - 18px,1180px)}
-      .nav{min-height:58px}
-      .brand p{display:none}
-      .brand h1{max-width:160px}
-      .navLink{display:none}
-      .mobileMenuBtn{display:inline-flex}
-      .primaryBtn{padding:10px 12px;font-size:13px}
-      .cartBtn{padding:10px 11px}
-      .hero{padding-top:16px}
-      .heroCard{padding:17px;border-radius:24px}
-      .hero h2{font-size:39px}
-      .heroText{font-size:13px}
-      .miniStats{grid-template-columns:1fr 1fr 1fr;gap:7px}
-      .stat{padding:10px 8px}
-      .stat b{font-size:15px}
-      .stat span{font-size:10px}
-      .categoryGrid{grid-template-columns:repeat(2,1fr)}
-      .categoryCard{min-height:120px}
-      .cakesGrid{grid-template-columns:1fr}
-      .cakeImg{height:210px}
-      .steps,.trustGrid{grid-template-columns:1fr}
-      .customCTA{align-items:flex-start;flex-direction:column}
-      .galleryGrid{grid-template-columns:repeat(2,1fr)}
-      .galleryImg{height:135px}
-      .footerLinks{justify-content:flex-start}
+    @media(max-width:760px){
+      .wrap{
+        width:min(100% - 18px,1160px);
+      }
+
+      .nav{
+        min-height:58px;
+      }
+
+      .brand p{
+        display:none;
+      }
+
+      .brand h1{
+        max-width:150px;
+      }
+
+      .navLink{
+        display:none;
+      }
+
+      .mobileMenuBtn{
+        display:inline-flex;
+      }
+
+      .primaryBtn{
+        padding:10px 12px;
+        font-size:13px;
+      }
+
+      .ghostBtn,
+      .cartBtn{
+        padding:10px 11px;
+        font-size:13px;
+      }
+
+      .hero{
+        padding-top:12px;
+      }
+
+      .heroMain{
+        padding:20px;
+        border-radius:25px;
+        min-height:400px;
+      }
+
+      .hero h2{
+        font-size:43px;
+      }
+
+      .heroText{
+        font-size:13px;
+      }
+
+      .heroSide{
+        grid-template-columns:1fr;
+      }
+
+      .photoPanel{
+        min-height:220px;
+        border-radius:24px;
+      }
+
+      .quickMenu{
+        border-radius:24px;
+      }
+
+      .menuList{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .sectionHead{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:8px;
+      }
+
+      .categoryGrid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .categoryCard{
+        min-height:112px;
+      }
+
+      .cakesGrid{
+        grid-template-columns:1fr;
+      }
+
+      .cakeImg{
+        height:215px;
+      }
+
+      .howStrip{
+        grid-template-columns:1fr;
+        border-radius:24px;
+      }
+
+      .bottomCTA{
+        flex-direction:column;
+        align-items:flex-start;
+        border-radius:24px;
+      }
+
+      .footerLinks{
+        justify-content:flex-start;
+      }
     }
   </style>
 </head>
@@ -776,8 +966,8 @@
     <a href="index.html" class="brand">
       <div id="siteLogo" class="logo">🍰</div>
       <div>
-        <h1 id="siteBrandName">Cake Studio</h1>
-        <p id="siteTagline">Fresh custom cakes & sweet orders</p>
+        <h1 id="siteBrandName">Siffat Cakes</h1>
+        <p id="siteTagline">Eggless Cakes & Desserts</p>
       </div>
     </a>
 
@@ -806,42 +996,63 @@
 
 <main>
   <section class="hero">
-    <div class="wrap heroGrid">
-      <div class="heroCard">
-        <div class="tag" id="heroTag">✨ Custom cakes made fresh</div>
+    <div class="wrap heroShell">
+      <div class="heroMain">
+        <div class="brandPill" id="heroTag">Eggless Cakes & Desserts</div>
 
         <h2 id="heroTitle">
-          Custom cakes for <span>birthdays, weddings & sweet moments.</span>
+          Custom cakes made <span class="script">sweetly</span> for every moment.
         </h2>
 
         <p class="heroText" id="heroSubtitle">
-          Browse cakes, customize size, flavour and add-ons, add multiple items to cart, and confirm your order request on WhatsApp.
+          Browse cakes, choose size and flavour, add items to cart, and send your order request on WhatsApp.
         </p>
 
         <div class="heroButtons">
           <a class="primaryBtn" href="cakes.html">Browse Cakes</a>
-          <a class="ghostBtn" href="cake.html?custom=true">Create Custom Cake</a>
+          <a class="ghostBtn" href="cake.html?custom=true">Custom Cake</a>
           <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank">Need Today?</a>
         </div>
 
         <div class="notice" id="sameDayNotice">
           Online orders require at least 24 hours notice. For same-day or urgent orders, please contact us directly on WhatsApp.
         </div>
-
-        <div class="miniStats">
-          <div class="stat"><b>Fresh</b><span>Baked on order</span></div>
-          <div class="stat"><b>Custom</b><span>Theme & message</span></div>
-          <div class="stat"><b>Easy</b><span>Cart + WhatsApp</span></div>
-        </div>
       </div>
 
-      <div id="heroPhoto" class="photoPanel">
-        <div class="floatingInfo">
-          <div>
-            <b>Need a cake urgently?</b>
-            <span id="heroFloatingText">Same-day orders are handled directly on WhatsApp.</span>
+      <div class="heroSide">
+        <div id="heroPhoto" class="photoPanel">
+          <div class="photoInfo">
+            <div>
+              <b>Fresh custom orders</b>
+              <span id="heroFloatingText">Birthdays, weddings, cupcakes, brownies & more.</span>
+            </div>
+            <a class="primaryBtn" id="heroWhatsappBtn" href="#" target="_blank">Ask</a>
           </div>
-          <a class="primaryBtn" id="heroWhatsappBtn" href="#" target="_blank">Ask</a>
+        </div>
+
+        <div class="quickMenu">
+          <h3>Menu Highlights</h3>
+          <div class="menuList">
+            <a class="menuItem" href="cakes.html">
+              <b>Cakes</b>
+              <span>Rasmalai, chocolate, vanilla, red velvet</span>
+            </a>
+
+            <a class="menuItem" href="cakes.html">
+              <b>Cupcakes</b>
+              <span>Chocolate, vanilla, red velvet, marble</span>
+            </a>
+
+            <a class="menuItem" href="cakes.html">
+              <b>Brownies</b>
+              <span>Triple chocolate, Oreo, Lotus, Ferrero</span>
+            </a>
+
+            <a class="menuItem" href="cake.html?custom=true">
+              <b>Custom</b>
+              <span>Your theme, message, flavour and add-ons</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -851,7 +1062,7 @@
     <div class="sectionHead">
       <div>
         <h3>Shop by Category</h3>
-        <p>Choose a cake type and explore designs made for that occasion.</p>
+        <p>Choose the type first, then customize size, flavour and message.</p>
       </div>
       <a class="ghostBtn" href="cakes.html">View All</a>
     </div>
@@ -865,7 +1076,7 @@
     <div class="sectionHead">
       <div>
         <h3>Featured Cakes</h3>
-        <p>Popular designs customers can customize before adding to cart.</p>
+        <p>Popular cakes customers can customize and add to cart.</p>
       </div>
       <a class="ghostBtn" href="cakes.html">All Cakes</a>
     </div>
@@ -879,113 +1090,45 @@
     <div class="sectionHead">
       <div>
         <h3>How Ordering Works</h3>
-        <p>A simple request flow made for custom cake orders.</p>
+        <p>Simple order request flow. Final confirmation happens on WhatsApp.</p>
       </div>
     </div>
 
-    <div class="steps">
-      <div class="stepBox">
+    <div class="howStrip">
+      <div class="step">
         <div class="stepNum">1</div>
-        <b>Choose a cake</b>
-        <span>Browse all cakes or open a category like birthday, wedding, kids or cupcakes.</span>
+        <div>
+          <b>Choose</b>
+          <span>Pick a cake or start a custom cake request.</span>
+        </div>
       </div>
 
-      <div class="stepBox">
+      <div class="step">
         <div class="stepNum">2</div>
-        <b>Customize details</b>
-        <span>Select size, servings, flavour, eggless option, add-ons and cake message.</span>
+        <div>
+          <b>Customize</b>
+          <span>Select size, flavour, options, add-ons and message.</span>
+        </div>
       </div>
 
-      <div class="stepBox">
+      <div class="step">
         <div class="stepNum">3</div>
-        <b>Add to cart</b>
-        <span>Add one or multiple customized cakes/items into a single order request.</span>
-      </div>
-
-      <div class="stepBox">
-        <div class="stepNum">4</div>
-        <b>Confirm on WhatsApp</b>
-        <span>Submit your request and complete confirmation directly with the shop.</span>
-      </div>
-    </div>
-
-    <div class="policyStrip" id="policyStrip">
-      Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp. Estimated prices may change after design review.
-    </div>
-  </section>
-
-  <section class="wrap">
-    <div class="customCTA">
-      <div>
-        <h3>Have your own cake idea?</h3>
-        <p>Send your theme, colours, serving size, inspiration photo and special notes. We’ll add it as a custom request and confirm everything on WhatsApp.</p>
-      </div>
-
-      <div class="heroButtons" style="margin-top:0;">
-        <a class="primaryBtn" href="cake.html?custom=true">Start Custom Cake</a>
-        <a class="ghostBtn" id="customWhatsappBtn" href="#" target="_blank">WhatsApp Directly</a>
+        <div>
+          <b>Confirm</b>
+          <span>Submit request and confirm final details on WhatsApp.</span>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="wrap">
-    <div class="sectionHead">
+    <div class="bottomCTA">
       <div>
-        <h3>Why Customers Love Us</h3>
-        <p>Small details that make custom ordering easier.</p>
-      </div>
-    </div>
-
-    <div class="trustGrid">
-      <div class="trustBox">
-        <b>Freshly Baked</b>
-        <span>Every cake is prepared around your selected date and order details.</span>
+        <b id="contactTitle">Need a cake today or have a special design?</b>
+        <span id="contactInfo">For urgent orders, custom themes, or questions before ordering, contact us directly on WhatsApp.</span>
       </div>
 
-      <div class="trustBox">
-        <b>Live Estimate</b>
-        <span>Size, flavour and add-ons update your estimated price while customizing.</span>
-      </div>
-
-      <div class="trustBox">
-        <b>Pickup / Delivery</b>
-        <span>Choose pickup or delivery at checkout. Delivery details can be confirmed later.</span>
-      </div>
-
-      <div class="trustBox">
-        <b>24 Hour Notice</b>
-        <span>Tomorrow is the first online order date. Same-day cakes go through WhatsApp.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="wrap" id="gallerySection">
-    <div class="sectionHead">
-      <div>
-        <h3>Sweet Gallery</h3>
-        <p>A small preview of cake styles and dessert inspiration.</p>
-      </div>
-      <a class="ghostBtn" id="instagramBtn" href="#" target="_blank">Instagram</a>
-    </div>
-
-    <div class="galleryGrid">
-      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
-      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
-      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
-      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
-      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
-      <div class="galleryImg"><img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=700&q=80" alt="Cake gallery"></div>
-    </div>
-  </section>
-
-  <section class="wrap">
-    <div class="contactStrip">
-      <div>
-        <b id="contactTitle">Have a question before ordering?</b>
-        <span id="contactInfo">For urgent or same-day cakes, contact us directly on WhatsApp.</span>
-      </div>
-
-      <div class="heroButtons" style="margin-top:0;">
+      <div class="heroButtons">
         <a class="primaryBtn" id="bottomWhatsappBtn" href="#" target="_blank">Contact WhatsApp</a>
         <a class="ghostBtn" href="cart.html">View Cart</a>
       </div>
@@ -996,16 +1139,15 @@
 <footer class="footer">
   <div class="wrap footerInner">
     <div>
-      <span>© <span id="year"></span> <span id="footerBrand">Cake Studio</span>. All rights reserved.</span>
-      <br>
-      <span id="footerAddress">Made for easy WhatsApp cake orders.</span>
+      <div class="footerBrand">© <span id="year"></span> <span id="footerBrand">Siffat Cakes</span></div>
+      <span id="footerAddress">381 Talbot Street, St. Thomas</span>
     </div>
 
     <div class="footerLinks">
       <a href="cakes.html">All Cakes</a>
       <a href="cake.html?custom=true">Custom Cake</a>
       <a href="cart.html">Cart</a>
-      <a href="#how">Policy</a>
+      <a href="#how">How It Works</a>
       <a href="admin.html">Admin</a>
     </div>
   </div>
@@ -1019,19 +1161,19 @@
   const CART_KEY = "cakeShopCartV1";
 
   const DEFAULT_SETTINGS = {
-    brand_name:"Cake Studio",
-    tagline:"Fresh custom cakes & sweet orders",
+    brand_name:"Siffat Cakes",
+    tagline:"Eggless Cakes & Desserts",
     logo_url:"",
     whatsapp_number:"",
     instagram_url:"",
-    address:"",
+    address:"381 Talbot Street, St. Thomas",
     business_hours:"",
     service_area:"",
-    hero_title:"Custom cakes for birthdays, weddings & sweet moments.",
-    hero_subtitle:"Browse cakes, customize size, flavour and add-ons, add multiple items to cart, and confirm your order request on WhatsApp.",
+    hero_title:"Custom cakes made sweetly for every moment.",
+    hero_subtitle:"Browse cakes, choose size and flavour, add items to cart, and send your order request on WhatsApp.",
     hero_image_url:"",
     minimum_notice_hours:24,
-    same_day_message:"For today or urgent orders, please contact us directly on WhatsApp.",
+    same_day_message:"Online orders require at least 24 hours notice. For same-day or urgent orders, please contact us directly on WhatsApp.",
     policy_text:"Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp. Estimated prices may change after design review.",
     currency:"$",
     show_prices:true
@@ -1042,8 +1184,7 @@
     "https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80",
     "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80",
     "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=900&q=80"
+    "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80"
   ];
 
   let siteSettings = {...DEFAULT_SETTINGS};
@@ -1053,9 +1194,14 @@
 
   const $ = (id) => document.getElementById(id);
 
-  $("year").textContent = new Date().getFullYear();
+  document.addEventListener("DOMContentLoaded", () => {
+    $("year").textContent = new Date().getFullYear();
 
-  init();
+    init().catch(err => {
+      console.error("Homepage init failed:", err);
+      renderError();
+    });
+  });
 
   async function init(){
     updateCartCount();
@@ -1096,24 +1242,22 @@
     const logo = siteSettings.logo_url || "";
     const heroImage = siteSettings.hero_image_url || "";
     const whatsapp = normalizePhone(siteSettings.whatsapp_number || "");
-    const instagram = siteSettings.instagram_url || "#";
 
-    document.title = brand + " - Custom Cakes & Orders";
+    document.title = brand + " - Custom Cakes & Desserts";
 
     $("siteBrandName").textContent = brand;
     $("siteTagline").textContent = tagline;
     $("footerBrand").textContent = brand;
 
-    $("heroTag").textContent = "✨ " + tagline;
+    $("heroTag").textContent = tagline;
     $("heroTitle").innerHTML = formatHeroTitle(siteSettings.hero_title || DEFAULT_SETTINGS.hero_title);
     $("heroSubtitle").textContent = siteSettings.hero_subtitle || DEFAULT_SETTINGS.hero_subtitle;
 
     $("sameDayNotice").textContent = siteSettings.same_day_message || DEFAULT_SETTINGS.same_day_message;
-    $("policyStrip").textContent = siteSettings.policy_text || DEFAULT_SETTINGS.policy_text;
 
     $("contactInfo").textContent = siteSettings.address
       ? `${siteSettings.address}${siteSettings.business_hours ? " · " + siteSettings.business_hours : ""}`
-      : "For urgent or same-day cakes, contact us directly on WhatsApp.";
+      : "For urgent orders, custom themes, or questions before ordering, contact us directly on WhatsApp.";
 
     $("footerAddress").textContent = buildFooterInfo();
 
@@ -1125,11 +1269,10 @@
 
     if(heroImage){
       $("heroPhoto").style.backgroundImage =
-        `linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.62)), url("${escapeCssUrl(heroImage)}")`;
+        `linear-gradient(180deg,rgba(107,10,116,.03),rgba(107,10,116,.50)), url("${escapeCssUrl(heroImage)}")`;
     }
 
     setupWhatsappLinks(whatsapp);
-    setupInstagram(instagram);
   }
 
   function buildFooterInfo(){
@@ -1139,7 +1282,7 @@
     if(siteSettings.service_area) parts.push("Serving " + siteSettings.service_area);
     if(siteSettings.business_hours) parts.push(siteSettings.business_hours);
 
-    return parts.length ? parts.join(" · ") : "Made for easy WhatsApp cake orders.";
+    return parts.length ? parts.join(" · ") : "381 Talbot Street, St. Thomas";
   }
 
   function setupWhatsappLinks(phone){
@@ -1149,9 +1292,12 @@
     const normalUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : "#";
     const urgentUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(urgentMessage)}` : "#";
 
-    ["topWhatsappBtn","heroWhatsappBtn","customWhatsappBtn","bottomWhatsappBtn"].forEach(id => {
-      $(id).href = normalUrl;
-      $(id).onclick = phone ? null : function(e){
+    ["topWhatsappBtn","heroWhatsappBtn","bottomWhatsappBtn"].forEach(id => {
+      const el = $(id);
+      if(!el) return;
+
+      el.href = normalUrl;
+      el.onclick = phone ? null : function(e){
         e.preventDefault();
         alert("WhatsApp number is not added yet. Add it in admin settings.");
       };
@@ -1162,18 +1308,6 @@
       e.preventDefault();
       alert("WhatsApp number is not added yet. Add it in admin settings.");
     };
-  }
-
-  function setupInstagram(url){
-    const btn = $("instagramBtn");
-
-    if(url && url !== "#"){
-      btn.href = url;
-      btn.style.display = "inline-flex";
-    }else{
-      btn.href = "#";
-      btn.style.display = "none";
-    }
   }
 
   function renderCategories(){
@@ -1189,7 +1323,7 @@
       return;
     }
 
-    const shown = categories.slice(0, 6);
+    const shown = categories.slice(0, 5);
 
     grid.innerHTML = shown.map((cat, index) => {
       const image = cat.image_url || CATEGORY_FALLBACK_IMAGES[index % CATEGORY_FALLBACK_IMAGES.length];
@@ -1210,8 +1344,8 @@
     const grid = $("featuredGrid");
 
     let shown = cakes.filter(cake => cake.is_featured === true);
-    if(!shown.length) shown = cakes.slice(0, 8);
-    else shown = shown.slice(0, 8);
+    if(!shown.length) shown = cakes.slice(0, 4);
+    else shown = shown.slice(0, 4);
 
     if(!shown.length){
       grid.innerHTML = `
@@ -1227,12 +1361,13 @@
       const cats = getCakeCategoryNames(cake.id);
       const priceText = getPriceText(cake);
       const href = `cake.html?id=${encodeURIComponent(cake.id)}`;
+      const image = cake.image_url || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80";
 
       return `
         <article class="cakeCard">
           <a href="${href}">
             <div class="cakeImg">
-              <img src="${escapeHtml(cake.image_url || "")}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'">
+              <img src="${escapeHtml(image)}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'">
               <div class="badge">${escapeHtml(cats[0] || "Cake")}${cake.is_featured ? " · Featured" : ""}</div>
             </div>
           </a>
@@ -1261,11 +1396,9 @@
       .filter(row => String(row.cake_id) === String(cakeId))
       .map(row => row.category_id);
 
-    const names = ids
+    return ids
       .map(id => categories.find(cat => String(cat.id) === String(id))?.name)
       .filter(Boolean);
-
-    return names;
   }
 
   function getPriceText(cake){
@@ -1283,15 +1416,18 @@
 
   function formatHeroTitle(title){
     const clean = escapeHtml(title || "");
+    const lower = clean.toLowerCase();
+
+    if(lower.includes("sweetly")){
+      return clean.replace(/sweetly/i, `<span class="script">sweetly</span>`);
+    }
+
     const words = clean.split(" ").filter(Boolean);
 
-    if(words.length < 6) return clean;
+    if(words.length < 4) return clean;
 
-    const splitAt = Math.ceil(words.length / 2);
-    const first = words.slice(0, splitAt).join(" ");
-    const second = words.slice(splitAt).join(" ");
-
-    return `${first} <span>${second}</span>`;
+    const last = words.pop();
+    return `${words.join(" ")} <span class="script">${last}</span>`;
   }
 
   function updateCartCount(){
@@ -1312,6 +1448,15 @@
 
   function toggleMobileMenu(){
     $("mobileMenu").classList.toggle("show");
+  }
+
+  function renderError(){
+    $("categoryGrid").innerHTML = `
+      <div class="empty">Could not load homepage data. Please check Supabase settings.</div>
+    `;
+    $("featuredGrid").innerHTML = `
+      <div class="empty">Could not load cakes. Please check Supabase settings.</div>
+    `;
   }
 
   function normalizePhone(value){
