@@ -1335,6 +1335,49 @@
       return;
     }
 
+    /*
+      IMPORTANT FIX:
+      Open blank WhatsApp tab immediately from the customer click.
+      Browser allows this because it happens before async Supabase saving.
+    */
+    const whatsappTab = window.open("about:blank", "_blank");
+
+    if(whatsappTab){
+      whatsappTab.document.write(`
+        <html>
+          <head>
+            <title>Preparing WhatsApp...</title>
+            <style>
+              body{
+                margin:0;
+                min-height:100vh;
+                display:grid;
+                place-items:center;
+                background:#fff7ff;
+                color:#640D6B;
+                font-family:Arial,sans-serif;
+                text-align:center;
+              }
+              .box{
+                padding:22px;
+                border:1px solid rgba(100,13,107,.16);
+                border-radius:22px;
+                background:white;
+                max-width:420px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="box">
+              <h2>Preparing WhatsApp message...</h2>
+              <p>Please wait while your order request is saved.</p>
+            </div>
+          </body>
+        </html>
+      `);
+      whatsappTab.document.close();
+    }
+
     const deliveryType = getValue("deliveryType");
     const isDelivery = deliveryType === "Delivery";
     const totals = calculatePayment();
@@ -1406,11 +1449,21 @@
       updateCartCount();
 
       const whatsappUrl = `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, "_blank");
+      localStorage.setItem("lastWhatsAppOrderUrl", whatsappUrl);
 
-      showSuccess(orderId);
+      if(whatsappTab && !whatsappTab.closed){
+        whatsappTab.location.href = whatsappUrl;
+      }
+
+      showSuccess(orderId, whatsappUrl, !!whatsappTab);
+
     }catch(err){
       console.error(err);
+
+      if(whatsappTab && !whatsappTab.closed){
+        whatsappTab.close();
+      }
+
       showToast(err.message || "Could not save order.", true);
       btn.disabled = false;
       btn.textContent = "Submit Order Request & Open WhatsApp";
@@ -1643,32 +1696,39 @@
     ].filter(Boolean).join("\n");
   }
 
-  function showSuccess(orderId){
+  function showSuccess(orderId, whatsappUrl = "", whatsappOpened = false){
     const shortId = String(orderId).slice(0,8).toUpperCase();
 
     $("checkoutArea").className = "";
     $("checkoutArea").innerHTML = `
       <div class="successBox">
         <h3>Order request saved</h3>
-        Your order request has been saved and WhatsApp should be open now.
+        Your order request has been saved.
         <br><br>
         <b>Order ID:</b> ${escapeHtml(shortId)}
         <br><br>
-        Please complete/send the WhatsApp message to confirm with the shop.
-        <br>
+        ${whatsappOpened
+          ? "WhatsApp message should be open in another tab/app. Please send the message to confirm with the shop."
+          : "Browser blocked the WhatsApp popup. Please tap the button below to open WhatsApp message."
+        }
+        <br><br>
         This is not a final invoice. Invoice can be sent later after payment/completion.
+
         <div class="emptyActions" style="justify-content:flex-start;">
-          <a class="primaryBtn" href="index.html">Back to Home</a>
-          <a class="ghostBtn" href="index.html#mainCategories">Browse More</a>
+          ${whatsappUrl ? `<a class="primaryBtn" href="${escapeHtml(whatsappUrl)}" target="_blank">Open WhatsApp Message</a>` : ""}
+          <a class="ghostBtn" href="thank-you.html?order=${encodeURIComponent(orderId)}">Continue</a>
+          <a class="ghostBtn" href="index.html">Back to Home</a>
         </div>
       </div>
     `;
 
-    showToast("Order saved. WhatsApp opened.");
+    showToast(whatsappOpened ? "Order saved. WhatsApp opened." : "Order saved. Tap WhatsApp button.");
 
-    setTimeout(() => {
-      window.location.href = "thank-you.html?order=" + encodeURIComponent(orderId);
-    }, 1400);
+    if(whatsappOpened){
+      setTimeout(() => {
+        window.location.href = "thank-you.html?order=" + encodeURIComponent(orderId);
+      }, 2500);
+    }
   }
 
   function isQuickItem(item){
