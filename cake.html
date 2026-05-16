@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Customize Cake - Cake Studio</title>
+  <title>Customize Cake - Siffat Cakes</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,18 +13,17 @@
 
   <style>
     :root{
-      --bg:#100b12;
-      --bg2:#19101c;
-      --text:#fff7fb;
-      --muted:#c9aebd;
-      --line:rgba(255,255,255,.10);
-      --pink:#ff5fa2;
-      --pink2:#ff8ac0;
-      --cream:#ffe4c7;
-      --gold:#ffc86b;
-      --green:#39d98a;
-      --red:#ff5b6e;
-      --shadow:0 18px 55px rgba(0,0,0,.36);
+      --bg:#fbf4fb;
+      --text:#1d141f;
+      --muted:#725a76;
+      --purple:#640D6B;
+      --purple2:#7a1281;
+      --soft:#fff7ff;
+      --line:rgba(100,13,107,.16);
+      --shadow:0 18px 45px rgba(100,13,107,.12);
+      --shadow2:0 10px 24px rgba(100,13,107,.09);
+      --green:#16823a;
+      --red:#b42318;
     }
 
     *{
@@ -38,9 +37,9 @@
     body{
       min-height:100vh;
       background:
-        radial-gradient(circle at top left, rgba(255,95,162,.22), transparent 34%),
-        radial-gradient(circle at 90% 10%, rgba(255,200,107,.12), transparent 28%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+        radial-gradient(circle at 0% 0%, rgba(100,13,107,.11), transparent 32%),
+        radial-gradient(circle at 100% 0%, rgba(122,18,129,.09), transparent 28%),
+        linear-gradient(180deg,var(--bg),#ffffff 54%,#ffffff);
       color:var(--text);
     }
 
@@ -49,7 +48,7 @@
     button{border:none;cursor:pointer}
 
     .wrap{
-      width:min(1180px, calc(100% - 28px));
+      width:min(1280px, calc(100% - 32px));
       margin:auto;
     }
 
@@ -57,17 +56,17 @@
       position:sticky;
       top:0;
       z-index:50;
+      background:rgba(255,255,255,.90);
       backdrop-filter:blur(18px);
-      background:rgba(16,11,18,.82);
       border-bottom:1px solid var(--line);
     }
 
     .nav{
-      min-height:64px;
+      min-height:60px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap:12px;
     }
 
     .brand{
@@ -80,14 +79,16 @@
     .logo{
       width:42px;
       height:42px;
-      border-radius:15px;
+      border-radius:50%;
       display:grid;
       place-items:center;
-      background:linear-gradient(135deg,var(--pink),var(--gold));
-      box-shadow:0 12px 28px rgba(255,95,162,.25);
-      font-size:22px;
+      background:var(--purple);
+      color:white;
+      box-shadow:0 12px 28px rgba(100,13,107,.22);
+      font-size:20px;
       overflow:hidden;
       flex:0 0 auto;
+      border:2px solid rgba(255,255,255,.85);
     }
 
     .logo img{
@@ -95,16 +96,18 @@
       height:100%;
       object-fit:cover;
       display:block;
+      background:white;
     }
 
     .brand h1{
-      font-size:17px;
+      font-size:18px;
       line-height:1;
-      letter-spacing:-.04em;
+      letter-spacing:-.045em;
+      color:var(--purple);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:250px;
+      max-width:260px;
     }
 
     .brand p{
@@ -114,7 +117,7 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:270px;
+      max-width:280px;
     }
 
     .navActions{
@@ -124,51 +127,64 @@
     }
 
     .navLink{
-      padding:9px 12px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
+      padding:9px 11px;
+      border:1px solid transparent;
+      color:var(--muted);
       border-radius:999px;
       font-size:13px;
       font-weight:900;
+      transition:.18s ease;
     }
 
-    .primaryBtn,.ghostBtn,.cartBtn{
+    .navLink:hover{
+      color:var(--purple);
+      background:rgba(100,13,107,.07);
+      border-color:rgba(100,13,107,.12);
+    }
+
+    .primaryBtn,.ghostBtn,.cartBtn,.secondaryBtn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:8px;
       border-radius:999px;
       font-weight:1000;
-      transition:.2s ease;
+      transition:.18s ease;
       white-space:nowrap;
     }
 
     .primaryBtn{
       padding:11px 15px;
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
       color:white;
-      box-shadow:0 14px 30px rgba(255,95,162,.24);
+      box-shadow:0 12px 28px rgba(100,13,107,.22);
     }
 
     .primaryBtn:hover{
       transform:translateY(-1px);
-      box-shadow:0 18px 36px rgba(255,95,162,.34);
+      box-shadow:0 16px 34px rgba(100,13,107,.29);
     }
 
     .ghostBtn{
       padding:10px 13px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
+      background:white;
+      color:var(--purple);
+      box-shadow:0 8px 18px rgba(100,13,107,.05);
+    }
+
+    .ghostBtn:hover{
+      background:#fff7ff;
+      transform:translateY(-1px);
     }
 
     .cartBtn{
-      padding:10px 13px;
+      padding:10px 12px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:white;
+      background:#fff;
+      color:var(--purple);
       font-size:13px;
+      box-shadow:0 8px 18px rgba(100,13,107,.05);
     }
 
     .cartCount{
@@ -178,7 +194,7 @@
       border-radius:999px;
       display:grid;
       place-items:center;
-      background:var(--pink);
+      background:var(--purple);
       color:white;
       font-size:11px;
       font-weight:1000;
@@ -190,6 +206,7 @@
       display:none;
       border-top:1px solid var(--line);
       padding:10px 0 12px;
+      background:rgba(255,255,255,.92);
     }
 
     .mobileMenu.show{
@@ -201,33 +218,39 @@
       padding:11px 12px;
       border-radius:16px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.055);
+      background:#fff;
       font-weight:900;
       font-size:13px;
+      color:var(--purple);
     }
 
     .page{
-      padding:24px 0 32px;
+      padding:16px 0 32px;
     }
 
     .detailGrid{
       display:grid;
-      grid-template-columns:.95fr 1.05fr;
-      gap:16px;
+      grid-template-columns:.9fr 1.1fr 370px;
+      gap:14px;
       align-items:start;
     }
 
     .imageCard,.formCard,.priceCard,.infoCard{
       border:1px solid var(--line);
-      background:rgba(255,255,255,.055);
+      background:rgba(255,255,255,.92);
       border-radius:28px;
-      box-shadow:var(--shadow);
+      box-shadow:var(--shadow2);
       overflow:hidden;
     }
 
+    .imageCard{
+      position:sticky;
+      top:82px;
+    }
+
     .imageBox{
-      height:520px;
-      background:#2d1a30;
+      height:480px;
+      background:#f1e4f2;
       position:relative;
       overflow:hidden;
     }
@@ -246,12 +269,12 @@
       max-width:calc(100% - 28px);
       padding:8px 11px;
       border-radius:999px;
-      background:rgba(0,0,0,.58);
+      background:rgba(255,255,255,.90);
       backdrop-filter:blur(10px);
-      color:white;
+      color:var(--purple);
       font-size:12px;
       font-weight:1000;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(100,13,107,.13);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -262,6 +285,7 @@
     }
 
     .imageInfo h2{
+      color:var(--purple);
       font-size:30px;
       letter-spacing:-.06em;
       line-height:1;
@@ -285,7 +309,7 @@
       padding:6px 8px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
+      background:#fff7ff;
       color:var(--muted);
       font-size:11px;
       font-weight:900;
@@ -301,6 +325,7 @@
     }
 
     .cardHead h3{
+      color:var(--purple);
       font-size:20px;
       letter-spacing:-.05em;
     }
@@ -333,7 +358,7 @@
     }
 
     .field label{
-      color:var(--cream);
+      color:var(--purple);
       font-size:12px;
       font-weight:1000;
     }
@@ -342,20 +367,17 @@
       width:100%;
       border:1px solid var(--line);
       outline:none;
-      background:rgba(255,255,255,.07);
+      background:white;
       color:var(--text);
       border-radius:15px;
       padding:12px;
       min-height:45px;
       resize:vertical;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
     }
 
     .field textarea{
-      min-height:82px;
-    }
-
-    .field select option{
-      color:#111;
+      min-height:96px;
     }
 
     .hint{
@@ -372,22 +394,29 @@
 
     .addonChoice{
       border:1px solid var(--line);
-      background:rgba(255,255,255,.045);
+      background:#fff7ff;
       border-radius:16px;
       padding:10px;
       display:flex;
       align-items:flex-start;
       gap:8px;
       cursor:pointer;
+      transition:.18s ease;
+    }
+
+    .addonChoice:hover{
+      border-color:rgba(100,13,107,.28);
+      transform:translateY(-1px);
     }
 
     .addonChoice input{
       margin-top:2px;
-      accent-color:var(--pink);
+      accent-color:var(--purple);
     }
 
     .addonChoice b{
       display:block;
+      color:var(--text);
       font-size:12px;
       margin-bottom:3px;
     }
@@ -418,19 +447,20 @@
 
     .priceLine b{
       color:var(--text);
+      text-align:right;
     }
 
     .totalBox{
       margin-top:12px;
-      border:1px solid rgba(255,200,107,.22);
-      background:rgba(255,200,107,.08);
+      border:1px solid rgba(100,13,107,.18);
+      background:#fff7ff;
       border-radius:20px;
       padding:14px;
     }
 
     .totalBox span{
       display:block;
-      color:var(--cream);
+      color:var(--purple);
       font-size:12px;
       font-weight:1000;
       margin-bottom:5px;
@@ -438,19 +468,20 @@
 
     .totalBox b{
       display:block;
+      color:var(--purple);
       font-size:34px;
       letter-spacing:-.06em;
     }
 
     .quoteNote{
       margin-top:10px;
-      border:1px solid rgba(255,95,162,.22);
-      background:rgba(255,95,162,.08);
-      color:#ffd5e7;
+      border:1px solid rgba(100,13,107,.20);
+      background:rgba(100,13,107,.08);
+      color:var(--purple);
       border-radius:16px;
       padding:11px;
       font-size:12px;
-      font-weight:800;
+      font-weight:850;
       line-height:1.45;
       display:none;
     }
@@ -460,9 +491,9 @@
     }
 
     .policyNote{
-      border:1px solid rgba(255,200,107,.20);
-      background:rgba(255,200,107,.08);
-      color:var(--cream);
+      border:1px solid rgba(100,13,107,.16);
+      background:#fff7ff;
+      color:var(--muted);
       border-radius:18px;
       padding:12px;
       font-size:12px;
@@ -481,10 +512,10 @@
       width:100%;
       padding:14px 16px;
       border-radius:999px;
-      background:linear-gradient(135deg,var(--pink),var(--pink2));
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
       color:white;
       font-weight:1000;
-      box-shadow:0 15px 30px rgba(255,95,162,.22);
+      box-shadow:0 15px 30px rgba(100,13,107,.22);
     }
 
     .addBtn:hover{
@@ -495,10 +526,11 @@
       width:100%;
       padding:13px 16px;
       border-radius:999px;
-      background:rgba(255,255,255,.08);
-      color:white;
+      background:white;
+      color:var(--purple);
       font-weight:900;
       border:1px solid var(--line);
+      text-align:center;
     }
 
     .toast{
@@ -510,15 +542,13 @@
       pointer-events:none;
       z-index:200;
       max-width:min(560px,calc(100% - 24px));
-      border:1px solid var(--line);
-      background:rgba(33,22,37,.96);
-      color:var(--text);
-      backdrop-filter:blur(18px);
+      background:var(--purple);
+      color:white;
       border-radius:999px;
-      padding:11px 15px;
+      padding:12px 15px;
       font-size:13px;
-      font-weight:900;
-      box-shadow:0 18px 50px rgba(0,0,0,.38);
+      font-weight:1000;
+      box-shadow:0 18px 36px rgba(100,13,107,.24);
       transition:.2s ease;
       text-align:center;
     }
@@ -529,19 +559,26 @@
     }
 
     .empty{
-      border:1px dashed rgba(255,255,255,.18);
-      background:rgba(255,255,255,.04);
+      border:1px dashed rgba(100,13,107,.22);
+      background:rgba(255,255,255,.78);
       border-radius:24px;
-      padding:28px;
+      padding:34px 18px;
       color:var(--muted);
       text-align:center;
       line-height:1.55;
       grid-column:1/-1;
+      box-shadow:var(--shadow2);
+    }
+
+    .empty strong{
+      color:var(--purple);
+      font-size:20px;
     }
 
     .footer{
       border-top:1px solid var(--line);
-      padding:20px 0;
+      background:rgba(255,255,255,.72);
+      padding:18px 0;
       color:var(--muted);
       font-size:12px;
     }
@@ -554,6 +591,12 @@
       flex-wrap:wrap;
     }
 
+    .footerBrand{
+      color:var(--purple);
+      font-weight:1000;
+      font-size:13px;
+    }
+
     .footerLinks{
       display:flex;
       gap:10px;
@@ -562,17 +605,37 @@
     }
 
     .footerLinks a{
-      color:var(--cream);
-      font-weight:800;
+      color:var(--purple);
+      font-weight:900;
     }
 
-    @media(max-width:980px){
+    @media(max-width:1180px){
+      .detailGrid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .sideStack{
+        grid-column:1/-1;
+        position:static;
+        grid-template-columns:1fr 1fr;
+      }
+
+      .imageCard{
+        position:static;
+      }
+
+      .imageBox{
+        height:430px;
+      }
+    }
+
+    @media(max-width:860px){
       .detailGrid{
         grid-template-columns:1fr;
       }
 
       .sideStack{
-        position:static;
+        grid-template-columns:1fr;
       }
 
       .imageBox{
@@ -581,24 +644,55 @@
     }
 
     @media(max-width:720px){
-      .wrap{width:min(100% - 18px,1180px)}
-      .nav{min-height:58px}
-      .brand p{display:none}
-      .brand h1{max-width:160px}
-      .navLink{display:none}
-      .mobileMenuBtn{display:inline-flex}
-      .primaryBtn{padding:10px 12px;font-size:13px}
-      .cartBtn{padding:10px 11px}
+      .wrap{
+        width:min(100% - 18px,1280px);
+      }
+
+      .nav{
+        min-height:58px;
+      }
+
+      .brand p{
+        display:none;
+      }
+
+      .brand h1{
+        max-width:150px;
+      }
+
+      .navLink{
+        display:none;
+      }
+
+      .mobileMenuBtn{
+        display:inline-flex;
+      }
+
+      .primaryBtn{
+        padding:10px 12px;
+        font-size:13px;
+      }
+
+      .ghostBtn,.cartBtn{
+        padding:10px 11px;
+        font-size:13px;
+      }
+
       .formGrid,.addonsGrid{
         grid-template-columns:1fr;
       }
+
       .imageBox{
         height:310px;
       }
+
       .imageInfo h2{
         font-size:26px;
       }
-      .footerLinks{justify-content:flex-start}
+
+      .footerLinks{
+        justify-content:flex-start;
+      }
     }
   </style>
 </head>
@@ -610,14 +704,15 @@
     <a href="index.html" class="brand">
       <div id="siteLogo" class="logo">🍰</div>
       <div>
-        <h1 id="siteBrandName">Cake Studio</h1>
-        <p id="siteTagline">Fresh custom cakes & sweet orders</p>
+        <h1 id="siteBrandName">Siffat Cakes</h1>
+        <p id="siteTagline">Eggless Cakes & Desserts</p>
       </div>
     </a>
 
     <div class="navActions">
       <a class="navLink" href="index.html">Home</a>
-      <a class="navLink" href="cakes.html">Cakes</a>
+      <a class="navLink" href="index.html#mainCategories">Menu</a>
+      <a class="navLink" href="category.html?cat=cakes">Cakes</a>
       <a class="navLink" href="cake.html?custom=true">Custom Cake</a>
 
       <a class="cartBtn" href="cart.html" aria-label="Open cart">
@@ -631,7 +726,8 @@
 
   <div class="wrap mobileMenu" id="mobileMenu">
     <a href="index.html">Home</a>
-    <a href="cakes.html">All Cakes</a>
+    <a href="index.html#mainCategories">Main Menu</a>
+    <a href="category.html?cat=cakes">Cakes</a>
     <a href="cake.html?custom=true">Create Custom Cake</a>
     <a href="cart.html">Cart</a>
   </div>
@@ -646,17 +742,16 @@
 <footer class="footer">
   <div class="wrap footerInner">
     <div>
-      <span>© <span id="year"></span> <span id="footerBrand">Cake Studio</span>. All rights reserved.</span>
-      <br>
-      <span id="footerAddress">Made for easy WhatsApp cake orders.</span>
+      <div class="footerBrand">© <span id="year"></span> <span id="footerBrand">Siffat Cakes</span></div>
+      <span id="footerAddress">381 Talbot Street, St. Thomas</span>
     </div>
 
     <div class="footerLinks">
       <a href="index.html">Home</a>
-      <a href="cakes.html">All Cakes</a>
+      <a href="index.html#mainCategories">Menu</a>
+      <a href="category.html?cat=cakes">Cakes</a>
       <a href="cake.html?custom=true">Custom Cake</a>
       <a href="cart.html">Cart</a>
-      <a href="admin.html">Admin</a>
     </div>
   </div>
 </footer>
@@ -672,16 +767,16 @@
   const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=80";
 
   const DEFAULT_SETTINGS = {
-    brand_name:"Cake Studio",
-    tagline:"Fresh custom cakes & sweet orders",
+    brand_name:"Siffat Cakes",
+    tagline:"Eggless Cakes & Desserts",
     logo_url:"",
     whatsapp_number:"",
     instagram_url:"",
-    address:"",
+    address:"381 Talbot Street, St. Thomas",
     business_hours:"",
     service_area:"",
     minimum_notice_hours:24,
-    same_day_message:"For today or urgent orders, please contact us directly on WhatsApp.",
+    same_day_message:"Online orders require at least 24 hours notice. For same-day or urgent orders, please contact us directly on WhatsApp.",
     policy_text:"Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp. Estimated prices may change after design review.",
     currency:"$",
     show_prices:true
@@ -719,10 +814,10 @@
 
     const params = new URLSearchParams(window.location.search);
     const cakeId = params.get("id");
+
     isCustomCake = params.get("custom") === "true" || params.get("type") === "custom";
 
     await loadData(cakeId);
-
     applySettings();
 
     if(!isCustomCake && !currentCake){
@@ -750,7 +845,12 @@
 
     if(cakeId && !isCustomCake){
       queries.push(
-        supabaseClient.from("cakes").select("*").eq("id", cakeId).eq("is_active", true).maybeSingle()
+        supabaseClient
+          .from("cakes")
+          .select("*")
+          .eq("id", cakeId)
+          .eq("is_active", true)
+          .maybeSingle()
       );
     }
 
@@ -770,8 +870,11 @@
       cakeRes
     ] = results;
 
-    if(settingsRes.error) console.warn("Settings load error:", settingsRes.error.message);
-    else siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
+    if(settingsRes.error){
+      console.warn("Settings load issue:", settingsRes.error.message);
+    }else{
+      siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
+    }
 
     if(categoriesRes.error) throw new Error("Categories error: " + categoriesRes.error.message);
     if(sizesRes.error) throw new Error("Sizes error: " + sizesRes.error.message);
@@ -779,11 +882,11 @@
     if(optionsRes.error) throw new Error("Options error: " + optionsRes.error.message);
     if(addonsRes.error) throw new Error("Add-ons error: " + addonsRes.error.message);
 
-    categories = categoriesRes.data || [];
-    sizes = sizesRes.data || [];
-    flavours = flavoursRes.data || [];
-    options = optionsRes.data || [];
-    addons = addonsRes.data || [];
+    categories = Array.isArray(categoriesRes.data) ? categoriesRes.data : [];
+    sizes = Array.isArray(sizesRes.data) ? sizesRes.data : [];
+    flavours = Array.isArray(flavoursRes.data) ? flavoursRes.data : [];
+    options = Array.isArray(optionsRes.data) ? optionsRes.data : [];
+    addons = Array.isArray(addonsRes.data) ? addonsRes.data : [];
 
     cakeCategories = cakeCategoriesRes.error ? [] : (cakeCategoriesRes.data || []);
     cakeSizes = cakeSizesRes.error ? [] : (cakeSizesRes.data || []);
@@ -794,18 +897,6 @@
       if(cakeRes.error) throw new Error("Cake error: " + cakeRes.error.message);
       currentCake = cakeRes.data || null;
     }
-
-    console.log("Cake page loaded:", {
-      siteSettings,
-      currentCake,
-      sizes,
-      flavours,
-      options,
-      addons,
-      cakeSizes,
-      cakeFlavours,
-      cakeAddons
-    });
   }
 
   function applySettings(){
@@ -830,14 +921,15 @@
 
   function renderPage(){
     const cakeName = isCustomCake ? "Custom Cake Request" : (currentCake.name || "Custom Cake");
+
     const cakeDescription = isCustomCake
-      ? "Create your own custom cake request. Add theme, colours, servings, message and inspiration photo."
+      ? "Create a custom cake from scratch. Add your design idea, size, flavour, message and special notes."
       : (currentCake.description || "Fresh custom cake made on order.");
 
     const cakeImage = isCustomCake ? FALLBACK_IMAGE : (currentCake.image_url || FALLBACK_IMAGE);
     const catNames = isCustomCake ? ["Custom Cake"] : getCakeCategoryNames(currentCake.id);
 
-    document.title = `${cakeName} - ${siteSettings.brand_name || "Cake Studio"}`;
+    document.title = `${cakeName} - ${siteSettings.brand_name || "Siffat Cakes"}`;
 
     $("mainContent").innerHTML = `
       <section class="imageCard">
@@ -852,75 +944,75 @@
 
           <div class="tags">
             ${catNames.slice(0,3).map(name => `<span class="tag">${escapeHtml(name)}</span>`).join("")}
-            <span class="tag">${isCustomCake ? "quote request" : escapeHtml(currentCake.price_type || "estimated")}</span>
+            <span class="tag">${isCustomCake ? "custom request" : "customizable"}</span>
+            <span class="tag">${isCustomCake ? "quote possible" : escapeHtml(currentCake.price_type || "estimated")}</span>
           </div>
         </div>
       </section>
 
-      <section>
-        <div class="formCard">
-          <div class="cardHead">
-            <div>
-              <h3>Customize Your Cake</h3>
-              <p>Select size, servings, flavour, option, add-ons and notes. Estimated price updates live.</p>
+      <section class="formCard">
+        <div class="cardHead">
+          <div>
+            <h3>Customize Your Cake</h3>
+            <p>Select size, flavour, option, add-ons and notes. Estimated price updates live.</p>
+          </div>
+        </div>
+
+        <div class="cardBody">
+          <form id="customForm" class="formGrid">
+            ${isCustomCake ? `
+              <div class="field full">
+                <label>Custom Cake Title *</label>
+                <input id="customCakeTitle" required placeholder="Pink princess cake, car theme cake, engagement cake...">
+              </div>
+            ` : ""}
+
+            <div class="field">
+              <label>Cake Size *</label>
+              <select id="sizeSelect" required onchange="updatePrice()">
+                ${buildSizeOptions()}
+              </select>
+              <div class="hint">Servings and base price are controlled by admin.</div>
             </div>
-          </div>
 
-          <div class="cardBody">
-            <form id="customForm" class="formGrid">
-              ${isCustomCake ? `
-                <div class="field full">
-                  <label>Custom Cake Title *</label>
-                  <input id="customCakeTitle" required placeholder="Pink princess cake, car theme cake, engagement cake...">
-                </div>
-              ` : ""}
+            <div class="field">
+              <label>Flavour</label>
+              <select id="flavourSelect" onchange="updatePrice()">
+                ${buildFlavourOptions()}
+              </select>
+            </div>
 
-              <div class="field">
-                <label>Cake Size *</label>
-                <select id="sizeSelect" required onchange="updatePrice()">
-                  ${buildSizeOptions()}
-                </select>
-                <div class="hint">Servings and base price are controlled by admin.</div>
+            <div class="field">
+              <label>Option</label>
+              <select id="optionSelect" onchange="updatePrice()">
+                ${buildOptionOptions()}
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Quantity</label>
+              <input id="quantityInput" type="number" min="1" value="1" oninput="updatePrice()">
+            </div>
+
+            <div class="field full">
+              <label>Message on Cake</label>
+              <input id="cakeMessageInput" placeholder="Happy Birthday, Congratulations, Baby Shower, etc.">
+            </div>
+
+            <div class="field full">
+              <label>Special Notes</label>
+              <textarea id="notesInput" placeholder="Add theme, colours, allergy notes, design details, inspiration photo link, pickup notes, budget range, or anything special here."></textarea>
+              <div class="hint">Use this one box for design/theme/colour/photo link/allergy details instead of separate confusing fields.</div>
+            </div>
+
+            <div class="field full">
+              <label>Add-ons</label>
+              <div id="addonsGrid" class="addonsGrid">
+                ${buildAddonChoices()}
               </div>
-
-              <div class="field">
-                <label>Flavour</label>
-                <select id="flavourSelect" onchange="updatePrice()">
-                  ${buildFlavourOptions()}
-                </select>
-              </div>
-
-              <div class="field">
-                <label>Option</label>
-                <select id="optionSelect" onchange="updatePrice()">
-                  ${buildOptionOptions()}
-                </select>
-              </div>
-
-              <div class="field">
-                <label>Quantity</label>
-                <input id="quantityInput" type="number" min="1" value="1" oninput="updatePrice()">
-              </div>
-
-              <div class="field full">
-                <label>Message on Cake</label>
-                <input id="cakeMessageInput" placeholder="Happy Birthday Aanya, Congratulations, etc.">
-              </div>
-
-              <div class="field full">
-                <label>Special Notes</label>
-                <textarea id="notesInput" placeholder="Allergies, design details, budget range, serving notes, pickup notes..."></textarea>
-              </div>
-
-              <div class="field full">
-                <label>Add-ons</label>
-                <div id="addonsGrid" class="addonsGrid">
-                  ${buildAddonChoices()}
-                </div>
-                <div class="hint">Add-ons are controlled by admin. Quote-required add-ons may change final price.</div>
-              </div>
-            </form>
-          </div>
+              <div class="hint">Quote-required add-ons may change final price after shop review.</div>
+            </div>
+          </form>
         </div>
       </section>
 
@@ -961,25 +1053,15 @@
             </div>
 
             <div class="actionRow">
-              <a class="secondaryBtn" id="sideWhatsappBtn" href="#" target="_blank" style="text-align:center;">Need Today? WhatsApp</a>
-              <a class="secondaryBtn" href="cakes.html" style="text-align:center;">Back to Cakes</a>
+              <a class="secondaryBtn" id="sideWhatsappBtn" href="#" target="_blank">Need Today? WhatsApp</a>
+              <a class="secondaryBtn" href="category.html?cat=cakes">Back to Cakes</a>
             </div>
           </div>
         </div>
       </aside>
     `;
 
-    const sideWhatsapp = $("sideWhatsappBtn");
-    const phone = normalizePhone(siteSettings.whatsapp_number || "");
-    if(phone){
-      sideWhatsapp.href = `https://wa.me/${phone}?text=${encodeURIComponent("Hi, I need a same-day or urgent cake order. Can you please confirm availability?")}`;
-    }else{
-      sideWhatsapp.href = "#";
-      sideWhatsapp.onclick = function(e){
-        e.preventDefault();
-        showToast("WhatsApp number is not added yet.", true);
-      };
-    }
+    setupSideWhatsapp();
   }
 
   function buildSizeOptions(){
@@ -1024,6 +1106,7 @@
     }
 
     return `
+      <option value="">Select option</option>
       ${options.map(option => {
         const extra = Number(option.extra_price || 0);
         const priceText = option.quote_required ? "Quote required" : (extra ? "+" + money(extra) : "+$0");
@@ -1107,11 +1190,11 @@
     const estimatedTotal = unitTotal * quantity;
 
     const quoteRequired =
-      (selectedSize && selectedSize.quote_required) ||
-      (selectedFlavour && selectedFlavour.quote_required) ||
-      (selectedOption && selectedOption.quote_required) ||
-      selectedAddons.some(addon => addon.quote_required) ||
-      (!selectedSize);
+      !selectedSize ||
+      selectedSize?.quote_required === true ||
+      selectedFlavour?.quote_required === true ||
+      selectedOption?.quote_required === true ||
+      selectedAddons.some(addon => addon.quote_required === true);
 
     const rows = [];
 
@@ -1123,8 +1206,8 @@
     });
 
     rows.push({
-      label: selectedFlavour ? selectedFlavour.name : "Flavour",
-      value: selectedFlavour ? (selectedFlavour.quote_required ? "Quote" : "+" + money(flavourExtra)) : "Not selected"
+      label: getFlavourLabel(),
+      value: selectedFlavour ? (selectedFlavour.quote_required ? "Quote" : "+" + money(flavourExtra)) : "Not priced"
     });
 
     rows.push({
@@ -1158,10 +1241,7 @@
       </div>
     `).join("");
 
-    $("estimatedTotal").textContent = quoteRequired
-      ? "Quote"
-      : money(estimatedTotal);
-
+    $("estimatedTotal").textContent = quoteRequired ? "Quote" : money(estimatedTotal);
     $("quoteNote").classList.toggle("show", quoteRequired);
 
     return {
@@ -1188,6 +1268,7 @@
     }
 
     const customTitleInput = $("customCakeTitle");
+
     const cakeName = isCustomCake
       ? (customTitleInput?.value.trim() || "")
       : (currentCake.name || "Cake");
@@ -1200,52 +1281,64 @@
 
     const cart = getCart();
 
+    const flavourName = getFlavourLabel();
+    const image = isCustomCake ? FALLBACK_IMAGE : (currentCake.image_url || FALLBACK_IMAGE);
+
     const item = {
-      cart_item_id: createId(),
-      cake_id: isCustomCake ? null : currentCake.id,
-      cake_name: cakeName,
-      cake_image: isCustomCake ? FALLBACK_IMAGE : (currentCake.image_url || FALLBACK_IMAGE),
-      is_custom: isCustomCake,
+      cart_item_id:createId(),
+      cart_id:createId(),
+      item_type:"custom_cake",
+      product_type:"custom_cake",
 
-      selected_size_id: priceData.selectedSize?.id || "",
-      selected_size_name: priceData.selectedSize?.name || "",
-      selected_servings: priceData.selectedSize?.servings || "",
-      selected_size_price: Number(priceData.sizePrice || 0),
-      size_quote_required: priceData.selectedSize?.quote_required === true,
+      cake_id:isCustomCake ? null : currentCake.id,
+      cake_name:cakeName,
+      name:cakeName,
+      cake_image:image,
+      image_url:image,
+      is_custom:isCustomCake,
 
-      selected_flavour_id: priceData.selectedFlavour?.id || "",
-      selected_flavour_name: priceData.selectedFlavour?.name || "",
-      flavour_extra_price: Number(priceData.flavourExtra || 0),
-      flavour_quote_required: priceData.selectedFlavour?.quote_required === true,
+      selected_size_id:priceData.selectedSize?.id || "",
+      selected_size_name:priceData.selectedSize?.name || "",
+      selected_servings:priceData.selectedSize?.servings || "",
+      selected_size_price:Number(priceData.sizePrice || 0),
+      size_quote_required:priceData.selectedSize?.quote_required === true,
 
-      selected_option_id: priceData.selectedOption?.id || "",
-      selected_option_name: priceData.selectedOption?.name || "",
-      option_extra_price: Number(priceData.optionExtra || 0),
-      option_quote_required: priceData.selectedOption?.quote_required === true,
+      selected_flavour_id:priceData.selectedFlavour?.id || "",
+      selected_flavour_name:flavourName === "Flavour" ? "" : flavourName,
+      flavour:flavourName === "Flavour" ? "" : flavourName,
+      flavour_extra_price:Number(priceData.flavourExtra || 0),
+      flavour_quote_required:priceData.selectedFlavour?.quote_required === true,
 
-      selected_addons: priceData.selectedAddons.map(addon => ({
-        id: addon.id,
-        name: addon.name,
-        price: Number(addon.price || 0),
-        quote_required: addon.quote_required === true
+      selected_option_id:priceData.selectedOption?.id || "",
+      selected_option_name:priceData.selectedOption?.name || "",
+      option_extra_price:Number(priceData.optionExtra || 0),
+      option_quote_required:priceData.selectedOption?.quote_required === true,
+
+      selected_addons:priceData.selectedAddons.map(addon => ({
+        id:addon.id,
+        name:addon.name,
+        price:Number(addon.price || 0),
+        quote_required:addon.quote_required === true
       })),
 
-      message_on_cake: $("cakeMessageInput").value.trim(),
-      theme_notes: "",
-inspiration_photo_link: "",
-      special_notes: $("notesInput").value.trim(),
+      message_on_cake:$("cakeMessageInput").value.trim(),
+      theme_notes:"",
+      inspiration_photo_link:"",
+      special_notes:$("notesInput").value.trim(),
 
-      quantity: priceData.quantity,
-      estimated_item_total: Number(priceData.estimatedTotal || 0),
-      quote_required: priceData.quoteRequired === true,
-      added_at: new Date().toISOString()
+      quantity:priceData.quantity,
+      estimated_item_total:Number(priceData.estimatedTotal || 0),
+      estimated_total:Number(priceData.estimatedTotal || 0),
+      price_type:priceData.quoteRequired ? "quote" : "estimated",
+      quote_required:priceData.quoteRequired === true,
+      added_at:new Date().toISOString()
     };
 
     cart.push(item);
     saveCart(cart);
     updateCartCount();
 
-    showToast("Added to cart.");
+    showToast("Cake added to cart.");
 
     if(goToCart){
       window.location.href = "cart.html";
@@ -1259,8 +1352,26 @@ inspiration_photo_link: "",
 
   function getSelectedFlavour(){
     const value = $("flavourSelect")?.value || "";
-    if(!value || value === "not_sure") return null;
+
+    if(!value || value === "not_sure"){
+      return null;
+    }
+
     return flavours.find(flavour => String(flavour.id) === String(value)) || null;
+  }
+
+  function getFlavourLabel(){
+    const value = $("flavourSelect")?.value || "";
+
+    if(value === "not_sure"){
+      return "Not sure / Need suggestion";
+    }
+
+    const selected = getSelectedFlavour();
+
+    if(selected) return selected.name;
+
+    return "Flavour";
   }
 
   function getSelectedOption(){
@@ -1288,7 +1399,7 @@ inspiration_photo_link: "",
       <div class="empty">
         <strong>Cake not found.</strong><br>
         This cake does not exist or is currently inactive.<br><br>
-        <a class="primaryBtn" href="cakes.html">View All Cakes</a>
+        <a class="primaryBtn" href="category.html?cat=cakes">View Cakes</a>
       </div>
     `;
   }
@@ -1304,15 +1415,35 @@ inspiration_photo_link: "",
   }
 
   function setupWhatsappLinks(phone){
-    const normalMessage = "Hi, I want to ask about a cake order.";
+    const normalMessage = "Hi, I want to ask about a cake or dessert order.";
     const normalUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(normalMessage)}` : "#";
 
     const top = $("topWhatsappBtn");
+    if(!top) return;
+
     top.href = normalUrl;
     top.onclick = phone ? null : function(e){
       e.preventDefault();
       showToast("WhatsApp number is not added yet.", true);
     };
+  }
+
+  function setupSideWhatsapp(){
+    const sideWhatsapp = $("sideWhatsappBtn");
+    if(!sideWhatsapp) return;
+
+    const phone = normalizePhone(siteSettings.whatsapp_number || "");
+
+    if(phone){
+      sideWhatsapp.href = `https://wa.me/${phone}?text=${encodeURIComponent("Hi, I need a same-day or urgent cake order. Can you please confirm availability?")}`;
+      sideWhatsapp.onclick = null;
+    }else{
+      sideWhatsapp.href = "#";
+      sideWhatsapp.onclick = function(e){
+        e.preventDefault();
+        showToast("WhatsApp number is not added yet.", true);
+      };
+    }
   }
 
   function buildFooterInfo(){
@@ -1322,7 +1453,7 @@ inspiration_photo_link: "",
     if(siteSettings.service_area) parts.push("Serving " + siteSettings.service_area);
     if(siteSettings.business_hours) parts.push(siteSettings.business_hours);
 
-    return parts.length ? parts.join(" · ") : "Made for easy WhatsApp cake orders.";
+    return parts.length ? parts.join(" · ") : "381 Talbot Street, St. Thomas";
   }
 
   function getCart(){
@@ -1367,11 +1498,13 @@ inspiration_photo_link: "",
   function showToast(message, isError = false){
     const toast = $("toast");
     toast.textContent = message;
-    toast.style.borderColor = isError ? "rgba(255,91,110,.35)" : "rgba(255,255,255,.10)";
-    toast.style.color = isError ? "#ffdce1" : "var(--text)";
+    toast.style.background = isError ? "var(--red)" : "var(--purple)";
     toast.classList.add("show");
+
     clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+    window.__toastTimer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2400);
   }
 
   function escapeHtml(value){
