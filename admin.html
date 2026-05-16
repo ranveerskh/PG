@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cake Shop Admin</title>
+
+  <title>Siffat Cakes Admin</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,94 +13,47 @@
 
   <style>
     :root{
-      --bg:#0f0a12;
-      --bg2:#18101c;
-      --card:#211625;
-      --card2:#281b2d;
-      --text:#fff7fb;
-      --muted:#c9aebd;
-      --line:rgba(255,255,255,.10);
-      --pink:#ff5fa2;
-      --pink2:#ff8ac0;
-      --cream:#ffe4c7;
-      --gold:#ffc86b;
-      --green:#39d98a;
-      --red:#ff5b6e;
-      --blue:#72a7ff;
-      --shadow:0 18px 60px rgba(0,0,0,.36);
+      --bg:#fbf4fb;
+      --bg2:#fff;
+      --text:#1d141f;
+      --muted:#725a76;
+      --purple:#640D6B;
+      --purple2:#7a1281;
+      --soft:#fff7ff;
+      --line:rgba(100,13,107,.16);
+      --shadow:0 18px 45px rgba(100,13,107,.12);
+      --shadow2:0 10px 24px rgba(100,13,107,.08);
+      --green:#16823a;
+      --red:#b42318;
+      --orange:#b54708;
+      --blue:#175cd3;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+
     body{
       min-height:100vh;
       background:
-        radial-gradient(circle at top left, rgba(255,95,162,.20), transparent 35%),
-        radial-gradient(circle at top right, rgba(255,200,107,.12), transparent 30%),
-        linear-gradient(180deg,var(--bg),var(--bg2));
+        radial-gradient(circle at 0% 0%,rgba(100,13,107,.12),transparent 33%),
+        radial-gradient(circle at 100% 0%,rgba(122,18,129,.08),transparent 30%),
+        linear-gradient(180deg,var(--bg),#fff 58%,#fff);
       color:var(--text);
+      overflow-x:hidden;
     }
 
     button,input,select,textarea{font:inherit}
     button{border:0;cursor:pointer}
     a{color:inherit;text-decoration:none}
 
-    .wrap{width:min(1280px,calc(100% - 24px));margin:auto}
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      background:rgba(15,10,18,.82);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid var(--line);
+    .wrap{
+      width:min(1320px,calc(100% - 28px));
+      margin:auto;
     }
-
-    .nav{
-      min-height:64px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
-    .logo{
-      width:42px;
-      height:42px;
-      border-radius:15px;
-      display:grid;
-      place-items:center;
-      background:linear-gradient(135deg,var(--pink),var(--gold));
-      box-shadow:0 12px 26px rgba(255,95,162,.22);
-      font-size:21px;
-      flex:0 0 auto;
-      overflow:hidden;
-    }
-    .brand h1{font-size:17px;letter-spacing:-.04em;white-space:nowrap}
-    .brand p{margin-top:3px;color:var(--muted);font-size:11px;white-space:nowrap}
-
-    .navActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:10px 13px;
-      border-radius:999px;
-      color:white;
-      font-weight:900;
-      background:rgba(255,255,255,.08);
-      border:1px solid var(--line);
-      transition:.18s ease;
-    }
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12)}
-    .btn.primary{background:linear-gradient(135deg,var(--pink),var(--pink2));border-color:rgba(255,95,162,.45)}
-    .btn.green{background:rgba(57,217,138,.15);border-color:rgba(57,217,138,.32);color:#d7ffe9}
-    .btn.red{background:rgba(255,91,110,.14);border-color:rgba(255,91,110,.32);color:#ffe0e5}
-    .btn.gold{background:rgba(255,200,107,.14);border-color:rgba(255,200,107,.32);color:var(--cream)}
-    .btn.small{padding:8px 10px;font-size:12px}
-    .btn.block{width:100%}
 
     .loginScreen{
       min-height:100vh;
@@ -107,38 +61,159 @@
       place-items:center;
       padding:24px;
     }
+
     .loginCard{
       width:min(430px,100%);
       border:1px solid var(--line);
-      background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+      background:rgba(255,255,255,.92);
       border-radius:28px;
       padding:22px;
       box-shadow:var(--shadow);
     }
-    .loginCard h2{font-size:28px;letter-spacing:-.06em;margin-bottom:8px}
-    .loginCard p{color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:16px}
 
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-    .field label{font-size:12px;color:var(--cream);font-weight:900}
-    .field input,.field select,.field textarea{
-      width:100%;
-      min-height:43px;
-      border:1px solid var(--line);
-      outline:none;
-      border-radius:15px;
-      background:rgba(255,255,255,.07);
-      color:var(--text);
-      padding:11px 12px;
+    .loginCard h2{
+      color:var(--purple);
+      font-size:30px;
+      letter-spacing:-.065em;
+      margin-bottom:8px;
     }
-    .field textarea{min-height:86px;resize:vertical}
-    .field select option{color:#111}
-    .hint{font-size:11px;color:var(--muted);line-height:1.45}
-    .dangerText{font-size:11px;color:#ffdce1;line-height:1.45}
+
+    .loginCard p{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+      margin-bottom:16px;
+    }
+
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--purple);
+      color:#fff;
+      box-shadow:0 12px 28px rgba(100,13,107,.22);
+      font-size:20px;
+      overflow:hidden;
+      flex:0 0 auto;
+      border:2px solid rgba(255,255,255,.85);
+    }
 
     .app{display:none}
     .app.show{display:block}
 
-    .main{padding:18px 0 32px}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:60;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      min-height:62px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .brand h1{
+      color:var(--purple);
+      font-size:18px;
+      line-height:1;
+      letter-spacing:-.045em;
+      white-space:nowrap;
+    }
+
+    .brand p{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:11px;
+      white-space:nowrap;
+      max-width:320px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .navActions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:38px;
+      padding:9px 12px;
+      border-radius:999px;
+      color:var(--purple);
+      font-weight:1000;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:0 8px 18px rgba(100,13,107,.04);
+      transition:.18s ease;
+      white-space:nowrap;
+      font-size:13px;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      background:#fff7ff;
+    }
+
+    .btn.primary{
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      border-color:rgba(100,13,107,.30);
+      color:#fff;
+      box-shadow:0 12px 26px rgba(100,13,107,.20);
+    }
+
+    .btn.green{
+      background:rgba(22,130,58,.08);
+      border-color:rgba(22,130,58,.22);
+      color:var(--green);
+    }
+
+    .btn.red{
+      background:rgba(180,35,24,.08);
+      border-color:rgba(180,35,24,.20);
+      color:var(--red);
+    }
+
+    .btn.orange{
+      background:rgba(181,71,8,.08);
+      border-color:rgba(181,71,8,.20);
+      color:var(--orange);
+    }
+
+    .btn.small{
+      min-height:34px;
+      padding:7px 10px;
+      font-size:12px;
+    }
+
+    .btn.block{
+      width:100%;
+    }
+
+    .main{
+      padding:16px 0 34px;
+    }
 
     .tabs{
       display:flex;
@@ -148,54 +223,40 @@
       margin-bottom:14px;
       scrollbar-width:none;
     }
+
     .tabs::-webkit-scrollbar{display:none}
 
     .tabBtn{
       flex:0 0 auto;
-      padding:10px 13px;
+      min-height:40px;
+      padding:9px 13px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
+      background:rgba(255,255,255,.84);
       color:var(--muted);
       font-weight:1000;
       font-size:13px;
+      box-shadow:0 8px 18px rgba(100,13,107,.04);
     }
+
     .tabBtn.active{
-      color:white;
-      background:linear-gradient(135deg,rgba(255,95,162,.92),rgba(255,138,192,.72));
-      border-color:rgba(255,95,162,.45);
+      color:#fff;
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      border-color:rgba(100,13,107,.30);
     }
 
     .panel{display:none}
     .panel.active{display:block}
 
-    .gridStats{
-      display:grid;
-      grid-template-columns:repeat(6,1fr);
-      gap:10px;
-      margin-bottom:14px;
-    }
-    .stat{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.055);
-      border-radius:20px;
-      padding:14px;
-      box-shadow:0 12px 30px rgba(0,0,0,.16);
-    }
-    .stat b{display:block;font-size:24px;letter-spacing:-.05em}
-    .stat span{display:block;margin-top:5px;color:var(--muted);font-size:12px}
-
-    .layout2{display:grid;grid-template-columns:380px 1fr;gap:14px;align-items:start}
-    .layoutWide{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
-    .catalogGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;align-items:start}
-
     .card{
       border:1px solid var(--line);
-      background:rgba(255,255,255,.055);
+      background:rgba(255,255,255,.92);
       border-radius:24px;
-      box-shadow:0 14px 36px rgba(0,0,0,.18);
+      box-shadow:var(--shadow2);
       overflow:hidden;
+      min-width:0;
     }
+
     .cardHead{
       padding:14px;
       border-bottom:1px solid var(--line);
@@ -204,22 +265,130 @@
       justify-content:space-between;
       gap:12px;
     }
-    .cardHead h3{font-size:17px;letter-spacing:-.04em}
-    .cardHead p{margin-top:4px;font-size:12px;color:var(--muted);line-height:1.4}
-    .cardBody{padding:14px}
 
-    .formGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .full{grid-column:1/-1}
+    .cardHead h3{
+      color:var(--purple);
+      font-size:18px;
+      letter-spacing:-.045em;
+    }
+
+    .cardHead p{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.42;
+    }
+
+    .cardBody{
+      padding:14px;
+    }
+
+    .gridStats{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .stat{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      border-radius:20px;
+      padding:14px;
+      box-shadow:var(--shadow2);
+    }
+
+    .stat b{
+      display:block;
+      color:var(--purple);
+      font-size:25px;
+      letter-spacing:-.06em;
+    }
+
+    .stat span{
+      display:block;
+      margin-top:5px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:750;
+    }
+
+    .layout2{
+      display:grid;
+      grid-template-columns:390px 1fr;
+      gap:14px;
+      align-items:start;
+    }
+
+    .setupGrid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+      align-items:start;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:10px;
+      min-width:0;
+    }
+
+    .field label{
+      color:var(--purple);
+      font-size:12px;
+      font-weight:1000;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      min-height:43px;
+      border:1px solid var(--line);
+      outline:none;
+      border-radius:15px;
+      background:#fff;
+      color:var(--text);
+      padding:11px 12px;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
+    }
+
+    .field textarea{
+      min-height:86px;
+      resize:vertical;
+    }
+
+    .hint{
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .formGrid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .full{
+      grid-column:1/-1;
+    }
 
     .formPanel{
       display:none;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.13);
+      border:1px solid var(--line);
+      background:#fff7ff;
       border-radius:22px;
       padding:14px;
       margin-bottom:14px;
     }
-    .formPanel.open{display:block}
+
+    .formPanel.open{
+      display:block;
+    }
+
     .formPanelTitle{
       display:flex;
       align-items:flex-start;
@@ -227,19 +396,49 @@
       gap:12px;
       margin-bottom:12px;
     }
-    .formPanelTitle h4{font-size:16px;letter-spacing:-.04em}
-    .formPanelTitle p{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4}
 
-    .checkRow{display:flex;align-items:center;gap:8px;margin:8px 0 10px;color:var(--muted);font-size:13px;font-weight:800}
-    .checkRow input{width:17px;height:17px;accent-color:var(--pink)}
+    .formPanelTitle h4{
+      color:var(--purple);
+      font-size:17px;
+      letter-spacing:-.045em;
+    }
 
-    .list{display:grid;gap:8px}
+    .formPanelTitle p{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:4px;
+      line-height:1.4;
+    }
+
+    .checkRow{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:850;
+      margin:8px 0 10px;
+    }
+
+    .checkRow input{
+      width:17px;
+      height:17px;
+      accent-color:var(--purple);
+    }
+
+    .list{
+      display:grid;
+      gap:8px;
+    }
+
     .compactItem{
       border:1px solid var(--line);
-      background:rgba(255,255,255,.045);
+      background:#fff;
       border-radius:18px;
       overflow:hidden;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
     }
+
     .compactTop{
       padding:12px;
       display:flex;
@@ -248,7 +447,11 @@
       align-items:center;
       cursor:pointer;
     }
-    .compactMain{min-width:0}
+
+    .compactMain{
+      min-width:0;
+    }
+
     .itemTitle{
       font-weight:1000;
       font-size:14px;
@@ -256,12 +459,14 @@
       text-overflow:ellipsis;
       white-space:nowrap;
     }
+
     .itemMeta{
       margin-top:5px;
       color:var(--muted);
       font-size:11px;
       line-height:1.45;
     }
+
     .itemActions{
       display:flex;
       gap:6px;
@@ -270,26 +475,21 @@
       align-items:center;
       flex:0 0 auto;
     }
+
     .compactDetails{
       display:none;
       padding:12px;
       border-top:1px solid var(--line);
-      background:rgba(0,0,0,.12);
+      background:#fff7ff;
       color:var(--muted);
       font-size:12px;
       line-height:1.55;
     }
-    .compactItem.open .compactDetails{display:block}
 
-    .miniPreview{
-      width:52px;
-      height:52px;
-      border-radius:16px;
-      object-fit:cover;
-      background:#2b1d30;
-      border:1px solid var(--line);
-      flex:0 0 auto;
+    .compactItem.open .compactDetails{
+      display:block;
     }
+
     .rowWithImage{
       display:flex;
       align-items:center;
@@ -297,20 +497,31 @@
       min-width:0;
     }
 
-    .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+    .miniPreview{
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      object-fit:cover;
+      background:#f1e4f2;
+      border:1px solid var(--line);
+      flex:0 0 auto;
+    }
+
+    .tags{
+      display:flex;
+      gap:5px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
     .tag{
       padding:5px 7px;
       border-radius:999px;
-      background:rgba(255,255,255,.07);
+      background:#fff7ff;
       border:1px solid var(--line);
       color:var(--muted);
       font-size:10px;
       font-weight:900;
-    }
-
-    .multiSelect{
-      min-height:118px!important;
-      padding:8px!important;
     }
 
     .searchRow{
@@ -319,54 +530,111 @@
       margin-bottom:12px;
       flex-wrap:wrap;
     }
-    .searchRow input,.searchRow select{
+
+    .searchRow input,
+    .searchRow select{
       min-height:42px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.07);
+      background:#fff;
       color:var(--text);
       border-radius:999px;
       padding:0 13px;
       outline:none;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
     }
-    .searchRow input{flex:1;min-width:210px}
-    .searchRow select option{color:#111}
+
+    .searchRow input{
+      flex:1;
+      min-width:220px;
+    }
+
+    .multiSelect{
+      min-height:124px!important;
+      padding:8px!important;
+      border-radius:16px!important;
+    }
 
     .imageBox{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      background:#fff;
       border-radius:18px;
       padding:10px;
       display:grid;
       gap:8px;
     }
+
+    .imageInputRow{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:8px;
+      align-items:center;
+    }
+
     .uploadRow{
       display:flex;
       gap:8px;
       align-items:center;
       flex-wrap:wrap;
     }
+
     .uploadRow input[type=file]{
       flex:1;
-      min-width:180px;
+      min-width:190px;
       padding:9px;
+      box-shadow:none;
     }
+
+    .imageTools{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
     .imagePreview{
-      width:100%;
-      height:120px;
+      width:140px;
+      height:96px;
       border-radius:16px;
       border:1px solid var(--line);
       object-fit:cover;
-      background:#2b1d30;
+      background:#f1e4f2;
       display:none;
     }
-    .imagePreview.show{display:block}
+
+    .imagePreview.show{
+      display:block;
+    }
+
+    .productModeBox{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:20px;
+      padding:12px;
+      margin-bottom:12px;
+    }
+
+    .modePill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 9px;
+      border-radius:999px;
+      background:#fff7ff;
+      border:1px solid var(--line);
+      color:var(--purple);
+      font-size:11px;
+      font-weight:1000;
+      margin-top:8px;
+    }
 
     .orderCard{
       border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
+      background:#fff;
       border-radius:20px;
       overflow:hidden;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
     }
+
     .orderTop{
       padding:12px;
       display:flex;
@@ -376,37 +644,84 @@
       border-bottom:1px solid transparent;
       cursor:pointer;
     }
-    .orderCard.open .orderTop{border-bottom-color:var(--line)}
-    .orderTop h4{font-size:15px;margin-bottom:4px}
-    .orderTop p{color:var(--muted);font-size:12px;line-height:1.45}
+
+    .orderCard.open .orderTop{
+      border-bottom-color:var(--line);
+    }
+
+    .orderTop h4{
+      font-size:15px;
+      margin-bottom:4px;
+    }
+
+    .orderTop p{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
     .status{
       padding:7px 9px;
       border-radius:999px;
       font-size:11px;
       font-weight:1000;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.07);
+      background:#fff7ff;
       white-space:nowrap;
     }
-    .status.Pending{color:var(--gold)}
+
+    .status.Pending{color:var(--orange)}
     .status.Confirmed{color:var(--blue)}
-    .status.InProgress{color:#b7cfff}
+    .status.InProgress{color:#4a5fd0}
     .status.Ready,.status.Completed{color:var(--green)}
     .status.Cancelled{color:var(--red)}
-    .orderBody{padding:12px;display:none}
-    .orderCard.open .orderBody{display:block}
 
-    .orderItems{display:grid;gap:8px;margin-top:10px}
+    .orderBody{
+      padding:12px;
+      display:none;
+      background:#fff7ff;
+    }
+
+    .orderCard.open .orderBody{
+      display:block;
+    }
+
+    .orderItems{
+      display:grid;
+      gap:8px;
+      margin-top:10px;
+    }
+
     .orderItem{
       border:1px solid var(--line);
-      background:rgba(0,0,0,.12);
+      background:#fff;
       border-radius:16px;
       padding:10px;
       font-size:12px;
       line-height:1.55;
       color:var(--muted);
     }
-    .orderItem b{color:var(--text)}
+
+    .orderItem b{
+      color:var(--text);
+    }
+
+    .orderSectionTitle{
+      color:var(--purple);
+      font-weight:1000;
+      margin:12px 0 7px;
+      font-size:13px;
+    }
+
+    .loading{
+      padding:22px;
+      border:1px dashed rgba(100,13,107,.22);
+      border-radius:18px;
+      color:var(--muted);
+      text-align:center;
+      background:rgba(255,255,255,.70);
+      line-height:1.5;
+    }
 
     .toast{
       position:fixed;
@@ -417,42 +732,77 @@
       pointer-events:none;
       z-index:200;
       max-width:min(560px,calc(100% - 24px));
-      border:1px solid var(--line);
-      background:rgba(33,22,37,.96);
-      color:var(--text);
-      backdrop-filter:blur(18px);
+      background:var(--purple);
+      color:#fff;
       border-radius:999px;
-      padding:11px 15px;
+      padding:12px 15px;
       font-size:13px;
-      font-weight:900;
-      box-shadow:0 18px 50px rgba(0,0,0,.38);
+      font-weight:1000;
+      box-shadow:0 18px 36px rgba(100,13,107,.24);
       transition:.2s ease;
       text-align:center;
     }
-    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-    .loading{
-      padding:22px;
-      border:1px dashed rgba(255,255,255,.18);
-      border-radius:18px;
-      color:var(--muted);
-      text-align:center;
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
     }
 
-    @media(max-width:1050px){
-      .gridStats{grid-template-columns:repeat(3,1fr)}
-      .layout2,.catalogGrid{grid-template-columns:1fr}
+    .hidden{
+      display:none!important;
     }
 
-    @media(max-width:650px){
-      .wrap{width:min(100% - 16px,1280px)}
-      .nav{align-items:flex-start;flex-direction:column;padding:10px 0}
-      .navActions{width:100%;justify-content:flex-start}
-      .gridStats{grid-template-columns:repeat(2,1fr)}
-      .formGrid{grid-template-columns:1fr}
-      .compactTop{align-items:flex-start;flex-direction:column}
-      .itemActions{justify-content:flex-start}
-      .rowWithImage{width:100%}
+    @media(max-width:1120px){
+      .gridStats{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .layout2,
+      .setupGrid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:720px){
+      .wrap{
+        width:min(100% - 16px,1320px);
+      }
+
+      .nav{
+        align-items:flex-start;
+        flex-direction:column;
+        padding:10px 0;
+      }
+
+      .navActions{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .gridStats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .formGrid{
+        grid-template-columns:1fr;
+      }
+
+      .compactTop{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .itemActions{
+        justify-content:flex-start;
+      }
+
+      .rowWithImage{
+        width:100%;
+      }
+
+      .imageInputRow{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
@@ -463,7 +813,7 @@
   <div class="loginCard">
     <div class="logo" style="margin-bottom:14px;">🍰</div>
     <h2>Admin Login</h2>
-    <p>Login to manage cakes, categories, sizes, flavours, add-ons, settings and orders.</p>
+    <p>Login to manage Siffat Cakes website, products, orders, cake setup, images and settings.</p>
 
     <div class="field">
       <label>Email</label>
@@ -478,7 +828,7 @@
     <button class="btn primary block" onclick="loginAdmin()">Login</button>
 
     <p class="hint" style="margin-top:12px;">
-      Make sure this email user exists in Supabase Authentication and its User ID is added inside admin_users table.
+      This email must exist in Supabase Authentication and its User ID must be added to the admin_users table.
     </p>
   </div>
 </section>
@@ -489,12 +839,13 @@
       <div class="brand">
         <div class="logo">🍰</div>
         <div>
-          <h1>Cake Shop Admin</h1>
+          <h1>Siffat Cakes Admin</h1>
           <p id="adminEmailText">Managing website</p>
         </div>
       </div>
 
       <div class="navActions">
+        <span class="btn green small">Connected</span>
         <a class="btn small" href="index.html" target="_blank">View Site</a>
         <button class="btn small" onclick="loadAll()">Refresh</button>
         <button class="btn red small" onclick="logoutAdmin()">Sign Out</button>
@@ -505,10 +856,11 @@
   <main class="wrap main">
     <div class="tabs">
       <button class="tabBtn active" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</button>
-      <button class="tabBtn" data-tab="settings" onclick="showTab('settings')">Settings</button>
-      <button class="tabBtn" data-tab="catalog" onclick="showTab('catalog')">Categories / Prices</button>
-      <button class="tabBtn" data-tab="cakes" onclick="showTab('cakes')">Cakes</button>
       <button class="tabBtn" data-tab="orders" onclick="showTab('orders')">Orders</button>
+      <button class="tabBtn" data-tab="products" onclick="showTab('products')">Products</button>
+      <button class="tabBtn" data-tab="setup" onclick="showTab('setup')">Cake Setup</button>
+      <button class="tabBtn" data-tab="settings" onclick="showTab('settings')">Website Settings</button>
+      <button class="tabBtn" data-tab="images" onclick="showTab('images')">Images</button>
     </div>
 
     <section id="dashboardPanel" class="panel active">
@@ -518,41 +870,45 @@
         <div class="card">
           <div class="cardHead">
             <div>
-              <h3>Admin Setup</h3>
-              <p>Useful steps before handing the website to the client.</p>
+              <h3>Clean Admin Flow</h3>
+              <p>Admin is separated by purpose so it does not become messy.</p>
             </div>
           </div>
+
           <div class="cardBody">
             <div class="list">
               <div class="compactItem open">
                 <div class="compactTop">
-                  <div>
-                    <div class="itemTitle">1. Add WhatsApp number</div>
-                    <div class="itemMeta">Settings → WhatsApp number with country code.</div>
+                  <div class="compactMain">
+                    <div class="itemTitle">Products</div>
+                    <div class="itemMeta">Manage customizable cakes and quick desserts separately.</div>
                   </div>
                 </div>
               </div>
+
               <div class="compactItem open">
                 <div class="compactTop">
-                  <div>
-                    <div class="itemTitle">2. Add prices</div>
-                    <div class="itemMeta">Sizes, flavours, options and add-ons control customer live estimate.</div>
+                  <div class="compactMain">
+                    <div class="itemTitle">Cake Setup</div>
+                    <div class="itemMeta">Sizes, flavours, options, add-ons and occasions stay separate.</div>
                   </div>
                 </div>
               </div>
+
               <div class="compactItem open">
                 <div class="compactTop">
-                  <div>
-                    <div class="itemTitle">3. Add cakes</div>
-                    <div class="itemMeta">Use image link or upload image, then assign categories/prices/options.</div>
+                  <div class="compactMain">
+                    <div class="itemTitle">Images</div>
+                    <div class="itemMeta">Use direct URL, upload to Supabase, or open Postimages.</div>
                   </div>
                 </div>
               </div>
+
               <div class="compactItem open">
                 <div class="compactTop">
-                  <div>
-                    <div class="itemTitle">4. Test full order</div>
-                    <div class="itemMeta">Cake → Cart → Checkout → WhatsApp → Admin Orders.</div>
+                  <div class="compactMain">
+                    <div class="itemTitle">Orders</div>
+                    <div class="itemMeta">Collapsed order slips with status, print and WhatsApp actions.</div>
                   </div>
                 </div>
               </div>
@@ -564,10 +920,11 @@
           <div class="cardHead">
             <div>
               <h3>Recent Orders</h3>
-              <p>Latest order requests from customers.</p>
+              <p>Latest customer requests.</p>
             </div>
             <button class="btn small" onclick="showTab('orders')">Open Orders</button>
           </div>
+
           <div class="cardBody">
             <div id="recentOrdersList" class="list"></div>
           </div>
@@ -575,193 +932,293 @@
       </div>
     </section>
 
-    <section id="settingsPanel" class="panel">
+    <section id="ordersPanel" class="panel">
       <div class="card">
         <div class="cardHead">
           <div>
-            <h3>Website Settings</h3>
-            <p>Branding, WhatsApp, hero, policy and public website information.</p>
+            <h3>Orders</h3>
+            <p>Orders are collapsed. Open each order to review custom cakes, desserts and customer details.</p>
           </div>
+          <button class="btn small" onclick="loadAll()">Refresh</button>
         </div>
 
         <div class="cardBody">
-          <form id="settingsForm" class="formGrid">
-            <div class="field">
-              <label>Brand Name</label>
-              <input id="setBrandName" placeholder="Cake Studio">
-            </div>
+          <div class="searchRow">
+            <input id="orderSearch" placeholder="Search name, phone, email, order id..." oninput="renderOrders()">
+            <select id="orderStatusFilter" onchange="renderOrders()">
+              <option value="all">All Statuses</option>
+              <option>Pending</option>
+              <option>Confirmed</option>
+              <option>In Progress</option>
+              <option>Ready</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+            <select id="orderTypeFilter" onchange="renderOrders()">
+              <option value="all">Pickup + Delivery</option>
+              <option>Pickup</option>
+              <option>Delivery</option>
+            </select>
+          </div>
 
-            <div class="field">
-              <label>Tagline</label>
-              <input id="setTagline" placeholder="Fresh custom cakes & sweet orders">
-            </div>
-
-            <div class="field full">
-              <label>Logo Image</label>
-              <div class="imageBox">
-                <input id="setLogoUrl" placeholder="Paste logo image link or upload image">
-                <div class="uploadRow">
-                  <input id="setLogoFile" type="file" accept="image/png,image/jpeg,image/webp">
-                  <button class="btn small" type="button" onclick="uploadAndSet('setLogoFile','setLogoUrl','settings')">Upload Logo</button>
-                </div>
-                <div class="hint">Use image link OR upload image. Max 3MB: JPG, PNG, WEBP.</div>
-              </div>
-            </div>
-
-            <div class="field full">
-              <label>Hero Image</label>
-              <div class="imageBox">
-                <input id="setHeroImage" placeholder="Paste hero image link or upload image">
-                <div class="uploadRow">
-                  <input id="setHeroFile" type="file" accept="image/png,image/jpeg,image/webp">
-                  <button class="btn small" type="button" onclick="uploadAndSet('setHeroFile','setHeroImage','settings')">Upload Hero</button>
-                </div>
-                <div class="hint">This image appears on homepage hero.</div>
-              </div>
-            </div>
-
-            <div class="field">
-              <label>WhatsApp Number</label>
-              <input id="setWhatsapp" placeholder="15195555555">
-              <div class="hint">Use country code. Example Canada: 15195555555</div>
-            </div>
-
-            <div class="field">
-              <label>Instagram URL</label>
-              <input id="setInstagram" placeholder="https://instagram.com/...">
-            </div>
-
-            <div class="field">
-              <label>Address</label>
-              <input id="setAddress" placeholder="City / Pickup address">
-            </div>
-
-            <div class="field">
-              <label>Business Hours</label>
-              <input id="setHours" placeholder="Mon-Sat 10 AM - 7 PM">
-            </div>
-
-            <div class="field">
-              <label>Service Area</label>
-              <input id="setServiceArea" placeholder="London, St. Thomas, nearby areas">
-            </div>
-
-            <div class="field">
-              <label>Currency Symbol</label>
-              <input id="setCurrency" placeholder="$">
-            </div>
-
-            <div class="field full">
-              <label>Hero Title</label>
-              <input id="setHeroTitle">
-            </div>
-
-            <div class="field full">
-              <label>Hero Subtitle</label>
-              <textarea id="setHeroSubtitle"></textarea>
-            </div>
-
-            <div class="field">
-              <label>Minimum Notice Hours</label>
-              <input id="setNoticeHours" type="number" min="0">
-              <div class="hint">24 means online orders start from tomorrow.</div>
-            </div>
-
-            <div class="field">
-              <label>Show Prices?</label>
-              <select id="setShowPrices">
-                <option value="true">Yes, show estimated prices</option>
-                <option value="false">No, show request quote</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Charge HST?</label>
-              <select id="setChargeHst">
-                <option value="false">No, do not charge HST</option>
-                <option value="true">Yes, charge HST</option>
-              </select>
-              <div class="hint">Turn on only if the business is GST/HST registered.</div>
-            </div>
-
-            <div class="field">
-              <label>HST Rate %</label>
-              <input id="setHstRate" type="number" min="0" step="0.01" placeholder="13">
-              <div class="hint">Ontario HST is usually 13% if HST applies.</div>
-            </div>
-
-            <div class="field">
-              <label>Default Delivery Fee</label>
-              <input id="setDefaultDeliveryFee" type="number" min="0" step="0.01" placeholder="0">
-              <div class="hint">Checkout adds this only when customer selects Delivery.</div>
-            </div>
-
-            <div class="field full">
-              <label>Same-Day / Urgent Order Message</label>
-              <textarea id="setSameDay"></textarea>
-            </div>
-
-            <div class="field full">
-              <label>Policy Text</label>
-              <textarea id="setPolicy"></textarea>
-            </div>
-
-            <div class="full">
-              <button class="btn primary" type="button" onclick="saveSettings(event)">Save Settings</button>
-            </div>
-          </form>
+          <div id="ordersList" class="list"></div>
         </div>
       </div>
     </section>
 
-    <section id="catalogPanel" class="panel">
-      <div class="catalogGrid">
-
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h3>Categories</h3>
-              <p>Collapsed by default. Click a row to view details.</p>
-            </div>
-            <button class="btn primary small" onclick="openCategoryForm()">+ Add Category</button>
+    <section id="productsPanel" class="panel">
+      <div class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Products</h3>
+            <p>Cakes are customizable. Cupcakes, muffins, brownies and baklava are quick-add desserts.</p>
           </div>
-          <div class="cardBody">
-            <div id="categoryFormPanel" class="formPanel">
-              <div class="formPanelTitle">
-                <div>
-                  <h4 id="categoryFormTitle">Add Category</h4>
-                  <p>Use image link or upload image.</p>
+
+          <div class="itemActions">
+            <button class="btn primary small" onclick="openProductForm('cake')">+ Customizable Cake</button>
+            <button class="btn primary small" onclick="openProductForm('quick')">+ Quick Dessert</button>
+          </div>
+        </div>
+
+        <div class="cardBody">
+          <div id="productFormPanel" class="formPanel">
+            <div class="formPanelTitle">
+              <div>
+                <h4 id="productFormTitle">Add Product</h4>
+                <p id="productFormSubtitle">Choose product type first. The form changes automatically.</p>
+              </div>
+              <button class="btn small" type="button" onclick="closePanel('productFormPanel')">Close</button>
+            </div>
+
+            <form id="productForm">
+              <input type="hidden" id="productId">
+              <input type="hidden" id="productEditKind">
+
+              <div class="productModeBox">
+                <div class="field" style="margin-bottom:0;">
+                  <label>Product Type</label>
+                  <select id="productType" onchange="switchProductType()">
+                    <option value="cake">Customizable Cake</option>
+                    <option value="quick">Quick Add Dessert</option>
+                  </select>
                 </div>
-                <button class="btn small" type="button" onclick="closePanel('categoryFormPanel')">Close</button>
+                <div id="productModeHint" class="modePill">Customizable cake flow</div>
               </div>
 
-              <form id="categoryForm">
-                <input type="hidden" id="categoryId">
-
-                <div class="field"><label>Name</label><input id="categoryName" required></div>
-                <div class="field"><label>Slug</label><input id="categorySlug" placeholder="birthday-cakes"></div>
+              <div class="formGrid">
+                <div class="field">
+                  <label>Name</label>
+                  <input id="productName" required placeholder="Rasmalai Cake / Oreo Brownie">
+                </div>
 
                 <div class="field">
-                  <label>Category Image</label>
+                  <label>Slug</label>
+                  <input id="productSlug" placeholder="auto-generated-if-empty">
+                </div>
+
+                <div class="field full">
+                  <label>Description</label>
+                  <textarea id="productDesc" placeholder="Short product description..."></textarea>
+                </div>
+
+                <div class="field full">
+                  <label>Product Image</label>
                   <div class="imageBox">
-                    <input id="categoryImage" placeholder="Paste image link or upload image">
+                    <div class="imageInputRow">
+                      <input id="productImageUrl" placeholder="Paste direct image link..." oninput="previewImageFromInput('productImageUrl','productImagePreview')">
+                      <a class="btn primary" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
+                    </div>
+
                     <div class="uploadRow">
-                      <input id="categoryImageFile" type="file" accept="image/png,image/jpeg,image/webp">
-                      <button class="btn small" type="button" onclick="uploadAndSet('categoryImageFile','categoryImage','categories')">Upload Image</button>
+                      <input id="productImageFile" type="file" accept="image/png,image/jpeg,image/webp">
+                      <button class="btn small" type="button" onclick="uploadAndSet('productImageFile','productImageUrl','productImagePreview','products')">Upload Image</button>
+                      <button class="btn small" type="button" onclick="clearImageField('productImageUrl','productImagePreview','productImageFile')">Clear</button>
+                    </div>
+
+                    <img id="productImagePreview" class="imagePreview" alt="Preview">
+                    <div class="hint">Use image URL, upload from computer, or open Postimages and paste direct image link.</div>
+                  </div>
+                </div>
+
+                <div id="cakeProductFields" class="full">
+                  <div class="formGrid">
+                    <div class="field">
+                      <label>Starting Price</label>
+                      <input id="cakeStartingPrice" type="number" step="0.01" value="0">
+                    </div>
+
+                    <div class="field">
+                      <label>Price Type</label>
+                      <select id="cakePriceType">
+                        <option value="estimated">From / Estimated</option>
+                        <option value="fixed">Fixed</option>
+                        <option value="quote">Quote Required</option>
+                      </select>
+                    </div>
+
+                    <div class="field">
+                      <label>Cake Occasions</label>
+                      <select id="cakeCategoriesSelect" class="multiSelect" multiple></select>
+                      <div class="hint">Birthday, wedding, kids, anniversary etc.</div>
+                    </div>
+
+                    <div class="field">
+                      <label>Available Sizes</label>
+                      <select id="cakeSizesSelect" class="multiSelect" multiple></select>
+                    </div>
+
+                    <div class="field">
+                      <label>Available Flavours</label>
+                      <select id="cakeFlavoursSelect" class="multiSelect" multiple></select>
+                    </div>
+
+                    <div class="field">
+                      <label>Available Add-ons</label>
+                      <select id="cakeAddonsSelect" class="multiSelect" multiple></select>
                     </div>
                   </div>
                 </div>
 
-                <div class="field"><label>Description</label><textarea id="categoryDesc"></textarea></div>
-                <div class="field"><label>Sort Order</label><input id="categorySort" type="number" value="0"></div>
-                <label class="checkRow"><input id="categoryActive" type="checkbox" checked> Active</label>
+                <div id="quickProductFields" class="full hidden">
+                  <div class="formGrid">
+                    <div class="field">
+                      <label>Main Category</label>
+                      <select id="quickCategory">
+                        <option value="cupcakes">Cupcakes</option>
+                        <option value="muffins">Muffins</option>
+                        <option value="brownies">Brownies</option>
+                        <option value="baklava">Baklava</option>
+                      </select>
+                    </div>
 
-                <button class="btn primary block" type="submit">Save Category</button>
-                <button class="btn block" type="button" onclick="resetCategoryForm(false)" style="margin-top:8px;">Clear</button>
+                    <div class="field">
+                      <label>Flavour / Variant</label>
+                      <input id="quickVariant" placeholder="Chocolate, Oreo, Lotus, Pistachio...">
+                    </div>
+
+                    <div class="field">
+                      <label>Price</label>
+                      <input id="quickPrice" type="number" step="0.01" value="0">
+                    </div>
+
+                    <div class="field">
+                      <label>Quote Required?</label>
+                      <select id="quickQuote">
+                        <option value="false">No, fixed price</option>
+                        <option value="true">Yes, quote required</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label>Sort Order</label>
+                  <input id="productSort" type="number" value="0">
+                </div>
+
+                <div class="field">
+                  <label>Visibility</label>
+                  <label class="checkRow"><input id="productFeatured" type="checkbox"> Featured</label>
+                  <label class="checkRow"><input id="productActive" type="checkbox" checked> Active</label>
+                </div>
+
+                <div class="full">
+                  <button class="btn primary" type="submit">Save Product</button>
+                  <button class="btn" type="button" onclick="resetProductForm(false)" style="margin-left:8px;">Clear</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="searchRow">
+            <input id="productSearch" placeholder="Search products..." oninput="renderProducts()">
+            <select id="productKindFilter" onchange="renderProducts()">
+              <option value="all">All Products</option>
+              <option value="cake">Customizable Cakes</option>
+              <option value="quick">Quick Desserts</option>
+            </select>
+            <select id="productStatusFilter" onchange="renderProducts()">
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="featured">Featured</option>
+            </select>
+          </div>
+
+          <div id="productsList" class="list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="setupPanel" class="panel">
+      <div class="setupGrid">
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Cake Occasions</h3>
+              <p>These belong inside Cakes only, not homepage main menu.</p>
+            </div>
+            <button class="btn primary small" onclick="openOccasionForm()">+ Add Occasion</button>
+          </div>
+
+          <div class="cardBody">
+            <div id="occasionFormPanel" class="formPanel">
+              <div class="formPanelTitle">
+                <div>
+                  <h4 id="occasionFormTitle">Add Cake Occasion</h4>
+                  <p>Birthday, wedding, kids, anniversary, baby shower, simple cakes.</p>
+                </div>
+                <button class="btn small" type="button" onclick="closePanel('occasionFormPanel')">Close</button>
+              </div>
+
+              <form id="occasionForm">
+                <input type="hidden" id="occasionId">
+
+                <div class="field">
+                  <label>Name</label>
+                  <input id="occasionName" required placeholder="Birthday Cakes">
+                </div>
+
+                <div class="field">
+                  <label>Slug</label>
+                  <input id="occasionSlug" placeholder="birthday">
+                </div>
+
+                <div class="field">
+                  <label>Description</label>
+                  <textarea id="occasionDesc"></textarea>
+                </div>
+
+                <div class="field">
+                  <label>Image</label>
+                  <div class="imageBox">
+                    <div class="imageInputRow">
+                      <input id="occasionImage" placeholder="Paste image link..." oninput="previewImageFromInput('occasionImage','occasionImagePreview')">
+                      <a class="btn primary" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
+                    </div>
+                    <div class="uploadRow">
+                      <input id="occasionImageFile" type="file" accept="image/png,image/jpeg,image/webp">
+                      <button class="btn small" type="button" onclick="uploadAndSet('occasionImageFile','occasionImage','occasionImagePreview','categories')">Upload</button>
+                      <button class="btn small" type="button" onclick="clearImageField('occasionImage','occasionImagePreview','occasionImageFile')">Clear</button>
+                    </div>
+                    <img id="occasionImagePreview" class="imagePreview" alt="Preview">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label>Sort Order</label>
+                  <input id="occasionSort" type="number" value="0">
+                </div>
+
+                <label class="checkRow"><input id="occasionActive" type="checkbox" checked> Active</label>
+
+                <button class="btn primary block" type="submit">Save Occasion</button>
+                <button class="btn block" type="button" onclick="resetOccasionForm(false)" style="margin-top:8px;">Clear</button>
               </form>
             </div>
 
-            <div id="categoryList" class="list"></div>
+            <div id="occasionList" class="list"></div>
           </div>
         </div>
 
@@ -769,16 +1226,17 @@
           <div class="cardHead">
             <div>
               <h3>Sizes & Servings</h3>
-              <p>Customer sees these with live pricing.</p>
+              <p>Used by cake customization pricing.</p>
             </div>
             <button class="btn primary small" onclick="openSizeForm()">+ Add Size</button>
           </div>
+
           <div class="cardBody">
             <div id="sizeFormPanel" class="formPanel">
               <div class="formPanelTitle">
                 <div>
                   <h4 id="sizeFormTitle">Add Size</h4>
-                  <p>Example: 8 inch — serves 10-14 people — $65.</p>
+                  <p>Example: 8 inch · serves 10-14 · $65.</p>
                 </div>
                 <button class="btn small" type="button" onclick="closePanel('sizeFormPanel')">Close</button>
               </div>
@@ -804,10 +1262,11 @@
           <div class="cardHead">
             <div>
               <h3>Flavours</h3>
-              <p>Flavour can add extra price.</p>
+              <p>Flavours can have extra price or quote required.</p>
             </div>
             <button class="btn primary small" onclick="openFlavourForm()">+ Add Flavour</button>
           </div>
+
           <div class="cardBody">
             <div id="flavourFormPanel" class="formPanel">
               <div class="formPanelTitle">
@@ -838,16 +1297,17 @@
           <div class="cardHead">
             <div>
               <h3>Options</h3>
-              <p>Regular, eggless, vegan, gluten-free.</p>
+              <p>Regular, eggless, vegan, gluten-free etc.</p>
             </div>
             <button class="btn primary small" onclick="openOptionForm()">+ Add Option</button>
           </div>
+
           <div class="cardBody">
             <div id="optionFormPanel" class="formPanel">
               <div class="formPanelTitle">
                 <div>
                   <h4 id="optionFormTitle">Add Option</h4>
-                  <p>These appear in customization page.</p>
+                  <p>These appear in cake customization.</p>
                 </div>
                 <button class="btn small" type="button" onclick="closePanel('optionFormPanel')">Close</button>
               </div>
@@ -873,16 +1333,17 @@
           <div class="cardHead">
             <div>
               <h3>Add-ons</h3>
-              <p>Toppers, flowers, gold leaf, decoration.</p>
+              <p>Toppers, flowers, gold leaf, custom decoration.</p>
             </div>
             <button class="btn primary small" onclick="openAddonForm()">+ Add Add-on</button>
           </div>
+
           <div class="cardBody">
             <div id="addonFormPanel" class="formPanel">
               <div class="formPanelTitle">
                 <div>
                   <h4 id="addonFormTitle">Add Add-on</h4>
-                  <p>Add-ons can be selected by customers.</p>
+                  <p>Add-ons can be selected during cake customization.</p>
                 </div>
                 <button class="btn small" type="button" onclick="closePanel('addonFormPanel')">Close</button>
               </div>
@@ -907,158 +1368,248 @@
       </div>
     </section>
 
-    <section id="cakesPanel" class="panel">
-      <div class="layoutWide">
+    <section id="settingsPanel" class="panel">
+      <div class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Website Settings</h3>
+            <p>Branding, contact, homepage, order rules, tax and policies.</p>
+          </div>
+          <button class="btn primary small" onclick="saveSettings()">Save Settings</button>
+        </div>
+
+        <div class="cardBody">
+          <form id="settingsForm" class="formGrid">
+            <div class="field">
+              <label>Brand Name</label>
+              <input id="setBrandName" placeholder="Siffat Cakes">
+            </div>
+
+            <div class="field">
+              <label>Tagline</label>
+              <input id="setTagline" placeholder="Eggless Cakes & Desserts">
+            </div>
+
+            <div class="field full">
+              <label>Logo Image</label>
+              <div class="imageBox">
+                <div class="imageInputRow">
+                  <input id="setLogoUrl" placeholder="Paste logo image link..." oninput="previewImageFromInput('setLogoUrl','setLogoPreview')">
+                  <a class="btn primary" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
+                </div>
+
+                <div class="uploadRow">
+                  <input id="setLogoFile" type="file" accept="image/png,image/jpeg,image/webp">
+                  <button class="btn small" type="button" onclick="uploadAndSet('setLogoFile','setLogoUrl','setLogoPreview','settings')">Upload Logo</button>
+                  <button class="btn small" type="button" onclick="clearImageField('setLogoUrl','setLogoPreview','setLogoFile')">Clear</button>
+                </div>
+
+                <img id="setLogoPreview" class="imagePreview" alt="Logo preview">
+              </div>
+            </div>
+
+            <div class="field full">
+              <label>Hero Image</label>
+              <div class="imageBox">
+                <div class="imageInputRow">
+                  <input id="setHeroImage" placeholder="Paste hero image link..." oninput="previewImageFromInput('setHeroImage','setHeroPreview')">
+                  <a class="btn primary" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
+                </div>
+
+                <div class="uploadRow">
+                  <input id="setHeroFile" type="file" accept="image/png,image/jpeg,image/webp">
+                  <button class="btn small" type="button" onclick="uploadAndSet('setHeroFile','setHeroImage','setHeroPreview','settings')">Upload Hero</button>
+                  <button class="btn small" type="button" onclick="clearImageField('setHeroImage','setHeroPreview','setHeroFile')">Clear</button>
+                </div>
+
+                <img id="setHeroPreview" class="imagePreview" alt="Hero preview">
+              </div>
+            </div>
+
+            <div class="field">
+              <label>WhatsApp Number</label>
+              <input id="setWhatsapp" placeholder="15195555555">
+              <div class="hint">Use country code. Example Canada: 15195555555</div>
+            </div>
+
+            <div class="field">
+              <label>Instagram URL</label>
+              <input id="setInstagram" placeholder="https://instagram.com/...">
+            </div>
+
+            <div class="field">
+              <label>Address</label>
+              <input id="setAddress" placeholder="381 Talbot Street, St. Thomas">
+            </div>
+
+            <div class="field">
+              <label>Business Hours</label>
+              <input id="setHours" placeholder="Mon-Sat 10 AM - 7 PM">
+            </div>
+
+            <div class="field">
+              <label>Service Area</label>
+              <input id="setServiceArea" placeholder="London, St. Thomas, nearby areas">
+            </div>
+
+            <div class="field">
+              <label>Currency Symbol</label>
+              <input id="setCurrency" placeholder="$">
+            </div>
+
+            <div class="field full">
+              <label>Hero Title</label>
+              <input id="setHeroTitle">
+            </div>
+
+            <div class="field full">
+              <label>Hero Subtitle</label>
+              <textarea id="setHeroSubtitle"></textarea>
+            </div>
+
+            <div class="field">
+              <label>Minimum Notice Hours</label>
+              <input id="setNoticeHours" type="number" min="0">
+            </div>
+
+            <div class="field">
+              <label>Show Prices?</label>
+              <select id="setShowPrices">
+                <option value="true">Yes, show estimated prices</option>
+                <option value="false">No, request quote only</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Charge HST?</label>
+              <select id="setChargeHst">
+                <option value="false">No, do not charge HST</option>
+                <option value="true">Yes, charge HST</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>HST Rate %</label>
+              <input id="setHstRate" type="number" min="0" step="0.01" placeholder="13">
+            </div>
+
+            <div class="field">
+              <label>Default Delivery Fee</label>
+              <input id="setDefaultDeliveryFee" type="number" min="0" step="0.01" placeholder="0">
+            </div>
+
+            <div class="field full">
+              <label>Same-Day / Urgent Message</label>
+              <textarea id="setSameDay"></textarea>
+            </div>
+
+            <div class="field full">
+              <label>Policy Text</label>
+              <textarea id="setPolicy"></textarea>
+            </div>
+
+            <div class="full">
+              <button class="btn primary" type="button" onclick="saveSettings()">Save Settings</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="imagesPanel" class="panel">
+      <div class="layout2">
         <div class="card">
           <div class="cardHead">
             <div>
-              <h3>Cake Products</h3>
-              <p>Forms stay closed. Click “Add New Cake” or “Edit” to open the form.</p>
-            </div>
-            <div class="itemActions">
-              <button class="btn primary small" onclick="openCakeForm()">+ Add New Cake</button>
-              <button class="btn small" onclick="loadAll()">Refresh</button>
+              <h3>Upload Image</h3>
+              <p>Upload to Supabase Storage and copy/use the public URL.</p>
             </div>
           </div>
 
           <div class="cardBody">
-            <div id="cakeFormPanel" class="formPanel">
-              <div class="formPanelTitle">
-                <div>
-                  <h4 id="cakeFormTitle">Add New Cake</h4>
-                  <p>Paste image link or upload image, then assign categories, sizes, flavours and add-ons.</p>
-                </div>
-                <button class="btn small" type="button" onclick="closePanel('cakeFormPanel')">Close</button>
-              </div>
-
-              <form id="cakeForm">
-                <input type="hidden" id="cakeId">
-
-                <div class="formGrid">
-                  <div class="field">
-                    <label>Cake Name</label>
-                    <input id="cakeName" required placeholder="Chocolate Birthday Cake">
-                  </div>
-
-                  <div class="field">
-                    <label>Slug</label>
-                    <input id="cakeSlug" placeholder="chocolate-birthday-cake">
-                  </div>
-
-                  <div class="field full">
-                    <label>Description</label>
-                    <textarea id="cakeDesc"></textarea>
-                  </div>
-
-                  <div class="field full">
-                    <label>Cake Image</label>
-                    <div class="imageBox">
-                      <input id="cakeImage" placeholder="Paste cake image link or upload image">
-                      <div class="uploadRow">
-                        <input id="cakeImageFile" type="file" accept="image/png,image/jpeg,image/webp">
-                        <button class="btn small" type="button" onclick="uploadAndSet('cakeImageFile','cakeImage','cakes')">Upload Cake Image</button>
-                      </div>
-                      <div class="hint">Use image link OR upload image. Max 3MB: JPG, PNG, WEBP.</div>
-                    </div>
-                  </div>
-
-                  <div class="field">
-                    <label>Starting Price</label>
-                    <input id="cakeStartingPrice" type="number" step="0.01" value="0">
-                  </div>
-
-                  <div class="field">
-                    <label>Price Type</label>
-                    <select id="cakePriceType">
-                      <option value="estimated">Estimated</option>
-                      <option value="fixed">Fixed</option>
-                      <option value="quote">Quote Required</option>
-                    </select>
-                  </div>
-
-                  <div class="field">
-                    <label>Sort Order</label>
-                    <input id="cakeSort" type="number" value="0">
-                  </div>
-
-                  <div class="field">
-                    <label>Visibility</label>
-                    <label class="checkRow"><input id="cakeFeatured" type="checkbox"> Featured</label>
-                    <label class="checkRow"><input id="cakeActive" type="checkbox" checked> Active</label>
-                  </div>
-
-                  <div class="field">
-                    <label>Categories</label>
-                    <select id="cakeCategoriesSelect" class="multiSelect" multiple></select>
-                  </div>
-
-                  <div class="field">
-                    <label>Available Sizes</label>
-                    <select id="cakeSizesSelect" class="multiSelect" multiple></select>
-                  </div>
-
-                  <div class="field">
-                    <label>Available Flavours</label>
-                    <select id="cakeFlavoursSelect" class="multiSelect" multiple></select>
-                  </div>
-
-                  <div class="field">
-                    <label>Available Add-ons</label>
-                    <select id="cakeAddonsSelect" class="multiSelect" multiple></select>
-                  </div>
-
-                  <div class="full">
-                    <button class="btn primary" type="submit">Save Cake</button>
-                    <button class="btn" type="button" onclick="resetCakeForm(false)" style="margin-left:8px;">Clear</button>
-                  </div>
-                </div>
-              </form>
+            <div class="field">
+              <label>Choose Image</label>
+              <input id="galleryFile" type="file" accept="image/png,image/jpeg,image/webp">
             </div>
 
-            <div class="searchRow">
-              <input id="cakeSearch" placeholder="Search cakes..." oninput="renderCakes()">
-              <select id="cakeFilterStatus" onchange="renderCakes()">
-                <option value="all">All</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-                <option value="featured">Featured</option>
+            <div class="field">
+              <label>Folder</label>
+              <select id="galleryFolder">
+                <option value="products">Products</option>
+                <option value="categories">Categories</option>
+                <option value="settings">Settings</option>
+                <option value="gallery">Gallery</option>
               </select>
             </div>
 
-            <div id="cakeList" class="list"></div>
+            <button class="btn primary block" onclick="uploadGalleryImage()">Upload Image</button>
+
+            <div class="field" style="margin-top:12px;">
+              <label>Uploaded Image URL</label>
+              <input id="galleryUrl" readonly placeholder="Uploaded URL will appear here">
+            </div>
+
+            <div class="imageTools">
+              <button class="btn small" onclick="copyFieldValue('galleryUrl')">Copy URL</button>
+              <a class="btn primary small" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
+            </div>
+
+            <img id="galleryPreview" class="imagePreview" alt="Uploaded preview" style="margin-top:10px;">
           </div>
         </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Image Link Rules</h3>
+              <p>Keep images simple and reliable.</p>
+            </div>
+          </div>
+
+          <div class="cardBody">
+            <div class="list">
+              <div class="compactItem open">
+                <div class="compactTop">
+                  <div class="compactMain">
+                    <div class="itemTitle">Use direct image links</div>
+                    <div class="itemMeta">Good: .jpg, .png, .webp image URLs.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="compactItem open">
+                <div class="compactTop">
+                  <div class="compactMain">
+                    <div class="itemTitle">Use Upload for client photos</div>
+                    <div class="itemMeta">Upload saves to Supabase Storage and gives a public URL.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="compactItem open">
+                <div class="compactTop">
+                  <div class="compactMain">
+                    <div class="itemTitle">Use Postimages for quick external upload</div>
+                    <div class="itemMeta">Open Postimages, upload, copy direct link, paste in image URL field.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="compactItem open">
+                <div class="compactTop">
+                  <div class="compactMain">
+                    <div class="itemTitle">Avoid webpage links</div>
+                    <div class="itemMeta">Instagram/Facebook/Google Drive page links may not display as images.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <section id="ordersPanel" class="panel">
-      <div class="card">
-        <div class="cardHead">
-          <div>
-            <h3>Orders</h3>
-            <p>Orders are collapsed by default. Click an order row to expand.</p>
-          </div>
-          <button class="btn small" onclick="loadAll()">Refresh</button>
-        </div>
-
-        <div class="cardBody">
-          <div class="searchRow">
-            <input id="orderSearch" placeholder="Search name, phone, order id..." oninput="renderOrders()">
-            <select id="orderStatusFilter" onchange="renderOrders()">
-              <option value="all">All Statuses</option>
-              <option>Pending</option>
-              <option>Confirmed</option>
-              <option>In Progress</option>
-              <option>Ready</option>
-              <option>Completed</option>
-              <option>Cancelled</option>
-            </select>
-          </div>
-
-          <div id="ordersList" class="list"></div>
-        </div>
-      </div>
-    </section>
   </main>
 </div>
 
@@ -1073,26 +1624,26 @@
   const $ = (id) => document.getElementById(id);
 
   const DEFAULT_SETTINGS = {
-    id: 1,
-    brand_name: "Cake Studio",
-    tagline: "Fresh custom cakes & sweet orders",
-    logo_url: "",
-    whatsapp_number: "",
-    instagram_url: "",
-    address: "",
-    business_hours: "",
-    service_area: "",
-    hero_title: "Beautiful cakes for birthdays, weddings & every sweet moment.",
-    hero_subtitle: "Browse cakes, customize your order, add multiple items to cart, and confirm on WhatsApp.",
-    hero_image_url: "",
-    minimum_notice_hours: 24,
-    same_day_message: "For today or urgent orders, please contact us directly on WhatsApp.",
-    policy_text: "Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp.",
-    currency: "$",
-    show_prices: true,
-    charge_hst: false,
-    hst_rate: 13,
-    default_delivery_fee: 0
+    id:1,
+    brand_name:"Siffat Cakes",
+    tagline:"Eggless Cakes & Desserts",
+    logo_url:"",
+    whatsapp_number:"",
+    instagram_url:"",
+    address:"381 Talbot Street, St. Thomas",
+    business_hours:"",
+    service_area:"",
+    hero_title:"Custom cakes and desserts for your sweetest moments.",
+    hero_subtitle:"Custom cakes, cupcakes, brownies, muffins and baklava for every sweet moment.",
+    hero_image_url:"",
+    minimum_notice_hours:24,
+    same_day_message:"Online orders require at least 24 hours notice. For same-day or urgent orders, please contact us directly on WhatsApp.",
+    policy_text:"Online orders require at least 24 hours notice. Your order is confirmed only after the shop replies on WhatsApp. Estimated prices may change after design review.",
+    currency:"$",
+    show_prices:true,
+    charge_hst:false,
+    hst_rate:13,
+    default_delivery_fee:0
   };
 
   let currentUser = null;
@@ -1104,6 +1655,7 @@
   let options = [];
   let addons = [];
   let cakes = [];
+  let quickProducts = [];
 
   let cakeCategories = [];
   let cakeSizes = [];
@@ -1112,6 +1664,8 @@
 
   let orders = [];
   let orderItems = [];
+
+  let formsBound = false;
 
   initAuth();
 
@@ -1182,19 +1736,16 @@
     $("app").classList.remove("show");
   }
 
-  let formsBound = false;
-
   function bindForms(){
     if(formsBound) return;
     formsBound = true;
 
-    $("settingsForm").addEventListener("submit", saveSettings);
-    $("categoryForm").addEventListener("submit", saveCategory);
+    $("productForm").addEventListener("submit", saveProduct);
+    $("occasionForm").addEventListener("submit", saveOccasion);
     $("sizeForm").addEventListener("submit", saveSize);
     $("flavourForm").addEventListener("submit", saveFlavour);
     $("optionForm").addEventListener("submit", saveOption);
     $("addonForm").addEventListener("submit", saveAddon);
-    $("cakeForm").addEventListener("submit", saveCake);
   }
 
   async function loadAll(){
@@ -1209,6 +1760,7 @@
         optionsRes,
         addonsRes,
         cakesRes,
+        quickProductsRes,
         cakeCategoriesRes,
         cakeSizesRes,
         cakeFlavoursRes,
@@ -1223,6 +1775,7 @@
         supabaseClient.from("cake_options").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
         supabaseClient.from("addons").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
         supabaseClient.from("cakes").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
+        supabaseClient.from("quick_products").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
         supabaseClient.from("cake_categories").select("*"),
         supabaseClient.from("cake_sizes").select("*"),
         supabaseClient.from("cake_flavours").select("*"),
@@ -1239,6 +1792,7 @@
         optionsRes.error ||
         addonsRes.error ||
         cakesRes.error ||
+        quickProductsRes.error ||
         cakeCategoriesRes.error ||
         cakeSizesRes.error ||
         cakeFlavoursRes.error ||
@@ -1255,6 +1809,7 @@
       options = optionsRes.data || [];
       addons = addonsRes.data || [];
       cakes = cakesRes.data || [];
+      quickProducts = quickProductsRes.data || [];
 
       cakeCategories = cakeCategoriesRes.data || [];
       cakeSizes = cakeSizesRes.data || [];
@@ -1268,7 +1823,7 @@
       showToast("Admin data loaded.");
     }catch(err){
       console.error(err);
-      showToast(err.message || "Failed to load data.", true);
+      showToast(err.message || "Failed to load admin data.", true);
     }
   }
 
@@ -1276,15 +1831,21 @@
     renderStats();
     renderRecentOrders();
     fillSettingsForm();
-    renderCatalogLists();
-    fillCakeSelects();
-    renderCakes();
+    fillProductSelects();
+    renderProducts();
+    renderSetupLists();
     renderOrders();
   }
 
   function showTab(tab){
-    document.querySelectorAll(".tabBtn").forEach(btn => btn.classList.toggle("active", btn.dataset.tab === tab));
-    document.querySelectorAll(".panel").forEach(panel => panel.classList.remove("active"));
+    document.querySelectorAll(".tabBtn").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tab === tab);
+    });
+
+    document.querySelectorAll(".panel").forEach(panel => {
+      panel.classList.remove("active");
+    });
+
     $(tab + "Panel").classList.add("active");
   }
 
@@ -1303,19 +1864,23 @@
 
   function renderStats(){
     const statusCount = (status) => orders.filter(o => o.status === status).length;
+    const quoteCount = orders.filter(order => {
+      const items = orderItems.filter(item => item.order_id === order.id);
+      return items.some(item => Number(item.estimated_item_total || 0) === 0);
+    }).length;
 
     $("statsGrid").innerHTML = `
       <div class="stat"><b>${orders.length}</b><span>Total Orders</span></div>
       <div class="stat"><b>${statusCount("Pending")}</b><span>Pending</span></div>
       <div class="stat"><b>${statusCount("Confirmed")}</b><span>Confirmed</span></div>
-      <div class="stat"><b>${statusCount("In Progress")}</b><span>In Progress</span></div>
       <div class="stat"><b>${statusCount("Ready")}</b><span>Ready</span></div>
       <div class="stat"><b>${statusCount("Completed")}</b><span>Completed</span></div>
+      <div class="stat"><b>${quoteCount}</b><span>Quote Required</span></div>
     `;
   }
 
   function renderRecentOrders(){
-    const recent = orders.slice(0, 5);
+    const recent = orders.slice(0,5);
 
     if(!recent.length){
       $("recentOrdersList").innerHTML = `<div class="loading">No orders yet.</div>`;
@@ -1325,15 +1890,15 @@
     $("recentOrdersList").innerHTML = recent.map(order => `
       <div class="compactItem">
         <div class="compactTop">
-          <div>
+          <div class="compactMain">
             <div class="itemTitle">${escapeHtml(order.customer_name || "Customer")}</div>
             <div class="itemMeta">
               ${escapeHtml(order.customer_phone || "")}<br>
               Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
-              Total: ${money(order.estimated_total)}
+              Estimated: ${money(order.estimated_total)}
             </div>
           </div>
-          <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status)}</span>
+          <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status || "Pending")}</span>
         </div>
       </div>
     `).join("");
@@ -1359,73 +1924,1199 @@
     $("setDefaultDeliveryFee").value = siteSettings.default_delivery_fee ?? 0;
     $("setSameDay").value = siteSettings.same_day_message || "";
     $("setPolicy").value = siteSettings.policy_text || "";
+
+    setPreview("setLogoPreview", siteSettings.logo_url || "");
+    setPreview("setHeroPreview", siteSettings.hero_image_url || "");
   }
 
-  async function saveSettings(event){
-    if(event) event.preventDefault();
-
-    const btn = event?.target?.tagName === "BUTTON" ? event.target : document.querySelector("#settingsForm button[onclick*='saveSettings']");
-    const oldText = btn ? btn.textContent : "Save Settings";
-
+  async function saveSettings(){
     try{
-      if(btn){
-        btn.disabled = true;
-        btn.textContent = "Saving...";
-      }
-
       const payload = {
-        id: 1,
-        brand_name: $("setBrandName").value.trim() || "Cake Studio",
-        tagline: $("setTagline").value.trim(),
-        logo_url: $("setLogoUrl").value.trim(),
-        hero_image_url: $("setHeroImage").value.trim(),
-        whatsapp_number: $("setWhatsapp").value.trim(),
-        instagram_url: $("setInstagram").value.trim(),
-        address: $("setAddress").value.trim(),
-        business_hours: $("setHours").value.trim(),
-        service_area: $("setServiceArea").value.trim(),
-        currency: $("setCurrency").value.trim() || "$",
-        hero_title: $("setHeroTitle").value.trim(),
-        hero_subtitle: $("setHeroSubtitle").value.trim(),
-        minimum_notice_hours: Number($("setNoticeHours").value || 24),
-        show_prices: $("setShowPrices").value === "true",
-        charge_hst: $("setChargeHst").value === "true",
-        hst_rate: Number($("setHstRate").value || 0),
-        default_delivery_fee: Number($("setDefaultDeliveryFee").value || 0),
-        same_day_message: $("setSameDay").value.trim(),
-        policy_text: $("setPolicy").value.trim()
+        id:1,
+        brand_name:$("setBrandName").value.trim() || "Siffat Cakes",
+        tagline:$("setTagline").value.trim(),
+        logo_url:$("setLogoUrl").value.trim(),
+        hero_image_url:$("setHeroImage").value.trim(),
+        whatsapp_number:$("setWhatsapp").value.trim(),
+        instagram_url:$("setInstagram").value.trim(),
+        address:$("setAddress").value.trim(),
+        business_hours:$("setHours").value.trim(),
+        service_area:$("setServiceArea").value.trim(),
+        currency:$("setCurrency").value.trim() || "$",
+        hero_title:$("setHeroTitle").value.trim(),
+        hero_subtitle:$("setHeroSubtitle").value.trim(),
+        minimum_notice_hours:Number($("setNoticeHours").value || 24),
+        show_prices:$("setShowPrices").value === "true",
+        charge_hst:$("setChargeHst").value === "true",
+        hst_rate:Number($("setHstRate").value || 0),
+        default_delivery_fee:Number($("setDefaultDeliveryFee").value || 0),
+        same_day_message:$("setSameDay").value.trim(),
+        policy_text:$("setPolicy").value.trim()
       };
-
-      console.log("Saving settings payload:", payload);
 
       const { data, error } = await supabaseClient
         .from("site_settings")
-        .upsert(payload, { onConflict: "id" })
+        .upsert(payload, { onConflict:"id" })
         .select()
         .single();
 
-      if(error){
-        console.error("Settings save error:", error);
-        showToast(error.message, true);
-        return;
-      }
+      if(error) throw error;
 
       siteSettings = {...siteSettings, ...(data || payload)};
       fillSettingsForm();
       showToast("Settings saved.");
-
     }catch(err){
-      console.error("Save settings failed:", err);
+      console.error(err);
       showToast(err.message || "Settings save failed.", true);
-    }finally{
-      if(btn){
-        btn.disabled = false;
-        btn.textContent = oldText;
-      }
     }
   }
 
-  async function uploadAndSet(fileInputId, targetInputId, folder){
+  function fillProductSelects(){
+    fillMulti("cakeCategoriesSelect", categories, "name");
+    fillMulti("cakeSizesSelect", sizes, item => `${item.name} ${item.servings ? "· " + item.servings : ""} · ${item.quote_required ? "Quote" : money(item.price)}`);
+    fillMulti("cakeFlavoursSelect", flavours, item => `${item.name} · ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}`);
+    fillMulti("cakeAddonsSelect", addons, item => `${item.name} · ${item.quote_required ? "Quote" : money(item.price)}`);
+  }
+
+  function fillMulti(id, rows, labelKey){
+    const labelFn = typeof labelKey === "function" ? labelKey : (item) => item[labelKey];
+
+    $(id).innerHTML = rows.map(row => `
+      <option value="${escapeHtml(row.id)}">${escapeHtml(labelFn(row))}</option>
+    `).join("");
+  }
+
+  function openProductForm(kind = "cake"){
+    resetProductForm(false);
+    $("productType").value = kind;
+    switchProductType();
+    openPanel("productFormPanel");
+    showTab("products");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  function switchProductType(){
+    const type = $("productType").value;
+    const isCake = type === "cake";
+
+    $("cakeProductFields").classList.toggle("hidden", !isCake);
+    $("quickProductFields").classList.toggle("hidden", isCake);
+
+    $("productFormTitle").textContent = isCake ? "Add Customizable Cake" : "Add Quick Dessert";
+    $("productFormSubtitle").textContent = isCake
+      ? "Cake products open the full customization page."
+      : "Quick desserts are added directly to cart from category page.";
+
+    $("productModeHint").textContent = isCake
+      ? "Customizable cake flow"
+      : "Quick add dessert flow";
+  }
+
+  async function saveProduct(event){
+    event.preventDefault();
+
+    const type = $("productType").value;
+    const editKind = $("productEditKind").value;
+    const id = $("productId").value;
+
+    if(id && editKind && editKind !== type){
+      showToast("Clear form first before changing product type.", true);
+      return;
+    }
+
+    if(type === "cake"){
+      await saveCakeProduct();
+    }else{
+      await saveQuickProduct();
+    }
+  }
+
+  async function saveCakeProduct(){
+    const existingId = $("productId").value;
+    const name = $("productName").value.trim();
+
+    const payload = {
+      name,
+      slug:$("productSlug").value.trim() || slugify(name),
+      description:$("productDesc").value.trim(),
+      image_url:$("productImageUrl").value.trim(),
+      starting_price:Number($("cakeStartingPrice").value || 0),
+      price_type:$("cakePriceType").value,
+      sort_order:Number($("productSort").value || 0),
+      is_featured:$("productFeatured").checked,
+      is_active:$("productActive").checked
+    };
+
+    let cakeId = existingId;
+
+    if(existingId){
+      const { error } = await supabaseClient.from("cakes").update(payload).eq("id", existingId);
+      if(error) return showToast(error.message, true);
+    }else{
+      const { data, error } = await supabaseClient.from("cakes").insert(payload).select("id").single();
+      if(error) return showToast(error.message, true);
+      cakeId = data.id;
+    }
+
+    const selectedCategories = getSelectedValues("cakeCategoriesSelect");
+    const selectedSizes = getSelectedValues("cakeSizesSelect");
+    const selectedFlavours = getSelectedValues("cakeFlavoursSelect");
+    const selectedAddons = getSelectedValues("cakeAddonsSelect");
+
+    const results = await Promise.all([
+      replaceRelations("cake_categories","cake_id",cakeId,"category_id",selectedCategories),
+      replaceRelations("cake_sizes","cake_id",cakeId,"size_id",selectedSizes),
+      replaceRelations("cake_flavours","cake_id",cakeId,"flavour_id",selectedFlavours),
+      replaceRelations("cake_addons","cake_id",cakeId,"addon_id",selectedAddons)
+    ]);
+
+    const relError = results.find(r => r?.error)?.error;
+    if(relError) return showToast(relError.message, true);
+
+    resetProductForm(true);
+    await loadAll();
+    showToast("Cake product saved.");
+  }
+
+  async function saveQuickProduct(){
+    const existingId = $("productId").value;
+    const name = $("productName").value.trim();
+    const quote = $("quickQuote").value === "true";
+
+    const payload = {
+      name,
+      slug:$("productSlug").value.trim() || slugify(name),
+      category:$("quickCategory").value,
+      description:$("productDesc").value.trim(),
+      image_url:$("productImageUrl").value.trim(),
+      variant:$("quickVariant").value.trim(),
+      price:Number($("quickPrice").value || 0),
+      price_type:quote ? "quote" : "fixed",
+      quote_required:quote,
+      sort_order:Number($("productSort").value || 0),
+      is_featured:$("productFeatured").checked,
+      is_active:$("productActive").checked
+    };
+
+    const { error } = existingId
+      ? await supabaseClient.from("quick_products").update(payload).eq("id", existingId)
+      : await supabaseClient.from("quick_products").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetProductForm(true);
+    await loadAll();
+    showToast("Quick dessert saved.");
+  }
+
+  async function replaceRelations(table,parentCol,parentId,childCol,ids){
+    const del = await supabaseClient.from(table).delete().eq(parentCol,parentId);
+    if(del.error) return del;
+
+    if(!ids.length) return { error:null };
+
+    const rows = ids.map(id => ({
+      [parentCol]:parentId,
+      [childCol]:id
+    }));
+
+    return await supabaseClient.from(table).insert(rows);
+  }
+
+  function renderProducts(){
+    const box = $("productsList");
+    const search = ($("productSearch")?.value || "").trim().toLowerCase();
+    const kindFilter = $("productKindFilter")?.value || "all";
+    const statusFilter = $("productStatusFilter")?.value || "all";
+
+    let rows = [];
+
+    if(kindFilter === "all" || kindFilter === "cake"){
+      rows.push(...cakes.map(item => ({...item, __kind:"cake"})));
+    }
+
+    if(kindFilter === "all" || kindFilter === "quick"){
+      rows.push(...quickProducts.map(item => ({...item, __kind:"quick"})));
+    }
+
+    if(statusFilter === "active") rows = rows.filter(item => item.is_active !== false);
+    if(statusFilter === "inactive") rows = rows.filter(item => item.is_active === false);
+    if(statusFilter === "featured") rows = rows.filter(item => item.is_featured === true);
+
+    if(search){
+      rows = rows.filter(item => {
+        const combined = `${item.name || ""} ${item.description || ""} ${item.category || ""} ${item.variant || ""}`.toLowerCase();
+        return combined.includes(search);
+      });
+    }
+
+    if(!rows.length){
+      box.innerHTML = `<div class="loading">No products found.</div>`;
+      return;
+    }
+
+    box.innerHTML = rows.map(item => {
+      return item.__kind === "cake" ? renderCakeProductRow(item) : renderQuickProductRow(item);
+    }).join("");
+  }
+
+  function renderCakeProductRow(cake){
+    const domId = "cake-" + cake.id;
+    const cats = getCakeRelationNames(cake.id,cakeCategories,categories,"category_id");
+    const cakeSizeNames = getCakeRelationNames(cake.id,cakeSizes,sizes,"size_id");
+    const flavs = getCakeRelationNames(cake.id,cakeFlavours,flavours,"flavour_id");
+    const cakeAddonNames = getCakeRelationNames(cake.id,cakeAddons,addons,"addon_id");
+    const img = cake.image_url || getFallbackImage("cakes");
+
+    return `
+      <div class="compactItem" id="${domId}">
+        <div class="compactTop" onclick="toggleCompact('${domId}')">
+          <div class="rowWithImage">
+            <img class="miniPreview" src="${escapeHtml(img)}" onerror="this.src='${getFallbackImage("cakes")}'">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(cake.name || "Cake")}</div>
+              <div class="itemMeta">
+                Customizable Cake · Starting ${money(cake.starting_price)} · ${escapeHtml(cake.price_type || "estimated")} · ${cake.is_active ? "Active" : "Inactive"} ${cake.is_featured ? "· Featured" : ""}
+              </div>
+              <div class="tags">
+                ${cats.slice(0,3).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+                ${cakeSizeNames.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+                ${flavs.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
+              </div>
+            </div>
+          </div>
+          <div class="itemActions" onclick="event.stopPropagation()">
+            <button class="btn small" onclick="editCakeProduct('${cake.id}')">Edit</button>
+            <button class="btn red small" onclick="deleteCakeProduct('${cake.id}')">Delete</button>
+          </div>
+        </div>
+        <div class="compactDetails">
+          <b>Description:</b> ${escapeHtml(cake.description || "No description")}<br>
+          <b>Image:</b> ${escapeHtml(cake.image_url || "No image")}<br>
+          <b>Occasions:</b> ${cats.length ? escapeHtml(cats.join(", ")) : "None"}<br>
+          <b>Sizes:</b> ${cakeSizeNames.length ? escapeHtml(cakeSizeNames.join(", ")) : "All/None selected"}<br>
+          <b>Flavours:</b> ${flavs.length ? escapeHtml(flavs.join(", ")) : "All/None selected"}<br>
+          <b>Add-ons:</b> ${cakeAddonNames.length ? escapeHtml(cakeAddonNames.join(", ")) : "All/None selected"}<br>
+          <b>Sort:</b> ${cake.sort_order ?? 0}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderQuickProductRow(product){
+    const domId = "quick-" + product.id;
+    const img = product.image_url || getFallbackImage(product.category);
+
+    return `
+      <div class="compactItem" id="${domId}">
+        <div class="compactTop" onclick="toggleCompact('${domId}')">
+          <div class="rowWithImage">
+            <img class="miniPreview" src="${escapeHtml(img)}" onerror="this.src='${getFallbackImage(product.category)}'">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(product.name || "Dessert")}</div>
+              <div class="itemMeta">
+                Quick Dessert · ${toTitle(product.category)} ${product.variant ? "· " + escapeHtml(product.variant) : ""} · ${product.quote_required ? "Quote" : money(product.price)} · ${product.is_active ? "Active" : "Inactive"} ${product.is_featured ? "· Featured" : ""}
+              </div>
+              <div class="tags">
+                <span class="tag">${toTitle(product.category)}</span>
+                ${product.variant ? `<span class="tag">${escapeHtml(product.variant)}</span>` : ""}
+                <span class="tag">${product.quote_required ? "Quote required" : "Fixed price"}</span>
+              </div>
+            </div>
+          </div>
+          <div class="itemActions" onclick="event.stopPropagation()">
+            <button class="btn small" onclick="editQuickProduct('${product.id}')">Edit</button>
+            <button class="btn red small" onclick="deleteQuickProduct('${product.id}')">Delete</button>
+          </div>
+        </div>
+        <div class="compactDetails">
+          <b>Description:</b> ${escapeHtml(product.description || "No description")}<br>
+          <b>Image:</b> ${escapeHtml(product.image_url || "No image")}<br>
+          <b>Category:</b> ${toTitle(product.category)}<br>
+          <b>Variant:</b> ${escapeHtml(product.variant || "None")}<br>
+          <b>Price:</b> ${product.quote_required ? "Quote required" : money(product.price)}<br>
+          <b>Sort:</b> ${product.sort_order ?? 0}
+        </div>
+      </div>
+    `;
+  }
+
+  function editCakeProduct(id){
+    const cake = cakes.find(c => String(c.id) === String(id));
+    if(!cake) return;
+
+    resetProductForm(false);
+
+    $("productType").value = "cake";
+    $("productId").value = cake.id;
+    $("productEditKind").value = "cake";
+    switchProductType();
+
+    $("productFormTitle").textContent = "Edit Customizable Cake";
+    $("productName").value = cake.name || "";
+    $("productSlug").value = cake.slug || "";
+    $("productDesc").value = cake.description || "";
+    $("productImageUrl").value = cake.image_url || "";
+    setPreview("productImagePreview", cake.image_url || "");
+
+    $("cakeStartingPrice").value = cake.starting_price ?? 0;
+    $("cakePriceType").value = cake.price_type || "estimated";
+
+    $("productSort").value = cake.sort_order ?? 0;
+    $("productFeatured").checked = cake.is_featured === true;
+    $("productActive").checked = cake.is_active !== false;
+
+    setSelectedValues("cakeCategoriesSelect", cakeCategories.filter(r => String(r.cake_id) === String(id)).map(r => r.category_id));
+    setSelectedValues("cakeSizesSelect", cakeSizes.filter(r => String(r.cake_id) === String(id)).map(r => r.size_id));
+    setSelectedValues("cakeFlavoursSelect", cakeFlavours.filter(r => String(r.cake_id) === String(id)).map(r => r.flavour_id));
+    setSelectedValues("cakeAddonsSelect", cakeAddons.filter(r => String(r.cake_id) === String(id)).map(r => r.addon_id));
+
+    openPanel("productFormPanel");
+    showTab("products");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function editQuickProduct(id){
+    const product = quickProducts.find(p => String(p.id) === String(id));
+    if(!product) return;
+
+    resetProductForm(false);
+
+    $("productType").value = "quick";
+    $("productId").value = product.id;
+    $("productEditKind").value = "quick";
+    switchProductType();
+
+    $("productFormTitle").textContent = "Edit Quick Dessert";
+    $("productName").value = product.name || "";
+    $("productSlug").value = product.slug || "";
+    $("productDesc").value = product.description || "";
+    $("productImageUrl").value = product.image_url || "";
+    setPreview("productImagePreview", product.image_url || "");
+
+    $("quickCategory").value = product.category || "cupcakes";
+    $("quickVariant").value = product.variant || "";
+    $("quickPrice").value = product.price ?? 0;
+    $("quickQuote").value = String(product.quote_required === true);
+
+    $("productSort").value = product.sort_order ?? 0;
+    $("productFeatured").checked = product.is_featured === true;
+    $("productActive").checked = product.is_active !== false;
+
+    openPanel("productFormPanel");
+    showTab("products");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function resetProductForm(close = false){
+    $("productForm").reset();
+    $("productId").value = "";
+    $("productEditKind").value = "";
+
+    $("productType").value = "cake";
+    $("cakeStartingPrice").value = 0;
+    $("cakePriceType").value = "estimated";
+    $("quickCategory").value = "cupcakes";
+    $("quickPrice").value = 0;
+    $("quickQuote").value = "false";
+
+    $("productSort").value = 0;
+    $("productFeatured").checked = false;
+    $("productActive").checked = true;
+
+    setSelectedValues("cakeCategoriesSelect", []);
+    setSelectedValues("cakeSizesSelect", []);
+    setSelectedValues("cakeFlavoursSelect", []);
+    setSelectedValues("cakeAddonsSelect", []);
+    clearImageField("productImageUrl","productImagePreview","productImageFile");
+
+    switchProductType();
+
+    if(close) closePanel("productFormPanel");
+  }
+
+  async function deleteCakeProduct(id){
+    if(!confirm("Delete this cake product?")) return;
+
+    await Promise.all([
+      supabaseClient.from("cake_categories").delete().eq("cake_id", id),
+      supabaseClient.from("cake_sizes").delete().eq("cake_id", id),
+      supabaseClient.from("cake_flavours").delete().eq("cake_id", id),
+      supabaseClient.from("cake_addons").delete().eq("cake_id", id)
+    ]);
+
+    const { error } = await supabaseClient.from("cakes").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+
+    await loadAll();
+    showToast("Cake product deleted.");
+  }
+
+  async function deleteQuickProduct(id){
+    if(!confirm("Delete this quick dessert?")) return;
+
+    const { error } = await supabaseClient.from("quick_products").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+
+    await loadAll();
+    showToast("Quick dessert deleted.");
+  }
+
+  function renderSetupLists(){
+    renderOccasionList();
+    renderSizeList();
+    renderFlavourList();
+    renderOptionList();
+    renderAddonList();
+  }
+
+  function renderOccasionList(){
+    const box = $("occasionList");
+
+    if(!categories.length){
+      box.innerHTML = `<div class="loading">No cake occasions yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = categories.map(item => {
+      const domId = "occasion-" + item.id;
+      const img = item.image_url || getFallbackImage("cakes");
+
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="rowWithImage">
+              <img class="miniPreview" src="${escapeHtml(img)}" onerror="this.src='${getFallbackImage("cakes")}'">
+              <div class="compactMain">
+                <div class="itemTitle">${escapeHtml(item.name)}</div>
+                <div class="itemMeta">${escapeHtml(item.slug || "")} · ${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}</div>
+              </div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editOccasion('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteOccasion('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Description:</b> ${escapeHtml(item.description || "No description")}<br>
+            <b>Image:</b> ${escapeHtml(item.image_url || "No image")}<br>
+            <b>Status:</b> ${item.is_active ? "Active" : "Inactive"}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function openOccasionForm(){
+    resetOccasionForm(false);
+    $("occasionFormTitle").textContent = "Add Cake Occasion";
+    openPanel("occasionFormPanel");
+  }
+
+  async function saveOccasion(event){
+    event.preventDefault();
+
+    const id = $("occasionId").value;
+    const name = $("occasionName").value.trim();
+
+    const payload = {
+      name,
+      slug:$("occasionSlug").value.trim() || slugify(name),
+      description:$("occasionDesc").value.trim(),
+      image_url:$("occasionImage").value.trim(),
+      sort_order:Number($("occasionSort").value || 0),
+      is_active:$("occasionActive").checked
+    };
+
+    const { error } = id
+      ? await supabaseClient.from("categories").update(payload).eq("id", id)
+      : await supabaseClient.from("categories").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetOccasionForm(true);
+    await loadAll();
+    showToast("Cake occasion saved.");
+  }
+
+  function editOccasion(id){
+    const item = categories.find(x => String(x.id) === String(id));
+    if(!item) return;
+
+    $("occasionFormTitle").textContent = "Edit Cake Occasion";
+    $("occasionId").value = item.id;
+    $("occasionName").value = item.name || "";
+    $("occasionSlug").value = item.slug || "";
+    $("occasionDesc").value = item.description || "";
+    $("occasionImage").value = item.image_url || "";
+    $("occasionSort").value = item.sort_order ?? 0;
+    $("occasionActive").checked = item.is_active !== false;
+    setPreview("occasionImagePreview", item.image_url || "");
+
+    openPanel("occasionFormPanel");
+    showTab("setup");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function resetOccasionForm(close = false){
+    $("occasionForm").reset();
+    $("occasionId").value = "";
+    $("occasionSort").value = 0;
+    $("occasionActive").checked = true;
+    clearImageField("occasionImage","occasionImagePreview","occasionImageFile");
+    $("occasionFormTitle").textContent = "Add Cake Occasion";
+    if(close) closePanel("occasionFormPanel");
+  }
+
+  async function deleteOccasion(id){
+    if(!confirm("Delete this cake occasion?")) return;
+
+    await supabaseClient.from("cake_categories").delete().eq("category_id", id);
+    const { error } = await supabaseClient.from("categories").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+
+    await loadAll();
+    showToast("Cake occasion deleted.");
+  }
+
+  function renderSizeList(){
+    const box = $("sizeList");
+
+    if(!sizes.length){
+      box.innerHTML = `<div class="loading">No sizes yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = sizes.map(item => {
+      const domId = "size-" + item.id;
+
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : money(item.price)}</div>
+              <div class="itemMeta">${escapeHtml(item.servings || "No servings")} · ${item.is_active ? "Active" : "Inactive"}</div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editSize('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteSize('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Servings:</b> ${escapeHtml(item.servings || "No servings")}<br>
+            <b>Price:</b> ${money(item.price)}<br>
+            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
+            <b>Sort:</b> ${item.sort_order ?? 0}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function openSizeForm(){
+    resetSizeForm(false);
+    $("sizeFormTitle").textContent = "Add Size";
+    openPanel("sizeFormPanel");
+  }
+
+  async function saveSize(event){
+    event.preventDefault();
+
+    const id = $("sizeId").value;
+
+    const payload = {
+      name:$("sizeName").value.trim(),
+      servings:$("sizeServings").value.trim(),
+      price:Number($("sizePrice").value || 0),
+      quote_required:$("sizeQuote").checked,
+      is_active:$("sizeActive").checked,
+      sort_order:Number($("sizeSort").value || 0)
+    };
+
+    const { error } = id
+      ? await supabaseClient.from("sizes").update(payload).eq("id", id)
+      : await supabaseClient.from("sizes").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetSizeForm(true);
+    await loadAll();
+    showToast("Size saved.");
+  }
+
+  function editSize(id){
+    const item = sizes.find(x => String(x.id) === String(id));
+    if(!item) return;
+
+    $("sizeFormTitle").textContent = "Edit Size";
+    $("sizeId").value = item.id;
+    $("sizeName").value = item.name || "";
+    $("sizeServings").value = item.servings || "";
+    $("sizePrice").value = item.price ?? 0;
+    $("sizeQuote").checked = item.quote_required === true;
+    $("sizeActive").checked = item.is_active !== false;
+    $("sizeSort").value = item.sort_order ?? 0;
+
+    openPanel("sizeFormPanel");
+    showTab("setup");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function resetSizeForm(close = false){
+    $("sizeForm").reset();
+    $("sizeId").value = "";
+    $("sizePrice").value = 0;
+    $("sizeSort").value = 0;
+    $("sizeActive").checked = true;
+    $("sizeFormTitle").textContent = "Add Size";
+    if(close) closePanel("sizeFormPanel");
+  }
+
+  async function deleteSize(id){
+    if(!confirm("Delete this size?")) return;
+
+    await supabaseClient.from("cake_sizes").delete().eq("size_id", id);
+    const { error } = await supabaseClient.from("sizes").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+
+    await loadAll();
+    showToast("Size deleted.");
+  }
+
+  function renderFlavourList(){
+    const box = $("flavourList");
+
+    if(!flavours.length){
+      box.innerHTML = `<div class="loading">No flavours yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = flavours.map(item => {
+      const domId = "flavour-" + item.id;
+
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}</div>
+              <div class="itemMeta">${item.quote_required ? "Quote required" : "Fixed extra"} · ${item.is_active ? "Active" : "Inactive"}</div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editFlavour('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteFlavour('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Extra Price:</b> ${money(item.extra_price)}<br>
+            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
+            <b>Sort:</b> ${item.sort_order ?? 0}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function openFlavourForm(){
+    resetFlavourForm(false);
+    $("flavourFormTitle").textContent = "Add Flavour";
+    openPanel("flavourFormPanel");
+  }
+
+  async function saveFlavour(event){
+    event.preventDefault();
+
+    const id = $("flavourId").value;
+
+    const payload = {
+      name:$("flavourName").value.trim(),
+      extra_price:Number($("flavourPrice").value || 0),
+      quote_required:$("flavourQuote").checked,
+      is_active:$("flavourActive").checked,
+      sort_order:Number($("flavourSort").value || 0)
+    };
+
+    const { error } = id
+      ? await supabaseClient.from("flavours").update(payload).eq("id", id)
+      : await supabaseClient.from("flavours").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetFlavourForm(true);
+    await loadAll();
+    showToast("Flavour saved.");
+  }
+
+  function editFlavour(id){
+    const item = flavours.find(x => String(x.id) === String(id));
+    if(!item) return;
+
+    $("flavourFormTitle").textContent = "Edit Flavour";
+    $("flavourId").value = item.id;
+    $("flavourName").value = item.name || "";
+    $("flavourPrice").value = item.extra_price ?? 0;
+    $("flavourQuote").checked = item.quote_required === true;
+    $("flavourActive").checked = item.is_active !== false;
+    $("flavourSort").value = item.sort_order ?? 0;
+
+    openPanel("flavourFormPanel");
+    showTab("setup");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function resetFlavourForm(close = false){
+    $("flavourForm").reset();
+    $("flavourId").value = "";
+    $("flavourPrice").value = 0;
+    $("flavourSort").value = 0;
+    $("flavourActive").checked = true;
+    $("flavourFormTitle").textContent = "Add Flavour";
+    if(close) closePanel("flavourFormPanel");
+  }
+
+  async function deleteFlavour(id){
+    if(!confirm("Delete this flavour?")) return;
+
+    await supabaseClient.from("cake_flavours").delete().eq("flavour_id", id);
+    const { error } = await supabaseClient.from("flavours").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+
+    await loadAll();
+    showToast("Flavour deleted.");
+  }
+
+  function renderOptionList(){
+    const box = $("optionList");
+
+    if(!options.length){
+      box.innerHTML = `<div class="loading">No options yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = options.map(item => {
+      const domId = "option-" + item.id;
+
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}</div>
+              <div class="itemMeta">${escapeHtml(item.option_type || "option")} · ${item.is_active ? "Active" : "Inactive"}</div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editOption('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteOption('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Type:</b> ${escapeHtml(item.option_type || "option")}<br>
+            <b>Extra Price:</b> ${money(item.extra_price)}<br>
+            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
+            <b>Sort:</b> ${item.sort_order ?? 0}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function openOptionForm(){
+    resetOptionForm(false);
+    $("optionFormTitle").textContent = "Add Option";
+    openPanel("optionFormPanel");
+  }
+
+  async function saveOption(event){
+    event.preventDefault();
+
+    const id = $("optionId").value;
+
+    const payload = {
+      name:$("optionName").value.trim(),
+      option_type:$("optionType").value.trim() || "diet",
+      extra_price:Number($("optionPrice").value || 0),
+      quote_required:$("optionQuote").checked,
+      is_active:$("optionActive").checked,
+      sort_order:Number($("optionSort").value || 0)
+    };
+
+    const { error } = id
+      ? await supabaseClient.from("cake_options").update(payload).eq("id", id)
+      : await supabaseClient.from("cake_options").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetOptionForm(true);
+    await loadAll();
+    showToast("Option saved.");
+  }
+
+  function editOption(id){
+    const item = options.find(x => String(x.id) === String(id));
+    if(!item) return;
+
+    $("optionFormTitle").textContent = "Edit Option";
+    $("optionId").value = item.id;
+    $("optionName").value = item.name || "";
+    $("optionType").value = item.option_type || "diet";
+    $("optionPrice").value = item.extra_price ?? 0;
+    $("optionQuote").checked = item.quote_required === true;
+    $("optionActive").checked = item.is_active !== false;
+    $("optionSort").value = item.sort_order ?? 0;
+
+    openPanel("optionFormPanel");
+    showTab("setup");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function resetOptionForm(close = false){
+    $("optionForm").reset();
+    $("optionId").value = "";
+    $("optionType").value = "diet";
+    $("optionPrice").value = 0;
+    $("optionSort").value = 0;
+    $("optionActive").checked = true;
+    $("optionFormTitle").textContent = "Add Option";
+    if(close) closePanel("optionFormPanel");
+  }
+
+  async function deleteOption(id){
+    if(!confirm("Delete this option?")) return;
+
+    const { error } = await supabaseClient.from("cake_options").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+
+    await loadAll();
+    showToast("Option deleted.");
+  }
+
+  function renderAddonList(){
+    const box = $("addonList");
+
+    if(!addons.length){
+      box.innerHTML = `<div class="loading">No add-ons yet.</div>`;
+      return;
+    }
+
+    box.innerHTML = addons.map(item => {
+      const domId = "addon-" + item.id;
+
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="compactMain">
+              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : money(item.price)}</div>
+              <div class="itemMeta">${escapeHtml(item.description || "No description")} · ${item.is_active ? "Active" : "Inactive"}</div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn small" onclick="editAddon('${item.id}')">Edit</button>
+              <button class="btn red small" onclick="deleteAddon('${item.id}')">Delete</button>
+            </div>
+          </div>
+          <div class="compactDetails">
+            <b>Description:</b> ${escapeHtml(item.description || "No description")}<br>
+            <b>Price:</b> ${money(item.price)}<br>
+            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
+            <b>Sort:</b> ${item.sort_order ?? 0}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function openAddonForm(){
+    resetAddonForm(false);
+    $("addonFormTitle").textContent = "Add Add-on";
+    openPanel("addonFormPanel");
+  }
+
+  async function saveAddon(event){
+    event.preventDefault();
+
+    const id = $("addonId").value;
+
+    const payload = {
+      name:$("addonName").value.trim(),
+      description:$("addonDesc").value.trim(),
+      price:Number($("addonPrice").value || 0),
+      quote_required:$("addonQuote").checked,
+      is_active:$("addonActive").checked,
+      sort_order:Number($("addonSort").value || 0)
+    };
+
+    const { error } = id
+      ? await supabaseClient.from("addons").update(payload).eq("id", id)
+      : await supabaseClient.from("addons").insert(payload);
+
+    if(error) return showToast(error.message, true);
+
+    resetAddonForm(true);
+    await loadAll();
+    showToast("Add-on saved.");
+  }
+
+  function editAddon(id){
+    const item = addons.find(x => String(x.id) === String(id));
+    if(!item) return;
+
+    $("addonFormTitle").textContent = "Edit Add-on";
+    $("addonId").value = item.id;
+    $("addonName").value = item.name || "";
+    $("addonDesc").value = item.description || "";
+    $("addonPrice").value = item.price ?? 0;
+    $("addonQuote").checked = item.quote_required === true;
+    $("addonActive").checked = item.is_active !== false;
+    $("addonSort").value = item.sort_order ?? 0;
+
+    openPanel("addonFormPanel");
+    showTab("setup");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function resetAddonForm(close = false){
+    $("addonForm").reset();
+    $("addonId").value = "";
+    $("addonPrice").value = 0;
+    $("addonSort").value = 0;
+    $("addonActive").checked = true;
+    $("addonFormTitle").textContent = "Add Add-on";
+    if(close) closePanel("addonFormPanel");
+  }
+
+  async function deleteAddon(id){
+    if(!confirm("Delete this add-on?")) return;
+
+    await supabaseClient.from("cake_addons").delete().eq("addon_id", id);
+    const { error } = await supabaseClient.from("addons").delete().eq("id", id);
+    if(error) return showToast(error.message, true);
+
+    await loadAll();
+    showToast("Add-on deleted.");
+  }
+
+  function renderOrders(){
+    const box = $("ordersList");
+    const search = ($("orderSearch")?.value || "").trim().toLowerCase();
+    const statusFilter = $("orderStatusFilter")?.value || "all";
+    const typeFilter = $("orderTypeFilter")?.value || "all";
+
+    let rows = [...orders];
+
+    if(statusFilter !== "all"){
+      rows = rows.filter(o => o.status === statusFilter);
+    }
+
+    if(typeFilter !== "all"){
+      rows = rows.filter(o => o.delivery_type === typeFilter);
+    }
+
+    if(search){
+      rows = rows.filter(o => {
+        const combined = `${o.id || ""} ${o.customer_name || ""} ${o.customer_phone || ""} ${o.customer_email || ""}`.toLowerCase();
+        return combined.includes(search);
+      });
+    }
+
+    if(!rows.length){
+      box.innerHTML = `<div class="loading">No orders found.</div>`;
+      return;
+    }
+
+    box.innerHTML = rows.map(order => renderOrderRow(order)).join("");
+  }
+
+  function renderOrderRow(order){
+    const items = orderItems.filter(item => String(item.order_id) === String(order.id));
+    const cakeItems = items.filter(item => !isQuickOrderItem(item));
+    const quickItems = items.filter(item => isQuickOrderItem(item));
+    const domId = "order-" + order.id;
+    const hasQuote = items.some(item => Number(item.estimated_item_total || 0) === 0);
+    const shortId = String(order.id).slice(0,8).toUpperCase();
+
+    return `
+      <div class="orderCard" id="${domId}">
+        <div class="orderTop" onclick="toggleOrder('${order.id}')">
+          <div>
+            <h4>${escapeHtml(order.customer_name || "Customer")} · ${hasQuote ? "Quote" : money(order.estimated_total)}</h4>
+            <p>
+              ${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}<br>
+              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
+              Order ID: ${escapeHtml(shortId)}
+            </p>
+          </div>
+          <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;">
+            <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status || "Pending")}</span>
+            <span class="btn small">Details</span>
+          </div>
+        </div>
+
+        <div class="orderBody">
+          <div class="formGrid">
+            <div class="field">
+              <label>Status</label>
+              <select id="status-${order.id}">
+                ${["Pending","Confirmed","In Progress","Ready","Completed","Cancelled"].map(s => `
+                  <option ${order.status === s ? "selected" : ""}>${s}</option>
+                `).join("")}
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Update</label>
+              <button class="btn green" onclick="updateOrderStatus('${order.id}')">Update Status</button>
+            </div>
+
+            <div class="field full">
+              <label>Customer / Pickup / Delivery</label>
+              <div class="orderItem">
+                <b>Name:</b> ${escapeHtml(order.customer_name || "")}<br>
+                <b>Phone:</b> ${escapeHtml(order.customer_phone || "")}<br>
+                <b>Email:</b> ${escapeHtml(order.customer_email || "")}<br>
+                <b>Needed Date:</b> ${formatDate(order.needed_date)}<br>
+                <b>Needed Time:</b> ${escapeHtml(order.needed_time || "Not selected")}<br>
+                <b>Type:</b> ${escapeHtml(order.delivery_type || "")}<br>
+                <b>Address:</b> ${escapeHtml(order.address || "")}<br>
+                <b>City:</b> ${escapeHtml(order.city || "")}<br>
+                <b>Postal:</b> ${escapeHtml(order.postal_code || "")}<br>
+                <b>Instructions:</b> ${escapeHtml(order.delivery_instructions || "")}<br>
+                <b>Order Note:</b><br>${nl2br(escapeHtml(order.order_note || ""))}
+              </div>
+            </div>
+          </div>
+
+          <div class="orderSectionTitle">Custom Cakes</div>
+          <div class="orderItems">
+            ${cakeItems.length ? cakeItems.map(item => renderOrderItem(item, false)).join("") : `<div class="loading">No custom cakes in this order.</div>`}
+          </div>
+
+          <div class="orderSectionTitle">Quick Desserts</div>
+          <div class="orderItems">
+            ${quickItems.length ? quickItems.map(item => renderOrderItem(item, true)).join("") : `<div class="loading">No quick desserts in this order.</div>`}
+          </div>
+
+          <div class="orderSectionTitle">WhatsApp Message</div>
+          <div class="orderItem">
+            ${order.whatsapp_message ? nl2br(escapeHtml(order.whatsapp_message)) : "No saved WhatsApp message."}
+          </div>
+
+          <div class="itemActions" style="margin-top:12px;justify-content:flex-start;">
+            <button class="btn green small" onclick="whatsappCustomer('${order.id}')">Message Customer</button>
+            <button class="btn small" onclick="copyWhatsAppMessage('${order.id}')">Copy Message</button>
+            <button class="btn small" onclick="printOrder('${order.id}')">Print Slip</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderOrderItem(item, isQuick){
+    if(isQuick){
+      const info = getQuickInfoFromOrderItem(item);
+
+      return `
+        <div class="orderItem">
+          <b>${escapeHtml(item.cake_name || "Dessert")}</b><br>
+          <b>Type:</b> Quick Dessert<br>
+          <b>Category:</b> ${escapeHtml(info.categoryName || item.option_name || "")}<br>
+          <b>Variant:</b> ${escapeHtml(info.variant || item.flavour_name || "")}<br>
+          <b>Quantity:</b> ${item.quantity || 1}<br>
+          <b>Estimated Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}<br>
+          <b>Notes:</b> ${escapeHtml(item.special_notes || "")}
+        </div>
+      `;
+    }
+
+    return `
+      <div class="orderItem">
+        <b>${escapeHtml(item.cake_name || "Cake")}</b><br>
+        <b>Type:</b> Custom Cake<br>
+        <b>Size:</b> ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""} · ${money(item.size_price)}<br>
+        <b>Flavour:</b> ${escapeHtml(item.flavour_name || "")} · +${money(item.flavour_extra_price)}<br>
+        <b>Option:</b> ${escapeHtml(item.option_name || "")} · +${money(item.option_extra_price)}<br>
+        <b>Quantity:</b> ${item.quantity || 1}<br>
+        <b>Message on Cake:</b> ${escapeHtml(item.message_on_cake || "")}<br>
+        <b>Special Notes:</b> ${escapeHtml(item.special_notes || "")}<br>
+        <b>Add-ons:</b> ${formatAddons(item.addons_json)}<br>
+        <b>Estimated Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}
+      </div>
+    `;
+  }
+
+  function toggleOrder(id){
+    const el = $("order-" + id);
+    if(el) el.classList.toggle("open");
+  }
+
+  async function updateOrderStatus(id){
+    const status = $("status-" + id).value;
+
+    const { error } = await supabaseClient
+      .from("orders")
+      .update({ status })
+      .eq("id", id);
+
+    if(error) return showToast(error.message, true);
+
+    const order = orders.find(o => String(o.id) === String(id));
+    if(order) order.status = status;
+
+    renderStats();
+    renderRecentOrders();
+    renderOrders();
+    showToast("Order status updated.");
+  }
+
+  function whatsappCustomer(id){
+    const order = orders.find(o => String(o.id) === String(id));
+    if(!order) return;
+
+    const phone = normalizePhone(order.customer_phone || "");
+    if(!phone){
+      showToast("Customer phone number missing.", true);
+      return;
+    }
+
+    const msg = `Hi ${order.customer_name || ""}, your Siffat Cakes order for ${formatDate(order.needed_date)} is currently: ${order.status || "Pending"}.`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  function copyWhatsAppMessage(id){
+    const order = orders.find(o => String(o.id) === String(id));
+    if(!order || !order.whatsapp_message){
+      showToast("No WhatsApp message found.", true);
+      return;
+    }
+
+    navigator.clipboard.writeText(order.whatsapp_message)
+      .then(() => showToast("WhatsApp message copied."))
+      .catch(() => showToast("Could not copy message.", true));
+  }
+
+  function printOrder(id){
+    const card = $("order-" + id);
+    if(!card) return;
+
+    const printWindow = window.open("", "_blank");
+    printWindow.document.write(`
+      <html>
+      <head>
+        <title>Print Order</title>
+        <style>
+          body{font-family:Arial,sans-serif;padding:20px;color:#111}
+          .btn,button,select{display:none!important}
+          .orderBody{display:block!important}
+          .orderCard{border:1px solid #ddd;padding:15px;border-radius:12px}
+          .orderTop{border-bottom:1px solid #ddd;margin-bottom:10px}
+          .orderItem{border:1px solid #ddd;padding:10px;margin:8px 0;border-radius:10px;white-space:normal}
+          .orderSectionTitle{font-weight:bold;margin-top:14px}
+        </style>
+      </head>
+      <body>${card.outerHTML}</body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  }
+
+  async function uploadAndSet(fileInputId,targetInputId,previewId,folder){
     const fileInput = $(fileInputId);
     const targetInput = $(targetInputId);
 
@@ -1450,16 +3141,15 @@
     try{
       showToast("Uploading image...");
 
-      const ext = file.name.split(".").pop().toLowerCase();
       const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
       const path = `${folder}/${Date.now()}-${Math.random().toString(16).slice(2)}-${safeName}`;
 
       const { error } = await supabaseClient.storage
         .from(STORAGE_BUCKET)
         .upload(path, file, {
-          cacheControl: "3600",
-          upsert: false,
-          contentType: file.type
+          cacheControl:"3600",
+          upsert:false,
+          contentType:file.type
         });
 
       if(error) throw error;
@@ -1470,6 +3160,7 @@
 
       targetInput.value = data.publicUrl;
       fileInput.value = "";
+      setPreview(previewId, data.publicUrl);
 
       showToast("Image uploaded and URL added.");
     }catch(err){
@@ -1478,874 +3169,62 @@
     }
   }
 
-  function renderCatalogLists(){
-    renderCategoryList();
-    renderSizeList();
-    renderFlavourList();
-    renderOptionList();
-    renderAddonList();
+  async function uploadGalleryImage(){
+    await uploadAndSet("galleryFile","galleryUrl","galleryPreview",$("galleryFolder").value || "gallery");
   }
 
-  function renderCategoryList(){
-    const box = $("categoryList");
-    if(!categories.length){
-      box.innerHTML = `<div class="loading">No categories yet.</div>`;
+  function previewImageFromInput(inputId,previewId){
+    const input = $(inputId);
+    setPreview(previewId, input ? input.value.trim() : "");
+  }
+
+  function setPreview(previewId,url){
+    const img = $(previewId);
+    if(!img) return;
+
+    if(!url){
+      img.classList.remove("show");
+      img.removeAttribute("src");
       return;
     }
 
-    box.innerHTML = categories.map(item => {
-      const domId = "category-" + item.id;
-      const img = item.image_url || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80";
-
-      return `
-        <div class="compactItem" id="${domId}">
-          <div class="compactTop" onclick="toggleCompact('${domId}')">
-            <div class="rowWithImage">
-              <img class="miniPreview" src="${escapeHtml(img)}" onerror="this.style.display='none'">
-              <div class="compactMain">
-                <div class="itemTitle">${escapeHtml(item.name)}</div>
-                <div class="itemMeta">${escapeHtml(item.slug || "")} · ${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}</div>
-              </div>
-            </div>
-            <div class="itemActions" onclick="event.stopPropagation()">
-              <button class="btn small" onclick="editCategory('${item.id}')">Edit</button>
-              <button class="btn red small" onclick="deleteCategory('${item.id}')">Delete</button>
-            </div>
-          </div>
-          <div class="compactDetails">
-            <b>Description:</b> ${escapeHtml(item.description || "No description")}<br>
-            <b>Image:</b> ${escapeHtml(item.image_url || "No image")}<br>
-            <b>Status:</b> ${item.is_active ? "Active" : "Inactive"}
-          </div>
-        </div>
-      `;
-    }).join("");
+    img.src = url;
+    img.classList.add("show");
   }
 
-  function renderSizeList(){
-    const box = $("sizeList");
-    if(!sizes.length){
-      box.innerHTML = `<div class="loading">No sizes yet.</div>`;
+  function clearImageField(inputId,previewId,fileId){
+    const input = $(inputId);
+    const file = $(fileId);
+
+    if(input) input.value = "";
+    if(file) file.value = "";
+    setPreview(previewId, "");
+  }
+
+  function copyFieldValue(id){
+    const input = $(id);
+    if(!input || !input.value){
+      showToast("Nothing to copy.", true);
       return;
     }
 
-    box.innerHTML = sizes.map(item => {
-      const domId = "size-" + item.id;
-      return `
-        <div class="compactItem" id="${domId}">
-          <div class="compactTop" onclick="toggleCompact('${domId}')">
-            <div class="compactMain">
-              <div class="itemTitle">${escapeHtml(item.name)} · ${money(item.price)}</div>
-              <div class="itemMeta">${escapeHtml(item.servings || "No servings")} · ${item.quote_required ? "Quote required" : "Fixed price"} · ${item.is_active ? "Active" : "Inactive"}</div>
-            </div>
-            <div class="itemActions" onclick="event.stopPropagation()">
-              <button class="btn small" onclick="editSize('${item.id}')">Edit</button>
-              <button class="btn red small" onclick="deleteSize('${item.id}')">Delete</button>
-            </div>
-          </div>
-          <div class="compactDetails">
-            <b>Servings:</b> ${escapeHtml(item.servings || "No servings")}<br>
-            <b>Price:</b> ${money(item.price)}<br>
-            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
-            <b>Sort:</b> ${item.sort_order ?? 0}
-          </div>
-        </div>
-      `;
-    }).join("");
+    navigator.clipboard.writeText(input.value)
+      .then(() => showToast("Copied."))
+      .catch(() => showToast("Could not copy.", true));
   }
 
-  function renderFlavourList(){
-    const box = $("flavourList");
-    if(!flavours.length){
-      box.innerHTML = `<div class="loading">No flavours yet.</div>`;
-      return;
-    }
-
-    box.innerHTML = flavours.map(item => {
-      const domId = "flavour-" + item.id;
-      return `
-        <div class="compactItem" id="${domId}">
-          <div class="compactTop" onclick="toggleCompact('${domId}')">
-            <div class="compactMain">
-              <div class="itemTitle">${escapeHtml(item.name)} · +${money(item.extra_price)}</div>
-              <div class="itemMeta">${item.quote_required ? "Quote required" : "Fixed extra"} · ${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}</div>
-            </div>
-            <div class="itemActions" onclick="event.stopPropagation()">
-              <button class="btn small" onclick="editFlavour('${item.id}')">Edit</button>
-              <button class="btn red small" onclick="deleteFlavour('${item.id}')">Delete</button>
-            </div>
-          </div>
-          <div class="compactDetails">
-            <b>Extra Price:</b> ${money(item.extra_price)}<br>
-            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
-            <b>Status:</b> ${item.is_active ? "Active" : "Inactive"}
-          </div>
-        </div>
-      `;
-    }).join("");
+  function getSelectedValues(id){
+    return Array.from($(id).selectedOptions).map(option => option.value);
   }
 
-  function renderOptionList(){
-    const box = $("optionList");
-    if(!options.length){
-      box.innerHTML = `<div class="loading">No options yet.</div>`;
-      return;
-    }
-
-    box.innerHTML = options.map(item => {
-      const domId = "option-" + item.id;
-      return `
-        <div class="compactItem" id="${domId}">
-          <div class="compactTop" onclick="toggleCompact('${domId}')">
-            <div class="compactMain">
-              <div class="itemTitle">${escapeHtml(item.name)} · +${money(item.extra_price)}</div>
-              <div class="itemMeta">${escapeHtml(item.option_type || "option")} · ${item.quote_required ? "Quote required" : "Fixed extra"} · ${item.is_active ? "Active" : "Inactive"}</div>
-            </div>
-            <div class="itemActions" onclick="event.stopPropagation()">
-              <button class="btn small" onclick="editOption('${item.id}')">Edit</button>
-              <button class="btn red small" onclick="deleteOption('${item.id}')">Delete</button>
-            </div>
-          </div>
-          <div class="compactDetails">
-            <b>Type:</b> ${escapeHtml(item.option_type || "option")}<br>
-            <b>Extra Price:</b> ${money(item.extra_price)}<br>
-            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}
-          </div>
-        </div>
-      `;
-    }).join("");
+  function setSelectedValues(id,values){
+    const set = new Set(values.map(String));
+    Array.from($(id).options).forEach(option => {
+      option.selected = set.has(String(option.value));
+    });
   }
 
-  function renderAddonList(){
-    const box = $("addonList");
-    if(!addons.length){
-      box.innerHTML = `<div class="loading">No add-ons yet.</div>`;
-      return;
-    }
-
-    box.innerHTML = addons.map(item => {
-      const domId = "addon-" + item.id;
-      return `
-        <div class="compactItem" id="${domId}">
-          <div class="compactTop" onclick="toggleCompact('${domId}')">
-            <div class="compactMain">
-              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : money(item.price)}</div>
-              <div class="itemMeta">${escapeHtml(item.description || "No description")} · ${item.is_active ? "Active" : "Inactive"}</div>
-            </div>
-            <div class="itemActions" onclick="event.stopPropagation()">
-              <button class="btn small" onclick="editAddon('${item.id}')">Edit</button>
-              <button class="btn red small" onclick="deleteAddon('${item.id}')">Delete</button>
-            </div>
-          </div>
-          <div class="compactDetails">
-            <b>Description:</b> ${escapeHtml(item.description || "No description")}<br>
-            <b>Price:</b> ${money(item.price)}<br>
-            <b>Quote Required:</b> ${item.quote_required ? "Yes" : "No"}<br>
-            <b>Status:</b> ${item.is_active ? "Active" : "Inactive"}
-          </div>
-        </div>
-      `;
-    }).join("");
-  }
-
-  function openCategoryForm(){
-    resetCategoryForm(false);
-    $("categoryFormTitle").textContent = "Add Category";
-    openPanel("categoryFormPanel");
-  }
-
-  async function saveCategory(event){
-    event.preventDefault();
-
-    const id = $("categoryId").value;
-    const name = $("categoryName").value.trim();
-
-    const payload = {
-      name,
-      slug: $("categorySlug").value.trim() || slugify(name),
-      description: $("categoryDesc").value.trim(),
-      image_url: $("categoryImage").value.trim(),
-      sort_order: Number($("categorySort").value || 0),
-      is_active: $("categoryActive").checked
-    };
-
-    const { error } = id
-      ? await supabaseClient.from("categories").update(payload).eq("id", id)
-      : await supabaseClient.from("categories").insert(payload);
-
-    if(error) return showToast(error.message, true);
-
-    resetCategoryForm(true);
-    await loadAll();
-    showToast("Category saved.");
-  }
-
-  function editCategory(id){
-    const item = categories.find(x => x.id === id);
-    if(!item) return;
-
-    $("categoryFormTitle").textContent = "Edit Category";
-    $("categoryId").value = item.id;
-    $("categoryName").value = item.name || "";
-    $("categorySlug").value = item.slug || "";
-    $("categoryDesc").value = item.description || "";
-    $("categoryImage").value = item.image_url || "";
-    $("categorySort").value = item.sort_order ?? 0;
-    $("categoryActive").checked = item.is_active !== false;
-
-    openPanel("categoryFormPanel");
-    showTab("catalog");
-    window.scrollTo({top:0, behavior:"smooth"});
-  }
-
-  function resetCategoryForm(close = false){
-    $("categoryForm").reset();
-    $("categoryId").value = "";
-    $("categoryActive").checked = true;
-    $("categorySort").value = 0;
-    $("categoryFormTitle").textContent = "Add Category";
-    if(close) closePanel("categoryFormPanel");
-  }
-
-  async function deleteCategory(id){
-    if(!confirm("Delete this category?")) return;
-    const { error } = await supabaseClient.from("categories").delete().eq("id", id);
-    if(error) return showToast(error.message, true);
-    await loadAll();
-    showToast("Category deleted.");
-  }
-
-  function openSizeForm(){
-    resetSizeForm(false);
-    $("sizeFormTitle").textContent = "Add Size";
-    openPanel("sizeFormPanel");
-  }
-
-  async function saveSize(event){
-    event.preventDefault();
-
-    const id = $("sizeId").value;
-    const payload = {
-      name: $("sizeName").value.trim(),
-      servings: $("sizeServings").value.trim(),
-      price: Number($("sizePrice").value || 0),
-      quote_required: $("sizeQuote").checked,
-      is_active: $("sizeActive").checked,
-      sort_order: Number($("sizeSort").value || 0)
-    };
-
-    const { error } = id
-      ? await supabaseClient.from("sizes").update(payload).eq("id", id)
-      : await supabaseClient.from("sizes").insert(payload);
-
-    if(error) return showToast(error.message, true);
-
-    resetSizeForm(true);
-    await loadAll();
-    showToast("Size saved.");
-  }
-
-  function editSize(id){
-    const item = sizes.find(x => x.id === id);
-    if(!item) return;
-
-    $("sizeFormTitle").textContent = "Edit Size";
-    $("sizeId").value = item.id;
-    $("sizeName").value = item.name || "";
-    $("sizeServings").value = item.servings || "";
-    $("sizePrice").value = item.price ?? 0;
-    $("sizeQuote").checked = item.quote_required === true;
-    $("sizeActive").checked = item.is_active !== false;
-    $("sizeSort").value = item.sort_order ?? 0;
-
-    openPanel("sizeFormPanel");
-    showTab("catalog");
-    window.scrollTo({top:0, behavior:"smooth"});
-  }
-
-  function resetSizeForm(close = false){
-    $("sizeForm").reset();
-    $("sizeId").value = "";
-    $("sizePrice").value = 0;
-    $("sizeSort").value = 0;
-    $("sizeActive").checked = true;
-    $("sizeFormTitle").textContent = "Add Size";
-    if(close) closePanel("sizeFormPanel");
-  }
-
-  async function deleteSize(id){
-    if(!confirm("Delete this size?")) return;
-    const { error } = await supabaseClient.from("sizes").delete().eq("id", id);
-    if(error) return showToast(error.message, true);
-    await loadAll();
-    showToast("Size deleted.");
-  }
-
-  function openFlavourForm(){
-    resetFlavourForm(false);
-    $("flavourFormTitle").textContent = "Add Flavour";
-    openPanel("flavourFormPanel");
-  }
-
-  async function saveFlavour(event){
-    event.preventDefault();
-
-    const id = $("flavourId").value;
-    const payload = {
-      name: $("flavourName").value.trim(),
-      extra_price: Number($("flavourPrice").value || 0),
-      quote_required: $("flavourQuote").checked,
-      is_active: $("flavourActive").checked,
-      sort_order: Number($("flavourSort").value || 0)
-    };
-
-    const { error } = id
-      ? await supabaseClient.from("flavours").update(payload).eq("id", id)
-      : await supabaseClient.from("flavours").insert(payload);
-
-    if(error) return showToast(error.message, true);
-
-    resetFlavourForm(true);
-    await loadAll();
-    showToast("Flavour saved.");
-  }
-
-  function editFlavour(id){
-    const item = flavours.find(x => x.id === id);
-    if(!item) return;
-
-    $("flavourFormTitle").textContent = "Edit Flavour";
-    $("flavourId").value = item.id;
-    $("flavourName").value = item.name || "";
-    $("flavourPrice").value = item.extra_price ?? 0;
-    $("flavourQuote").checked = item.quote_required === true;
-    $("flavourActive").checked = item.is_active !== false;
-    $("flavourSort").value = item.sort_order ?? 0;
-
-    openPanel("flavourFormPanel");
-    showTab("catalog");
-    window.scrollTo({top:0, behavior:"smooth"});
-  }
-
-  function resetFlavourForm(close = false){
-    $("flavourForm").reset();
-    $("flavourId").value = "";
-    $("flavourPrice").value = 0;
-    $("flavourSort").value = 0;
-    $("flavourActive").checked = true;
-    $("flavourFormTitle").textContent = "Add Flavour";
-    if(close) closePanel("flavourFormPanel");
-  }
-
-  async function deleteFlavour(id){
-    if(!confirm("Delete this flavour?")) return;
-    const { error } = await supabaseClient.from("flavours").delete().eq("id", id);
-    if(error) return showToast(error.message, true);
-    await loadAll();
-    showToast("Flavour deleted.");
-  }
-
-  function openOptionForm(){
-    resetOptionForm(false);
-    $("optionFormTitle").textContent = "Add Option";
-    openPanel("optionFormPanel");
-  }
-
-  async function saveOption(event){
-    event.preventDefault();
-
-    const id = $("optionId").value;
-    const payload = {
-      name: $("optionName").value.trim(),
-      option_type: $("optionType").value.trim() || "diet",
-      extra_price: Number($("optionPrice").value || 0),
-      quote_required: $("optionQuote").checked,
-      is_active: $("optionActive").checked,
-      sort_order: Number($("optionSort").value || 0)
-    };
-
-    const { error } = id
-      ? await supabaseClient.from("cake_options").update(payload).eq("id", id)
-      : await supabaseClient.from("cake_options").insert(payload);
-
-    if(error) return showToast(error.message, true);
-
-    resetOptionForm(true);
-    await loadAll();
-    showToast("Option saved.");
-  }
-
-  function editOption(id){
-    const item = options.find(x => x.id === id);
-    if(!item) return;
-
-    $("optionFormTitle").textContent = "Edit Option";
-    $("optionId").value = item.id;
-    $("optionName").value = item.name || "";
-    $("optionType").value = item.option_type || "diet";
-    $("optionPrice").value = item.extra_price ?? 0;
-    $("optionQuote").checked = item.quote_required === true;
-    $("optionActive").checked = item.is_active !== false;
-    $("optionSort").value = item.sort_order ?? 0;
-
-    openPanel("optionFormPanel");
-    showTab("catalog");
-    window.scrollTo({top:0, behavior:"smooth"});
-  }
-
-  function resetOptionForm(close = false){
-    $("optionForm").reset();
-    $("optionId").value = "";
-    $("optionType").value = "diet";
-    $("optionPrice").value = 0;
-    $("optionSort").value = 0;
-    $("optionActive").checked = true;
-    $("optionFormTitle").textContent = "Add Option";
-    if(close) closePanel("optionFormPanel");
-  }
-
-  async function deleteOption(id){
-    if(!confirm("Delete this option?")) return;
-    const { error } = await supabaseClient.from("cake_options").delete().eq("id", id);
-    if(error) return showToast(error.message, true);
-    await loadAll();
-    showToast("Option deleted.");
-  }
-
-  function openAddonForm(){
-    resetAddonForm(false);
-    $("addonFormTitle").textContent = "Add Add-on";
-    openPanel("addonFormPanel");
-  }
-
-  async function saveAddon(event){
-    event.preventDefault();
-
-    const id = $("addonId").value;
-    const payload = {
-      name: $("addonName").value.trim(),
-      description: $("addonDesc").value.trim(),
-      price: Number($("addonPrice").value || 0),
-      quote_required: $("addonQuote").checked,
-      is_active: $("addonActive").checked,
-      sort_order: Number($("addonSort").value || 0)
-    };
-
-    const { error } = id
-      ? await supabaseClient.from("addons").update(payload).eq("id", id)
-      : await supabaseClient.from("addons").insert(payload);
-
-    if(error) return showToast(error.message, true);
-
-    resetAddonForm(true);
-    await loadAll();
-    showToast("Add-on saved.");
-  }
-
-  function editAddon(id){
-    const item = addons.find(x => x.id === id);
-    if(!item) return;
-
-    $("addonFormTitle").textContent = "Edit Add-on";
-    $("addonId").value = item.id;
-    $("addonName").value = item.name || "";
-    $("addonDesc").value = item.description || "";
-    $("addonPrice").value = item.price ?? 0;
-    $("addonQuote").checked = item.quote_required === true;
-    $("addonActive").checked = item.is_active !== false;
-    $("addonSort").value = item.sort_order ?? 0;
-
-    openPanel("addonFormPanel");
-    showTab("catalog");
-    window.scrollTo({top:0, behavior:"smooth"});
-  }
-
-  function resetAddonForm(close = false){
-    $("addonForm").reset();
-    $("addonId").value = "";
-    $("addonPrice").value = 0;
-    $("addonSort").value = 0;
-    $("addonActive").checked = true;
-    $("addonFormTitle").textContent = "Add Add-on";
-    if(close) closePanel("addonFormPanel");
-  }
-
-  async function deleteAddon(id){
-    if(!confirm("Delete this add-on?")) return;
-    const { error } = await supabaseClient.from("addons").delete().eq("id", id);
-    if(error) return showToast(error.message, true);
-    await loadAll();
-    showToast("Add-on deleted.");
-  }
-
-  function fillCakeSelects(){
-    fillMulti("cakeCategoriesSelect", categories, "name");
-    fillMulti("cakeSizesSelect", sizes, item => `${item.name} - ${item.servings || ""} - ${money(item.price)}${item.quote_required ? " - Quote" : ""}`);
-    fillMulti("cakeFlavoursSelect", flavours, item => `${item.name} - +${money(item.extra_price)}${item.quote_required ? " - Quote" : ""}`);
-    fillMulti("cakeAddonsSelect", addons, item => `${item.name} - ${money(item.price)}${item.quote_required ? " - Quote" : ""}`);
-  }
-
-  function fillMulti(id, rows, labelKey){
-    const labelFn = typeof labelKey === "function" ? labelKey : (item) => item[labelKey];
-    $(id).innerHTML = rows.map(row => `
-      <option value="${row.id}">${escapeHtml(labelFn(row))}</option>
-    `).join("");
-  }
-
-  function openCakeForm(){
-    resetCakeForm(false);
-    $("cakeFormTitle").textContent = "Add New Cake";
-    openPanel("cakeFormPanel");
-    showTab("cakes");
-  }
-
-  async function saveCake(event){
-    event.preventDefault();
-
-    const existingId = $("cakeId").value;
-    const name = $("cakeName").value.trim();
-
-    const payload = {
-      name,
-      slug: $("cakeSlug").value.trim() || slugify(name),
-      description: $("cakeDesc").value.trim(),
-      image_url: $("cakeImage").value.trim(),
-      starting_price: Number($("cakeStartingPrice").value || 0),
-      price_type: $("cakePriceType").value,
-      sort_order: Number($("cakeSort").value || 0),
-      is_featured: $("cakeFeatured").checked,
-      is_active: $("cakeActive").checked
-    };
-
-    let cakeId = existingId;
-
-    if(existingId){
-      const { error } = await supabaseClient.from("cakes").update(payload).eq("id", existingId);
-      if(error) return showToast(error.message, true);
-    }else{
-      const { data, error } = await supabaseClient.from("cakes").insert(payload).select("id").single();
-      if(error) return showToast(error.message, true);
-      cakeId = data.id;
-    }
-
-    const selectedCategories = getSelectedValues("cakeCategoriesSelect");
-    const selectedSizes = getSelectedValues("cakeSizesSelect");
-    const selectedFlavours = getSelectedValues("cakeFlavoursSelect");
-    const selectedAddons = getSelectedValues("cakeAddonsSelect");
-
-    const results = await Promise.all([
-      replaceRelations("cake_categories", "cake_id", cakeId, "category_id", selectedCategories),
-      replaceRelations("cake_sizes", "cake_id", cakeId, "size_id", selectedSizes),
-      replaceRelations("cake_flavours", "cake_id", cakeId, "flavour_id", selectedFlavours),
-      replaceRelations("cake_addons", "cake_id", cakeId, "addon_id", selectedAddons)
-    ]);
-
-    const relError = results.find(r => r?.error)?.error;
-    if(relError) return showToast(relError.message, true);
-
-    resetCakeForm(true);
-    await loadAll();
-    showToast("Cake saved.");
-  }
-
-  async function replaceRelations(table, parentCol, parentId, childCol, ids){
-    const del = await supabaseClient.from(table).delete().eq(parentCol, parentId);
-    if(del.error) return del;
-
-    if(!ids.length) return { error:null };
-
-    const rows = ids.map(id => ({
-      [parentCol]: parentId,
-      [childCol]: id
-    }));
-
-    return await supabaseClient.from(table).insert(rows);
-  }
-
-  function renderCakes(){
-    const box = $("cakeList");
-    const search = ($("cakeSearch")?.value || "").trim().toLowerCase();
-    const filter = $("cakeFilterStatus")?.value || "all";
-
-    let rows = [...cakes];
-
-    if(filter === "active") rows = rows.filter(c => c.is_active !== false);
-    if(filter === "inactive") rows = rows.filter(c => c.is_active === false);
-    if(filter === "featured") rows = rows.filter(c => c.is_featured === true);
-
-    if(search){
-      rows = rows.filter(c => `${c.name || ""} ${c.description || ""}`.toLowerCase().includes(search));
-    }
-
-    if(!rows.length){
-      box.innerHTML = `<div class="loading">No cakes found.</div>`;
-      return;
-    }
-
-    box.innerHTML = rows.map(cake => {
-      const domId = "cake-" + cake.id;
-      const cats = getCakeRelationNames(cake.id, cakeCategories, categories, "category_id");
-      const cakeSizeNames = getCakeRelationNames(cake.id, cakeSizes, sizes, "size_id");
-      const flavs = getCakeRelationNames(cake.id, cakeFlavours, flavours, "flavour_id");
-      const cakeAddonNames = getCakeRelationNames(cake.id, cakeAddons, addons, "addon_id");
-      const img = cake.image_url || "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80";
-
-      return `
-        <div class="compactItem" id="${domId}">
-          <div class="compactTop" onclick="toggleCompact('${domId}')">
-            <div class="rowWithImage">
-              <img class="miniPreview" src="${escapeHtml(img)}" onerror="this.style.display='none'">
-              <div class="compactMain">
-                <div class="itemTitle">${escapeHtml(cake.name || "Cake")}</div>
-                <div class="itemMeta">
-                  Starting: ${money(cake.starting_price)} · ${escapeHtml(cake.price_type || "estimated")} · ${cake.is_active ? "Active" : "Inactive"} ${cake.is_featured ? "· Featured" : ""}
-                </div>
-                <div class="tags">
-                  ${cats.slice(0,3).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
-                  ${cakeSizeNames.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
-                  ${flavs.slice(0,2).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
-                </div>
-              </div>
-            </div>
-            <div class="itemActions" onclick="event.stopPropagation()">
-              <button class="btn small" onclick="editCake('${cake.id}')">Edit</button>
-              <button class="btn red small" onclick="deleteCake('${cake.id}')">Delete</button>
-            </div>
-          </div>
-          <div class="compactDetails">
-            <b>Description:</b> ${escapeHtml(cake.description || "No description")}<br>
-            <b>Image:</b> ${escapeHtml(cake.image_url || "No image")}<br>
-            <b>Categories:</b> ${cats.length ? escapeHtml(cats.join(", ")) : "None"}<br>
-            <b>Sizes:</b> ${cakeSizeNames.length ? escapeHtml(cakeSizeNames.join(", ")) : "All/None selected"}<br>
-            <b>Flavours:</b> ${flavs.length ? escapeHtml(flavs.join(", ")) : "All/None selected"}<br>
-            <b>Add-ons:</b> ${cakeAddonNames.length ? escapeHtml(cakeAddonNames.join(", ")) : "All/None selected"}<br>
-            <b>Sort:</b> ${cake.sort_order ?? 0}
-          </div>
-        </div>
-      `;
-    }).join("");
-  }
-
-  function editCake(id){
-    const cake = cakes.find(c => c.id === id);
-    if(!cake) return;
-
-    $("cakeFormTitle").textContent = "Edit Cake";
-    $("cakeId").value = cake.id;
-    $("cakeName").value = cake.name || "";
-    $("cakeSlug").value = cake.slug || "";
-    $("cakeDesc").value = cake.description || "";
-    $("cakeImage").value = cake.image_url || "";
-    $("cakeStartingPrice").value = cake.starting_price ?? 0;
-    $("cakePriceType").value = cake.price_type || "estimated";
-    $("cakeSort").value = cake.sort_order ?? 0;
-    $("cakeFeatured").checked = cake.is_featured === true;
-    $("cakeActive").checked = cake.is_active !== false;
-
-    setSelectedValues("cakeCategoriesSelect", cakeCategories.filter(r => r.cake_id === id).map(r => r.category_id));
-    setSelectedValues("cakeSizesSelect", cakeSizes.filter(r => r.cake_id === id).map(r => r.size_id));
-    setSelectedValues("cakeFlavoursSelect", cakeFlavours.filter(r => r.cake_id === id).map(r => r.flavour_id));
-    setSelectedValues("cakeAddonsSelect", cakeAddons.filter(r => r.cake_id === id).map(r => r.addon_id));
-
-    openPanel("cakeFormPanel");
-    showTab("cakes");
-    window.scrollTo({top:0, behavior:"smooth"});
-  }
-
-  function resetCakeForm(close = false){
-    $("cakeForm").reset();
-    $("cakeId").value = "";
-    $("cakeStartingPrice").value = 0;
-    $("cakeSort").value = 0;
-    $("cakePriceType").value = "estimated";
-    $("cakeActive").checked = true;
-    $("cakeFeatured").checked = false;
-    $("cakeFormTitle").textContent = "Add New Cake";
-    setSelectedValues("cakeCategoriesSelect", []);
-    setSelectedValues("cakeSizesSelect", []);
-    setSelectedValues("cakeFlavoursSelect", []);
-    setSelectedValues("cakeAddonsSelect", []);
-    if(close) closePanel("cakeFormPanel");
-  }
-
-  async function deleteCake(id){
-    if(!confirm("Delete this cake? This will remove its category/size/flavour/add-on links too.")) return;
-
-    const { error } = await supabaseClient.from("cakes").delete().eq("id", id);
-    if(error) return showToast(error.message, true);
-
-    await loadAll();
-    showToast("Cake deleted.");
-  }
-
-  function renderOrders(){
-    const box = $("ordersList");
-    const search = ($("orderSearch")?.value || "").trim().toLowerCase();
-    const filter = $("orderStatusFilter")?.value || "all";
-
-    let rows = [...orders];
-
-    if(filter !== "all"){
-      rows = rows.filter(o => o.status === filter);
-    }
-
-    if(search){
-      rows = rows.filter(o => {
-        const combined = `${o.id || ""} ${o.customer_name || ""} ${o.customer_phone || ""} ${o.customer_email || ""}`.toLowerCase();
-        return combined.includes(search);
-      });
-    }
-
-    if(!rows.length){
-      box.innerHTML = `<div class="loading">No orders found.</div>`;
-      return;
-    }
-
-    box.innerHTML = rows.map(order => {
-      const items = orderItems.filter(item => item.order_id === order.id);
-      const domId = "order-" + order.id;
-      const hasQuote = items.some(item => Number(item.estimated_item_total || 0) === 0);
-
-      return `
-        <div class="orderCard" id="${domId}">
-          <div class="orderTop" onclick="toggleOrder('${order.id}')">
-            <div>
-              <h4>${escapeHtml(order.customer_name || "Customer")} · ${hasQuote ? "Quote" : money(order.estimated_total)}</h4>
-              <p>
-                ${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}<br>
-                Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
-                Order ID: ${escapeHtml(String(order.id).slice(0,8).toUpperCase())}
-              </p>
-            </div>
-            <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;">
-              <span class="status ${escapeClass(order.status)}">${escapeHtml(order.status)}</span>
-              <span class="btn small">Details</span>
-            </div>
-          </div>
-
-          <div class="orderBody">
-            <div class="formGrid">
-              <div class="field">
-                <label>Status</label>
-                <select id="status-${order.id}">
-                  ${["Pending","Confirmed","In Progress","Ready","Completed","Cancelled"].map(s => `
-                    <option ${order.status === s ? "selected" : ""}>${s}</option>
-                  `).join("")}
-                </select>
-              </div>
-
-              <div class="field">
-                <label>Actions</label>
-                <button class="btn green" onclick="updateOrderStatus('${order.id}')">Update Status</button>
-              </div>
-
-              <div class="field full">
-                <label>Customer / Delivery Info</label>
-                <div class="orderItem">
-                  <b>Name:</b> ${escapeHtml(order.customer_name || "")}<br>
-                  <b>Phone:</b> ${escapeHtml(order.customer_phone || "")}<br>
-                  <b>Email:</b> ${escapeHtml(order.customer_email || "")}<br>
-                  <b>Needed Date:</b> ${formatDate(order.needed_date)}<br>
-                  <b>Needed Time:</b> ${escapeHtml(order.needed_time || "Not selected")}<br>
-                  <b>Type:</b> ${escapeHtml(order.delivery_type || "")}<br>
-                  <b>Address:</b> ${escapeHtml(order.address || "")}<br>
-                  <b>City:</b> ${escapeHtml(order.city || "")}<br>
-                  <b>Postal:</b> ${escapeHtml(order.postal_code || "")}<br>
-                  <b>Instructions:</b> ${escapeHtml(order.delivery_instructions || "")}<br>
-                  <b>Note:</b> ${escapeHtml(order.order_note || "")}
-                </div>
-              </div>
-            </div>
-
-            <div class="orderItems">
-              ${items.length ? items.map(item => `
-                <div class="orderItem">
-                  <b>${escapeHtml(item.cake_name || "Cake")}</b><br>
-                  Size: ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""} · ${money(item.size_price)}<br>
-                  Flavour: ${escapeHtml(item.flavour_name || "")} · +${money(item.flavour_extra_price)}<br>
-                  Option: ${escapeHtml(item.option_name || "")} · +${money(item.option_extra_price)}<br>
-                  Quantity: ${item.quantity || 1}<br>
-                  Message on cake: ${escapeHtml(item.message_on_cake || "")}<br>
-                  Special notes: ${escapeHtml(item.special_notes || "")}<br>
-                  Add-ons: ${formatAddons(item.addons_json)}<br>
-                  <b>Item Estimated Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}
-                </div>
-              `).join("") : `<div class="loading">No order items found.</div>`}
-            </div>
-
-            <div class="itemActions" style="margin-top:12px;justify-content:flex-start;">
-              <button class="btn green small" onclick="whatsappCustomer('${order.id}')">Message Customer</button>
-              <button class="btn small" onclick="printOrder('${order.id}')">Print</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join("");
-  }
-
-  function toggleOrder(id){
-    const el = $("order-" + id);
-    if(el) el.classList.toggle("open");
-  }
-
-  async function updateOrderStatus(id){
-    const status = $("status-" + id).value;
-
-    const { error } = await supabaseClient
-      .from("orders")
-      .update({ status })
-      .eq("id", id);
-
-    if(error) return showToast(error.message, true);
-
-    const order = orders.find(o => o.id === id);
-    if(order) order.status = status;
-
-    renderStats();
-    renderRecentOrders();
-    renderOrders();
-    showToast("Order status updated.");
-  }
-
-  function whatsappCustomer(id){
-    const order = orders.find(o => o.id === id);
-    if(!order) return;
-
-    const phone = normalizePhone(order.customer_phone || "");
-    if(!phone){
-      showToast("Customer phone number missing.", true);
-      return;
-    }
-
-    const msg = `Hi ${order.customer_name || ""}, your cake order for ${formatDate(order.needed_date)} is currently: ${order.status}.`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
-  }
-
-  function printOrder(id){
-    const card = $("order-" + id);
-    if(!card) return;
-
-    const printWindow = window.open("", "_blank");
-    printWindow.document.write(`
-      <html>
-      <head>
-        <title>Print Order</title>
-        <style>
-          body{font-family:Arial,sans-serif;padding:20px;color:#111}
-          .btn,button{display:none!important}
-          .orderBody{display:block!important}
-          .orderCard{border:1px solid #ddd;padding:15px;border-radius:12px}
-          .orderItem{border:1px solid #ddd;padding:10px;margin:8px 0;border-radius:10px}
-        </style>
-      </head>
-      <body>${card.outerHTML}</body>
-      </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
-  }
-
-  function getCakeRelationNames(cakeId, relationRows, sourceRows, sourceKey){
+  function getCakeRelationNames(cakeId,relationRows,sourceRows,sourceKey){
     const ids = relationRows
       .filter(row => String(row.cake_id) === String(cakeId))
       .map(row => row[sourceKey]);
@@ -2355,40 +3234,32 @@
       .filter(Boolean);
   }
 
-  function getSelectedValues(id){
-    return Array.from($(id).selectedOptions).map(option => option.value);
+  function isQuickOrderItem(item){
+    const addons = parseAddons(item.addons_json);
+    return addons.some(a => a && a.type === "quick_product") || (!item.cake_id && item.option_name && !item.size_name);
   }
 
-  function setSelectedValues(id, values){
-    const set = new Set(values.map(String));
-    Array.from($(id).options).forEach(option => {
-      option.selected = set.has(String(option.value));
-    });
+  function getQuickInfoFromOrderItem(item){
+    const addons = parseAddons(item.addons_json);
+    const quickInfo = addons.find(a => a && a.type === "quick_product") || {};
+
+    return {
+      categoryName:quickInfo.category_name || quickInfo.category || item.option_name || "",
+      variant:quickInfo.variant || item.flavour_name || ""
+    };
   }
 
-  function money(value){
-    const symbol = siteSettings.currency || "$";
-    const num = Number(value || 0);
-    return symbol + num.toFixed(2).replace(".00", "");
-  }
-
-  function formatDate(value){
-    if(!value) return "Not selected";
+  function parseAddons(value){
     try{
-      const d = new Date(value + "T00:00:00");
-      return d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
+      if(Array.isArray(value)) return value;
+      return JSON.parse(value || "[]");
     }catch{
-      return value;
+      return [];
     }
   }
 
   function formatAddons(value){
-    let arr = [];
-    try{
-      arr = Array.isArray(value) ? value : JSON.parse(value || "[]");
-    }catch{
-      arr = [];
-    }
+    const arr = parseAddons(value);
 
     if(!arr.length) return "None";
 
@@ -2398,16 +3269,33 @@
     }).join(", ");
   }
 
+  function money(value){
+    const symbol = siteSettings.currency || "$";
+    const num = Number(value || 0);
+    return symbol + num.toFixed(2).replace(".00","");
+  }
+
+  function formatDate(value){
+    if(!value) return "Not selected";
+
+    try{
+      const d = new Date(value + "T00:00:00");
+      return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+    }catch{
+      return value;
+    }
+  }
+
   function normalizePhone(value){
-    return String(value || "").replace(/[^\d]/g, "");
+    return String(value || "").replace(/[^\d]/g,"");
   }
 
   function slugify(value){
     return String(value || "")
       .toLowerCase()
       .trim()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+      .replace(/[^a-z0-9]+/g,"-")
+      .replace(/^-+|-+$/g,"");
   }
 
   function escapeHtml(value){
@@ -2420,17 +3308,43 @@
   }
 
   function escapeClass(value){
-    return String(value || "").replace(/[^a-zA-Z0-9_-]/g, "");
+    return String(value || "").replace(/[^a-zA-Z0-9_-]/g,"");
   }
 
-  function showToast(message, isError = false){
+  function nl2br(value){
+    return String(value || "").replaceAll("\n","<br>");
+  }
+
+  function toTitle(value){
+    return String(value || "")
+      .replaceAll("-"," ")
+      .replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  function getFallbackImage(category){
+    const key = String(category || "").toLowerCase();
+
+    const images = {
+      cakes:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80",
+      cupcakes:"https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80",
+      muffins:"https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=900&q=80",
+      brownies:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80",
+      baklava:"https://images.unsplash.com/photo-1627311745837-68d6b11f0e41?auto=format&fit=crop&w=900&q=80"
+    };
+
+    return images[key] || images.cakes;
+  }
+
+  function showToast(message,isError = false){
     const toast = $("toast");
     toast.textContent = message;
-    toast.style.borderColor = isError ? "rgba(255,91,110,.35)" : "rgba(255,255,255,.10)";
-    toast.style.color = isError ? "#ffdce1" : "var(--text)";
+    toast.style.background = isError ? "var(--red)" : "var(--purple)";
     toast.classList.add("show");
+
     clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+    window.__toastTimer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2600);
   }
 </script>
 
