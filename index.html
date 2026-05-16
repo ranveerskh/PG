@@ -329,14 +329,9 @@
       max-width:700px;
     }
 
-    .heroSide{
-      display:grid;
-      gap:14px;
-      grid-template-rows:1fr auto;
-    }
-
     .photoPanel{
-      min-height:245px;
+      min-height:390px;
+      height:100%;
       border:1px solid var(--line);
       border-radius:28px;
       background:
@@ -376,57 +371,6 @@
       color:var(--muted);
       font-size:12px;
       line-height:1.35;
-    }
-
-    .menuBox{
-      border:1px solid var(--line);
-      border-radius:26px;
-      background:rgba(255,255,255,.88);
-      box-shadow:var(--shadow2);
-      padding:13px;
-      overflow:hidden;
-    }
-
-    .menuBox h3{
-      color:var(--purple);
-      font-size:18px;
-      letter-spacing:-.045em;
-      margin-bottom:9px;
-    }
-
-    .menuList{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-    }
-
-    .menuItem{
-      border:1px solid rgba(100,13,107,.13);
-      background:#fff;
-      border-radius:17px;
-      padding:11px;
-      min-height:68px;
-      transition:.18s ease;
-    }
-
-    .menuItem:hover{
-      transform:translateY(-1px);
-      border-color:rgba(100,13,107,.28);
-      box-shadow:0 12px 20px rgba(100,13,107,.08);
-    }
-
-    .menuItem b{
-      display:block;
-      color:var(--text);
-      font-size:13px;
-      margin-bottom:5px;
-    }
-
-    .menuItem span{
-      display:block;
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.33;
     }
 
     .sectionHead{
@@ -493,42 +437,6 @@
       line-height:1.35;
       max-height:31px;
       overflow:hidden;
-    }
-
-    .cakeOccasionGrid{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:10px;
-    }
-
-    .occasionCard{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.88);
-      border-radius:20px;
-      padding:13px;
-      min-height:94px;
-      box-shadow:var(--shadow2);
-      transition:.18s ease;
-    }
-
-    .occasionCard:hover{
-      transform:translateY(-2px);
-      border-color:rgba(100,13,107,.28);
-      box-shadow:0 16px 30px rgba(100,13,107,.12);
-    }
-
-    .occasionCard b{
-      display:block;
-      color:var(--purple);
-      font-size:14px;
-      margin-bottom:6px;
-    }
-
-    .occasionCard span{
-      display:block;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
     }
 
     .cakesGrid{
@@ -813,12 +721,14 @@
       line-height:1.5;
     }
 
+    .hidden{
+      display:none !important;
+    }
+
     @media(max-width:1040px){
       .heroGrid{grid-template-columns:1fr}
-      .heroSide{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-      .photoPanel{min-height:250px}
+      .photoPanel{min-height:280px}
       .mainCategoryGrid{grid-template-columns:repeat(3,1fr)}
-      .cakeOccasionGrid{grid-template-columns:repeat(3,1fr)}
       .cakesGrid{grid-template-columns:repeat(2,1fr)}
     }
 
@@ -835,14 +745,10 @@
       .heroMain{padding:20px;border-radius:24px;min-height:auto}
       .hero h2{font-size:38px;line-height:1.03}
       .heroText{font-size:13px}
-      .heroSide{grid-template-columns:1fr}
       .photoPanel{min-height:220px;border-radius:24px}
-      .menuBox{border-radius:24px}
-      .menuList{grid-template-columns:1fr 1fr}
       .sectionHead{align-items:flex-start;flex-direction:column;gap:8px}
       .mainCategoryGrid{grid-template-columns:repeat(2,1fr)}
       .mainCategoryCard{min-height:116px}
-      .cakeOccasionGrid{grid-template-columns:1fr 1fr}
       .cakesGrid{grid-template-columns:1fr}
       .cakeImg{height:215px}
       .howStrip{grid-template-columns:1fr;border-radius:24px}
@@ -866,7 +772,6 @@
 
     <div class="navActions">
       <a class="navLink" href="#mainCategories">Menu</a>
-      <a class="navLink" href="#cakeOccasions">Cake Occasions</a>
       <a class="navLink" href="cake.html?custom=true">Custom Cake</a>
 
       <a class="cartBtn" href="cart.html" aria-label="Open cart">
@@ -880,7 +785,6 @@
 
   <div class="wrap mobileMenu" id="mobileMenu">
     <a href="#mainCategories">Main Menu</a>
-    <a href="#cakeOccasions">Cake Occasions</a>
     <a href="cake.html?custom=true">Create Custom Cake</a>
     <a href="cart.html">Cart</a>
     <a href="#how">How It Works</a>
@@ -899,12 +803,12 @@
           </h2>
 
           <p class="heroText" id="heroSubtitle">
-            Start with cakes, cupcakes, muffins, brownies or baklava. Cake occasions like birthday and wedding stay inside the cakes section.
+            Order custom cakes, cupcakes, muffins, brownies and baklava with a simple WhatsApp confirmation flow.
           </p>
 
           <div class="heroButtons">
             <a class="primaryBtn" href="#mainCategories">Explore Menu</a>
-            <a class="ghostBtn" href="category.html?cat=cakes">Browse Cakes</a>
+            <a class="ghostBtn" href="cake.html?custom=true">Custom Cake</a>
             <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank">Need Today?</a>
           </div>
 
@@ -914,40 +818,13 @@
         </div>
       </div>
 
-      <div class="heroSide">
-        <div id="heroPhoto" class="photoPanel">
-          <div class="photoInfo">
-            <div>
-              <b>Clean menu flow</b>
-              <span id="heroFloatingText">Main categories first, cake occasions inside cakes.</span>
-            </div>
-            <a class="primaryBtn" id="heroWhatsappBtn" href="#" target="_blank">Ask</a>
+      <div id="heroPhoto" class="photoPanel">
+        <div class="photoInfo">
+          <div>
+            <b>Fresh custom orders</b>
+            <span id="heroFloatingText">Pick your category, choose your product, confirm on WhatsApp.</span>
           </div>
-        </div>
-
-        <div class="menuBox">
-          <h3>Quick Menu</h3>
-          <div class="menuList">
-            <a class="menuItem" href="category.html?cat=cakes">
-              <b>Cakes</b>
-              <span>Customizable cakes with size and flavour</span>
-            </a>
-
-            <a class="menuItem" href="category.html?cat=cupcakes">
-              <b>Cupcakes</b>
-              <span>Chocolate, vanilla, red velvet, marble</span>
-            </a>
-
-            <a class="menuItem" href="category.html?cat=brownies">
-              <b>Brownies</b>
-              <span>Oreo, Lotus, Ferrero and more</span>
-            </a>
-
-            <a class="menuItem" href="category.html?cat=baklava">
-              <b>Baklava</b>
-              <span>Pistachio or walnut honey syrup</span>
-            </a>
-          </div>
+          <a class="primaryBtn" id="heroWhatsappBtn" href="#" target="_blank">Ask</a>
         </div>
       </div>
     </div>
@@ -957,36 +834,24 @@
     <div class="sectionHead">
       <div>
         <h3>Main Menu Categories</h3>
-        <p>Choose a product category first. Cake occasions are separated below to avoid mixing categories.</p>
+        <p>Cakes are customizable. Cupcakes, muffins, brownies and baklava are quick-add dessert categories.</p>
       </div>
     </div>
 
     <div id="mainCategoryGrid" class="mainCategoryGrid"></div>
   </section>
 
-  <section id="cakeOccasions" class="wrap">
+  <section id="featuredSection" class="wrap">
     <div class="sectionHead">
       <div>
-        <h3>Cake Occasions</h3>
-        <p>These are filters inside cakes, not main menu categories.</p>
-      </div>
-      <a class="ghostBtn" href="category.html?cat=cakes">All Cakes</a>
-    </div>
-
-    <div id="cakeOccasionGrid" class="cakeOccasionGrid"></div>
-  </section>
-
-  <section class="wrap">
-    <div class="sectionHead">
-      <div>
-        <h3>Featured Custom Cakes</h3>
-        <p>Popular cake designs customers can customize before adding to cart.</p>
+        <h3>Popular Picks</h3>
+        <p>Featured cakes and desserts selected by Siffat Cakes.</p>
       </div>
       <a class="ghostBtn" href="category.html?cat=cakes">View Cakes</a>
     </div>
 
     <div id="featuredGrid" class="cakesGrid">
-      <div class="loader">Loading cakes...</div>
+      <div class="loader">Loading featured products...</div>
     </div>
   </section>
 
@@ -994,7 +859,7 @@
     <div class="sectionHead">
       <div>
         <h3>How Ordering Works</h3>
-        <p>Open the right category, choose products, then confirm on WhatsApp.</p>
+        <p>Simple order request first. Final confirmation happens on WhatsApp.</p>
       </div>
     </div>
 
@@ -1002,16 +867,16 @@
       <div class="step">
         <div class="stepNum">1</div>
         <div>
-          <b>Choose main category</b>
-          <span>Cakes, cupcakes, muffins, brownies or baklava.</span>
+          <b>Pick Category</b>
+          <span>Choose cakes, cupcakes, muffins, brownies or baklava.</span>
         </div>
       </div>
 
       <div class="step">
         <div class="stepNum">2</div>
         <div>
-          <b>Pick product</b>
-          <span>View product photos, description, flavour and cart options.</span>
+          <b>Choose Product</b>
+          <span>Customize cakes or add quick dessert items to cart.</span>
         </div>
       </div>
 
@@ -1049,7 +914,6 @@
 
     <div class="footerLinks">
       <a href="#mainCategories">Menu</a>
-      <a href="#cakeOccasions">Cake Occasions</a>
       <a href="cake.html?custom=true">Custom Cake</a>
       <a href="cart.html">Cart</a>
       <a href="#how">How It Works</a>
@@ -1074,7 +938,7 @@
     business_hours:"",
     service_area:"",
     hero_title:"Custom cakes and desserts for your sweetest moments.",
-    hero_subtitle:"Start with cakes, cupcakes, muffins, brownies or baklava. Cake occasions like birthday and wedding stay inside the cakes section.",
+    hero_subtitle:"Order custom cakes, cupcakes, muffins, brownies and baklava with a simple WhatsApp confirmation flow.",
     hero_image_url:"",
     minimum_notice_hours:24,
     same_day_message:"Online orders require at least 24 hours notice. For same-day or urgent orders, please contact us directly on WhatsApp.",
@@ -1093,25 +957,25 @@
     {
       name:"Cupcakes",
       slug:"cupcakes",
-      description:"Chocolate, vanilla, red velvet and marble.",
+      description:"Quick-add cupcakes for parties, gifts and events.",
       image_url:"https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80"
     },
     {
       name:"Muffins",
       slug:"muffins",
-      description:"Banana walnut, raspberry and chocolate chip.",
+      description:"Fresh muffins with flavour and quantity options.",
       image_url:"https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=900&q=80"
     },
     {
       name:"Brownies",
       slug:"brownies",
-      description:"Triple chocolate, Oreo, Lotus, Ferrero and more.",
+      description:"Rich brownies, bars and dessert boxes.",
       image_url:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80"
     },
     {
       name:"Baklava",
       slug:"baklava",
-      description:"Crispy layers with pistachios or walnuts.",
+      description:"Sweet layered baklava boxes and trays.",
       image_url:"https://images.unsplash.com/photo-1627311745837-68d6b11f0e41?auto=format&fit=crop&w=900&q=80"
     },
     {
@@ -1120,34 +984,6 @@
       description:"Start a custom cake request from scratch.",
       image_url:"https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80",
       custom_link:"cake.html?custom=true"
-    }
-  ];
-
-  const DEFAULT_CAKE_OCCASIONS = [
-    {
-      name:"Birthday Cakes",
-      slug:"birthday",
-      description:"Custom cakes for birthday celebrations."
-    },
-    {
-      name:"Wedding Cakes",
-      slug:"wedding",
-      description:"Elegant cakes for wedding events."
-    },
-    {
-      name:"Kids Cakes",
-      slug:"kids",
-      description:"Fun themes for kids and family parties."
-    },
-    {
-      name:"Anniversary Cakes",
-      slug:"anniversary",
-      description:"Sweet cakes for special milestones."
-    },
-    {
-      name:"Simple Cakes",
-      slug:"simple",
-      description:"Clean designs for everyday celebrations."
     }
   ];
 
@@ -1172,8 +1008,7 @@
     await loadHomeData();
     applySettings();
     renderMainCategories();
-    renderCakeOccasions();
-    renderFeaturedCakes();
+    renderFeaturedProducts();
   }
 
   async function loadHomeData(){
@@ -1251,7 +1086,7 @@
   }
 
   function setupWhatsappLinks(phone){
-    const message = "Hi, I want to ask about a cake order.";
+    const message = "Hi, I want to ask about a cake or dessert order.";
     const urgentMessage = "Hi, I need a same-day or urgent cake order. Can you please confirm availability?";
 
     const normalUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : "#";
@@ -1305,53 +1140,20 @@
     }).join("");
   }
 
-  function renderCakeOccasions(){
-    const grid = $("cakeOccasionGrid");
-
-    const adminOccasions = categories
-      .filter(cat => isCakeOccasion(cat.name || cat.slug || ""))
-      .map(cat => ({
-        name: cat.name,
-        slug: cat.slug || slugify(cat.name),
-        description: cat.description || "Browse cakes for this occasion."
-      }));
-
-    const mergedMap = new Map();
-
-    DEFAULT_CAKE_OCCASIONS.forEach(item => {
-      mergedMap.set(slugify(item.slug), item);
-    });
-
-    adminOccasions.forEach(item => {
-      mergedMap.set(slugify(item.slug || item.name), item);
-    });
-
-    const items = Array.from(mergedMap.values()).slice(0, 8);
-
-    grid.innerHTML = items.map(item => `
-      <a class="occasionCard" href="category.html?cat=cakes&occasion=${encodeURIComponent(item.slug)}">
-        <b>${escapeHtml(item.name)}</b>
-        <span>${escapeHtml(item.description)}</span>
-      </a>
-    `).join("");
-  }
-
-  function renderFeaturedCakes(){
+  function renderFeaturedProducts(){
+    const section = $("featuredSection");
     const grid = $("featuredGrid");
 
-    let shown = cakes.filter(cake => cake.is_featured === true);
-    if(!shown.length) shown = cakes.slice(0, 4);
-    else shown = shown.slice(0, 4);
+    let shown = cakes
+      .filter(cake => cake.is_featured === true && cake.image_url)
+      .slice(0, 4);
 
     if(!shown.length){
-      grid.innerHTML = `
-        <div class="empty">
-          No active cakes found yet.<br>
-          Add cake products from admin panel to show them here.
-        </div>
-      `;
+      section.classList.add("hidden");
       return;
     }
+
+    section.classList.remove("hidden");
 
     grid.innerHTML = shown.map(cake => {
       const cats = getCakeCategoryNames(cake.id);
@@ -1364,7 +1166,7 @@
           <a href="${href}">
             <div class="cakeImg">
               <img src="${escapeHtml(image)}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'">
-              <div class="badge">${escapeHtml(cats[0] || "Custom Cake")}${cake.is_featured ? " · Featured" : ""}</div>
+              <div class="badge">${escapeHtml(cats[0] || "Featured")}</div>
             </div>
           </a>
 
@@ -1410,39 +1212,6 @@
     return "From " + currency + price.toFixed(2).replace(".00", "");
   }
 
-  function isCakeOccasion(value){
-    const text = String(value || "").toLowerCase();
-
-    if(isMainMenuCategory(text)) return false;
-
-    return (
-      text.includes("birthday") ||
-      text.includes("wedding") ||
-      text.includes("kids") ||
-      text.includes("kid") ||
-      text.includes("anniversary") ||
-      text.includes("baby") ||
-      text.includes("shower") ||
-      text.includes("simple") ||
-      text.includes("occasion")
-    );
-  }
-
-  function isMainMenuCategory(value){
-    const text = String(value || "").toLowerCase();
-    return (
-      text === "cakes" ||
-      text === "cake" ||
-      text.includes("cupcake") ||
-      text.includes("cup cake") ||
-      text.includes("muffin") ||
-      text.includes("brownie") ||
-      text.includes("brownies") ||
-      text.includes("baklava") ||
-      text.includes("baklawa")
-    );
-  }
-
   function formatHeroTitle(title){
     const clean = escapeHtml(title || "");
     const words = clean.split(" ").filter(Boolean);
@@ -1477,9 +1246,8 @@
     $("mainCategoryGrid").innerHTML = `
       <div class="empty">Could not load homepage data. Please check Supabase settings.</div>
     `;
-    $("featuredGrid").innerHTML = `
-      <div class="empty">Could not load cakes. Please check Supabase settings.</div>
-    `;
+
+    $("featuredSection").classList.add("hidden");
   }
 
   function normalizePhone(value){
