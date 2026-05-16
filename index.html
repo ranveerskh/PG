@@ -14,23 +14,11 @@
   <style>
     :root{
       --bg:#fbf4fb;
-      --bg2:#ffffff;
-      --card:#ffffff;
-      --soft:#f6e8f7;
-
       --text:#1d141f;
       --muted:#725a76;
-
       --purple:#640D6B;
       --purple2:#7a1281;
-      --purple3:#9d3aa3;
       --line:rgba(100,13,107,.16);
-
-      --cream:#fff5ff;
-      --gold:#d8a13a;
-      --green:#159463;
-      --red:#d13d54;
-
       --shadow:0 18px 45px rgba(100,13,107,.12);
       --shadow2:0 10px 24px rgba(100,13,107,.09);
     }
@@ -55,8 +43,7 @@
     }
 
     a{color:inherit;text-decoration:none}
-    button,input,select{font:inherit}
-    button{border:none;cursor:pointer}
+    button{border:none;cursor:pointer;font:inherit}
 
     .wrap{
       width:min(1280px, calc(100% - 32px));
@@ -282,9 +269,6 @@
     .brandPill{
       width:max-content;
       max-width:100%;
-      display:flex;
-      align-items:center;
-      gap:8px;
       padding:8px 12px;
       border-radius:999px;
       background:rgba(255,255,255,.13);
@@ -302,9 +286,7 @@
       letter-spacing:-.075em;
     }
 
-    .hero h2 span{
-      color:#ffe7ff;
-    }
+    .hero h2 span{color:#ffe7ff}
 
     .heroText{
       max-width:680px;
@@ -470,12 +452,12 @@
 
     .categoryGrid{
       display:grid;
-      grid-template-columns:repeat(5,1fr);
+      grid-template-columns:repeat(6,1fr);
       gap:10px;
     }
 
     .categoryCard{
-      min-height:108px;
+      min-height:122px;
       position:relative;
       overflow:hidden;
       border:1px solid var(--line);
@@ -509,128 +491,8 @@
       color:rgba(255,255,255,.84);
       font-size:11px;
       line-height:1.35;
-      max-height:30px;
+      max-height:31px;
       overflow:hidden;
-    }
-
-    .quickDessertGrid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-    }
-
-    .dessertCard{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
-      border-radius:24px;
-      overflow:hidden;
-      box-shadow:var(--shadow2);
-      transition:.18s ease;
-    }
-
-    .dessertCard:hover{
-      transform:translateY(-2px);
-      box-shadow:0 18px 36px rgba(100,13,107,.13);
-      border-color:rgba(100,13,107,.26);
-    }
-
-    .dessertTop{
-      min-height:128px;
-      padding:14px;
-      background:
-        radial-gradient(circle at 20% 18%,rgba(255,255,255,.16),transparent 30%),
-        linear-gradient(135deg,var(--purple),var(--purple2));
-      color:white;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .dessertTop::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background-image:
-        radial-gradient(circle at 18px 18px,rgba(255,255,255,.11) 1px,transparent 1px);
-      background-size:35px 35px;
-      opacity:.18;
-      pointer-events:none;
-    }
-
-    .dessertTopContent{
-      position:relative;
-      z-index:1;
-    }
-
-    .dessertTop b{
-      display:block;
-      font-size:19px;
-      letter-spacing:-.045em;
-    }
-
-    .dessertTop span{
-      display:block;
-      margin-top:6px;
-      color:rgba(255,255,255,.82);
-      font-size:12px;
-      line-height:1.4;
-    }
-
-    .dessertBody{
-      padding:12px;
-      display:grid;
-      gap:9px;
-    }
-
-    .quickField{
-      display:grid;
-      gap:5px;
-    }
-
-    .quickField label{
-      color:var(--purple);
-      font-size:11px;
-      font-weight:1000;
-    }
-
-    .quickField select,
-    .quickField input{
-      width:100%;
-      min-height:40px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:white;
-      color:var(--text);
-      outline:none;
-      padding:9px 10px;
-      font-weight:800;
-      font-size:13px;
-    }
-
-    .quoteLine{
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.4;
-      font-weight:700;
-    }
-
-    .quickAddBtn{
-      width:100%;
-      padding:11px 12px;
-      border-radius:999px;
-      background:rgba(100,13,107,.09);
-      border:1px solid rgba(100,13,107,.14);
-      color:var(--purple);
-      font-size:13px;
-      font-weight:1000;
-      transition:.18s ease;
-    }
-
-    .quickAddBtn:hover{
-      background:var(--purple);
-      color:white;
     }
 
     .cakesGrid{
@@ -669,9 +531,7 @@
       transition:.28s ease;
     }
 
-    .cakeCard:hover .cakeImg img{
-      transform:scale(1.035);
-    }
+    .cakeCard:hover .cakeImg img{transform:scale(1.035)}
 
     .badge{
       position:absolute;
@@ -691,9 +551,7 @@
       text-overflow:ellipsis;
     }
 
-    .cakeBody{
-      padding:12px;
-    }
+    .cakeBody{padding:12px}
 
     .cakeBody h4{
       font-size:15px;
@@ -919,166 +777,39 @@
       line-height:1.5;
     }
 
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform:translateX(-50%) translateY(20px);
-      opacity:0;
-      pointer-events:none;
-      z-index:200;
-      max-width:min(560px,calc(100% - 24px));
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.96);
-      color:var(--purple);
-      backdrop-filter:blur(18px);
-      border-radius:999px;
-      padding:11px 15px;
-      font-size:13px;
-      font-weight:1000;
-      box-shadow:0 18px 50px rgba(100,13,107,.18);
-      transition:.2s ease;
-      text-align:center;
-    }
-
-    .toast.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(0);
-    }
-
     @media(max-width:1040px){
-      .heroGrid{
-        grid-template-columns:1fr;
-      }
-
-      .heroSide{
-        grid-template-columns:1fr 1fr;
-        grid-template-rows:auto;
-      }
-
-      .photoPanel{
-        min-height:250px;
-      }
-
-      .categoryGrid{
-        grid-template-columns:repeat(3,1fr);
-      }
-
-      .quickDessertGrid,
-      .cakesGrid{
-        grid-template-columns:repeat(2,1fr);
-      }
+      .heroGrid{grid-template-columns:1fr}
+      .heroSide{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+      .photoPanel{min-height:250px}
+      .categoryGrid{grid-template-columns:repeat(3,1fr)}
+      .cakesGrid{grid-template-columns:repeat(2,1fr)}
     }
 
     @media(max-width:760px){
-      .wrap{
-        width:min(100% - 18px,1280px);
-      }
-
-      .nav{
-        min-height:58px;
-      }
-
-      .brand p{
-        display:none;
-      }
-
-      .brand h1{
-        max-width:150px;
-      }
-
-      .navLink{
-        display:none;
-      }
-
-      .mobileMenuBtn{
-        display:inline-flex;
-      }
-
-      .primaryBtn{
-        padding:10px 12px;
-        font-size:13px;
-      }
-
-      .ghostBtn,
-      .cartBtn{
-        padding:10px 11px;
-        font-size:13px;
-      }
-
-      .hero{
-        padding-top:12px;
-      }
-
-      .heroMain{
-        padding:20px;
-        border-radius:24px;
-        min-height:auto;
-      }
-
-      .hero h2{
-        font-size:38px;
-        line-height:1.03;
-      }
-
-      .heroText{
-        font-size:13px;
-      }
-
-      .heroSide{
-        grid-template-columns:1fr;
-      }
-
-      .photoPanel{
-        min-height:220px;
-        border-radius:24px;
-      }
-
-      .menuBox{
-        border-radius:24px;
-      }
-
-      .menuList{
-        grid-template-columns:1fr 1fr;
-      }
-
-      .sectionHead{
-        align-items:flex-start;
-        flex-direction:column;
-        gap:8px;
-      }
-
-      .categoryGrid{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .categoryCard{
-        min-height:108px;
-      }
-
-      .quickDessertGrid,
-      .cakesGrid{
-        grid-template-columns:1fr;
-      }
-
-      .cakeImg{
-        height:215px;
-      }
-
-      .howStrip{
-        grid-template-columns:1fr;
-        border-radius:24px;
-      }
-
-      .bottomCTA{
-        flex-direction:column;
-        align-items:flex-start;
-        border-radius:24px;
-      }
-
-      .footerLinks{
-        justify-content:flex-start;
-      }
+      .wrap{width:min(100% - 18px,1280px)}
+      .nav{min-height:58px}
+      .brand p{display:none}
+      .brand h1{max-width:150px}
+      .navLink{display:none}
+      .mobileMenuBtn{display:inline-flex}
+      .primaryBtn{padding:10px 12px;font-size:13px}
+      .ghostBtn,.cartBtn{padding:10px 11px;font-size:13px}
+      .hero{padding-top:12px}
+      .heroMain{padding:20px;border-radius:24px;min-height:auto}
+      .hero h2{font-size:38px;line-height:1.03}
+      .heroText{font-size:13px}
+      .heroSide{grid-template-columns:1fr}
+      .photoPanel{min-height:220px;border-radius:24px}
+      .menuBox{border-radius:24px}
+      .menuList{grid-template-columns:1fr 1fr}
+      .sectionHead{align-items:flex-start;flex-direction:column;gap:8px}
+      .categoryGrid{grid-template-columns:repeat(2,1fr)}
+      .categoryCard{min-height:108px}
+      .cakesGrid{grid-template-columns:1fr}
+      .cakeImg{height:215px}
+      .howStrip{grid-template-columns:1fr;border-radius:24px}
+      .bottomCTA{flex-direction:column;align-items:flex-start;border-radius:24px}
+      .footerLinks{justify-content:flex-start}
     }
   </style>
 </head>
@@ -1096,9 +827,8 @@
     </a>
 
     <div class="navActions">
+      <a class="navLink" href="#categories">Categories</a>
       <a class="navLink" href="cakes.html">Cakes</a>
-      <a class="navLink" href="#cakeCategories">Cake Categories</a>
-      <a class="navLink" href="#desserts">Desserts</a>
       <a class="navLink" href="cake.html?custom=true">Custom Cake</a>
 
       <a class="cartBtn" href="cart.html" aria-label="Open cart">
@@ -1111,9 +841,8 @@
   </div>
 
   <div class="wrap mobileMenu" id="mobileMenu">
-    <a href="cakes.html">All Customizable Cakes</a>
-    <a href="#cakeCategories">Cake Categories</a>
-    <a href="#desserts">Quick Add Desserts</a>
+    <a href="#categories">Menu Categories</a>
+    <a href="cakes.html">All Cakes</a>
     <a href="cake.html?custom=true">Create Custom Cake</a>
     <a href="cart.html">Cart</a>
     <a href="#how">How It Works</a>
@@ -1128,16 +857,16 @@
           <div class="brandPill" id="heroTag">Eggless Cakes & Desserts</div>
 
           <h2 id="heroTitle">
-            Custom cakes for your sweetest moments.
+            Custom cakes and desserts for your sweetest moments.
           </h2>
 
           <p class="heroText" id="heroSubtitle">
-            Customize cakes with size, flavour, message and add-ons. Add cupcakes, muffins, brownies or baklava directly to cart.
+            Explore cakes, cupcakes, muffins, brownies and baklava. Cakes can be customized, while dessert categories open product pages with photos, descriptions and cart options.
           </p>
 
           <div class="heroButtons">
-            <a class="primaryBtn" href="cakes.html">Customize Cakes</a>
-            <a class="ghostBtn" href="#desserts">Quick Add Desserts</a>
+            <a class="primaryBtn" href="#categories">Explore Menu</a>
+            <a class="ghostBtn" href="cake.html?custom=true">Custom Cake</a>
             <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank">Need Today?</a>
           </div>
 
@@ -1152,7 +881,7 @@
           <div class="photoInfo">
             <div>
               <b>Fresh custom orders</b>
-              <span id="heroFloatingText">Cakes are customizable. Desserts are quick-add items.</span>
+              <span id="heroFloatingText">Open a category, choose a product, then add to cart.</span>
             </div>
             <a class="primaryBtn" id="heroWhatsappBtn" href="#" target="_blank">Ask</a>
           </div>
@@ -1161,24 +890,24 @@
         <div class="menuBox">
           <h3>Menu Highlights</h3>
           <div class="menuList">
-            <a class="menuItem" href="cakes.html">
+            <a class="menuItem" href="category.html?cat=cakes">
               <b>Cakes</b>
               <span>Customize size, flavour, message and add-ons</span>
             </a>
 
-            <a class="menuItem" href="#desserts">
+            <a class="menuItem" href="category.html?cat=cupcakes">
               <b>Cupcakes</b>
               <span>Chocolate, vanilla, red velvet, marble</span>
             </a>
 
-            <a class="menuItem" href="#desserts">
+            <a class="menuItem" href="category.html?cat=brownies">
               <b>Brownies</b>
               <span>Triple chocolate, Oreo, Lotus, Ferrero</span>
             </a>
 
-            <a class="menuItem" href="#desserts">
+            <a class="menuItem" href="category.html?cat=baklava">
               <b>Baklava</b>
-              <span>Crispy layers with pistachios/walnuts</span>
+              <span>Crispy layers with pistachios or walnuts</span>
             </a>
           </div>
         </div>
@@ -1186,30 +915,18 @@
     </div>
   </section>
 
-  <section id="cakeCategories" class="wrap">
+  <section id="categories" class="wrap">
     <div class="sectionHead">
       <div>
-        <h3>Cake Categories</h3>
-        <p>Cakes are customizable. Choose a cake category or start from all cakes.</p>
+        <h3>Menu Categories</h3>
+        <p>Choose a category to see products, photos, descriptions and order options.</p>
       </div>
-      <a class="ghostBtn" href="cakes.html">View All Cakes</a>
+      <a class="ghostBtn" href="cakes.html">All Cakes</a>
     </div>
 
     <div id="categoryGrid" class="categoryGrid">
-      <div class="loader">Loading cake categories...</div>
+      <div class="loader">Loading categories...</div>
     </div>
-  </section>
-
-  <section id="desserts" class="wrap">
-    <div class="sectionHead">
-      <div>
-        <h3>Quick Add Desserts</h3>
-        <p>Cupcakes, muffins, brownies and baklava can be added directly to cart. Final price is confirmed on WhatsApp.</p>
-      </div>
-      <a class="ghostBtn" href="cart.html">View Cart</a>
-    </div>
-
-    <div id="quickDessertGrid" class="quickDessertGrid"></div>
   </section>
 
   <section class="wrap">
@@ -1218,7 +935,7 @@
         <h3>Featured Custom Cakes</h3>
         <p>Popular cake designs customers can customize before adding to cart.</p>
       </div>
-      <a class="ghostBtn" href="cakes.html">All Cakes</a>
+      <a class="ghostBtn" href="cakes.html">View Cakes</a>
     </div>
 
     <div id="featuredGrid" class="cakesGrid">
@@ -1230,7 +947,7 @@
     <div class="sectionHead">
       <div>
         <h3>How Ordering Works</h3>
-        <p>Cakes and desserts have different ordering paths, but checkout stays simple.</p>
+        <p>Open a category, choose your items, then confirm the final order on WhatsApp.</p>
       </div>
     </div>
 
@@ -1238,24 +955,24 @@
       <div class="step">
         <div class="stepNum">1</div>
         <div>
-          <b>Customize cake</b>
-          <span>Cakes include size, flavour, options, add-ons and message.</span>
+          <b>Open category</b>
+          <span>Choose cakes, cupcakes, muffins, brownies or baklava.</span>
         </div>
       </div>
 
       <div class="step">
         <div class="stepNum">2</div>
         <div>
-          <b>Quick add desserts</b>
-          <span>Cupcakes, muffins, brownies and baklava go directly to cart.</span>
+          <b>Choose product</b>
+          <span>View photos, descriptions and product details on category page.</span>
         </div>
       </div>
 
       <div class="step">
         <div class="stepNum">3</div>
         <div>
-          <b>Confirm on WhatsApp</b>
-          <span>Submit request and confirm final details, price and timing.</span>
+          <b>Confirm order</b>
+          <span>Add to cart and confirm final details, price and timing on WhatsApp.</span>
         </div>
       </div>
     </div>
@@ -1284,16 +1001,14 @@
     </div>
 
     <div class="footerLinks">
-      <a href="cakes.html">All Cakes</a>
-      <a href="#desserts">Desserts</a>
+      <a href="#categories">Categories</a>
+      <a href="cakes.html">Cakes</a>
       <a href="cake.html?custom=true">Custom Cake</a>
       <a href="cart.html">Cart</a>
       <a href="#how">How It Works</a>
     </div>
   </div>
 </footer>
-
-<div id="toast" class="toast"></div>
 
 <script>
   const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
@@ -1311,8 +1026,8 @@
     address:"381 Talbot Street, St. Thomas",
     business_hours:"",
     service_area:"",
-    hero_title:"Custom cakes for your sweetest moments.",
-    hero_subtitle:"Customize cakes with size, flavour, message and add-ons. Add cupcakes, muffins, brownies or baklava directly to cart.",
+    hero_title:"Custom cakes and desserts for your sweetest moments.",
+    hero_subtitle:"Explore cakes, cupcakes, muffins, brownies and baklava. Cakes can be customized, while dessert categories open product pages with photos, descriptions and cart options.",
     hero_image_url:"",
     minimum_notice_hours:24,
     same_day_message:"Online orders require at least 24 hours notice. For same-day or urgent orders, please contact us directly on WhatsApp.",
@@ -1321,42 +1036,43 @@
     show_prices:true
   };
 
-  const CATEGORY_FALLBACK_IMAGES = [
-    "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=900&q=80",
-    "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80"
-  ];
-
-  const QUICK_DESSERTS = [
+  const STATIC_CATEGORIES = [
     {
-      key:"cupcakes",
+      name:"Cakes",
+      slug:"cakes",
+      description:"Customize size, flavour, message and add-ons.",
+      image_url:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80"
+    },
+    {
       name:"Cupcakes",
-      subtitle:"Quick add cupcakes to your order.",
-      flavours:["Chocolate","Vanilla","Red Velvet","Marble"],
-      note:"Final cupcake price and quantity details confirmed on WhatsApp."
+      slug:"cupcakes",
+      description:"Chocolate, vanilla, red velvet and marble.",
+      image_url:"https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80"
     },
     {
-      key:"muffins",
       name:"Muffins",
-      subtitle:"Fresh muffins for simple dessert orders.",
-      flavours:["Banana Walnut","Raspberry","Chocolate Chip"],
-      note:"Final muffin price and quantity details confirmed on WhatsApp."
+      slug:"muffins",
+      description:"Banana walnut, raspberry and chocolate chip.",
+      image_url:"https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=900&q=80"
     },
     {
-      key:"brownies",
       name:"Brownies",
-      subtitle:"Rich brownie flavours from the menu.",
-      flavours:["Triple Chocolate","Triple Choco Walnut","Lotus Biscoff","Oreo","Hazelnut","Ferrero Rocher","Reese’s","M&M"],
-      note:"Final brownie price and quantity details confirmed on WhatsApp."
+      slug:"brownies",
+      description:"Triple chocolate, Oreo, Lotus, Ferrero and more.",
+      image_url:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80"
     },
     {
-      key:"baklava",
       name:"Baklava",
-      subtitle:"Crispy layers with pistachios/walnuts and honey syrup.",
-      flavours:["Pistachio/Walnut Honey Syrup"],
-      note:"Final baklava price and quantity details confirmed on WhatsApp."
+      slug:"baklava",
+      description:"Crispy layers with pistachios or walnuts.",
+      image_url:"https://images.unsplash.com/photo-1627311745837-68d6b11f0e41?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      name:"Custom Cake",
+      slug:"custom",
+      description:"Start a custom cake request from scratch.",
+      image_url:"https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80",
+      custom_link:"cake.html?custom=true"
     }
   ];
 
@@ -1378,7 +1094,6 @@
 
   async function init(){
     updateCartCount();
-    renderQuickDesserts();
     await loadHomeData();
     applySettings();
     renderCategories();
@@ -1487,110 +1202,47 @@
   function renderCategories(){
     const grid = $("categoryGrid");
 
-    const cakeOnlyCategories = categories.filter(cat => !isQuickDessertCategory(cat.name || cat.slug || ""));
+    const merged = mergeCategoriesWithStatic();
 
-    if(!cakeOnlyCategories.length){
-      grid.innerHTML = `
-        <div class="empty">
-          No active cake categories found yet.<br>
-          Add cake categories like Birthday, Wedding, Kids or Anniversary from admin.
-        </div>
-      `;
-      return;
-    }
-
-    const shown = cakeOnlyCategories.slice(0, 5);
-
-    grid.innerHTML = shown.map((cat, index) => {
-      const image = cat.image_url || CATEGORY_FALLBACK_IMAGES[index % CATEGORY_FALLBACK_IMAGES.length];
-      const slugOrId = cat.slug || cat.id;
+    grid.innerHTML = merged.map(cat => {
+      const slugOrId = cat.custom_link ? "" : (cat.slug || cat.id || slugify(cat.name));
+      const href = cat.custom_link || `category.html?cat=${encodeURIComponent(slugOrId)}`;
+      const image = cat.image_url || STATIC_CATEGORIES[0].image_url;
 
       return `
-        <a class="categoryCard" href="category.html?cat=${encodeURIComponent(slugOrId)}" style="--img:url('${escapeCssUrl(image)}')">
+        <a class="categoryCard" href="${href}" style="--img:url('${escapeCssUrl(image)}')">
           <div>
             <b>${escapeHtml(cat.name || "Category")}</b>
-            <span>${escapeHtml(cat.description || "Customize cakes in this category.")}</span>
+            <span>${escapeHtml(cat.description || "Open this category to view products.")}</span>
           </div>
         </a>
       `;
     }).join("");
   }
 
-  function renderQuickDesserts(){
-    const grid = $("quickDessertGrid");
+  function mergeCategoriesWithStatic(){
+    const map = new Map();
 
-    grid.innerHTML = QUICK_DESSERTS.map(item => `
-      <article class="dessertCard">
-        <div class="dessertTop">
-          <div class="dessertTopContent">
-            <b>${escapeHtml(item.name)}</b>
-            <span>${escapeHtml(item.subtitle)}</span>
-          </div>
-        </div>
+    STATIC_CATEGORIES.forEach(cat => {
+      map.set(slugify(cat.slug || cat.name), {...cat});
+    });
 
-        <div class="dessertBody">
-          <div class="quickField">
-            <label>Flavour</label>
-            <select id="${item.key}Flavour">
-              ${item.flavours.map(flavour => `<option value="${escapeHtml(flavour)}">${escapeHtml(flavour)}</option>`).join("")}
-            </select>
-          </div>
+    categories.forEach(cat => {
+      const key = slugify(cat.slug || cat.name || cat.id);
+      if(!key) return;
 
-          <div class="quickField">
-            <label>Quantity</label>
-            <input id="${item.key}Qty" type="number" min="1" value="1">
-          </div>
+      const existing = map.get(key) || {};
+      map.set(key, {
+        ...existing,
+        ...cat,
+        name: cat.name || existing.name,
+        slug: cat.slug || existing.slug || key,
+        description: cat.description || existing.description,
+        image_url: cat.image_url || existing.image_url
+      });
+    });
 
-          <div class="quoteLine">${escapeHtml(item.note)}</div>
-
-          <button class="quickAddBtn" onclick="addQuickDessert('${item.key}')">
-            Add to Cart
-          </button>
-        </div>
-      </article>
-    `).join("");
-  }
-
-  function addQuickDessert(key){
-    const item = QUICK_DESSERTS.find(x => x.key === key);
-    if(!item) return;
-
-    const flavour = $(key + "Flavour")?.value || item.flavours[0] || "Selected";
-    const qty = Math.max(1, Number($(key + "Qty")?.value || 1));
-
-    const cart = getCart();
-
-    const cartItem = {
-      cart_item_id: createId(),
-      item_type: "quick_dessert",
-      is_custom: false,
-      cake_id: null,
-      cake_name: `${item.name} - ${flavour}`,
-      cake_image: "",
-      selected_size_name: "Quick Add Dessert",
-      selected_servings: "",
-      selected_size_price: 0,
-      size_quote_required: true,
-      selected_flavour_name: flavour,
-      flavour_extra_price: 0,
-      flavour_quote_required: false,
-      selected_option_name: "Quick Add",
-      option_extra_price: 0,
-      option_quote_required: false,
-      selected_addons: [],
-      message_on_cake: "",
-      theme_notes: "",
-      inspiration_photo_link: "",
-      special_notes: `${item.name} quick add item. Final price confirmed on WhatsApp.`,
-      quantity: qty,
-      estimated_item_total: 0,
-      quote_required: true
-    };
-
-    cart.push(cartItem);
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    updateCartCount();
-    showToast(`${item.name} added to cart.`);
+    return Array.from(map.values()).slice(0, 8);
   }
 
   function renderFeaturedCakes(){
@@ -1667,19 +1319,6 @@
     return "From " + currency + price.toFixed(2).replace(".00", "");
   }
 
-  function isQuickDessertCategory(value){
-    const text = String(value || "").toLowerCase();
-    return (
-      text.includes("cupcake") ||
-      text.includes("cup cake") ||
-      text.includes("muffin") ||
-      text.includes("brownie") ||
-      text.includes("brownies") ||
-      text.includes("baklava") ||
-      text.includes("baklawa")
-    );
-  }
-
   function formatHeroTitle(title){
     const clean = escapeHtml(title || "");
     const words = clean.split(" ").filter(Boolean);
@@ -1706,11 +1345,6 @@
     }
   }
 
-  function createId(){
-    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
-    return "item-" + Date.now() + "-" + Math.random().toString(16).slice(2);
-  }
-
   function toggleMobileMenu(){
     $("mobileMenu").classList.toggle("show");
   }
@@ -1724,16 +1358,16 @@
     `;
   }
 
-  function showToast(message){
-    const toast = $("toast");
-    toast.textContent = message;
-    toast.classList.add("show");
-    clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
-  }
-
   function normalizePhone(value){
     return String(value || "").replace(/[^\d]/g, "");
+  }
+
+  function slugify(value){
+    return String(value || "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   }
 
   function escapeHtml(value){
