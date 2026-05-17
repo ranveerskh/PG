@@ -176,6 +176,12 @@
       background:#fff7ff;
     }
 
+    .btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      transform:none!important;
+    }
+
     .btn.primary{
       background:linear-gradient(135deg,var(--purple),var(--purple2));
       border-color:rgba(100,13,107,.30);
@@ -565,7 +571,7 @@
 
     .imageInputRow{
       display:grid;
-      grid-template-columns:1fr auto;
+      grid-template-columns:1fr;
       gap:8px;
       align-items:center;
     }
@@ -713,6 +719,106 @@
       font-size:13px;
     }
 
+    .mediaStats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      margin-bottom:12px;
+    }
+
+    .mediaStat{
+      border:1px solid var(--line);
+      background:#fff7ff;
+      border-radius:18px;
+      padding:11px;
+    }
+
+    .mediaStat b{
+      display:block;
+      color:var(--purple);
+      font-size:18px;
+      letter-spacing:-.04em;
+    }
+
+    .mediaStat span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .progressBar{
+      width:100%;
+      height:9px;
+      border-radius:999px;
+      background:rgba(100,13,107,.10);
+      overflow:hidden;
+      margin-top:8px;
+    }
+
+    .progressFill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+    }
+
+    .galleryGrid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+    }
+
+    .galleryCard{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
+    }
+
+    .galleryThumb{
+      width:100%;
+      height:145px;
+      object-fit:cover;
+      background:#f1e4f2;
+      display:block;
+      border-bottom:1px solid var(--line);
+    }
+
+    .galleryInfo{
+      padding:10px;
+    }
+
+    .galleryInfo b{
+      display:block;
+      font-size:12px;
+      line-height:1.25;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .galleryInfo span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.35;
+    }
+
+    .copyInput{
+      width:100%;
+      border:1px solid var(--line);
+      background:#fff7ff;
+      border-radius:12px;
+      padding:8px;
+      font-size:11px;
+      color:var(--muted);
+      margin-top:8px;
+    }
+
     .loading{
       padding:22px;
       border:1px dashed rgba(100,13,107,.22);
@@ -761,6 +867,10 @@
       .setupGrid{
         grid-template-columns:1fr;
       }
+
+      .galleryGrid{
+        grid-template-columns:repeat(2,1fr);
+      }
     }
 
     @media(max-width:720px){
@@ -779,7 +889,8 @@
         justify-content:flex-start;
       }
 
-      .gridStats{
+      .gridStats,
+      .mediaStats{
         grid-template-columns:repeat(2,1fr);
       }
 
@@ -800,7 +911,7 @@
         width:100%;
       }
 
-      .imageInputRow{
+      .galleryGrid{
         grid-template-columns:1fr;
       }
     }
@@ -899,7 +1010,7 @@
                 <div class="compactTop">
                   <div class="compactMain">
                     <div class="itemTitle">Images</div>
-                    <div class="itemMeta">Use direct URL, upload to Supabase, or open Postimages.</div>
+                    <div class="itemMeta">Images stay inside Supabase Storage. Upload limit is 1 MB per photo.</div>
                   </div>
                 </div>
               </div>
@@ -1026,7 +1137,6 @@
                   <div class="imageBox">
                     <div class="imageInputRow">
                       <input id="productImageUrl" placeholder="Paste direct image link..." oninput="previewImageFromInput('productImageUrl','productImagePreview')">
-                      <a class="btn primary" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
                     </div>
 
                     <div class="uploadRow">
@@ -1036,7 +1146,7 @@
                     </div>
 
                     <img id="productImagePreview" class="imagePreview" alt="Preview">
-                    <div class="hint">Use image URL, upload from computer, or open Postimages and paste direct image link.</div>
+                    <div class="hint">Max 1 MB. When replacing a saved product image, the old Supabase image is deleted after saving.</div>
                   </div>
                 </div>
 
@@ -1195,7 +1305,6 @@
                   <div class="imageBox">
                     <div class="imageInputRow">
                       <input id="occasionImage" placeholder="Paste image link..." oninput="previewImageFromInput('occasionImage','occasionImagePreview')">
-                      <a class="btn primary" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
                     </div>
                     <div class="uploadRow">
                       <input id="occasionImageFile" type="file" accept="image/png,image/jpeg,image/webp">
@@ -1203,6 +1312,7 @@
                       <button class="btn small" type="button" onclick="clearImageField('occasionImage','occasionImagePreview','occasionImageFile')">Clear</button>
                     </div>
                     <img id="occasionImagePreview" class="imagePreview" alt="Preview">
+                    <div class="hint">Max 1 MB. When replacing a saved occasion image, the old Supabase image is deleted after saving.</div>
                   </div>
                 </div>
 
@@ -1395,7 +1505,6 @@
               <div class="imageBox">
                 <div class="imageInputRow">
                   <input id="setLogoUrl" placeholder="Paste logo image link..." oninput="previewImageFromInput('setLogoUrl','setLogoPreview')">
-                  <a class="btn primary" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
                 </div>
 
                 <div class="uploadRow">
@@ -1405,6 +1514,7 @@
                 </div>
 
                 <img id="setLogoPreview" class="imagePreview" alt="Logo preview">
+                <div class="hint">Max 1 MB. Old saved logo image is deleted after saving if replaced.</div>
               </div>
             </div>
 
@@ -1413,7 +1523,6 @@
               <div class="imageBox">
                 <div class="imageInputRow">
                   <input id="setHeroImage" placeholder="Paste hero image link..." oninput="previewImageFromInput('setHeroImage','setHeroPreview')">
-                  <a class="btn primary" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
                 </div>
 
                 <div class="uploadRow">
@@ -1423,6 +1532,7 @@
                 </div>
 
                 <img id="setHeroPreview" class="imagePreview" alt="Hero preview">
+                <div class="hint">Max 1 MB. Old saved hero image is deleted after saving if replaced.</div>
               </div>
             </div>
 
@@ -1522,14 +1632,17 @@
           <div class="cardHead">
             <div>
               <h3>Upload Image</h3>
-              <p>Upload to Supabase Storage and copy/use the public URL.</p>
+              <p>Images upload to Supabase Storage. Maximum 1 MB each.</p>
             </div>
           </div>
 
           <div class="cardBody">
+            <div id="mediaStatsGrid" class="mediaStats"></div>
+
             <div class="field">
               <label>Choose Image</label>
               <input id="galleryFile" type="file" accept="image/png,image/jpeg,image/webp">
+              <div class="hint">Max 1 MB. Recommended: JPG or WEBP under 700 KB.</div>
             </div>
 
             <div class="field">
@@ -1551,7 +1664,7 @@
 
             <div class="imageTools">
               <button class="btn small" onclick="copyFieldValue('galleryUrl')">Copy URL</button>
-              <a class="btn primary small" href="https://postimages.org/" target="_blank" rel="noopener">Open Postimages</a>
+              <button class="btn small" onclick="refreshMediaGallery()">Refresh Gallery</button>
             </div>
 
             <img id="galleryPreview" class="imagePreview" alt="Uploaded preview" style="margin-top:10px;">
@@ -1561,52 +1674,34 @@
         <div class="card">
           <div class="cardHead">
             <div>
-              <h3>Image Link Rules</h3>
-              <p>Keep images simple and reliable.</p>
+              <h3>Image Gallery</h3>
+              <p>Client can see uploaded photos, used photos and unused photos.</p>
             </div>
+            <button class="btn small" onclick="refreshMediaGallery()">Refresh</button>
           </div>
 
           <div class="cardBody">
-            <div class="list">
-              <div class="compactItem open">
-                <div class="compactTop">
-                  <div class="compactMain">
-                    <div class="itemTitle">Use direct image links</div>
-                    <div class="itemMeta">Good: .jpg, .png, .webp image URLs.</div>
-                  </div>
-                </div>
-              </div>
+            <div class="searchRow">
+              <input id="imageSearch" placeholder="Search image path..." oninput="renderGalleryList()">
+              <select id="imageFolderFilter" onchange="renderGalleryList()">
+                <option value="all">All folders</option>
+                <option value="products">Products</option>
+                <option value="categories">Categories</option>
+                <option value="settings">Settings</option>
+                <option value="gallery">Gallery</option>
+              </select>
+              <select id="imageUsageFilter" onchange="renderGalleryList()">
+                <option value="all">All images</option>
+                <option value="used">Used</option>
+                <option value="unused">Unused</option>
+              </select>
+            </div>
 
-              <div class="compactItem open">
-                <div class="compactTop">
-                  <div class="compactMain">
-                    <div class="itemTitle">Use Upload for client photos</div>
-                    <div class="itemMeta">Upload saves to Supabase Storage and gives a public URL.</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="compactItem open">
-                <div class="compactTop">
-                  <div class="compactMain">
-                    <div class="itemTitle">Use Postimages for quick external upload</div>
-                    <div class="itemMeta">Open Postimages, upload, copy direct link, paste in image URL field.</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="compactItem open">
-                <div class="compactTop">
-                  <div class="compactMain">
-                    <div class="itemTitle">Avoid webpage links</div>
-                    <div class="itemMeta">Instagram/Facebook/Google Drive page links may not display as images.</div>
-                  </div>
-                </div>
-              </div>
+            <div id="galleryList" class="galleryGrid">
+              <div class="loading">Loading images...</div>
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -1619,6 +1714,10 @@
   const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
   const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
   const STORAGE_BUCKET = "cake-images";
+
+  const MAX_UPLOAD_MB = 1;
+  const CLIENT_PHOTO_LIMIT = 500;
+  const STORAGE_LIMIT_BYTES = 1024 * 1024 * 1024;
 
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   const $ = (id) => document.getElementById(id);
@@ -1665,6 +1764,8 @@
   let orders = [];
   let orderItems = [];
 
+  let mediaFiles = [];
+  let mediaLoadError = "";
   let formsBound = false;
 
   initAuth();
@@ -1819,6 +1920,15 @@
       orders = ordersRes.data || [];
       orderItems = orderItemsRes.data || [];
 
+      try{
+        await loadMediaFiles();
+        mediaLoadError = "";
+      }catch(storageErr){
+        console.warn("Media gallery load issue:", storageErr);
+        mediaLoadError = storageErr.message || "Could not load images.";
+        mediaFiles = [];
+      }
+
       renderAll();
       showToast("Admin data loaded.");
     }catch(err){
@@ -1835,6 +1945,8 @@
     renderProducts();
     renderSetupLists();
     renderOrders();
+    renderMediaStats();
+    renderGalleryList();
   }
 
   function showTab(tab){
@@ -1872,9 +1984,9 @@
     $("statsGrid").innerHTML = `
       <div class="stat"><b>${orders.length}</b><span>Total Orders</span></div>
       <div class="stat"><b>${statusCount("Pending")}</b><span>Pending</span></div>
-      <div class="stat"><b>${statusCount("Confirmed")}</b><span>Confirmed</span></div>
-      <div class="stat"><b>${statusCount("Ready")}</b><span>Ready</span></div>
-      <div class="stat"><b>${statusCount("Completed")}</b><span>Completed</span></div>
+      <div class="stat"><b>${cakes.length + quickProducts.length}</b><span>Total Products</span></div>
+      <div class="stat"><b>${quickProducts.length}</b><span>Quick Desserts</span></div>
+      <div class="stat"><b>${mediaFiles.length}/${CLIENT_PHOTO_LIMIT}</b><span>Photos Uploaded</span></div>
       <div class="stat"><b>${quoteCount}</b><span>Quote Required</span></div>
     `;
   }
@@ -1925,12 +2037,18 @@
     $("setSameDay").value = siteSettings.same_day_message || "";
     $("setPolicy").value = siteSettings.policy_text || "";
 
+    $("setLogoUrl").dataset.savedUrl = siteSettings.logo_url || "";
+    $("setHeroImage").dataset.savedUrl = siteSettings.hero_image_url || "";
+
     setPreview("setLogoPreview", siteSettings.logo_url || "");
     setPreview("setHeroPreview", siteSettings.hero_image_url || "");
   }
 
   async function saveSettings(){
     try{
+      const oldLogoUrl = siteSettings.logo_url || "";
+      const oldHeroUrl = siteSettings.hero_image_url || "";
+
       const payload = {
         id:1,
         brand_name:$("setBrandName").value.trim() || "Siffat Cakes",
@@ -1962,8 +2080,13 @@
 
       if(error) throw error;
 
+      await deleteOldSupabaseImageIfReplaced(oldLogoUrl, payload.logo_url);
+      await deleteOldSupabaseImageIfReplaced(oldHeroUrl, payload.hero_image_url);
+
       siteSettings = {...siteSettings, ...(data || payload)};
       fillSettingsForm();
+
+      await refreshMediaAfterChange();
       showToast("Settings saved.");
     }catch(err){
       console.error(err);
@@ -2034,6 +2157,9 @@
   async function saveCakeProduct(){
     const existingId = $("productId").value;
     const name = $("productName").value.trim();
+    const oldImageUrl = existingId
+      ? (cakes.find(c => String(c.id) === String(existingId))?.image_url || "")
+      : "";
 
     const payload = {
       name,
@@ -2073,6 +2199,8 @@
     const relError = results.find(r => r?.error)?.error;
     if(relError) return showToast(relError.message, true);
 
+    await deleteOldSupabaseImageIfReplaced(oldImageUrl, payload.image_url);
+
     resetProductForm(true);
     await loadAll();
     showToast("Cake product saved.");
@@ -2082,6 +2210,9 @@
     const existingId = $("productId").value;
     const name = $("productName").value.trim();
     const quote = $("quickQuote").value === "true";
+    const oldImageUrl = existingId
+      ? (quickProducts.find(p => String(p.id) === String(existingId))?.image_url || "")
+      : "";
 
     const payload = {
       name,
@@ -2103,6 +2234,8 @@
       : await supabaseClient.from("quick_products").insert(payload);
 
     if(error) return showToast(error.message, true);
+
+    await deleteOldSupabaseImageIfReplaced(oldImageUrl, payload.image_url);
 
     resetProductForm(true);
     await loadAll();
@@ -2257,6 +2390,7 @@
     $("productSlug").value = cake.slug || "";
     $("productDesc").value = cake.description || "";
     $("productImageUrl").value = cake.image_url || "";
+    $("productImageUrl").dataset.savedUrl = cake.image_url || "";
     setPreview("productImagePreview", cake.image_url || "");
 
     $("cakeStartingPrice").value = cake.starting_price ?? 0;
@@ -2292,6 +2426,7 @@
     $("productSlug").value = product.slug || "";
     $("productDesc").value = product.description || "";
     $("productImageUrl").value = product.image_url || "";
+    $("productImageUrl").dataset.savedUrl = product.image_url || "";
     setPreview("productImagePreview", product.image_url || "");
 
     $("quickCategory").value = product.category || "cupcakes";
@@ -2324,6 +2459,8 @@
     $("productFeatured").checked = false;
     $("productActive").checked = true;
 
+    $("productImageUrl").dataset.savedUrl = "";
+
     setSelectedValues("cakeCategoriesSelect", []);
     setSelectedValues("cakeSizesSelect", []);
     setSelectedValues("cakeFlavoursSelect", []);
@@ -2349,7 +2486,7 @@
     if(error) return showToast(error.message, true);
 
     await loadAll();
-    showToast("Cake product deleted.");
+    showToast("Cake product deleted. Its image stays in gallery unless unused and deleted manually.");
   }
 
   async function deleteQuickProduct(id){
@@ -2359,7 +2496,7 @@
     if(error) return showToast(error.message, true);
 
     await loadAll();
-    showToast("Quick dessert deleted.");
+    showToast("Quick dessert deleted. Its image stays in gallery unless unused and deleted manually.");
   }
 
   function renderSetupLists(){
@@ -2418,6 +2555,9 @@
 
     const id = $("occasionId").value;
     const name = $("occasionName").value.trim();
+    const oldImageUrl = id
+      ? (categories.find(c => String(c.id) === String(id))?.image_url || "")
+      : "";
 
     const payload = {
       name,
@@ -2434,6 +2574,8 @@
 
     if(error) return showToast(error.message, true);
 
+    await deleteOldSupabaseImageIfReplaced(oldImageUrl, payload.image_url);
+
     resetOccasionForm(true);
     await loadAll();
     showToast("Cake occasion saved.");
@@ -2449,6 +2591,7 @@
     $("occasionSlug").value = item.slug || "";
     $("occasionDesc").value = item.description || "";
     $("occasionImage").value = item.image_url || "";
+    $("occasionImage").dataset.savedUrl = item.image_url || "";
     $("occasionSort").value = item.sort_order ?? 0;
     $("occasionActive").checked = item.is_active !== false;
     setPreview("occasionImagePreview", item.image_url || "");
@@ -2463,6 +2606,7 @@
     $("occasionId").value = "";
     $("occasionSort").value = 0;
     $("occasionActive").checked = true;
+    $("occasionImage").dataset.savedUrl = "";
     clearImageField("occasionImage","occasionImagePreview","occasionImageFile");
     $("occasionFormTitle").textContent = "Add Cake Occasion";
     if(close) closePanel("occasionFormPanel");
@@ -3132,9 +3276,17 @@
       return;
     }
 
-    const maxMb = 3;
-    if(file.size > maxMb * 1024 * 1024){
-      showToast(`Image must be less than ${maxMb}MB.`, true);
+    if(file.size > MAX_UPLOAD_MB * 1024 * 1024){
+      showToast(`Image must be less than ${MAX_UPLOAD_MB} MB. Please compress it and try again.`, true);
+      return;
+    }
+
+    const savedUrl = targetInput?.dataset?.savedUrl || "";
+    const currentUrlBeforeUpload = targetInput?.value?.trim() || "";
+    const isReplacingSavedSupabasePhoto = savedUrl && isSupabaseStorageUrl(savedUrl);
+
+    if(mediaFiles.length >= CLIENT_PHOTO_LIMIT && !isReplacingSavedSupabasePhoto){
+      showToast(`Photo limit reached: ${CLIENT_PHOTO_LIMIT}/${CLIENT_PHOTO_LIMIT}. Delete unused images first.`, true);
       return;
     }
 
@@ -3158,9 +3310,22 @@
         .from(STORAGE_BUCKET)
         .getPublicUrl(path);
 
-      targetInput.value = data.publicUrl;
+      const newUrl = data.publicUrl;
+
+      targetInput.value = newUrl;
       fileInput.value = "";
-      setPreview(previewId, data.publicUrl);
+      setPreview(previewId, newUrl);
+
+      if(
+        currentUrlBeforeUpload &&
+        currentUrlBeforeUpload !== savedUrl &&
+        currentUrlBeforeUpload !== newUrl &&
+        isSupabaseStorageUrl(currentUrlBeforeUpload)
+      ){
+        await deleteStorageFileFromUrl(currentUrlBeforeUpload, true);
+      }
+
+      await refreshMediaAfterChange();
 
       showToast("Image uploaded and URL added.");
     }catch(err){
@@ -3171,6 +3336,288 @@
 
   async function uploadGalleryImage(){
     await uploadAndSet("galleryFile","galleryUrl","galleryPreview",$("galleryFolder").value || "gallery");
+  }
+
+  async function loadMediaFiles(){
+    const folders = ["products","categories","settings","gallery"];
+    const all = [];
+
+    for(const folder of folders){
+      const { data, error } = await supabaseClient.storage
+        .from(STORAGE_BUCKET)
+        .list(folder, {
+          limit:1000,
+          offset:0,
+          sortBy:{ column:"created_at", order:"desc" }
+        });
+
+      if(error) throw error;
+
+      (data || []).forEach(file => {
+        if(!file || !file.name || !file.metadata) return;
+
+        const path = `${folder}/${file.name}`;
+        const { data:publicData } = supabaseClient.storage
+          .from(STORAGE_BUCKET)
+          .getPublicUrl(path);
+
+        all.push({
+          folder,
+          name:file.name,
+          path,
+          url:publicData.publicUrl,
+          size:Number(file.metadata?.size || 0),
+          created_at:file.created_at || file.updated_at || "",
+          updated_at:file.updated_at || ""
+        });
+      });
+    }
+
+    mediaFiles = all.sort((a,b) => String(b.created_at || "").localeCompare(String(a.created_at || "")));
+  }
+
+  async function refreshMediaGallery(){
+    try{
+      showToast("Refreshing images...");
+      await loadMediaFiles();
+      mediaLoadError = "";
+      renderMediaStats();
+      renderGalleryList();
+      renderStats();
+      showToast("Images refreshed.");
+    }catch(err){
+      console.error(err);
+      mediaLoadError = err.message || "Could not refresh images.";
+      renderMediaStats();
+      renderGalleryList();
+      showToast(mediaLoadError, true);
+    }
+  }
+
+  async function refreshMediaAfterChange(){
+    try{
+      await loadMediaFiles();
+      mediaLoadError = "";
+      renderMediaStats();
+      renderGalleryList();
+      renderStats();
+    }catch(err){
+      console.warn("Could not refresh media after change:", err);
+      mediaLoadError = err.message || "Could not refresh images.";
+    }
+  }
+
+  function renderMediaStats(){
+    const box = $("mediaStatsGrid");
+    if(!box) return;
+
+    const totalPhotos = mediaFiles.length;
+    const totalBytes = mediaFiles.reduce((sum,file) => sum + Number(file.size || 0), 0);
+    const usedCount = mediaFiles.filter(file => getImageUsage(file.url).length > 0).length;
+    const unusedCount = Math.max(0, totalPhotos - usedCount);
+    const percent = Math.min(100, Math.round((totalPhotos / CLIENT_PHOTO_LIMIT) * 100));
+
+    box.innerHTML = `
+      <div class="mediaStat">
+        <b>${totalPhotos}/${CLIENT_PHOTO_LIMIT}</b>
+        <span>Photos uploaded</span>
+        <div class="progressBar"><div class="progressFill" style="width:${percent}%"></div></div>
+      </div>
+      <div class="mediaStat">
+        <b>${formatBytes(totalBytes)}</b>
+        <span>Approx storage used</span>
+        <div class="progressBar"><div class="progressFill" style="width:${Math.min(100, Math.round((totalBytes / STORAGE_LIMIT_BYTES) * 100))}%"></div></div>
+      </div>
+      <div class="mediaStat">
+        <b>${usedCount}</b>
+        <span>Used images</span>
+      </div>
+      <div class="mediaStat">
+        <b>${unusedCount}</b>
+        <span>Unused images</span>
+      </div>
+    `;
+  }
+
+  function renderGalleryList(){
+    const box = $("galleryList");
+    if(!box) return;
+
+    if(mediaLoadError){
+      box.innerHTML = `<div class="loading">${escapeHtml(mediaLoadError)}<br><br>If this says permission denied, add Storage list/delete policies for admin.</div>`;
+      return;
+    }
+
+    const search = ($("imageSearch")?.value || "").trim().toLowerCase();
+    const folderFilter = $("imageFolderFilter")?.value || "all";
+    const usageFilter = $("imageUsageFilter")?.value || "all";
+
+    let rows = [...mediaFiles];
+
+    if(folderFilter !== "all"){
+      rows = rows.filter(file => file.folder === folderFilter);
+    }
+
+    if(search){
+      rows = rows.filter(file => `${file.path} ${file.name}`.toLowerCase().includes(search));
+    }
+
+    if(usageFilter === "used"){
+      rows = rows.filter(file => getImageUsage(file.url).length > 0);
+    }
+
+    if(usageFilter === "unused"){
+      rows = rows.filter(file => getImageUsage(file.url).length === 0);
+    }
+
+    if(!rows.length){
+      box.innerHTML = `<div class="loading">No images found.</div>`;
+      return;
+    }
+
+    box.innerHTML = rows.map(file => {
+      const usage = getImageUsage(file.url);
+      const isUsed = usage.length > 0;
+
+      return `
+        <div class="galleryCard">
+          <img class="galleryThumb" src="${escapeHtml(file.url)}" alt="${escapeHtml(file.name)}" loading="lazy">
+          <div class="galleryInfo">
+            <b>${escapeHtml(file.name)}</b>
+            <span>${escapeHtml(file.folder)} · ${formatBytes(file.size)}</span>
+            <span>${isUsed ? "Used in: " + escapeHtml(usage.join(", ")) : "Unused image"}</span>
+            <input class="copyInput" readonly value="${escapeHtml(file.url)}">
+            <div class="itemActions" style="justify-content:flex-start;margin-top:8px;">
+              <button class="btn small" onclick="copyText('${escapeJs(file.url)}')">Copy URL</button>
+              <button class="btn red small" ${isUsed ? "disabled" : ""} onclick="deleteStorageImage('${escapeJs(file.path)}','${escapeJs(file.url)}')">
+                ${isUsed ? "In Use" : "Delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  async function deleteStorageImage(path,url){
+    if(getImageUsage(url).length > 0){
+      showToast("This image is still used. Remove it from products/settings first.", true);
+      return;
+    }
+
+    if(!confirm("Delete this unused image from Supabase Storage?")) return;
+
+    try{
+      const { error } = await supabaseClient.storage
+        .from(STORAGE_BUCKET)
+        .remove([path]);
+
+      if(error) throw error;
+
+      await refreshMediaAfterChange();
+      showToast("Image deleted.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Could not delete image.", true);
+    }
+  }
+
+  async function deleteOldSupabaseImageIfReplaced(oldUrl,newUrl){
+    if(!oldUrl) return;
+    if(oldUrl === newUrl) return;
+    if(!isSupabaseStorageUrl(oldUrl)) return;
+
+    const references = countCurrentImageReferences(oldUrl);
+
+    if(references > 1){
+      showToast("Old image kept because it is used somewhere else.");
+      return;
+    }
+
+    await deleteStorageFileFromUrl(oldUrl, true);
+  }
+
+  async function deleteStorageFileFromUrl(url,silent = false){
+    const path = getStoragePathFromUrl(url);
+    if(!path) return false;
+
+    try{
+      const { error } = await supabaseClient.storage
+        .from(STORAGE_BUCKET)
+        .remove([path]);
+
+      if(error) throw error;
+
+      if(!silent) showToast("Old image deleted.");
+      return true;
+    }catch(err){
+      console.warn("Delete storage file failed:", err);
+      if(!silent) showToast(err.message || "Could not delete image.", true);
+      return false;
+    }
+  }
+
+  function isSupabaseStorageUrl(url){
+    return String(url || "").includes(`/storage/v1/object/public/${STORAGE_BUCKET}/`);
+  }
+
+  function getStoragePathFromUrl(url){
+    const marker = `/storage/v1/object/public/${STORAGE_BUCKET}/`;
+    const text = String(url || "");
+    const idx = text.indexOf(marker);
+
+    if(idx === -1) return "";
+
+    const rawPath = text.slice(idx + marker.length).split("?")[0];
+    try{
+      return decodeURIComponent(rawPath);
+    }catch{
+      return rawPath;
+    }
+  }
+
+  function countCurrentImageReferences(url){
+    if(!url) return 0;
+
+    let count = 0;
+
+    if(siteSettings.logo_url === url) count++;
+    if(siteSettings.hero_image_url === url) count++;
+
+    categories.forEach(item => {
+      if(item.image_url === url) count++;
+    });
+
+    cakes.forEach(item => {
+      if(item.image_url === url) count++;
+    });
+
+    quickProducts.forEach(item => {
+      if(item.image_url === url) count++;
+    });
+
+    return count;
+  }
+
+  function getImageUsage(url){
+    const usage = [];
+
+    if(siteSettings.logo_url === url) usage.push("Logo");
+    if(siteSettings.hero_image_url === url) usage.push("Hero");
+
+    categories.forEach(item => {
+      if(item.image_url === url) usage.push("Occasion");
+    });
+
+    cakes.forEach(item => {
+      if(item.image_url === url) usage.push("Cake");
+    });
+
+    quickProducts.forEach(item => {
+      if(item.image_url === url) usage.push("Dessert");
+    });
+
+    return [...new Set(usage)];
   }
 
   function previewImageFromInput(inputId,previewId){
@@ -3209,6 +3656,12 @@
     }
 
     navigator.clipboard.writeText(input.value)
+      .then(() => showToast("Copied."))
+      .catch(() => showToast("Could not copy.", true));
+  }
+
+  function copyText(text){
+    navigator.clipboard.writeText(text)
       .then(() => showToast("Copied."))
       .catch(() => showToast("Could not copy.", true));
   }
@@ -3286,6 +3739,16 @@
     }
   }
 
+  function formatBytes(bytes){
+    const num = Number(bytes || 0);
+
+    if(num < 1024) return num + " B";
+    if(num < 1024 * 1024) return (num / 1024).toFixed(1).replace(".0","") + " KB";
+    if(num < 1024 * 1024 * 1024) return (num / 1024 / 1024).toFixed(1).replace(".0","") + " MB";
+
+    return (num / 1024 / 1024 / 1024).toFixed(2).replace(".00","") + " GB";
+  }
+
   function normalizePhone(value){
     return String(value || "").replace(/[^\d]/g,"");
   }
@@ -3305,6 +3768,14 @@
       .replaceAll(">","&gt;")
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
+  }
+
+  function escapeJs(value){
+    return String(value ?? "")
+      .replaceAll("\\","\\\\")
+      .replaceAll("'","\\'")
+      .replaceAll("\n","\\n")
+      .replaceAll("\r","");
   }
 
   function escapeClass(value){
