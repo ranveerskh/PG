@@ -3222,6 +3222,8 @@
       fileInput.value = "";
       setPreview(previewId, newUrl);
 
+      const autoSaveResult = await autoSaveUploadedImage(targetInputId, newUrl, currentUrlBeforeUpload);
+
       if(
         currentUrlBeforeUpload &&
         currentUrlBeforeUpload !== savedUrl &&
@@ -3231,8 +3233,13 @@
         await deleteStorageFileFromUrl(currentUrlBeforeUpload, true);
       }
 
-      setUploadStatus(fileInputId, "Image uploaded successfully. Now save this product/settings form.", false, true);
-      showToast("Image uploaded successfully. Now save the form.");
+      if(autoSaveResult && autoSaveResult.saved){
+        setUploadStatus(fileInputId, "Image uploaded and saved successfully.", false, true);
+        showToast("Image uploaded and saved.");
+      }else{
+        setUploadStatus(fileInputId, "Image uploaded. Now save this new product/form.", false, true);
+        showToast("Image uploaded. Now save the form.");
+      }
     }catch(err){
       console.error(err);
       const msg = err.message || "Image upload failed. Check Supabase Storage bucket/policies.";
@@ -3240,6 +3247,90 @@
       showToast(msg, true);
     }finally{
       if(button) button.disabled = false;
+    }
+  }
+
+
+  async function autoSaveUploadedImage(targetInputId,newUrl,oldUrl){
+    try{
+      if(!newUrl) return { saved:false };
+
+      if(targetInputId === "productImageUrl"){
+        const productId = $("productId")?.value || "";
+        const kind = $("productEditKind")?.value || $("productType")?.value || "";
+
+        if(!productId){
+          return { saved:false };
+        }
+
+        const table = kind === "quick" ? "quick_products" : "cakes";
+        const { error } = await supabaseClient
+          .from(table)
+          .update({ image_url:newUrl })
+          .eq("id", productId);
+
+        if(error) throw error;
+
+        if(kind === "quick"){
+          const row = quickProducts.find(item => String(item.id) === String(productId));
+          if(row) row.image_url = newUrl;
+        }else{
+          const row = cakes.find(item => String(item.id) === String(productId));
+          if(row) row.image_url = newUrl;
+        }
+
+        $("productImageUrl").dataset.savedUrl = newUrl;
+        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
+        renderProducts();
+        return { saved:true };
+      }
+
+      if(targetInputId === "occasionImage"){
+        const occasionId = $("occasionId")?.value || "";
+
+        if(!occasionId){
+          return { saved:false };
+        }
+
+        const { error } = await supabaseClient
+          .from("categories")
+          .update({ image_url:newUrl })
+          .eq("id", occasionId);
+
+        if(error) throw error;
+
+        const row = categories.find(item => String(item.id) === String(occasionId));
+        if(row) row.image_url = newUrl;
+
+        $("occasionImage").dataset.savedUrl = newUrl;
+        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
+        renderOccasionList();
+        return { saved:true };
+      }
+
+      if(targetInputId === "setLogoUrl" || targetInputId === "setHeroImage"){
+        const field = targetInputId === "setLogoUrl" ? "logo_url" : "hero_image_url";
+        const payload = { ...siteSettings, id:1, [field]:newUrl };
+
+        const { data, error } = await supabaseClient
+          .from("site_settings")
+          .upsert(payload, { onConflict:"id" })
+          .select()
+          .single();
+
+        if(error) throw error;
+
+        siteSettings = { ...siteSettings, ...(data || payload) };
+        $(targetInputId).dataset.savedUrl = newUrl;
+        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
+        return { saved:true };
+      }
+
+      return { saved:false };
+    }catch(err){
+      console.error("Image uploaded but auto-save failed:", err);
+      showToast("Image uploaded, but saving URL failed: " + (err.message || err), true);
+      return { saved:false, error:err };
     }
   }
 
