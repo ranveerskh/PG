@@ -1618,8 +1618,10 @@
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const CART_KEY = "cakeShopCartV1";
-  const CACHE_KEY = "siffatHomeCacheV3";
-  const CACHE_MAX_AGE_MS = 1000 * 60;
+  const CACHE_KEY = "siffatHomeCacheV4";
+  const CACHE_MAX_AGE_MS = 1000 * 60 * 60 * 12;
+  const LOAD_TIMEOUT_MS = 9000;
+  const LOAD_RETRY_DELAYS = [0, 900, 1800, 3500];
 
   const DEFAULT_SETTINGS = {
     brand_name:"Siffat Cakes",
@@ -1763,22 +1765,49 @@
   }
 
   async function loadHomeDataWithRetry(){
+    let lastErr = null;
+
+    for(let attempt = 0; attempt < LOAD_RETRY_DELAYS.length; attempt++){
+      const delay = LOAD_RETRY_DELAYS[attempt];
+
+      if(delay){
+        await wait(delay);
+        if(attempt >= 2){
+          showToast("Waking up website data. Retrying...", true);
+        }
+      }
+
+      try{
+        await warmSupabase();
+        await loadHomeData();
+        return;
+      }catch(err){
+        lastErr = err;
+        console.warn(`Homepage load attempt ${attempt + 1} failed:`, err?.message || err);
+      }
+    }
+
+    throw lastErr || new Error("Homepage data failed to load.");
+  }
+
+  async function warmSupabase(){
     try{
-      await loadHomeData();
-    }catch(firstErr){
-      console.warn("First homepage load failed. Retrying once...", firstErr?.message || firstErr);
-      await wait(700);
-      await loadHomeData();
+      await withTimeout(
+        supabaseClient.from("site_settings").select("id").eq("id", 1).maybeSingle(),
+        LOAD_TIMEOUT_MS
+      );
+    }catch(err){
+      console.warn("Supabase warm-up skipped:", err?.message || err);
     }
   }
 
   async function loadHomeData(){
     const requests = await Promise.allSettled([
-      supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
-      supabaseClient.from("categories").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }),
-      supabaseClient.from("cakes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
-      supabaseClient.from("quick_products").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
-      supabaseClient.from("cake_categories").select("*")
+      withTimeout(supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("categories").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("cakes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("quick_products").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("cake_categories").select("*"), LOAD_TIMEOUT_MS)
     ]);
 
     const [settingsRes, occasionsRes, cakesRes, quickRes, linksRes] = requests.map(result => {
@@ -1849,14 +1878,14 @@
     $("footerHours").textContent = siteSettings.business_hours || "";
 
     if(logo){
-      $("siteLogo").innerHTML = `<img src="${escapeHtml(logo)}" alt="${escapeHtml(brand)} logo" onerror="this.parentElement.textContent='🍰'">`;
+      $("siteLogo").innerHTML = `<img src="${escapeHtml(cacheBustImage(logo))}" alt="${escapeHtml(brand)} logo" onerror="this.parentElement.textContent='🍰'">`;
     }else{
       $("siteLogo").textContent = "🍰";
     }
 
     if(heroImage){
       $("heroPhoto").style.backgroundImage =
-        `linear-gradient(180deg,rgba(100,13,107,.02),rgba(100,13,107,.55)),url("${escapeCssUrl(heroImage)}")`;
+        `linear-gradient(180deg,rgba(100,13,107,.02),rgba(100,13,107,.55)),url("${escapeCssUrl(cacheBustImage(heroImage))}")`;
     }
 
     const message = encodeURIComponent(`Hi ${brand}, I want to ask about a cake/dessert order.`);
@@ -1894,7 +1923,7 @@
         const image = item?.image_url || getFallbackImage(slug);
 
         return `
-          <a class="quickHeroCard" href="category.html?cat=${encodeURIComponent(slug)}" style="--img:url('${escapeCssUrl(image)}')">
+          <a class="quickHeroCard" href="category.html?cat=${encodeURIComponent(slug)}" style="--img:url('${escapeCssUrl(cacheBustImage(image))}')">
             <div>
               <b>${escapeHtml(meta.name)}</b>
               <span>${getQuickCategoryCount(slug)} items</span>
@@ -1920,7 +1949,7 @@
           : `${count} items`;
 
       return `
-        <a class="menuCard" href="${escapeHtml(item.href)}" style="--img:url('${escapeCssUrl(image)}')">
+        <a class="menuCard" href="${escapeHtml(item.href)}" style="--img:url('${escapeCssUrl(cacheBustImage(image))}')">
           <div class="menuCardContent">
             <div class="countPill">${escapeHtml(countText)}</div>
             <b>${escapeHtml(item.name)}</b>
@@ -1959,7 +1988,7 @@
       const href = `category.html?cat=cakes&occasion=${encodeURIComponent(slug)}`;
 
       return `
-        <a class="occasionCard" href="${href}" style="--img:url('${escapeCssUrl(image)}')">
+        <a class="occasionCard" href="${href}" style="--img:url('${escapeCssUrl(cacheBustImage(image))}')">
           <div>
             <b>${escapeHtml(item.name || "Cake Occasion")}</b>
             <span>${escapeHtml(item.description || "Explore matching cakes and customization options.")}</span>
@@ -2035,7 +2064,7 @@
       <article class="productCard">
         <a href="${href}">
           <div class="productImage">
-            <img src="${escapeHtml(image)}" alt="${escapeHtml(product.name)}" loading="lazy" onerror="this.src='${escapeHtml(getFallbackImage(product.category || product.kind || "dessert"))}'">
+            <img src="${escapeHtml(cacheBustImage(image))}" alt="${escapeHtml(product.name)}" loading="lazy" onerror="this.src='${escapeHtml(getFallbackImage(product.category || product.kind || "dessert"))}'">
             <div class="badge">${escapeHtml(badgeText)}</div>
             ${product.featured ? `<div class="badge right">Featured</div>` : ""}
           </div>
@@ -2358,6 +2387,21 @@
     return String(value || "")
       .replace(/-/g, " ")
       .replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  function withTimeout(promise, ms){
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out. Retrying.")), ms))
+    ]);
+  }
+
+  function cacheBustImage(url){
+    const clean = String(url || "");
+    if(!clean) return clean;
+    if(!clean.includes("supabase.co/storage")) return clean;
+    const sep = clean.includes("?") ? "&" : "?";
+    return `${clean}${sep}v=${Date.now()}`;
   }
 
   function wait(ms){
