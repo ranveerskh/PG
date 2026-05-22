@@ -216,7 +216,17 @@
   let currentUser = null;
   let orders = [];
   let orderItems = [];
-  let siteSettings = { brand_name:"Siffat Cakes", whatsapp_number:"", currency:"$", address:"", business_hours:"", logo_url:"" };
+  let siteSettings = {
+    brand_name:"Siffat Cakes",
+    whatsapp_number:"",
+    currency:"$",
+    address:"",
+    business_hours:"",
+    logo_url:"",
+    charge_hst:false,
+    hst_rate:13,
+    default_delivery_fee:0
+  };
 
   initAuth();
 
@@ -525,13 +535,26 @@
     const brand = siteSettings.brand_name || "Siffat Cakes";
     const logo = siteSettings.logo_url || "";
     const shortId = String(order.id || "").slice(0,8).toUpperCase();
-    const subtotal = Number(order.subtotal ?? order.estimated_subtotal ?? 0);
-    const tax = Number(order.hst_amount ?? order.tax_amount ?? 0);
-    const delivery = Number(order.delivery_fee ?? 0);
-    const estimatedTotal = Number(order.estimated_total || 0);
+    const orderSubtotal = Number(order.subtotal ?? order.estimated_subtotal ?? 0);
     const calculatedSubtotal = items.reduce((sum,item)=>sum + Number(item.estimated_item_total || 0), 0);
-    const finalSubtotal = subtotal || calculatedSubtotal;
-    const finalTotal = estimatedTotal || (finalSubtotal + tax + delivery);
+    const estimatedTotal = Number(order.estimated_total || 0);
+    const finalSubtotal = orderSubtotal || calculatedSubtotal || estimatedTotal;
+    const delivery = Number(order.delivery_fee ?? siteSettings.default_delivery_fee ?? 0);
+    const savedTax = Number(order.hst_amount ?? order.tax_amount ?? order.hst ?? 0);
+    const hstRate = Number(siteSettings.hst_rate ?? 13);
+    const shouldChargeHst = truthy(siteSettings.charge_hst) || savedTax > 0;
+    let tax = savedTax;
+
+    if(!tax && shouldChargeHst && finalSubtotal > 0){
+      tax = Math.round(((finalSubtotal + delivery) * hstRate / 100) * 100) / 100;
+    }
+
+    let finalTotal = estimatedTotal;
+    if(shouldChargeHst){
+      finalTotal = finalSubtotal + delivery + tax;
+    }else if(!finalTotal){
+      finalTotal = finalSubtotal + delivery + tax;
+    }
 
     return `<!doctype html>
 <html>
@@ -594,11 +617,11 @@
   <section class="totals">
     <div><span>Subtotal</span><b>${finalSubtotal ? money(finalSubtotal) : "Quote"}</b></div>
     ${delivery ? `<div><span>Delivery</span><b>${money(delivery)}</b></div>` : ""}
-    ${tax ? `<div><span>Tax / HST</span><b>${money(tax)}</b></div>` : ""}
+    ${shouldChargeHst ? `<div><span>HST (${hstRate}%)</span><b>${money(tax)}</b></div>` : (tax ? `<div><span>Tax / HST</span><b>${money(tax)}</b></div>` : "")}
     <div class="grand"><span>Total</span><b>${finalTotal ? money(finalTotal) : "Quote"}</b></div>
   </section>
 
-  <section class="thanks">Thank you for ordering from ${escapeHtml(brand)}.</section>
+  <section class="thanks">Thank you for ordering from ${escapeHtml(brand)}. Invoice total includes HST when tax is enabled in website settings.</section>
   <section class="footer"><span>${escapeHtml(brand)}</span><span>${escapeHtml(siteSettings.whatsapp_number || "")}</span></section>
 </main>
 </body>
