@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Your Order - Siffat Cakes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+
+    :root{
+      --bg:#fbf4fb;
+      --text:#1d141f;
+      --muted:#725a76;
+      --purple:#640D6B;
+      --purple2:#7a1281;
+      --line:rgba(100,13,107,.16);
+      --shadow:0 18px 45px rgba(100,13,107,.12);
+      --shadow2:0 10px 24px rgba(100,13,107,.08);
+      --green:#16823a;
+      --red:#b42318;
+      --orange:#b54708;
+      --blue:#175cd3;
+      --soft:#fff7ff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    html,body{width:100%;min-height:100%}
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(100,13,107,.12),transparent 33%),
+        radial-gradient(circle at 100% 0%,rgba(122,18,129,.08),transparent 30%),
+        linear-gradient(180deg,var(--bg),#fff 58%,#fff);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    button,input,select,textarea{font:inherit}
+    button{border:0;cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1440px,calc(100% - 28px));margin:auto}
+    .topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .nav{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .logo{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--purple);color:#fff;box-shadow:0 12px 28px rgba(100,13,107,.22);font-size:20px;overflow:hidden;flex:0 0 auto;border:2px solid rgba(255,255,255,.85)}
+    .logo img{width:100%;height:100%;object-fit:cover;background:#fff}
+    .brand h1{color:var(--purple);font-size:18px;line-height:1;letter-spacing:-.045em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+    .brand p{margin-top:4px;color:var(--muted);font-size:11px;white-space:nowrap;max-width:360px;overflow:hidden;text-overflow:ellipsis}
+    .navActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:9px 12px;border-radius:999px;color:var(--purple);font-weight:1000;background:#fff;border:1px solid var(--line);box-shadow:0 8px 18px rgba(100,13,107,.04);transition:.18s ease;white-space:nowrap;font-size:13px}
+    .btn:hover{transform:translateY(-1px);background:#fff7ff}
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important}
+    .btn.primary{background:linear-gradient(135deg,var(--purple),var(--purple2));border-color:rgba(100,13,107,.30);color:#fff;box-shadow:0 12px 26px rgba(100,13,107,.20)}
+    .btn.green{background:rgba(22,130,58,.08);border-color:rgba(22,130,58,.22);color:var(--green)}
+    .btn.red{background:rgba(180,35,24,.08);border-color:rgba(180,35,24,.20);color:var(--red)}
+    .btn.orange{background:rgba(181,71,8,.08);border-color:rgba(181,71,8,.20);color:var(--orange)}
+    .btn.blue{background:rgba(23,92,211,.08);border-color:rgba(23,92,211,.20);color:var(--blue)}
+    .btn.small{min-height:34px;padding:7px 10px;font-size:12px}
+    .btn.block{width:100%}
+    .loginScreen{min-height:100vh;display:grid;place-items:center;padding:24px}
+    .loginCard{width:min(430px,100%);border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
+    .loginCard h2{color:var(--purple);font-size:30px;letter-spacing:-.065em;margin-bottom:8px}
+    .loginCard p{color:var(--muted);font-size:13px;line-height:1.55;margin-bottom:16px}
+    .app{display:none}.app.show{display:block}
+    .main{padding:16px 0 34px}
+    .card{border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:24px;box-shadow:var(--shadow2);overflow:hidden;min-width:0}
+    .cardHead{padding:14px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .cardHead h3{color:var(--purple);font-size:18px;letter-spacing:-.045em}.cardHead p{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.42}
+    .cardBody{padding:14px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;min-width:0}.field label{color:var(--purple);font-size:12px;font-weight:1000}
+    .field input,.field select,.field textarea{width:100%;min-height:43px;border:1px solid var(--line);outline:none;border-radius:15px;background:#fff;color:var(--text);padding:11px 12px;box-shadow:0 8px 18px rgba(100,13,107,.035)}
+    .field textarea{min-height:86px;resize:vertical}.hint{font-size:11px;color:var(--muted);line-height:1.45}.full{grid-column:1/-1}
+    .searchRow{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}.searchRow input,.searchRow select{min-height:42px;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:0 13px;outline:none;box-shadow:0 8px 18px rgba(100,13,107,.035)}.searchRow input{flex:1;min-width:220px}
+    .gridStats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:20px;padding:14px;box-shadow:var(--shadow2)}.stat b{display:block;color:var(--purple);font-size:25px;letter-spacing:-.06em}.stat span{display:block;margin-top:5px;color:var(--muted);font-size:12px;font-weight:750}
+    .list{display:grid;gap:9px}.loading{padding:22px;border:1px dashed rgba(100,13,107,.22);border-radius:18px;color:var(--muted);text-align:center;background:rgba(255,255,255,.70);line-height:1.5}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;z-index:200;max-width:min(560px,calc(100% - 24px));background:var(--purple);color:#fff;border-radius:999px;padding:12px 15px;font-size:13px;font-weight:1000;box-shadow:0 18px 36px rgba(100,13,107,.24);transition:.2s ease;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .status{padding:7px 9px;border-radius:999px;font-size:11px;font-weight:1000;border:1px solid var(--line);background:#fff7ff;white-space:nowrap}.status.Pending{color:var(--orange)}.status.Confirmed{color:var(--blue)}.status.InProgress{color:#4a5fd0}.status.Ready,.status.ReadyForPickup,.status.OutForDelivery,.status.Completed{color:var(--green)}.status.Cancelled{color:var(--red)}
+    @media(max-width:1120px){.gridStats{grid-template-columns:repeat(3,1fr)}}@media(max-width:720px){.wrap{width:min(100% - 16px,1440px)}.nav{align-items:flex-start;flex-direction:column;padding:10px 0}.navActions{width:100%;justify-content:flex-start}.gridStats{grid-template-columns:repeat(2,1fr)}}
+
+    .trackHero{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:20px 0}
+    .trackGrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(360px,1.1fr);gap:14px;align-items:stretch;width:100%}
+    .heroCard{border-radius:34px;padding:34px;background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;overflow:hidden;position:relative}
+    .heroCard:after{content:"";position:absolute;width:300px;height:300px;right:-90px;bottom:-100px;border-radius:50%;background:rgba(255,255,255,.10)}
+    .heroCard h2{font-size:clamp(38px,5vw,68px);line-height:.98;letter-spacing:-.08em;position:relative;z-index:1}.heroCard p{margin-top:14px;color:rgba(255,255,255,.86);font-size:15px;line-height:1.55;position:relative;z-index:1}
+    .trackCard{border:1px solid var(--line);background:rgba(255,255,255,.94);border-radius:34px;box-shadow:var(--shadow);padding:18px}
+    .result{margin-top:14px;display:none}.result.show{display:block}
+    .progress{display:grid;gap:9px;margin-top:12px}.step{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);background:#fff;border-radius:18px}.stepDot{width:32px;height:32px;border-radius:14px;display:grid;place-items:center;background:#fff7ff;border:1px solid var(--line);color:var(--muted);font-weight:1000;flex:0 0 auto}.step.done .stepDot{background:var(--purple);border-color:var(--purple);color:#fff}.step.active{border-color:rgba(100,13,107,.35);box-shadow:0 12px 24px rgba(100,13,107,.10)}.step b{display:block;font-size:13px}.step span{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.4}
+    .orderSummary{border:1px solid var(--line);background:#fff7ff;border-radius:20px;padding:13px;margin-top:12px}.orderSummary h3{color:var(--purple);font-size:17px;letter-spacing:-.04em;margin-bottom:7px}.orderSummary p{color:var(--muted);font-size:12px;line-height:1.6}
+    .history{display:grid;gap:7px;margin-top:8px}.historyItem{border:1px solid var(--line);background:#fff;border-radius:15px;padding:9px;font-size:12px;color:var(--muted);line-height:1.45}.historyItem b{color:var(--text)}
+    @media(max-width:900px){.trackGrid{grid-template-columns:1fr}.heroCard{border-radius:28px;padding:24px}.trackHero{min-height:auto}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap nav">
+    <a class="brand" href="index.html"><div id="siteLogo" class="logo">🍰</div><div><h1 id="siteBrandName">Siffat Cakes</h1><p id="siteTagline">Track your order</p></div></a>
+    <div class="navActions"><a class="btn small" href="index.html">Home</a><a class="btn small" href="cart.html">Cart</a><a id="whatsappBtn" class="btn primary small" href="#" target="_blank">WhatsApp</a></div>
+  </div>
+</header>
+<main class="wrap trackHero">
+  <div class="trackGrid">
+    <section class="heroCard"><h2>Track your sweet order.</h2><p>Enter your tracking code and the phone number or email used during checkout. You’ll see whether your order is pending, confirmed, in progress, ready, or completed.</p></section>
+    <section class="trackCard">
+      <div class="cardHead" style="padding:0 0 14px;border-bottom:1px solid var(--line);margin-bottom:14px"><div><h3>Order Tracking</h3><p>Use the code shared by Siffat Cakes.</p></div></div>
+      <div class="field"><label>Tracking Code / Order ID</label><input id="trackingCode" placeholder="Example: A1B2C3D4" autocomplete="off"></div>
+      <div class="field"><label>Phone or Email</label><input id="contact" placeholder="Phone or email used on order" autocomplete="off"></div>
+      <button class="btn primary block" onclick="trackOrder()">Track Order</button>
+      <p class="hint" style="margin-top:10px;">For privacy, both tracking code and customer phone/email are required.</p>
+      <div id="trackResult" class="result"></div>
+    </section>
+  </div>
+</main>
+<div id="toast" class="toast"></div>
+<script>
+  const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const $ = id => document.getElementById(id);
+  let siteSettings = { brand_name:"Siffat Cakes", tagline:"Eggless Cakes & Desserts", logo_url:"", whatsapp_number:"", currency:"$" };
+  const FLOW = ["Pending","Confirmed","In Progress","Ready for Pickup","Completed"];
+  document.addEventListener("DOMContentLoaded", async () => {
+    const params = new URLSearchParams(location.search);
+    if(params.get("code")) $("trackingCode").value = params.get("code");
+    await loadSettings();
+  });
+  async function loadSettings(){
+    try{
+      const { data } = await supabaseClient.from("site_settings").select("*").eq("id",1).maybeSingle();
+      siteSettings = {...siteSettings, ...(data || {})};
+      $("siteBrandName").textContent = siteSettings.brand_name || "Siffat Cakes";
+      $("siteTagline").textContent = siteSettings.tagline || "Track your order";
+      if(siteSettings.logo_url) $("siteLogo").innerHTML = `<img src="${escapeHtml(siteSettings.logo_url)}" alt="Logo" onerror="this.parentElement.textContent='🍰'">`;
+      const phone = normalizePhone(siteSettings.whatsapp_number || "");
+      $("whatsappBtn").href = phone ? `https://wa.me/${phone}?text=${encodeURIComponent("Hi, I want to ask about my Siffat Cakes order.")}` : "#";
+      $("whatsappBtn").onclick = phone ? null : e => { e.preventDefault(); showToast("WhatsApp number is not set yet.", true); };
+    }catch(err){ console.warn(err); }
+  }
+  async function trackOrder(){
+    const code = $("trackingCode").value.trim().toUpperCase();
+    const contact = $("contact").value.trim();
+    if(!code || !contact) return showToast("Enter tracking code and phone/email.", true);
+    const box = $("trackResult");
+    box.classList.add("show");
+    box.innerHTML = `<div class="loading">Checking order status...</div>`;
+    try{
+      const { data, error } = await supabaseClient.rpc("track_order", { p_tracking_code:code, p_contact:contact });
+      if(error) throw error;
+      if(!data || data.ok !== true){ box.innerHTML = `<div class="loading">${escapeHtml(data?.message || "Order not found. Check tracking code and contact info.")}</div>`; return; }
+      renderResult(data.order || {}, data.history || []);
+    }catch(err){
+      console.error(err);
+      box.innerHTML = `<div class="loading">Tracking is not ready yet. Run the tracking SQL file in Supabase first.<br><br>${escapeHtml(err.message || "")}</div>`;
+    }
+  }
+  function renderResult(order, history){
+    const status = normalizeDisplayStatus(order.status || "Pending");
+    const activeIndex = getStatusIndex(status);
+    const steps = FLOW.map((step,i)=>{
+      const done = i < activeIndex || (status === step && status !== "Cancelled");
+      const active = status === step;
+      return `<div class="step ${done?"done":""} ${active?"active":""}"><div class="stepDot">${i+1}</div><div><b>${escapeHtml(step)}</b><span>${getStepText(step)}</span></div></div>`;
+    }).join("");
+    const cancelBlock = status === "Cancelled" ? `<div class="step active"><div class="stepDot">!</div><div><b>Cancelled</b><span>This order was cancelled. Contact the shop if this looks wrong.</span></div></div>` : "";
+    $("trackResult").innerHTML = `
+      <div class="orderSummary"><h3>Status: ${escapeHtml(order.status || "Pending")}</h3><p><b>Tracking:</b> ${escapeHtml(order.tracking_code || "")}<br><b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br><b>Type:</b> ${escapeHtml(order.delivery_type || "")}<br><b>Estimated Total:</b> ${order.estimated_total ? money(order.estimated_total) : "Quote / Confirm with shop"}</p></div>
+      <div class="progress">${cancelBlock || steps}</div>
+      <div class="orderSummary"><h3>Status Activity</h3><div class="history">${history.length ? history.map(h=>`<div class="historyItem"><b>${escapeHtml(h.status || "Update")}</b><br>${escapeHtml(h.note || "")}${h.created_at ? `<br>${formatDateTime(h.created_at)}` : ""}</div>`).join("") : `<div class="historyItem">No detailed activity yet. Current status is shown above.</div>`}</div></div>`;
+  }
+  function normalizeDisplayStatus(s){ const v=String(s||"").toLowerCase().replace(/[^a-z]/g,""); if(v==="ready") return "Ready for Pickup"; if(v==="outfordelivery") return "Ready for Pickup"; if(v==="inprogress") return "In Progress"; if(v==="confirmed") return "Confirmed"; if(v==="completed") return "Completed"; if(v==="cancelled") return "Cancelled"; return "Pending"; }
+  function getStatusIndex(status){ const idx=FLOW.indexOf(status); return idx < 0 ? 0 : idx; }
+  function getStepText(step){ return {"Pending":"Order request received.","Confirmed":"Shop confirmed the order details.","In Progress":"Your order is being prepared.","Ready for Pickup":"Ready for pickup or delivery update.","Completed":"Order completed."}[step] || ""; }
+  function money(value){ const currency = siteSettings.currency || "$"; return currency + Number(value||0).toFixed(2).replace(".00",""); }
+  function formatDate(value){ if(!value) return "No date"; const d=new Date(value+"T00:00:00"); return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}); }
+  function formatDateTime(value){ if(!value) return ""; const d=new Date(value); return Number.isNaN(d.getTime()) ? value : d.toLocaleString(); }
+  function normalizePhone(value){ return String(value||"").replace(/[^\d]/g,""); }
+  function escapeHtml(value){ return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+  function showToast(message,isError=false){ const toast=$("toast"); toast.textContent=message; toast.style.background=isError?"var(--red)":"var(--purple)"; toast.classList.add("show"); clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>toast.classList.remove("show"),3000); }
+</script>
+</body>
+</html>
