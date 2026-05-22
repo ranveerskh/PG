@@ -3163,24 +3163,32 @@
     printWindow.print();
   }
 
-  async function uploadAndSet(fileInputId,targetInputId,previewId,folder){
+  async function uploadAndSet(fileInputId, targetInputId, previewId, folder){
     const fileInput = $(fileInputId);
     const targetInput = $(targetInputId);
     const button = document.querySelector(`button[onclick*="${fileInputId}"]`);
 
     clearUploadStatus(fileInputId);
 
-    if(!fileInput || !fileInput.files || !fileInput.files[0]){
+    if(!fileInput || !targetInput){
+      showToast("Upload fields not found on this page.", true);
+      return;
+    }
+
+    const file = fileInput.files?.[0];
+
+    if(!file){
       setUploadStatus(fileInputId, "Choose an image first.", true);
       showToast("Choose an image first.", true);
       return;
     }
 
-    const file = fileInput.files[0];
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
-    if(!file.type.startsWith("image/")){
-      setUploadStatus(fileInputId, "Only image files are allowed.", true);
-      showToast("Only image files are allowed.", true);
+    if(!allowedTypes.includes(file.type)){
+      const msg = "Only JPG, PNG, or WEBP images are allowed.";
+      setUploadStatus(fileInputId, msg, true);
+      showToast(msg, true);
       return;
     }
 
@@ -3191,18 +3199,18 @@
       return;
     }
 
-    const savedUrl = targetInput?.dataset?.savedUrl || "";
-    const currentUrlBeforeUpload = targetInput?.value?.trim() || "";
+    const oldUrlBeforeUpload = targetInput.value.trim();
+    const safeFolder = String(folder || "products").replace(/[^a-zA-Z0-9/_-]/g, "-");
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+    const fileName = `${Date.now()}-${Math.random().toString(16).slice(2)}.${ext}`;
+    const path = `${safeFolder}/${fileName}`;
 
     try{
       if(button) button.disabled = true;
       setUploadStatus(fileInputId, "Uploading image... please wait.");
       showToast("Uploading image...");
 
-      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
-      const path = `${folder}/${Date.now()}-${Math.random().toString(16).slice(2)}-${safeName}`;
-
-      const { error } = await supabaseClient.storage
+      const { error:uploadError } = await supabaseClient.storage
         .from(STORAGE_BUCKET)
         .upload(path, file, {
           cacheControl:"3600",
@@ -3210,35 +3218,36 @@
           contentType:file.type
         });
 
-      if(error) throw error;
+      if(uploadError) throw uploadError;
 
-      const { data } = supabaseClient.storage
+      const { data:urlData } = supabaseClient.storage
         .from(STORAGE_BUCKET)
         .getPublicUrl(path);
 
-      const newUrl = data.publicUrl;
+      const newUrl = urlData.publicUrl;
 
       targetInput.value = newUrl;
       fileInput.value = "";
       setPreview(previewId, newUrl);
 
-      const autoSaveResult = await autoSaveUploadedImage(targetInputId, newUrl, currentUrlBeforeUpload);
+      setUploadStatus(fileInputId, "Image uploaded. Saving URL to database...");
+      showToast("Image uploaded. Saving URL...");
 
-      if(
-        currentUrlBeforeUpload &&
-        currentUrlBeforeUpload !== savedUrl &&
-        currentUrlBeforeUpload !== newUrl &&
-        isSupabaseStorageUrl(currentUrlBeforeUpload)
-      ){
-        await deleteStorageFileFromUrl(currentUrlBeforeUpload, true);
-      }
+      const saveResult = await autoSaveUploadedImage(targetInputId, newUrl, oldUrlBeforeUpload);
 
-      if(autoSaveResult && autoSaveResult.saved){
-        setUploadStatus(fileInputId, "Image uploaded and saved successfully.", false, true);
-        showToast("Image uploaded and saved.");
+      if(saveResult.saved){
+        targetInput.dataset.savedUrl = newUrl;
+        setPreview(previewId, addCacheBustToImageUrl(newUrl));
+
+        if(oldUrlBeforeUpload && oldUrlBeforeUpload !== newUrl && isSupabaseStorageUrl(oldUrlBeforeUpload)){
+          await deleteStorageFileFromUrl(oldUrlBeforeUpload, true);
+        }
+
+        setUploadStatus(fileInputId, saveResult.message || "Photo uploaded and saved to database.", false, true);
+        showToast("Photo uploaded and saved.");
       }else{
-        setUploadStatus(fileInputId, "Image uploaded. Now save this new product/form.", false, true);
-        showToast("Image uploaded. Now save the form.");
+        setUploadStatus(fileInputId, saveResult.message || "Image uploaded. Now click Save to store it.", false, true);
+        showToast(saveResult.message || "Image uploaded. Now click Save.");
       }
     }catch(err){
       console.error(err);
@@ -3250,26 +3259,30 @@
     }
   }
 
-
-  async function autoSaveUploadedImage(targetInputId,newUrl,oldUrl){
+  async function autoSaveUploadedImage(targetInputId, newUrl, oldUrl){
     try{
-      if(!newUrl) return { saved:false };
+      if(!newUrl) return { saved:false, message:"No image URL found." };
 
       if(targetInputId === "productImageUrl"){
         const productId = $("productId")?.value || "";
-        const kind = $("productEditKind")?.value || $("productType")?.value || "";
+        const kind = $("productEditKind")?.value || $("productType")?.value || "cake";
 
         if(!productId){
-          return { saved:false };
+          return { saved:false, message:"Image uploaded. Fill product details and click Save Product." };
         }
 
         const table = kind === "quick" ? "quick_products" : "cakes";
-        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
           .from(table)
           .update({ image_url:newUrl })
-          .eq("id", productId);
+          .eq("id", productId)
+          .select("id,image_url")
+          .single();
 
         if(error) throw error;
+        if(!data || data.image_url !== newUrl){
+          throw new Error("Supabase did not confirm the saved image URL.");
+        }
 
         if(kind === "quick"){
           const row = quickProducts.find(item => String(item.id) === String(productId));
@@ -3280,58 +3293,69 @@
         }
 
         $("productImageUrl").dataset.savedUrl = newUrl;
-        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
         renderProducts();
-        return { saved:true };
+        return { saved:true, message:"Product photo uploaded and saved." };
       }
 
       if(targetInputId === "occasionImage"){
         const occasionId = $("occasionId")?.value || "";
 
         if(!occasionId){
-          return { saved:false };
+          return { saved:false, message:"Image uploaded. Fill occasion details and click Save Occasion." };
         }
 
-        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
           .from("categories")
           .update({ image_url:newUrl })
-          .eq("id", occasionId);
+          .eq("id", occasionId)
+          .select("id,image_url")
+          .single();
 
         if(error) throw error;
+        if(!data || data.image_url !== newUrl){
+          throw new Error("Supabase did not confirm the saved occasion image URL.");
+        }
 
         const row = categories.find(item => String(item.id) === String(occasionId));
         if(row) row.image_url = newUrl;
 
         $("occasionImage").dataset.savedUrl = newUrl;
-        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
         renderOccasionList();
-        return { saved:true };
+        fillProductSelects();
+        return { saved:true, message:"Occasion photo uploaded and saved." };
       }
 
       if(targetInputId === "setLogoUrl" || targetInputId === "setHeroImage"){
         const field = targetInputId === "setLogoUrl" ? "logo_url" : "hero_image_url";
-        const payload = { ...siteSettings, id:1, [field]:newUrl };
+        const payload = { id:1, [field]:newUrl };
 
         const { data, error } = await supabaseClient
           .from("site_settings")
           .upsert(payload, { onConflict:"id" })
-          .select()
+          .select("id,logo_url,hero_image_url")
           .single();
 
         if(error) throw error;
+        if(!data || data[field] !== newUrl){
+          throw new Error("Supabase did not confirm the saved website image URL.");
+        }
 
-        siteSettings = { ...siteSettings, ...(data || payload) };
+        siteSettings = { ...siteSettings, [field]:newUrl };
         $(targetInputId).dataset.savedUrl = newUrl;
-        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
-        return { saved:true };
+        return { saved:true, message: targetInputId === "setLogoUrl" ? "Logo uploaded and saved." : "Hero image uploaded and saved." };
       }
 
-      return { saved:false };
+      return { saved:false, message:"Image uploaded. Now click Save to store it." };
     }catch(err){
-      console.error("Image uploaded but auto-save failed:", err);
-      showToast("Image uploaded, but saving URL failed: " + (err.message || err), true);
-      return { saved:false, error:err };
+      console.error("Image uploaded but database save failed:", err);
+      return { saved:false, message:"Image uploaded, but database save failed: " + (err.message || err) };
     }
+  }
+
+  function addCacheBustToImageUrl(url){
+    if(!url) return "";
+    const sep = String(url).includes("?") ? "&" : "?";
+    return `${url}${sep}v=${Date.now()}`;
   }
 
   function getOrCreateUploadStatus(fileInputId){
