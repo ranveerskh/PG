@@ -103,7 +103,7 @@
       <div class="cardHead" style="padding:0 0 14px;border-bottom:1px solid var(--line);margin-bottom:14px"><div><h3>Order Tracking</h3><p>Use the code shared by Siffat Cakes.</p></div></div>
       <div class="field"><label>Tracking Code / Order ID</label><input id="trackingCode" placeholder="Example: A1B2C3D4" autocomplete="off"></div>
       <div class="field"><label>Phone or Email</label><input id="contact" placeholder="Phone or email used on order" autocomplete="off"></div>
-      <button class="btn primary block" onclick="trackOrder()">Track Order</button>
+      <button id="trackBtn" class="btn primary block" onclick="trackOrder()">Track Order</button>
       <p class="hint" style="margin-top:10px;">For privacy, both tracking code and customer phone/email are required.</p>
       <div id="trackResult" class="result"></div>
     </section>
@@ -119,7 +119,22 @@
   const FLOW = ["Pending","Confirmed","In Progress","Ready for Pickup","Completed"];
   document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(location.search);
-    if(params.get("code")) $("trackingCode").value = params.get("code");
+    if(params.get("code")){
+      $("trackingCode").value = params.get("code").toUpperCase();
+      const box = $("trackResult");
+      box.classList.add("show");
+      box.innerHTML = `<div class="loading">Tracking code added. Enter the customer phone/email and press <b>Track Order</b>.</div>`;
+    }
+
+    ["trackingCode","contact"].forEach(id => {
+      const el = $(id);
+      if(el){
+        el.addEventListener("keydown", event => {
+          if(event.key === "Enter") trackOrder();
+        });
+      }
+    });
+
     await loadSettings();
   });
   async function loadSettings(){
@@ -135,20 +150,38 @@
     }catch(err){ console.warn(err); }
   }
   async function trackOrder(){
-    const code = $("trackingCode").value.trim().toUpperCase();
+    const code = $("trackingCode").value.trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
     const contact = $("contact").value.trim();
-    if(!code || !contact) return showToast("Enter tracking code and phone/email.", true);
+
+    if(!code || !contact){
+      const box = $("trackResult");
+      box.classList.add("show");
+      box.innerHTML = `<div class="loading">Please enter both tracking code and phone/email.</div>`;
+      showToast("Enter tracking code and phone/email.", true);
+      return;
+    }
+
     const box = $("trackResult");
+    const btn = $("trackBtn");
     box.classList.add("show");
     box.innerHTML = `<div class="loading">Checking order status...</div>`;
+
     try{
+      if(btn) btn.disabled = true;
       const { data, error } = await supabaseClient.rpc("track_order", { p_tracking_code:code, p_contact:contact });
       if(error) throw error;
-      if(!data || data.ok !== true){ box.innerHTML = `<div class="loading">${escapeHtml(data?.message || "Order not found. Check tracking code and contact info.")}</div>`; return; }
-      renderResult(data.order || {}, data.history || []);
+
+      if(!data || data.ok !== true){
+        box.innerHTML = `<div class="loading">${escapeHtml(data?.message || "Order not found. Check tracking code and contact info.")}</div>`;
+        return;
+      }
+
+      renderResult(data.order || {}, Array.isArray(data.history) ? data.history : []);
     }catch(err){
       console.error(err);
-      box.innerHTML = `<div class="loading">Tracking is not ready yet. Run the tracking SQL file in Supabase first.<br><br>${escapeHtml(err.message || "")}</div>`;
+      box.innerHTML = `<div class="loading"><b>Tracking setup issue.</b><br>Run the updated SQL file in Supabase, then refresh this page.<br><br>${escapeHtml(err.message || "")}</div>`;
+    }finally{
+      if(btn) btn.disabled = false;
     }
   }
   function renderResult(order, history){
