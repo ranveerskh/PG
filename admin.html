@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Siffat Cakes Admin</title>
+  <title>Siffat Cakes Website Manager</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -611,6 +611,34 @@
       display:block;
     }
 
+    .uploadStatus{
+      display:none;
+      padding:9px 10px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff7ff;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+      line-height:1.35;
+    }
+
+    .uploadStatus.show{
+      display:block;
+    }
+
+    .uploadStatus.error{
+      background:rgba(180,35,24,.08);
+      border-color:rgba(180,35,24,.20);
+      color:var(--red);
+    }
+
+    .uploadStatus.success{
+      background:rgba(22,130,58,.08);
+      border-color:rgba(22,130,58,.22);
+      color:var(--green);
+    }
+
     .productModeBox{
       border:1px solid var(--line);
       background:#fff;
@@ -924,7 +952,7 @@
   <div class="loginCard">
     <div class="logo" style="margin-bottom:14px;">🍰</div>
     <h2>Admin Login</h2>
-    <p>Login to manage Siffat Cakes website, products, orders, cake setup, images and settings.</p>
+    <p>Login to manage Siffat Cakes website, products, cake setup and settings.</p>
 
     <div class="field">
       <label>Email</label>
@@ -950,7 +978,7 @@
       <div class="brand">
         <div class="logo">🍰</div>
         <div>
-          <h1>Siffat Cakes Admin</h1>
+          <h1>Siffat Cakes Website Manager</h1>
           <p id="adminEmailText">Managing website</p>
         </div>
       </div>
@@ -958,6 +986,7 @@
       <div class="navActions">
         <span class="btn green small">Connected</span>
         <a class="btn small" href="index.html" target="_blank">View Site</a>
+        <a class="btn primary small" href="orders-admin.html">Order Manager</a>
         <button class="btn small" onclick="loadAll()">Refresh</button>
         <button class="btn red small" onclick="logoutAdmin()">Sign Out</button>
       </div>
@@ -967,11 +996,9 @@
   <main class="wrap main">
     <div class="tabs">
       <button class="tabBtn active" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</button>
-      <button class="tabBtn" data-tab="orders" onclick="showTab('orders')">Orders</button>
       <button class="tabBtn" data-tab="products" onclick="showTab('products')">Products</button>
       <button class="tabBtn" data-tab="setup" onclick="showTab('setup')">Cake Setup</button>
       <button class="tabBtn" data-tab="settings" onclick="showTab('settings')">Website Settings</button>
-      <button class="tabBtn" data-tab="images" onclick="showTab('images')">Images</button>
     </div>
 
     <section id="dashboardPanel" class="panel active">
@@ -1009,8 +1036,8 @@
               <div class="compactItem open">
                 <div class="compactTop">
                   <div class="compactMain">
-                    <div class="itemTitle">Images</div>
-                    <div class="itemMeta">Images stay inside Supabase Storage. Upload limit is 1 MB per photo.</div>
+                    <div class="itemTitle">Order Manager</div>
+                    <div class="itemMeta">Daily order work is separated into orders-admin.html so the website manager stays clean.</div>
                   </div>
                 </div>
               </div>
@@ -1019,7 +1046,7 @@
                 <div class="compactTop">
                   <div class="compactMain">
                     <div class="itemTitle">Orders</div>
-                    <div class="itemMeta">Collapsed order slips with status, print and WhatsApp actions.</div>
+                    <div class="itemMeta">Open the separate order manager for status, tracking, sorting, printing and deletion tools.</div>
                   </div>
                 </div>
               </div>
@@ -1031,48 +1058,14 @@
           <div class="cardHead">
             <div>
               <h3>Recent Orders</h3>
-              <p>Latest customer requests.</p>
+              <p>Latest customer requests. Full management opens separately.</p>
             </div>
-            <button class="btn small" onclick="showTab('orders')">Open Orders</button>
+            <a class="btn small" href="orders-admin.html">Open Order Manager</a>
           </div>
 
           <div class="cardBody">
             <div id="recentOrdersList" class="list"></div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="ordersPanel" class="panel">
-      <div class="card">
-        <div class="cardHead">
-          <div>
-            <h3>Orders</h3>
-            <p>Orders are collapsed. Open each order to review custom cakes, desserts and customer details.</p>
-          </div>
-          <button class="btn small" onclick="loadAll()">Refresh</button>
-        </div>
-
-        <div class="cardBody">
-          <div class="searchRow">
-            <input id="orderSearch" placeholder="Search name, phone, email, order id..." oninput="renderOrders()">
-            <select id="orderStatusFilter" onchange="renderOrders()">
-              <option value="all">All Statuses</option>
-              <option>Pending</option>
-              <option>Confirmed</option>
-              <option>In Progress</option>
-              <option>Ready</option>
-              <option>Completed</option>
-              <option>Cancelled</option>
-            </select>
-            <select id="orderTypeFilter" onchange="renderOrders()">
-              <option value="all">Pickup + Delivery</option>
-              <option>Pickup</option>
-              <option>Delivery</option>
-            </select>
-          </div>
-
-          <div id="ordersList" class="list"></div>
         </div>
       </div>
     </section>
@@ -1626,85 +1619,6 @@
       </div>
     </section>
 
-    <section id="imagesPanel" class="panel">
-      <div class="layout2">
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h3>Upload Image</h3>
-              <p>Images upload to Supabase Storage. Maximum 1 MB each.</p>
-            </div>
-          </div>
-
-          <div class="cardBody">
-            <div id="mediaStatsGrid" class="mediaStats"></div>
-
-            <div class="field">
-              <label>Choose Image</label>
-              <input id="galleryFile" type="file" accept="image/png,image/jpeg,image/webp">
-              <div class="hint">Max 1 MB. Recommended: JPG or WEBP under 700 KB.</div>
-            </div>
-
-            <div class="field">
-              <label>Folder</label>
-              <select id="galleryFolder">
-                <option value="products">Products</option>
-                <option value="categories">Categories</option>
-                <option value="settings">Settings</option>
-                <option value="gallery">Gallery</option>
-              </select>
-            </div>
-
-            <button class="btn primary block" onclick="uploadGalleryImage()">Upload Image</button>
-
-            <div class="field" style="margin-top:12px;">
-              <label>Uploaded Image URL</label>
-              <input id="galleryUrl" readonly placeholder="Uploaded URL will appear here">
-            </div>
-
-            <div class="imageTools">
-              <button class="btn small" onclick="copyFieldValue('galleryUrl')">Copy URL</button>
-              <button class="btn small" onclick="refreshMediaGallery()">Refresh Gallery</button>
-            </div>
-
-            <img id="galleryPreview" class="imagePreview" alt="Uploaded preview" style="margin-top:10px;">
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h3>Image Gallery</h3>
-              <p>Client can see uploaded photos, used photos and unused photos.</p>
-            </div>
-            <button class="btn small" onclick="refreshMediaGallery()">Refresh</button>
-          </div>
-
-          <div class="cardBody">
-            <div class="searchRow">
-              <input id="imageSearch" placeholder="Search image path..." oninput="renderGalleryList()">
-              <select id="imageFolderFilter" onchange="renderGalleryList()">
-                <option value="all">All folders</option>
-                <option value="products">Products</option>
-                <option value="categories">Categories</option>
-                <option value="settings">Settings</option>
-                <option value="gallery">Gallery</option>
-              </select>
-              <select id="imageUsageFilter" onchange="renderGalleryList()">
-                <option value="all">All images</option>
-                <option value="used">Used</option>
-                <option value="unused">Unused</option>
-              </select>
-            </div>
-
-            <div id="galleryList" class="galleryGrid">
-              <div class="loading">Loading images...</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 </div>
 
@@ -1920,14 +1834,6 @@
       orders = ordersRes.data || [];
       orderItems = orderItemsRes.data || [];
 
-      try{
-        await loadMediaFiles();
-        mediaLoadError = "";
-      }catch(storageErr){
-        console.warn("Media gallery load issue:", storageErr);
-        mediaLoadError = storageErr.message || "Could not load images.";
-        mediaFiles = [];
-      }
 
       renderAll();
       showToast("Admin data loaded.");
@@ -1944,9 +1850,6 @@
     fillProductSelects();
     renderProducts();
     renderSetupLists();
-    renderOrders();
-    renderMediaStats();
-    renderGalleryList();
   }
 
   function showTab(tab){
@@ -1983,10 +1886,10 @@
 
     $("statsGrid").innerHTML = `
       <div class="stat"><b>${orders.length}</b><span>Total Orders</span></div>
-      <div class="stat"><b>${statusCount("Pending")}</b><span>Pending</span></div>
+      <div class="stat"><b>${statusCount("Pending")}</b><span>Pending Orders</span></div>
       <div class="stat"><b>${cakes.length + quickProducts.length}</b><span>Total Products</span></div>
-      <div class="stat"><b>${quickProducts.length}</b><span>Quick Desserts</span></div>
-      <div class="stat"><b>${mediaFiles.length}/${CLIENT_PHOTO_LIMIT}</b><span>Photos Uploaded</span></div>
+      <div class="stat"><b>${categories.length}</b><span>Cake Occasions</span></div>
+      <div class="stat"><b>${sizes.length + flavours.length + addons.length}</b><span>Cake Setup Items</span></div>
       <div class="stat"><b>${quoteCount}</b><span>Quote Required</span></div>
     `;
   }
@@ -2486,7 +2389,7 @@
     if(error) return showToast(error.message, true);
 
     await loadAll();
-    showToast("Cake product deleted. Its image stays in gallery unless unused and deleted manually.");
+    showToast("Cake product deleted.");
   }
 
   async function deleteQuickProduct(id){
@@ -2496,7 +2399,7 @@
     if(error) return showToast(error.message, true);
 
     await loadAll();
-    showToast("Quick dessert deleted. Its image stays in gallery unless unused and deleted manually.");
+    showToast("Quick dessert deleted.");
   }
 
   function renderSetupLists(){
@@ -3263,8 +3166,12 @@
   async function uploadAndSet(fileInputId,targetInputId,previewId,folder){
     const fileInput = $(fileInputId);
     const targetInput = $(targetInputId);
+    const button = document.querySelector(`button[onclick*="${fileInputId}"]`);
+
+    clearUploadStatus(fileInputId);
 
     if(!fileInput || !fileInput.files || !fileInput.files[0]){
+      setUploadStatus(fileInputId, "Choose an image first.", true);
       showToast("Choose an image first.", true);
       return;
     }
@@ -3272,25 +3179,24 @@
     const file = fileInput.files[0];
 
     if(!file.type.startsWith("image/")){
+      setUploadStatus(fileInputId, "Only image files are allowed.", true);
       showToast("Only image files are allowed.", true);
       return;
     }
 
     if(file.size > MAX_UPLOAD_MB * 1024 * 1024){
-      showToast(`Image must be less than ${MAX_UPLOAD_MB} MB. Please compress it and try again.`, true);
+      const msg = `Image must be less than ${MAX_UPLOAD_MB} MB. Please compress it and try again.`;
+      setUploadStatus(fileInputId, msg, true);
+      showToast(msg, true);
       return;
     }
 
     const savedUrl = targetInput?.dataset?.savedUrl || "";
     const currentUrlBeforeUpload = targetInput?.value?.trim() || "";
-    const isReplacingSavedSupabasePhoto = savedUrl && isSupabaseStorageUrl(savedUrl);
-
-    if(mediaFiles.length >= CLIENT_PHOTO_LIMIT && !isReplacingSavedSupabasePhoto){
-      showToast(`Photo limit reached: ${CLIENT_PHOTO_LIMIT}/${CLIENT_PHOTO_LIMIT}. Delete unused images first.`, true);
-      return;
-    }
 
     try{
+      if(button) button.disabled = true;
+      setUploadStatus(fileInputId, "Uploading image... please wait.");
       showToast("Uploading image...");
 
       const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
@@ -3325,13 +3231,52 @@
         await deleteStorageFileFromUrl(currentUrlBeforeUpload, true);
       }
 
-      await refreshMediaAfterChange();
-
-      showToast("Image uploaded and URL added.");
+      setUploadStatus(fileInputId, "Image uploaded successfully. Now save this product/settings form.", false, true);
+      showToast("Image uploaded successfully. Now save the form.");
     }catch(err){
       console.error(err);
-      showToast(err.message || "Image upload failed.", true);
+      const msg = err.message || "Image upload failed. Check Supabase Storage bucket/policies.";
+      setUploadStatus(fileInputId, msg, true);
+      showToast(msg, true);
+    }finally{
+      if(button) button.disabled = false;
     }
+  }
+
+  function getOrCreateUploadStatus(fileInputId){
+    const fileInput = $(fileInputId);
+    if(!fileInput) return null;
+
+    const box = fileInput.closest(".imageBox") || fileInput.parentElement;
+    if(!box) return null;
+
+    let status = box.querySelector(`[data-upload-status="${fileInputId}"]`);
+    if(!status){
+      status = document.createElement("div");
+      status.className = "uploadStatus";
+      status.dataset.uploadStatus = fileInputId;
+      box.appendChild(status);
+    }
+
+    return status;
+  }
+
+  function setUploadStatus(fileInputId,message,isError = false,isSuccess = false){
+    const status = getOrCreateUploadStatus(fileInputId);
+    if(!status) return;
+
+    status.textContent = message;
+    status.classList.add("show");
+    status.classList.toggle("error", !!isError);
+    status.classList.toggle("success", !!isSuccess);
+  }
+
+  function clearUploadStatus(fileInputId){
+    const status = getOrCreateUploadStatus(fileInputId);
+    if(!status) return;
+
+    status.textContent = "";
+    status.classList.remove("show","error","success");
   }
 
   async function uploadGalleryImage(){
@@ -3395,16 +3340,8 @@
   }
 
   async function refreshMediaAfterChange(){
-    try{
-      await loadMediaFiles();
-      mediaLoadError = "";
-      renderMediaStats();
-      renderGalleryList();
-      renderStats();
-    }catch(err){
-      console.warn("Could not refresh media after change:", err);
-      mediaLoadError = err.message || "Could not refresh images.";
-    }
+    // Gallery/post-image manager was removed. Product/logo/hero uploads still work through direct fields.
+    return true;
   }
 
   function renderMediaStats(){
