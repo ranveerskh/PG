@@ -114,6 +114,8 @@
   const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
   const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const LOAD_TIMEOUT_MS = 9000;
+  const LOAD_RETRY_DELAYS = [0, 900, 1800, 3500];
   const $ = id => document.getElementById(id);
   let siteSettings = { brand_name:"Siffat Cakes", tagline:"Eggless Cakes & Desserts", logo_url:"", whatsapp_number:"", currency:"$" };
   const FLOW = ["Pending","Confirmed","In Progress","Ready for Pickup","Completed"];
@@ -138,17 +140,39 @@
     await loadSettings();
   });
   async function loadSettings(){
-    try{
-      const { data } = await supabaseClient.from("site_settings").select("*").eq("id",1).maybeSingle();
-      siteSettings = {...siteSettings, ...(data || {})};
-      $("siteBrandName").textContent = siteSettings.brand_name || "Siffat Cakes";
-      $("siteTagline").textContent = siteSettings.tagline || "Track your order";
-      if(siteSettings.logo_url) $("siteLogo").innerHTML = `<img src="${escapeHtml(siteSettings.logo_url)}" alt="Logo" onerror="this.parentElement.textContent='🍰'">`;
-      const phone = normalizePhone(siteSettings.whatsapp_number || "");
-      $("whatsappBtn").href = phone ? `https://wa.me/${phone}?text=${encodeURIComponent("Hi, I want to ask about my Siffat Cakes order.")}` : "#";
-      $("whatsappBtn").onclick = phone ? null : e => { e.preventDefault(); showToast("WhatsApp number is not set yet.", true); };
-    }catch(err){ console.warn(err); }
+    let lastErr = null;
+
+    for(let attempt = 0; attempt < LOAD_RETRY_DELAYS.length; attempt++){
+      if(LOAD_RETRY_DELAYS[attempt]) await wait(LOAD_RETRY_DELAYS[attempt]);
+
+      try{
+        const { data, error } = await withTimeout(
+          supabaseClient.from("site_settings").select("*").eq("id",1).maybeSingle(),
+          LOAD_TIMEOUT_MS
+        );
+        if(error) throw error;
+
+        siteSettings = {...siteSettings, ...(data || {})};
+        $("siteBrandName").textContent = siteSettings.brand_name || "Siffat Cakes";
+        $("siteTagline").textContent = siteSettings.tagline || "Track your order";
+
+        if(siteSettings.logo_url){
+          $("siteLogo").innerHTML = `<img src="${escapeHtml(cacheBustImage(siteSettings.logo_url))}" alt="Logo" onerror="this.parentElement.textContent='🍰'">`;
+        }
+
+        const phone = normalizePhone(siteSettings.whatsapp_number || "");
+        $("whatsappBtn").href = phone ? `https://wa.me/${phone}?text=${encodeURIComponent("Hi, I want to ask about my Siffat Cakes order.")}` : "#";
+        $("whatsappBtn").onclick = phone ? null : e => { e.preventDefault(); showToast("WhatsApp number is not set yet.", true); };
+        return;
+      }catch(err){
+        lastErr = err;
+        console.warn(`Track settings load attempt ${attempt + 1} failed:`, err?.message || err);
+      }
+    }
+
+    console.warn("Track settings failed:", lastErr?.message || lastErr);
   }
+
   async function trackOrder(){
     const code = $("trackingCode").value.trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
     const contact = $("contact").value.trim();
@@ -168,8 +192,7 @@
 
     try{
       if(btn) btn.disabled = true;
-      const { data, error } = await supabaseClient.rpc("track_order", { p_tracking_code:code, p_contact:contact });
-      if(error) throw error;
+      const data = await callTrackOrderWithRetry(code, contact, box);
 
       if(!data || data.ok !== true){
         box.innerHTML = `<div class="loading">${escapeHtml(data?.message || "Order not found. Check tracking code and contact info.")}</div>`;
@@ -184,6 +207,63 @@
       if(btn) btn.disabled = false;
     }
   }
+  async function callTrackOrderWithRetry(code, contact, box){
+    let lastErr = null;
+
+    for(let attempt = 0; attempt < LOAD_RETRY_DELAYS.length; attempt++){
+      const delay = LOAD_RETRY_DELAYS[attempt];
+      if(delay){
+        await wait(delay);
+        box.innerHTML = `<div class="loading">Still checking... waking up order data. Attempt ${attempt + 1}/${LOAD_RETRY_DELAYS.length}</div>`;
+      }
+
+      try{
+        await warmSupabase();
+        const { data, error } = await withTimeout(
+          supabaseClient.rpc("track_order", { p_tracking_code:code, p_contact:contact }),
+          LOAD_TIMEOUT_MS
+        );
+        if(error) throw error;
+        return data;
+      }catch(err){
+        lastErr = err;
+        console.warn(`Track attempt ${attempt + 1} failed:`, err?.message || err);
+      }
+    }
+
+    throw lastErr || new Error("Tracking request failed.");
+  }
+
+  async function warmSupabase(){
+    try{
+      await withTimeout(
+        supabaseClient.from("site_settings").select("id").eq("id",1).maybeSingle(),
+        LOAD_TIMEOUT_MS
+      );
+    }catch(err){
+      console.warn("Track warm-up skipped:", err?.message || err);
+    }
+  }
+
+  function withTimeout(promise, ms){
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out. Retrying.")), ms))
+    ]);
+  }
+
+  function cacheBustImage(url){
+    const clean = String(url || "");
+    if(!clean) return clean;
+    if(!clean.includes("supabase.co/storage")) return clean;
+    const sep = clean.includes("?") ? "&" : "?";
+    return `${clean}${sep}v=${Date.now()}`;
+  }
+
+  function wait(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   function renderResult(order, history){
     const status = normalizeDisplayStatus(order.status || "Pending");
     const activeIndex = getStatusIndex(status);
