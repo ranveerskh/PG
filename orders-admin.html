@@ -318,7 +318,7 @@
             <button class="btn primary small" onclick="saveOrderChanges('${escapeJs(id)}')">Save Status / Note</button>
             <button class="btn small" onclick="whatsappCustomer('${escapeJs(id)}')">WhatsApp Customer</button>
             <button class="btn small" onclick="copyWhatsAppMessage('${escapeJs(id)}')">Copy Original WhatsApp</button>
-            <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print</button>
+            <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print Invoice</button>
             ${isArchived ? `<button class="btn green small" onclick="archiveOrder('${escapeJs(id)}', false)">Unarchive</button>` : `<button class="btn orange small" onclick="archiveOrder('${escapeJs(id)}', true)">Archive</button>`}
           </div>
           <div class="dangerZone">
@@ -345,22 +345,36 @@
   async function saveOrderChanges(id){
     const status = $("status-" + id).value;
     const admin_note = $("note-" + id).value.trim();
-    const tracking_code = ($("tracking-" + id).value || "").trim().toUpperCase();
-    let payload = { status, admin_note, tracking_code, status_updated_at:new Date().toISOString() };
-    let { error } = await supabaseClient.from("orders").update(payload).eq("id", id);
-    if(error && String(error.message || "").toLowerCase().includes("column")){
-      const fallback = await supabaseClient.from("orders").update({ status }).eq("id", id);
-      error = fallback.error;
-      if(!error) showToast("Status saved. Run tracking SQL to enable admin notes/tracking codes.", true);
+    const tracking_code = ($("tracking-" + id).value || "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
+
+    showToast("Saving order update...");
+
+    let { error } = await supabaseClient.rpc("admin_update_order", {
+      p_order_id:id,
+      p_status:status,
+      p_admin_note:admin_note,
+      p_tracking_code:tracking_code
+    });
+
+    if(error){
+      console.warn("admin_update_order RPC failed, trying direct update:", error.message || error);
+      const fallbackPayload = { status };
+      const direct = await supabaseClient.from("orders").update(fallbackPayload).eq("id", id);
+
+      if(direct.error){
+        return showToast("Order update failed. Run the updated SQL file first. " + (error.message || direct.error.message), true);
+      }
+
+      showToast("Status saved only. Run updated SQL to enable notes/tracking history.", true);
     }
-    if(error) return showToast(error.message, true);
-    await insertStatusHistory(id,status,admin_note);
+
     await loadAll();
     showToast("Order updated.");
   }
 
   async function insertStatusHistory(id,status,note){
-    try{ await supabaseClient.from("order_status_history").insert({ order_id:id, status, note, created_by:currentUser?.id || null }); }catch(err){ console.warn("History insert skipped", err); }
+    const { error } = await supabaseClient.from("order_status_history").insert({ order_id:id, status, note, created_by:currentUser?.id || null });
+    if(error) console.warn("History insert skipped", error.message || error);
   }
 
   async function archiveOrder(id, archive){
@@ -408,11 +422,127 @@
   }
 
   function printOrder(id){
-    const card = $("order-" + id);
-    if(!card) return;
+    const order = orders.find(o => String(o.id) === String(id));
+    if(!order) return showToast("Order not found.", true);
+
+    const items = orderItems.filter(item => String(item.order_id) === String(id));
     const win = window.open("", "_blank");
-    win.document.write(`<html><head><title>Order ${escapeHtml(id.slice(0,8))}</title><style>body{font-family:Arial;padding:20px;color:#111}button,select,textarea,input{display:none!important}.orderBody{display:block!important}.orderCard{border:1px solid #ddd;padding:16px;border-radius:12px}.orderItem{border:1px solid #ddd;padding:10px;margin:8px 0;border-radius:8px}</style></head><body>${card.innerHTML}</body></html>`);
-    win.document.close(); win.focus(); win.print();
+
+    if(!win){
+      showToast("Popup blocked. Allow popups to print invoice.", true);
+      return;
+    }
+
+    win.document.write(buildInvoiceHtml(order, items));
+    win.document.close();
+    win.focus();
+    setTimeout(() => win.print(), 450);
+  }
+
+  function buildInvoiceHtml(order, items){
+    const brand = siteSettings.brand_name || "Siffat Cakes";
+    const logo = siteSettings.logo_url || "";
+    const shortId = String(order.id || "").slice(0,8).toUpperCase();
+    const trackingCode = getTrackingCode(order);
+    const subtotal = Number(order.subtotal ?? order.estimated_subtotal ?? 0);
+    const tax = Number(order.hst_amount ?? order.tax_amount ?? 0);
+    const delivery = Number(order.delivery_fee ?? 0);
+    const estimatedTotal = Number(order.estimated_total || 0);
+    const calculatedSubtotal = items.reduce((sum,item)=>sum + Number(item.estimated_item_total || 0), 0);
+    const finalSubtotal = subtotal || calculatedSubtotal;
+    const finalTotal = estimatedTotal || (finalSubtotal + tax + delivery);
+
+    return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>${escapeHtml(brand)} Invoice ${escapeHtml(shortId)}</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:#f7f1f8;color:#1d141f;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.45}
+    .page{width:210mm;min-height:297mm;margin:0 auto;background:white;padding:18mm;}
+    .top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;border-bottom:2px solid #640D6B;padding-bottom:18px;margin-bottom:18px}
+    .brand{display:flex;gap:12px;align-items:center}.logo{width:56px;height:56px;border-radius:18px;background:#640D6B;color:#fff;display:grid;place-items:center;font-size:26px;overflow:hidden}.logo img{width:100%;height:100%;object-fit:cover}.brand h1{margin:0;color:#640D6B;font-size:24px;letter-spacing:-.04em}.brand p{margin:4px 0 0;color:#725a76;font-size:12px}.invoiceTitle{text-align:right}.invoiceTitle h2{margin:0;color:#640D6B;font-size:28px;letter-spacing:-.05em}.invoiceTitle p{margin:5px 0 0;color:#725a76;font-size:12px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.box{border:1px solid rgba(100,13,107,.18);background:#fff7ff;border-radius:14px;padding:12px}.box h3{margin:0 0 8px;color:#640D6B;font-size:13px;text-transform:uppercase;letter-spacing:.04em}.box p{margin:0;color:#1d141f}.muted{color:#725a76}
+    table{width:100%;border-collapse:collapse;margin-top:8px}.items{border:1px solid rgba(100,13,107,.18);border-radius:14px;overflow:hidden}th{background:#640D6B;color:white;text-align:left;padding:10px;font-size:12px}td{border-top:1px solid rgba(100,13,107,.12);padding:10px;vertical-align:top}td:last-child,th:last-child{text-align:right}.itemName{font-weight:700;color:#1d141f}.itemMeta{margin-top:4px;color:#725a76;font-size:11px;line-height:1.45}.totals{margin-left:auto;width:280px;margin-top:16px;border:1px solid rgba(100,13,107,.18);border-radius:14px;overflow:hidden}.totals div{display:flex;justify-content:space-between;padding:9px 12px;border-top:1px solid rgba(100,13,107,.10)}.totals div:first-child{border-top:0}.totals .grand{background:#640D6B;color:white;font-weight:800;font-size:15px}.note{margin-top:18px;padding:12px;border-radius:14px;background:#fff7ff;border:1px solid rgba(100,13,107,.18);color:#725a76;font-size:12px}.footer{margin-top:22px;border-top:1px solid rgba(100,13,107,.16);padding-top:12px;display:flex;justify-content:space-between;gap:14px;color:#725a76;font-size:11px}.printBtn{position:fixed;right:18px;top:18px;border:0;border-radius:999px;background:#640D6B;color:white;padding:11px 15px;font-weight:800;box-shadow:0 12px 28px rgba(100,13,107,.25);cursor:pointer}
+    @media print{body{background:white}.page{width:auto;min-height:auto;margin:0;padding:0}.printBtn{display:none}.top{break-inside:avoid}.box,.items,.totals,.note{break-inside:avoid}}
+  </style>
+</head>
+<body>
+<button class="printBtn" onclick="window.print()">Print / Save PDF</button>
+<main class="page">
+  <section class="top">
+    <div class="brand">
+      <div class="logo">${logo ? `<img src="${escapeHtml(logo)}" alt="Logo">` : "🍰"}</div>
+      <div>
+        <h1>${escapeHtml(brand)}</h1>
+        <p>${escapeHtml(siteSettings.address || "")}</p>
+        <p>${escapeHtml(siteSettings.business_hours || "")}</p>
+      </div>
+    </div>
+    <div class="invoiceTitle">
+      <h2>Order Invoice</h2>
+      <p><b>Order:</b> ${escapeHtml(shortId)}</p>
+      <p><b>Tracking:</b> ${escapeHtml(trackingCode)}</p>
+      <p><b>Created:</b> ${escapeHtml(formatDateTime(order.created_at))}</p>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="box">
+      <h3>Customer</h3>
+      <p><b>${escapeHtml(order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || "Customer"))}</b></p>
+      <p class="muted">${order.customer_data_deleted ? "Customer data removed" : escapeHtml(order.customer_phone || "")}</p>
+      <p class="muted">${order.customer_data_deleted ? "" : escapeHtml(order.customer_email || "")}</p>
+    </div>
+    <div class="box">
+      <h3>Order Details</h3>
+      <p><b>Status:</b> ${escapeHtml(order.status || "Pending")}</p>
+      <p><b>Needed:</b> ${escapeHtml(formatDate(order.needed_date))} ${order.needed_time ? escapeHtml(order.needed_time) : ""}</p>
+      <p><b>Type:</b> ${escapeHtml(order.delivery_type || "")}</p>
+    </div>
+  </section>
+
+  <section class="items">
+    <table>
+      <thead><tr><th>Item</th><th>Qty</th><th>Total</th></tr></thead>
+      <tbody>
+        ${items.length ? items.map(renderInvoiceItem).join("") : `<tr><td colspan="3">No items found.</td></tr>`}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="totals">
+    <div><span>Subtotal</span><b>${finalSubtotal ? money(finalSubtotal) : "Quote"}</b></div>
+    ${delivery ? `<div><span>Delivery</span><b>${money(delivery)}</b></div>` : ""}
+    ${tax ? `<div><span>Tax / HST</span><b>${money(tax)}</b></div>` : ""}
+    <div class="grand"><span>Total</span><b>${finalTotal ? money(finalTotal) : "Quote"}</b></div>
+  </section>
+
+  <section class="note">
+    This invoice is based on the current order information. Final custom cake pricing can be confirmed by the shop if the order requires a quote.
+  </section>
+
+  <section class="footer">
+    <span>Thank you for ordering from ${escapeHtml(brand)}.</span>
+    <span>${escapeHtml(siteSettings.whatsapp_number || "")}</span>
+  </section>
+</main>
+</body>
+</html>`;
+  }
+
+  function renderInvoiceItem(item){
+    const info = parseJson(item.product_snapshot || item.quick_product_snapshot || item.snapshot_json || null);
+    const isQuick = isQuickOrderItem(item);
+    const name = item.cake_name || item.product_name || info.name || (isQuick ? "Quick Dessert" : "Custom Cake");
+    const qty = Number(item.quantity || 1);
+    const total = Number(item.estimated_item_total || 0);
+    const meta = isQuick
+      ? [info.categoryName || info.category || item.option_name, info.variant || item.flavour_name, item.special_notes || item.customer_note].filter(Boolean).join(" · ")
+      : [item.size_name, item.flavour_name, item.option_name, item.message_on_cake ? "Message: " + item.message_on_cake : "", item.special_notes].filter(Boolean).join(" · ");
+
+    return `<tr><td><div class="itemName">${escapeHtml(name)}</div>${meta ? `<div class="itemMeta">${escapeHtml(meta)}</div>` : ""}</td><td>${qty}</td><td>${total ? money(total) : "Quote"}</td></tr>`;
   }
 
   function toggleOrder(id){ const el = $("order-" + id); if(el) el.classList.toggle("open"); }
@@ -439,7 +569,7 @@
   function copyField(id){ const el=$(id); if(!el) return; navigator.clipboard.writeText(el.value).then(()=>showToast("Copied.")); }
   function escapeHtml(value){ return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
   function escapeAttr(value){ return escapeHtml(value); }
-  function escapeJs(value){ return String(value ?? "").replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/"/g,'\\"'); }
+  function escapeJs(value){ return String(value ?? "").replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll('"','\\"'); }
   function escapeClass(value){ return String(value || "").replace(/[^a-zA-Z0-9_-]/g,""); }
   function showToast(message,isError=false){ const toast=$("toast"); toast.textContent=message; toast.style.background=isError?"var(--red)":"var(--purple)"; toast.classList.add("show"); clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>toast.classList.remove("show"),3200); }
 </script>
