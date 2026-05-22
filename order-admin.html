@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Siffat Cakes Order Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+
+    :root{
+      --bg:#fbf4fb;
+      --text:#1d141f;
+      --muted:#725a76;
+      --purple:#640D6B;
+      --purple2:#7a1281;
+      --line:rgba(100,13,107,.16);
+      --shadow:0 18px 45px rgba(100,13,107,.12);
+      --shadow2:0 10px 24px rgba(100,13,107,.08);
+      --green:#16823a;
+      --red:#b42318;
+      --orange:#b54708;
+      --blue:#175cd3;
+      --soft:#fff7ff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    html,body{width:100%;min-height:100%}
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(100,13,107,.12),transparent 33%),
+        radial-gradient(circle at 100% 0%,rgba(122,18,129,.08),transparent 30%),
+        linear-gradient(180deg,var(--bg),#fff 58%,#fff);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    button,input,select,textarea{font:inherit}
+    button{border:0;cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1440px,calc(100% - 28px));margin:auto}
+    .topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .nav{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;min-width:0}
+    .logo{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--purple);color:#fff;box-shadow:0 12px 28px rgba(100,13,107,.22);font-size:20px;overflow:hidden;flex:0 0 auto;border:2px solid rgba(255,255,255,.85)}
+    .logo img{width:100%;height:100%;object-fit:cover;background:#fff}
+    .brand h1{color:var(--purple);font-size:18px;line-height:1;letter-spacing:-.045em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
+    .brand p{margin-top:4px;color:var(--muted);font-size:11px;white-space:nowrap;max-width:360px;overflow:hidden;text-overflow:ellipsis}
+    .navActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:9px 12px;border-radius:999px;color:var(--purple);font-weight:1000;background:#fff;border:1px solid var(--line);box-shadow:0 8px 18px rgba(100,13,107,.04);transition:.18s ease;white-space:nowrap;font-size:13px}
+    .btn:hover{transform:translateY(-1px);background:#fff7ff}
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important}
+    .btn.primary{background:linear-gradient(135deg,var(--purple),var(--purple2));border-color:rgba(100,13,107,.30);color:#fff;box-shadow:0 12px 26px rgba(100,13,107,.20)}
+    .btn.green{background:rgba(22,130,58,.08);border-color:rgba(22,130,58,.22);color:var(--green)}
+    .btn.red{background:rgba(180,35,24,.08);border-color:rgba(180,35,24,.20);color:var(--red)}
+    .btn.orange{background:rgba(181,71,8,.08);border-color:rgba(181,71,8,.20);color:var(--orange)}
+    .btn.blue{background:rgba(23,92,211,.08);border-color:rgba(23,92,211,.20);color:var(--blue)}
+    .btn.small{min-height:34px;padding:7px 10px;font-size:12px}
+    .btn.block{width:100%}
+    .loginScreen{min-height:100vh;display:grid;place-items:center;padding:24px}
+    .loginCard{width:min(430px,100%);border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
+    .loginCard h2{color:var(--purple);font-size:30px;letter-spacing:-.065em;margin-bottom:8px}
+    .loginCard p{color:var(--muted);font-size:13px;line-height:1.55;margin-bottom:16px}
+    .app{display:none}.app.show{display:block}
+    .main{padding:16px 0 34px}
+    .card{border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:24px;box-shadow:var(--shadow2);overflow:hidden;min-width:0}
+    .cardHead{padding:14px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .cardHead h3{color:var(--purple);font-size:18px;letter-spacing:-.045em}.cardHead p{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.42}
+    .cardBody{padding:14px}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;min-width:0}.field label{color:var(--purple);font-size:12px;font-weight:1000}
+    .field input,.field select,.field textarea{width:100%;min-height:43px;border:1px solid var(--line);outline:none;border-radius:15px;background:#fff;color:var(--text);padding:11px 12px;box-shadow:0 8px 18px rgba(100,13,107,.035)}
+    .field textarea{min-height:86px;resize:vertical}.hint{font-size:11px;color:var(--muted);line-height:1.45}.full{grid-column:1/-1}
+    .searchRow{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}.searchRow input,.searchRow select{min-height:42px;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:0 13px;outline:none;box-shadow:0 8px 18px rgba(100,13,107,.035)}.searchRow input{flex:1;min-width:220px}
+    .gridStats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}.stat{border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:20px;padding:14px;box-shadow:var(--shadow2)}.stat b{display:block;color:var(--purple);font-size:25px;letter-spacing:-.06em}.stat span{display:block;margin-top:5px;color:var(--muted);font-size:12px;font-weight:750}
+    .list{display:grid;gap:9px}.loading{padding:22px;border:1px dashed rgba(100,13,107,.22);border-radius:18px;color:var(--muted);text-align:center;background:rgba(255,255,255,.70);line-height:1.5}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;z-index:200;max-width:min(560px,calc(100% - 24px));background:var(--purple);color:#fff;border-radius:999px;padding:12px 15px;font-size:13px;font-weight:1000;box-shadow:0 18px 36px rgba(100,13,107,.24);transition:.2s ease;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .status{padding:7px 9px;border-radius:999px;font-size:11px;font-weight:1000;border:1px solid var(--line);background:#fff7ff;white-space:nowrap}.status.Pending{color:var(--orange)}.status.Confirmed{color:var(--blue)}.status.InProgress{color:#4a5fd0}.status.Ready,.status.ReadyForPickup,.status.OutForDelivery,.status.Completed{color:var(--green)}.status.Cancelled{color:var(--red)}
+    @media(max-width:1120px){.gridStats{grid-template-columns:repeat(3,1fr)}}@media(max-width:720px){.wrap{width:min(100% - 16px,1440px)}.nav{align-items:flex-start;flex-direction:column;padding:10px 0}.navActions{width:100%;justify-content:flex-start}.gridStats{grid-template-columns:repeat(2,1fr)}}
+
+    .layout{display:grid;grid-template-columns:1fr;gap:14px}
+    .orderCard{border:1px solid var(--line);background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(100,13,107,.035)}
+    .orderTop{padding:13px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;cursor:pointer;border-bottom:1px solid transparent}
+    .orderCard.open .orderTop{border-bottom-color:var(--line)}
+    .orderTop h4{font-size:15px;margin-bottom:4px;letter-spacing:-.025em}.orderTop p{color:var(--muted);font-size:12px;line-height:1.45}
+    .orderBody{display:none;padding:13px;background:#fff7ff}.orderCard.open .orderBody{display:block}
+    .formGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .orderItems{display:grid;gap:8px;margin-top:10px}.orderItem{border:1px solid var(--line);background:#fff;border-radius:16px;padding:10px;font-size:12px;line-height:1.55;color:var(--muted)}.orderItem b{color:var(--text)}
+    .sectionTitle{color:var(--purple);font-weight:1000;margin:13px 0 8px;font-size:13px}
+    .pillRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.pill{padding:5px 7px;border:1px solid var(--line);background:#fff7ff;color:var(--muted);border-radius:999px;font-size:10px;font-weight:900}
+    .dangerZone{border:1px solid rgba(180,35,24,.22);background:rgba(180,35,24,.05);border-radius:18px;padding:12px;margin-top:12px}
+    .dangerZone b{display:block;color:var(--red);font-size:13px;margin-bottom:8px}
+    .copyBox{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px;font-size:12px;color:var(--muted)}
+    .miniGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    @media(max-width:920px){.formGrid,.miniGrid{grid-template-columns:1fr}.orderTop{flex-direction:column}}
+  </style>
+</head>
+<body>
+<section id="loginScreen" class="loginScreen">
+  <div class="loginCard">
+    <div class="logo" style="margin-bottom:14px;">🍰</div>
+    <h2>Order Manager Login</h2>
+    <p>Login to manage customer orders, statuses, tracking links, printing and safe deletion.</p>
+    <div class="field"><label>Email</label><input id="loginEmail" type="email" placeholder="admin@email.com"></div>
+    <div class="field"><label>Password</label><input id="loginPassword" type="password" placeholder="Password"></div>
+    <button class="btn primary block" onclick="loginAdmin()">Login</button>
+  </div>
+</section>
+
+<div id="app" class="app">
+  <header class="topbar">
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo">🍰</div>
+        <div><h1>Siffat Cakes Order Manager</h1><p id="adminEmailText">Managing orders</p></div>
+      </div>
+      <div class="navActions">
+        <span class="btn green small">Connected</span>
+        <a class="btn small" href="admin.html">Website Manager</a>
+        <a class="btn small" href="track.html" target="_blank">Track Page</a>
+        <a class="btn small" href="index.html" target="_blank">View Site</a>
+        <button class="btn small" onclick="loadAll()">Refresh</button>
+        <button class="btn red small" onclick="logoutAdmin()">Sign Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <div id="statsGrid" class="gridStats"></div>
+    <section class="card">
+      <div class="cardHead">
+        <div><h3>Orders</h3><p>Search, filter, sort, update status, open tracking links, print orders and clean customer data.</p></div>
+        <div class="navActions"><button class="btn primary small" onclick="loadAll()">Refresh Orders</button></div>
+      </div>
+      <div class="cardBody">
+        <div class="searchRow">
+          <input id="orderSearch" placeholder="Search name, phone, email, order ID, tracking code..." oninput="renderOrders()">
+          <select id="orderStatusFilter" onchange="renderOrders()">
+            <option value="all">All Statuses</option><option>Pending</option><option>Confirmed</option><option>In Progress</option><option>Ready</option><option>Ready for Pickup</option><option>Out for Delivery</option><option>Completed</option><option>Cancelled</option>
+          </select>
+          <select id="orderTypeFilter" onchange="renderOrders()">
+            <option value="all">Pickup + Delivery</option><option>Pickup</option><option>Delivery</option>
+          </select>
+          <select id="archiveFilter" onchange="renderOrders()">
+            <option value="active">Active Only</option><option value="archived">Archived Only</option><option value="all">Active + Archived</option>
+          </select>
+          <select id="orderSort" onchange="renderOrders()">
+            <option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="needed_soon">Needed date soonest</option><option value="needed_late">Needed date latest</option><option value="status">Status A-Z</option><option value="total_high">Total high to low</option><option value="total_low">Total low to high</option>
+          </select>
+        </div>
+        <div id="ordersList" class="list"><div class="loading">Loading orders...</div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+  const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const ORDER_STATUSES = ["Pending","Confirmed","In Progress","Ready","Ready for Pickup","Out for Delivery","Completed","Cancelled"];
+  const $ = id => document.getElementById(id);
+  let currentUser = null;
+  let orders = [];
+  let orderItems = [];
+  let siteSettings = { brand_name:"Siffat Cakes", whatsapp_number:"", currency:"$" };
+
+  initAuth();
+
+  async function initAuth(){
+    const { data } = await supabaseClient.auth.getSession();
+    if(data.session?.user){ currentUser = data.session.user; await verifyAndOpen(); } else showLogin();
+    supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+      if(session?.user){ currentUser = session.user; await verifyAndOpen(); } else { currentUser = null; showLogin(); }
+    });
+  }
+
+  async function loginAdmin(){
+    const email = $("loginEmail").value.trim();
+    const password = $("loginPassword").value;
+    if(!email || !password) return showToast("Enter admin email and password.", true);
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if(error) return showToast(error.message, true);
+    showToast("Logged in.");
+  }
+
+  async function logoutAdmin(){ await supabaseClient.auth.signOut(); showToast("Signed out."); }
+  function showLogin(){ $("loginScreen").style.display = "grid"; $("app").classList.remove("show"); }
+
+  async function verifyAndOpen(){
+    const { data, error } = await supabaseClient.rpc("is_admin");
+    if(error || data !== true){ await supabaseClient.auth.signOut(); showToast("This user is not added as admin.", true); return; }
+    $("loginScreen").style.display = "none";
+    $("app").classList.add("show");
+    $("adminEmailText").textContent = currentUser.email || "Admin";
+    await loadAll();
+  }
+
+  async function loadAll(){
+    try{
+      showToast("Loading orders...");
+      const [settingsRes, ordersRes, itemsRes] = await Promise.all([
+        supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
+        supabaseClient.from("orders").select("*").order("created_at", { ascending:false }),
+        supabaseClient.from("order_items").select("*").order("created_at", { ascending:true })
+      ]);
+      if(settingsRes.error) console.warn(settingsRes.error.message);
+      if(ordersRes.error) throw ordersRes.error;
+      if(itemsRes.error) throw itemsRes.error;
+      siteSettings = {...siteSettings, ...(settingsRes.data || {})};
+      orders = ordersRes.data || [];
+      orderItems = itemsRes.data || [];
+      renderAll();
+      showToast("Orders loaded.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Failed to load orders.", true);
+    }
+  }
+
+  function renderAll(){ renderStats(); renderOrders(); }
+
+  function renderStats(){
+    const active = orders.filter(o => !truthy(o.archived));
+    const count = status => active.filter(o => normalizeStatus(o.status) === normalizeStatus(status)).length;
+    const total = active.reduce((sum,o)=>sum+Number(o.estimated_total || 0),0);
+    $("statsGrid").innerHTML = `
+      <div class="stat"><b>${active.length}</b><span>Active Orders</span></div>
+      <div class="stat"><b>${count("Pending")}</b><span>Pending</span></div>
+      <div class="stat"><b>${count("Confirmed")}</b><span>Confirmed</span></div>
+      <div class="stat"><b>${count("In Progress")}</b><span>In Progress</span></div>
+      <div class="stat"><b>${orders.filter(o=>truthy(o.archived)).length}</b><span>Archived</span></div>
+      <div class="stat"><b>${money(total)}</b><span>Active Estimated Total</span></div>
+    `;
+  }
+
+  function renderOrders(){
+    const box = $("ordersList");
+    const search = ($("orderSearch")?.value || "").trim().toLowerCase();
+    const statusFilter = $("orderStatusFilter")?.value || "all";
+    const typeFilter = $("orderTypeFilter")?.value || "all";
+    const archiveFilter = $("archiveFilter")?.value || "active";
+    const sort = $("orderSort")?.value || "newest";
+    let rows = [...orders];
+    if(archiveFilter === "active") rows = rows.filter(o => !truthy(o.archived));
+    if(archiveFilter === "archived") rows = rows.filter(o => truthy(o.archived));
+    if(statusFilter !== "all") rows = rows.filter(o => normalizeStatus(o.status) === normalizeStatus(statusFilter));
+    if(typeFilter !== "all") rows = rows.filter(o => String(o.delivery_type || "").toLowerCase() === typeFilter.toLowerCase());
+    if(search){
+      rows = rows.filter(o => `${o.id || ""} ${getTrackingCode(o)} ${o.customer_name || ""} ${o.customer_phone || ""} ${o.customer_email || ""} ${o.needed_date || ""}`.toLowerCase().includes(search));
+    }
+    rows.sort((a,b)=>sortOrders(a,b,sort));
+    if(!rows.length){ box.innerHTML = `<div class="loading">No orders found.</div>`; return; }
+    box.innerHTML = rows.map(renderOrderRow).join("");
+  }
+
+  function renderOrderRow(order){
+    const id = String(order.id);
+    const items = orderItems.filter(item => String(item.order_id) === id);
+    const shortId = id.slice(0,8).toUpperCase();
+    const trackingCode = getTrackingCode(order);
+    const hasQuote = items.some(item => Number(item.estimated_item_total || 0) === 0);
+    const isArchived = truthy(order.archived);
+    const customerDeleted = truthy(order.customer_data_deleted);
+    const statusClass = escapeClass(order.status || "Pending");
+    const trackLink = getTrackLink(trackingCode);
+    return `
+      <div class="orderCard" id="order-${escapeAttr(id)}">
+        <div class="orderTop" onclick="toggleOrder('${escapeJs(id)}')">
+          <div>
+            <h4>${customerDeleted ? "Deleted Customer" : escapeHtml(order.customer_name || "Customer")} · ${hasQuote ? "Quote" : money(order.estimated_total)} ${isArchived ? "· Archived" : ""}</h4>
+            <p>
+              ${customerDeleted ? "Customer data removed" : `${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}`}<br>
+              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
+              Order ID: ${escapeHtml(shortId)} · Tracking: ${escapeHtml(trackingCode)}
+            </p>
+            <div class="pillRow"><span class="pill">${items.length} item(s)</span><span class="pill">${escapeHtml(order.delivery_type || "No type")}</span><span class="pill">${formatDateTime(order.created_at)}</span></div>
+          </div>
+          <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;" onclick="event.stopPropagation()">
+            <span class="status ${statusClass}">${escapeHtml(order.status || "Pending")}</span>
+            <button class="btn small" onclick="toggleOrder('${escapeJs(id)}')">Details</button>
+          </div>
+        </div>
+        <div class="orderBody">
+          <div class="formGrid">
+            <div class="field">
+              <label>Status</label>
+              <select id="status-${escapeAttr(id)}">${ORDER_STATUSES.map(s => `<option value="${escapeHtml(s)}" ${normalizeStatus(order.status)===normalizeStatus(s)?"selected":""}>${escapeHtml(s)}</option>`).join("")}</select>
+            </div>
+            <div class="field"><label>Tracking Code</label><input id="tracking-${escapeAttr(id)}" value="${escapeHtml(trackingCode)}"></div>
+            <div class="field"><label>Estimated Total</label><input readonly value="${hasQuote ? "Quote" : money(order.estimated_total)}"></div>
+            <div class="field full"><label>Admin Note</label><textarea id="note-${escapeAttr(id)}" placeholder="Private admin note...">${escapeHtml(order.admin_note || "")}</textarea></div>
+          </div>
+          <div class="miniGrid">
+            <div>
+              <div class="sectionTitle">Customer</div>
+              <div class="orderItem">
+                <b>Name:</b> ${customerDeleted ? "Deleted Customer" : escapeHtml(order.customer_name || "")}<br>
+                <b>Phone:</b> ${customerDeleted ? "Removed" : escapeHtml(order.customer_phone || "")}<br>
+                <b>Email:</b> ${customerDeleted ? "Removed" : escapeHtml(order.customer_email || "")}<br>
+                <b>Delivery Type:</b> ${escapeHtml(order.delivery_type || "")}<br>
+                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}
+              </div>
+            </div>
+            <div>
+              <div class="sectionTitle">Tracking Link</div>
+              <input class="copyBox" id="tracklink-${escapeAttr(id)}" readonly value="${escapeHtml(trackLink)}">
+              <div class="pillRow">
+                <button class="btn small" onclick="copyField('tracklink-${escapeJs(id)}')">Copy Link</button>
+                <a class="btn small" href="${escapeHtml(trackLink)}" target="_blank">Open Track</a>
+              </div>
+            </div>
+          </div>
+          <div class="sectionTitle">Items</div>
+          <div class="orderItems">${items.length ? items.map(renderOrderItem).join("") : `<div class="loading">No items found for this order.</div>`}</div>
+          <div class="sectionTitle">Actions</div>
+          <div class="pillRow">
+            <button class="btn primary small" onclick="saveOrderChanges('${escapeJs(id)}')">Save Status / Note</button>
+            <button class="btn small" onclick="whatsappCustomer('${escapeJs(id)}')">WhatsApp Customer</button>
+            <button class="btn small" onclick="copyWhatsAppMessage('${escapeJs(id)}')">Copy Original WhatsApp</button>
+            <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print</button>
+            ${isArchived ? `<button class="btn green small" onclick="archiveOrder('${escapeJs(id)}', false)">Unarchive</button>` : `<button class="btn orange small" onclick="archiveOrder('${escapeJs(id)}', true)">Archive</button>`}
+          </div>
+          <div class="dangerZone">
+            <b>Delete / privacy tools</b>
+            <div class="pillRow">
+              <button class="btn red small" onclick="anonymizeOrder('${escapeJs(id)}')">Delete Customer Data</button>
+              <button class="btn red small" onclick="permanentDeleteOrder('${escapeJs(id)}')">Permanent Delete Order</button>
+            </div>
+            <p class="hint" style="margin-top:8px;">Customer data deletion removes personal info but keeps the order record for business totals. Permanent delete removes order + items.</p>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderOrderItem(item){
+    const info = parseJson(item.product_snapshot || item.quick_product_snapshot || item.snapshot_json || item.addons_json || null);
+    const isQuick = isQuickOrderItem(item);
+    if(isQuick){
+      return `<div class="orderItem"><b>${escapeHtml(item.cake_name || item.product_name || info.name || "Quick Dessert")}</b><br><b>Type:</b> Quick Dessert<br><b>Category:</b> ${escapeHtml(info.categoryName || info.category || item.option_name || "")}<br><b>Variant:</b> ${escapeHtml(info.variant || item.flavour_name || "")}<br><b>Quantity:</b> ${item.quantity || 1}<br><b>Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}<br><b>Notes:</b> ${escapeHtml(item.special_notes || "")}</div>`;
+    }
+    return `<div class="orderItem"><b>${escapeHtml(item.cake_name || "Cake")}</b><br><b>Type:</b> Custom Cake<br><b>Size:</b> ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""}<br><b>Flavour:</b> ${escapeHtml(item.flavour_name || "")}<br><b>Option:</b> ${escapeHtml(item.option_name || "")}<br><b>Quantity:</b> ${item.quantity || 1}<br><b>Message on Cake:</b> ${escapeHtml(item.message_on_cake || "")}<br><b>Special Notes:</b> ${escapeHtml(item.special_notes || "")}<br><b>Add-ons:</b> ${formatAddons(item.addons_json)}<br><b>Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}</div>`;
+  }
+
+  async function saveOrderChanges(id){
+    const status = $("status-" + id).value;
+    const admin_note = $("note-" + id).value.trim();
+    const tracking_code = ($("tracking-" + id).value || "").trim().toUpperCase();
+    let payload = { status, admin_note, tracking_code, status_updated_at:new Date().toISOString() };
+    let { error } = await supabaseClient.from("orders").update(payload).eq("id", id);
+    if(error && String(error.message || "").toLowerCase().includes("column")){
+      const fallback = await supabaseClient.from("orders").update({ status }).eq("id", id);
+      error = fallback.error;
+      if(!error) showToast("Status saved. Run tracking SQL to enable admin notes/tracking codes.", true);
+    }
+    if(error) return showToast(error.message, true);
+    await insertStatusHistory(id,status,admin_note);
+    await loadAll();
+    showToast("Order updated.");
+  }
+
+  async function insertStatusHistory(id,status,note){
+    try{ await supabaseClient.from("order_status_history").insert({ order_id:id, status, note, created_by:currentUser?.id || null }); }catch(err){ console.warn("History insert skipped", err); }
+  }
+
+  async function archiveOrder(id, archive){
+    if(!confirm(archive ? "Archive this order?" : "Unarchive this order?")) return;
+    const { error } = await supabaseClient.rpc("admin_archive_order", { p_order_id:id, p_archived:archive });
+    if(error) return showToast("Archive needs the SQL setup first: " + error.message, true);
+    await loadAll();
+    showToast(archive ? "Order archived." : "Order unarchived.");
+  }
+
+  async function anonymizeOrder(id){
+    if(!confirm("Delete customer personal data from this order? This keeps order totals but removes name, phone, email and address fields.")) return;
+    const { error } = await supabaseClient.rpc("admin_anonymize_order", { p_order_id:id });
+    if(error) return showToast("Customer data delete needs the SQL setup first: " + error.message, true);
+    await loadAll();
+    showToast("Customer data deleted.");
+  }
+
+  async function permanentDeleteOrder(id){
+    if(!confirm("Permanently delete this order and all its items? This cannot be undone.")) return;
+    const { error } = await supabaseClient.rpc("admin_delete_order", { p_order_id:id });
+    if(error){
+      const itemsDelete = await supabaseClient.from("order_items").delete().eq("order_id", id);
+      if(itemsDelete.error) return showToast(itemsDelete.error.message, true);
+      const orderDelete = await supabaseClient.from("orders").delete().eq("id", id);
+      if(orderDelete.error) return showToast(orderDelete.error.message, true);
+    }
+    await loadAll();
+    showToast("Order permanently deleted.");
+  }
+
+  function whatsappCustomer(id){
+    const order = orders.find(o => String(o.id) === String(id));
+    if(!order) return;
+    const phone = normalizePhone(order.customer_phone || "");
+    if(!phone) return showToast("Customer phone number missing.", true);
+    const msg = `Hi ${order.customer_name || ""}, your Siffat Cakes order status is: ${order.status || "Pending"}. Track here: ${getTrackLink(getTrackingCode(order))}`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  function copyWhatsAppMessage(id){
+    const order = orders.find(o => String(o.id) === String(id));
+    if(!order || !order.whatsapp_message) return showToast("No original WhatsApp message found.", true);
+    navigator.clipboard.writeText(order.whatsapp_message).then(()=>showToast("WhatsApp message copied.")).catch(()=>showToast("Could not copy message.", true));
+  }
+
+  function printOrder(id){
+    const card = $("order-" + id);
+    if(!card) return;
+    const win = window.open("", "_blank");
+    win.document.write(`<html><head><title>Order ${escapeHtml(id.slice(0,8))}</title><style>body{font-family:Arial;padding:20px;color:#111}button,select,textarea,input{display:none!important}.orderBody{display:block!important}.orderCard{border:1px solid #ddd;padding:16px;border-radius:12px}.orderItem{border:1px solid #ddd;padding:10px;margin:8px 0;border-radius:8px}</style></head><body>${card.innerHTML}</body></html>`);
+    win.document.close(); win.focus(); win.print();
+  }
+
+  function toggleOrder(id){ const el = $("order-" + id); if(el) el.classList.toggle("open"); }
+  function getTrackingCode(order){ return String(order.tracking_code || String(order.id || "").replaceAll("-","").slice(0,10)).toUpperCase(); }
+  function getTrackLink(code){ return `${location.origin}${location.pathname.replace(/[^/]+$/, "track.html")}?code=${encodeURIComponent(code)}`; }
+  function sortOrders(a,b,sort){
+    if(sort === "oldest") return String(a.created_at||"").localeCompare(String(b.created_at||""));
+    if(sort === "needed_soon") return String(a.needed_date||"9999-99-99").localeCompare(String(b.needed_date||"9999-99-99"));
+    if(sort === "needed_late") return String(b.needed_date||"").localeCompare(String(a.needed_date||""));
+    if(sort === "status") return String(a.status||"").localeCompare(String(b.status||""));
+    if(sort === "total_high") return Number(b.estimated_total||0)-Number(a.estimated_total||0);
+    if(sort === "total_low") return Number(a.estimated_total||0)-Number(b.estimated_total||0);
+    return String(b.created_at||"").localeCompare(String(a.created_at||""));
+  }
+  function isQuickOrderItem(item){ const raw = String(item.product_type || item.item_type || item.type || "").toLowerCase(); return raw.includes("quick") || raw.includes("dessert") || !!item.quick_product_id || !!item.quick_product_snapshot; }
+  function parseJson(value){ if(!value) return {}; if(typeof value === "object") return value; try{ return JSON.parse(value); }catch{ return {}; } }
+  function formatAddons(value){ const data=parseJson(value); if(Array.isArray(data)) return data.map(x=>escapeHtml(x.name||x)).join(", ") || "None"; return "None"; }
+  function normalizeStatus(s){ return String(s||"").toLowerCase().replace(/[^a-z]/g,""); }
+  function truthy(v){ return v === true || v === "true" || v === 1 || v === "1"; }
+  function money(value){ const currency = siteSettings.currency || "$"; const n=Number(value||0); return currency + n.toFixed(2).replace(".00",""); }
+  function formatDate(value){ if(!value) return "No date"; const d=new Date(value + "T00:00:00"); return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}); }
+  function formatDateTime(value){ if(!value) return ""; const d=new Date(value); return Number.isNaN(d.getTime()) ? value : d.toLocaleString(); }
+  function normalizePhone(value){ return String(value||"").replace(/[^\d]/g,""); }
+  function copyField(id){ const el=$(id); if(!el) return; navigator.clipboard.writeText(el.value).then(()=>showToast("Copied.")); }
+  function escapeHtml(value){ return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+  function escapeAttr(value){ return escapeHtml(value); }
+  function escapeJs(value){ return String(value ?? "").replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/"/g,'\\"'); }
+  function escapeClass(value){ return String(value || "").replace(/[^a-zA-Z0-9_-]/g,""); }
+  function showToast(message,isError=false){ const toast=$("toast"); toast.textContent=message; toast.style.background=isError?"var(--red)":"var(--purple)"; toast.classList.add("show"); clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>toast.classList.remove("show"),3200); }
+</script>
+</body>
+</html>
