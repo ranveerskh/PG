@@ -251,6 +251,67 @@
       border-color:rgba(100,13,107,.30);
     }
 
+
+    .setupSwitches{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding:0 0 12px;
+      margin:-2px 0 12px;
+      scrollbar-width:none;
+    }
+
+    .setupSwitches::-webkit-scrollbar{display:none}
+
+    .setupSwitches .btn{
+      flex:0 0 auto;
+      min-height:36px;
+      font-size:12px;
+      padding:8px 11px;
+    }
+
+    .setupBlock{
+      scroll-margin-top:86px;
+    }
+
+    .homeMenuCardForm{
+      display:grid;
+      grid-template-columns:74px 1fr;
+      gap:12px;
+      align-items:start;
+    }
+
+    .homeMenuThumb{
+      width:74px;
+      height:74px;
+      border-radius:18px;
+      object-fit:cover;
+      background:#f1e4f2;
+      border:1px solid var(--line);
+      box-shadow:0 8px 18px rgba(100,13,107,.04);
+    }
+
+    .homeMenuFormGrid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+
+    @media(max-width:720px){
+      .homeMenuCardForm{
+        grid-template-columns:58px 1fr;
+        gap:10px;
+      }
+      .homeMenuThumb{
+        width:58px;
+        height:58px;
+        border-radius:15px;
+      }
+      .homeMenuFormGrid{
+        grid-template-columns:1fr;
+      }
+    }
+
     .panel{display:none}
     .panel.active{display:block}
 
@@ -639,95 +700,6 @@
       color:var(--green);
     }
 
-
-    .setupJumpBar{
-      display:flex;
-      gap:8px;
-      overflow:auto;
-      padding:2px 0 12px;
-      margin-bottom:8px;
-      scrollbar-width:none;
-    }
-
-    .setupJumpBar::-webkit-scrollbar{display:none}
-
-    .jumpBtn{
-      flex:0 0 auto;
-      min-height:38px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--purple);
-      font-size:12px;
-      font-weight:1000;
-      box-shadow:0 8px 18px rgba(100,13,107,.04);
-      white-space:nowrap;
-    }
-
-    .jumpBtn:hover{
-      background:linear-gradient(135deg,var(--purple),var(--purple2));
-      color:#fff;
-      transform:translateY(-1px);
-    }
-
-    .setupAnchor{
-      scroll-margin-top:88px;
-    }
-
-    .homepageCardPreview{
-      width:76px;
-      height:56px;
-      border-radius:16px;
-      object-fit:cover;
-      background:#f1e4f2;
-      border:1px solid var(--line);
-      flex:0 0 auto;
-    }
-
-    .homepageSlug{
-      display:inline-flex;
-      width:max-content;
-      max-width:100%;
-      margin-top:7px;
-      padding:5px 7px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff7ff;
-      color:var(--muted);
-      font-size:10px;
-      font-weight:900;
-    }
-
-    .homepagePreviewCard{
-      min-height:116px;
-      border:1px solid var(--line);
-      border-radius:22px;
-      overflow:hidden;
-      background:
-        linear-gradient(180deg,rgba(100,13,107,.04),rgba(100,13,107,.72)),
-        var(--preview-img) center/cover;
-      padding:12px;
-      display:flex;
-      align-items:flex-end;
-      box-shadow:0 8px 18px rgba(100,13,107,.05);
-    }
-
-    .homepagePreviewCard b{
-      color:#fff;
-      font-size:15px;
-      letter-spacing:-.035em;
-      text-shadow:0 8px 18px rgba(0,0,0,.30);
-    }
-
-    .homepagePreviewCard span{
-      display:block;
-      margin-top:3px;
-      color:rgba(255,255,255,.86);
-      font-size:11px;
-      line-height:1.35;
-    }
-
     .productModeBox{
       border:1px solid var(--line);
       background:#fff;
@@ -1085,8 +1057,8 @@
   <main class="wrap main">
     <div class="tabs">
       <button class="tabBtn active" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</button>
+      <button class="tabBtn" data-tab="homepageMenu" onclick="showTab('homepageMenu')">Homepage Menu</button>
       <button class="tabBtn" data-tab="products" onclick="showTab('products')">Products</button>
-      <button class="tabBtn" data-tab="homepage" onclick="showTab('homepage')">Homepage Menu</button>
       <button class="tabBtn" data-tab="setup" onclick="showTab('setup')">Cake Setup</button>
       <button class="tabBtn" data-tab="settings" onclick="showTab('settings')">Website Settings</button>
     </div>
@@ -1156,6 +1128,26 @@
           <div class="cardBody">
             <div id="recentOrdersList" class="list"></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="homepageMenuPanel" class="panel">
+      <div class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Homepage Menu Cards</h3>
+            <p>Control the photos shown on the homepage menu. These images are separate from product photos.</p>
+          </div>
+          <div class="itemActions">
+            <button class="btn small" onclick="loadHomepageMenuCards(true)">Refresh Cards</button>
+          </div>
+        </div>
+
+        <div class="cardBody">
+          <div id="homepageMenuWarning" class="loading hidden"></div>
+          <div id="homepageMenuList" class="list"></div>
         </div>
       </div>
     </section>
@@ -1343,108 +1335,18 @@
       </div>
     </section>
 
-
-    <section id="homepagePanel" class="panel">
-      <div class="layout2">
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h3>Homepage Menu Cards</h3>
-              <p>Edit the main mobile menu tiles: Cakes, Cupcakes, Muffins, Brownies, Baklava and Custom Cake.</p>
-            </div>
-            <button class="btn small" onclick="resetHomepageMenuForm(false)">Clear</button>
-          </div>
-
-          <div class="cardBody">
-            <form id="homepageMenuForm">
-              <input type="hidden" id="homeCardId">
-
-              <div class="field">
-                <label>Slug</label>
-                <input id="homeCardSlug" placeholder="cakes / cupcakes / custom-cake">
-                <div class="hint">Keep existing slugs stable. Recommended: cakes, cupcakes, muffins, brownies, baklava, custom-cake.</div>
-              </div>
-
-              <div class="field">
-                <label>Title</label>
-                <input id="homeCardTitle" required placeholder="Cakes">
-              </div>
-
-              <div class="field">
-                <label>Small Subtitle</label>
-                <input id="homeCardSubtitle" placeholder="Custom cakes">
-              </div>
-
-              <div class="field">
-                <label>Link URL</label>
-                <input id="homeCardLink" required placeholder="category.html?cat=cakes">
-              </div>
-
-              <div class="field">
-                <label>Menu Card Image</label>
-                <div class="imageBox">
-                  <div class="imageInputRow">
-                    <input id="homeCardImage" placeholder="Paste image link..." oninput="previewImageFromInput('homeCardImage','homeCardPreview')">
-                  </div>
-
-                  <div class="uploadRow">
-                    <input id="homeCardImageFile" type="file" accept="image/png,image/jpeg,image/webp">
-                    <button class="btn small" type="button" onclick="uploadAndSet('homeCardImageFile','homeCardImage','homeCardPreview','homepage')">Upload</button>
-                    <button class="btn small" type="button" onclick="clearImageField('homeCardImage','homeCardPreview','homeCardImageFile')">Clear</button>
-                  </div>
-
-                  <img id="homeCardPreview" class="imagePreview" alt="Homepage card preview">
-                  <div class="hint">This image controls the homepage menu tile. Product images stay separate.</div>
-                </div>
-              </div>
-
-              <div class="field">
-                <label>Sort Order</label>
-                <input id="homeCardSort" type="number" value="0">
-              </div>
-
-              <label class="checkRow"><input id="homeCardActive" type="checkbox" checked> Active on homepage</label>
-
-              <div id="homeCardLivePreview" class="homepagePreviewCard" style="--preview-img:url('')">
-                <div>
-                  <b>Preview</b>
-                  <span>Menu card preview</span>
-                </div>
-              </div>
-
-              <button class="btn primary block" type="submit" style="margin-top:12px;">Save Homepage Card</button>
-            </form>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="cardHead">
-            <div>
-              <h3>Current Homepage Menu</h3>
-              <p>Tap edit to change title, image, link, order or visibility.</p>
-            </div>
-            <button class="btn small" onclick="loadAll()">Refresh</button>
-          </div>
-
-          <div class="cardBody">
-            <div id="homepageMenuCardsList" class="list"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="setupPanel" class="panel">
-      <div class="setupJumpBar">
-        <button class="jumpBtn" onclick="scrollToSetup('setupOccasionsCard')">Cake Occasions</button>
-        <button class="jumpBtn" onclick="scrollToSetup('setupSizesCard')">Sizes</button>
-        <button class="jumpBtn" onclick="scrollToSetup('setupFlavoursCard')">Flavours</button>
-        <button class="jumpBtn" onclick="scrollToSetup('setupOptionsCard')">Options</button>
-        <button class="jumpBtn" onclick="scrollToSetup('setupAddonsCard')">Add-ons</button>
+      <div class="setupSwitches">
+        <button class="btn small" type="button" onclick="jumpSetup('setupOccasions')">Cake Occasions</button>
+        <button class="btn small" type="button" onclick="jumpSetup('setupSizes')">Sizes</button>
+        <button class="btn small" type="button" onclick="jumpSetup('setupFlavours')">Flavours</button>
+        <button class="btn small" type="button" onclick="jumpSetup('setupOptions')">Options</button>
+        <button class="btn small" type="button" onclick="jumpSetup('setupAddons')">Add-ons</button>
       </div>
 
       <div class="setupGrid">
 
-        <div class="card setupAnchor" id="setupOccasionsCard">
+        <div class="card setupBlock" id="setupOccasions">
           <div class="cardHead">
             <div>
               <h3>Cake Occasions</h3>
@@ -1513,7 +1415,7 @@
           </div>
         </div>
 
-        <div class="card setupAnchor" id="setupSizesCard">
+        <div class="card setupBlock" id="setupSizes">
           <div class="cardHead">
             <div>
               <h3>Sizes & Servings</h3>
@@ -1549,7 +1451,7 @@
           </div>
         </div>
 
-        <div class="card setupAnchor" id="setupFlavoursCard">
+        <div class="card setupBlock" id="setupFlavours">
           <div class="cardHead">
             <div>
               <h3>Flavours</h3>
@@ -1584,7 +1486,7 @@
           </div>
         </div>
 
-        <div class="card setupAnchor" id="setupOptionsCard">
+        <div class="card setupBlock" id="setupOptions">
           <div class="cardHead">
             <div>
               <h3>Options</h3>
@@ -1620,7 +1522,7 @@
           </div>
         </div>
 
-        <div class="card setupAnchor" id="setupAddonsCard">
+        <div class="card setupBlock" id="setupAddons">
           <div class="cardHead">
             <div>
               <h3>Add-ons</h3>
@@ -1858,6 +1760,8 @@
   let cakes = [];
   let quickProducts = [];
   let homepageMenuCards = [];
+  let homepageMenuCardsReady = false;
+  let homepageMenuCardsError = "";
 
   let cakeCategories = [];
   let cakeSizes = [];
@@ -1919,41 +1823,27 @@
   }
 
   async function verifyAndOpen(){
-    try{
-      const { data, error } = await supabaseClient.rpc("is_admin");
+    const { data, error } = await supabaseClient.rpc("is_admin");
 
-      if(error){
-        console.error("Admin verification error:", error);
-        $("loginScreen").style.display = "none";
-        $("app").classList.add("show");
-        $("adminEmailText").textContent = (currentUser?.email || "Admin") + " Â· verification retry needed";
-        bindForms();
-        showToast("Admin verification had a connection/policy issue. I did not log you out. Refresh or check is_admin RPC.", true);
-        await loadAll();
-        return;
-      }
-
-      if(data !== true){
-        showLogin();
-        showToast("This user is not added as admin in admin_users table.", true);
-        return;
-      }
-
-      $("loginScreen").style.display = "none";
-      $("app").classList.add("show");
-      $("adminEmailText").textContent = currentUser.email || "Admin";
-
-      bindForms();
-      await loadAll();
-    }catch(err){
-      console.error("Admin verify crashed:", err);
-      $("loginScreen").style.display = "none";
-      $("app").classList.add("show");
-      $("adminEmailText").textContent = currentUser?.email || "Admin";
-      bindForms();
-      showToast("Admin opened, but verification check had an error. You were not logged out.", true);
-      await loadAll();
+    if(error){
+      console.warn("Admin verification error:", error);
+      showToast("Could not verify admin right now. Refresh once. You were not signed out.", true);
+      showLogin();
+      return;
     }
+
+    if(data !== true){
+      await supabaseClient.auth.signOut();
+      showToast("This user is not added as admin in admin_users table.", true);
+      return;
+    }
+
+    $("loginScreen").style.display = "none";
+    $("app").classList.add("show");
+    $("adminEmailText").textContent = currentUser.email || "Admin";
+
+    bindForms();
+    await loadAll();
   }
 
   function showLogin(){
@@ -1971,45 +1861,12 @@
     $("flavourForm").addEventListener("submit", saveFlavour);
     $("optionForm").addEventListener("submit", saveOption);
     $("addonForm").addEventListener("submit", saveAddon);
-    $("homepageMenuForm").addEventListener("submit", saveHomepageMenuCard);
   }
 
   async function loadAll(){
     showToast("Loading admin data...");
 
-    const runQuery = async (label, promise, fallback) => {
-      try{
-        const res = await promise;
-        if(res?.error){
-          console.warn(label + " load issue:", res.error);
-          return { ok:false, data:fallback, error:res.error };
-        }
-        return { ok:true, data:res?.data ?? fallback, error:null };
-      }catch(err){
-        console.warn(label + " crashed:", err);
-        return { ok:false, data:fallback, error:err };
-      }
-    };
-
     try{
-      const results = await Promise.all([
-        runQuery("site_settings", supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(), siteSettings),
-        runQuery("categories", supabaseClient.from("categories").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), categories),
-        runQuery("sizes", supabaseClient.from("sizes").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), sizes),
-        runQuery("flavours", supabaseClient.from("flavours").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), flavours),
-        runQuery("cake_options", supabaseClient.from("cake_options").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), options),
-        runQuery("addons", supabaseClient.from("addons").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), addons),
-        runQuery("cakes", supabaseClient.from("cakes").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }), cakes),
-        runQuery("quick_products", supabaseClient.from("quick_products").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }), quickProducts),
-        runQuery("homepage_menu_cards", supabaseClient.from("homepage_menu_cards").select("*").order("sort_order", { ascending:true }).order("title", { ascending:true }), homepageMenuCards),
-        runQuery("cake_categories", supabaseClient.from("cake_categories").select("*"), cakeCategories),
-        runQuery("cake_sizes", supabaseClient.from("cake_sizes").select("*"), cakeSizes),
-        runQuery("cake_flavours", supabaseClient.from("cake_flavours").select("*"), cakeFlavours),
-        runQuery("cake_addons", supabaseClient.from("cake_addons").select("*"), cakeAddons),
-        runQuery("orders", supabaseClient.from("orders").select("*").order("created_at", { ascending:false }), orders),
-        runQuery("order_items", supabaseClient.from("order_items").select("*").order("created_at", { ascending:true }), orderItems)
-      ]);
-
       const [
         settingsRes,
         categoriesRes,
@@ -2019,58 +1876,81 @@
         addonsRes,
         cakesRes,
         quickProductsRes,
-        homepageMenuRes,
         cakeCategoriesRes,
         cakeSizesRes,
         cakeFlavoursRes,
         cakeAddonsRes,
         ordersRes,
         orderItemsRes
-      ] = results;
+      ] = await Promise.all([
+        supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
+        supabaseClient.from("categories").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("sizes").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("flavours").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("cake_options").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("addons").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
+        supabaseClient.from("cakes").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
+        supabaseClient.from("quick_products").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
+        supabaseClient.from("cake_categories").select("*"),
+        supabaseClient.from("cake_sizes").select("*"),
+        supabaseClient.from("cake_flavours").select("*"),
+        supabaseClient.from("cake_addons").select("*"),
+        supabaseClient.from("orders").select("*").order("created_at", { ascending:false }),
+        supabaseClient.from("order_items").select("*").order("created_at", { ascending:true })
+      ]);
 
-      if(settingsRes.ok) siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
-      if(categoriesRes.ok) categories = categoriesRes.data || [];
-      if(sizesRes.ok) sizes = sizesRes.data || [];
-      if(flavoursRes.ok) flavours = flavoursRes.data || [];
-      if(optionsRes.ok) options = optionsRes.data || [];
-      if(addonsRes.ok) addons = addonsRes.data || [];
-      if(cakesRes.ok) cakes = cakesRes.data || [];
-      if(quickProductsRes.ok) quickProducts = quickProductsRes.data || [];
-      if(homepageMenuRes.ok){
-        homepageMenuCards = homepageMenuRes.data || [];
-      }else{
-        homepageMenuCards = homepageMenuCards || [];
-      }
-      if(cakeCategoriesRes.ok) cakeCategories = cakeCategoriesRes.data || [];
-      if(cakeSizesRes.ok) cakeSizes = cakeSizesRes.data || [];
-      if(cakeFlavoursRes.ok) cakeFlavours = cakeFlavoursRes.data || [];
-      if(cakeAddonsRes.ok) cakeAddons = cakeAddonsRes.data || [];
-      if(ordersRes.ok) orders = ordersRes.data || [];
-      if(orderItemsRes.ok) orderItems = orderItemsRes.data || [];
+      const firstError =
+        settingsRes.error ||
+        categoriesRes.error ||
+        sizesRes.error ||
+        flavoursRes.error ||
+        optionsRes.error ||
+        addonsRes.error ||
+        cakesRes.error ||
+        quickProductsRes.error ||
+        cakeCategoriesRes.error ||
+        cakeSizesRes.error ||
+        cakeFlavoursRes.error ||
+        cakeAddonsRes.error ||
+        ordersRes.error ||
+        orderItemsRes.error;
+
+      if(firstError) throw firstError;
+
+      siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
+      categories = categoriesRes.data || [];
+      sizes = sizesRes.data || [];
+      flavours = flavoursRes.data || [];
+      options = optionsRes.data || [];
+      addons = addonsRes.data || [];
+      cakes = cakesRes.data || [];
+      quickProducts = quickProductsRes.data || [];
+
+      cakeCategories = cakeCategoriesRes.data || [];
+      cakeSizes = cakeSizesRes.data || [];
+      cakeFlavours = cakeFlavoursRes.data || [];
+      cakeAddons = cakeAddonsRes.data || [];
+
+      orders = ordersRes.data || [];
+      orderItems = orderItemsRes.data || [];
+
+      await loadHomepageMenuCards(false);
 
       renderAll();
-
-      const failed = results.filter(r => !r.ok);
-      if(failed.length){
-        const names = failed.map(r => r.error?.message || "some table").slice(0,2).join(" | ");
-        showToast(`Admin loaded with ${failed.length} table issue(s). Existing data was not cleared. ${names}`, true);
-      }else{
-        showToast("Admin data loaded.");
-      }
+      showToast("Admin data loaded.");
     }catch(err){
       console.error(err);
-      renderAll();
-      showToast(err.message || "Admin load failed, but existing data was kept.", true);
+      showToast(err.message || "Failed to load admin data.", true);
     }
   }
 
   function renderAll(){
     renderStats();
     renderRecentOrders();
+    renderHomepageMenuCards();
     fillSettingsForm();
     fillProductSelects();
     renderProducts();
-    renderHomepageMenuCards();
     renderSetupLists();
   }
 
@@ -2086,15 +1966,6 @@
     $(tab + "Panel").classList.add("active");
   }
 
-  function scrollToSetup(id){
-    showTab("setup");
-
-    window.setTimeout(() => {
-      const el = $(id);
-      if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
-    }, 80);
-  }
-
   function openPanel(id){
     $(id).classList.add("open");
   }
@@ -2106,6 +1977,191 @@
   function toggleCompact(id){
     const el = $(id);
     if(el) el.classList.toggle("open");
+  }
+
+
+  async function loadHomepageMenuCards(showMessage = false){
+    try{
+      homepageMenuCardsReady = false;
+      homepageMenuCardsError = "";
+
+      const { data, error } = await supabaseClient
+        .from("homepage_menu_cards")
+        .select("*")
+        .order("sort_order", { ascending:true })
+        .order("title", { ascending:true });
+
+      if(error) throw error;
+
+      homepageMenuCards = data || [];
+      homepageMenuCardsReady = true;
+
+      if(showMessage){
+        renderHomepageMenuCards();
+        showToast("Homepage menu cards loaded.");
+      }
+    }catch(err){
+      console.warn("Homepage menu cards not loaded:", err);
+      homepageMenuCards = [];
+      homepageMenuCardsReady = false;
+      homepageMenuCardsError = err.message || "Homepage menu cards table is not ready.";
+      if(showMessage){
+        renderHomepageMenuCards();
+        showToast(homepageMenuCardsError, true);
+      }
+    }
+  }
+
+  function renderHomepageMenuCards(){
+    const list = $("homepageMenuList");
+    const warning = $("homepageMenuWarning");
+    if(!list || !warning) return;
+
+    if(!homepageMenuCardsReady){
+      warning.classList.remove("hidden");
+      warning.textContent = homepageMenuCardsError
+        ? "Homepage menu table is not ready: " + homepageMenuCardsError
+        : "Homepage menu cards are not loaded yet.";
+      list.innerHTML = `
+        <div class="loading">
+          Run the homepage_menu_cards SQL first. Existing products/settings are still safe and loaded separately.
+        </div>
+      `;
+      return;
+    }
+
+    warning.classList.add("hidden");
+
+    if(!homepageMenuCards.length){
+      list.innerHTML = `<div class="loading">No homepage menu cards found. Run the insert SQL for Cakes, Cupcakes, Muffins, Brownies, Baklava and Custom Cake.</div>`;
+      return;
+    }
+
+    list.innerHTML = homepageMenuCards.map(card => {
+      const domId = "home-menu-" + card.id;
+      const img = card.image_url || getFallbackImage(card.slug || "dessert");
+      const fileId = "homeCardFile-" + card.id;
+      const inputId = "homeCardImage-" + card.id;
+
+      return `
+        <div class="compactItem open" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="rowWithImage">
+              <img class="miniPreview" src="${escapeHtml(addCacheBustToImageUrl(img))}" onerror="this.src='${getFallbackImage("dessert")}'">
+              <div class="compactMain">
+                <div class="itemTitle">${escapeHtml(card.title || card.slug || "Menu Card")}</div>
+                <div class="itemMeta">${escapeHtml(card.slug || "")} Â· ${card.is_active ? "Active" : "Hidden"} Â· Sort ${card.sort_order ?? 0}</div>
+              </div>
+            </div>
+            <div class="itemActions" onclick="event.stopPropagation()">
+              <button class="btn primary small" onclick="saveHomepageMenuCard('${card.id}')">Save</button>
+            </div>
+          </div>
+
+          <div class="compactDetails">
+            <div class="homeMenuCardForm">
+              <img class="homeMenuThumb" id="homeThumb-${card.id}" src="${escapeHtml(addCacheBustToImageUrl(img))}" onerror="this.src='${getFallbackImage("dessert")}'">
+              <div>
+                <div class="homeMenuFormGrid">
+                  <div class="field">
+                    <label>Title</label>
+                    <input id="homeTitle-${card.id}" value="${escapeHtml(card.title || "")}">
+                  </div>
+                  <div class="field">
+                    <label>Slug</label>
+                    <input id="homeSlug-${card.id}" value="${escapeHtml(card.slug || "")}" readonly>
+                  </div>
+                  <div class="field">
+                    <label>Subtitle</label>
+                    <input id="homeSubtitle-${card.id}" value="${escapeHtml(card.subtitle || "")}">
+                  </div>
+                  <div class="field">
+                    <label>Link URL</label>
+                    <input id="homeLink-${card.id}" value="${escapeHtml(card.link_url || "")}">
+                  </div>
+                  <div class="field full">
+                    <label>Card Image</label>
+                    <div class="imageBox">
+                      <input id="${inputId}" value="${escapeHtml(card.image_url || "")}" data-saved-url="${escapeHtml(card.image_url || "")}" placeholder="Paste image link..." oninput="previewImageFromInput('${inputId}','homeThumb-${card.id}')">
+                      <div class="uploadRow">
+                        <input id="${fileId}" type="file" accept="image/png,image/jpeg,image/webp">
+                        <button class="btn small" type="button" onclick="uploadAndSet('${fileId}','${inputId}','homeThumb-${card.id}','homepage-menu')">Upload</button>
+                        <button class="btn small" type="button" onclick="clearImageField('${inputId}','homeThumb-${card.id}','${fileId}')">Clear</button>
+                      </div>
+                      <div class="hint">This controls only the homepage menu image. Product images stay separate.</div>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>Sort Order</label>
+                    <input id="homeSort-${card.id}" type="number" value="${Number(card.sort_order || 0)}">
+                  </div>
+                  <div class="field">
+                    <label>Status</label>
+                    <select id="homeActive-${card.id}">
+                      <option value="true" ${card.is_active ? "selected" : ""}>Active</option>
+                      <option value="false" ${!card.is_active ? "selected" : ""}>Hidden</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="btn primary" type="button" onclick="saveHomepageMenuCard('${card.id}')">Save Menu Card</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  async function saveHomepageMenuCard(id){
+    try{
+      const payload = {
+        title:$("homeTitle-" + id).value.trim(),
+        subtitle:$("homeSubtitle-" + id).value.trim(),
+        image_url:$("homeCardImage-" + id).value.trim(),
+        link_url:$("homeLink-" + id).value.trim(),
+        sort_order:Number($("homeSort-" + id).value || 0),
+        is_active:$("homeActive-" + id).value === "true"
+      };
+
+      if(!payload.title){
+        showToast("Menu card title is required.", true);
+        return;
+      }
+
+      if(!payload.link_url){
+        showToast("Menu card link is required.", true);
+        return;
+      }
+
+      showToast("Saving homepage menu card...");
+
+      const { data, error } = await supabaseClient
+        .from("homepage_menu_cards")
+        .update(payload)
+        .eq("id", id)
+        .select()
+        .single();
+
+      if(error) throw error;
+
+      const index = homepageMenuCards.findIndex(card => String(card.id) === String(id));
+      if(index >= 0){
+        homepageMenuCards[index] = data;
+      }
+
+      homepageMenuCards.sort((a,b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+      renderHomepageMenuCards();
+      showToast("Homepage menu card saved.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Homepage menu card save failed.", true);
+    }
+  }
+
+  function jumpSetup(id){
+    const el = $(id);
+    if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
   }
 
   function renderStats(){
@@ -2631,207 +2687,6 @@
 
     await loadAll();
     showToast("Quick dessert deleted.");
-  }
-
-
-  function renderHomepageMenuCards(){
-    const box = $("homepageMenuCardsList");
-    if(!box) return;
-
-    if(!homepageMenuCards.length){
-      box.innerHTML = `
-        <div class="loading">
-          No homepage menu cards found.<br>
-          Run the homepage_menu_cards SQL first, then refresh admin.
-        </div>
-      `;
-      updateHomepageLivePreview();
-      return;
-    }
-
-    box.innerHTML = homepageMenuCards.map(item => {
-      const domId = "home-menu-" + item.id;
-      const img = item.image_url || getFallbackImage(item.slug || "cakes");
-
-      return `
-        <div class="compactItem" id="${domId}">
-          <div class="compactTop" onclick="toggleCompact('${domId}')">
-            <div class="rowWithImage">
-              <img class="homepageCardPreview" src="${escapeHtml(addCacheBustToImageUrl(img))}" onerror="this.src='${getFallbackImage("cakes")}'">
-              <div class="compactMain">
-                <div class="itemTitle">${escapeHtml(item.title || "Menu Card")}</div>
-                <div class="itemMeta">
-                  ${escapeHtml(item.subtitle || "")}<br>
-                  ${escapeHtml(item.link_url || "")}
-                </div>
-                <span class="homepageSlug">${escapeHtml(item.slug || "")} Â· Sort ${Number(item.sort_order || 0)} Â· ${item.is_active ? "Active" : "Hidden"}</span>
-              </div>
-            </div>
-            <div class="itemActions">
-              <button class="btn small" onclick="event.stopPropagation(); editHomepageMenuCard('${escapeJs(item.id)}')">Edit</button>
-            </div>
-          </div>
-
-          <div class="compactDetails">
-            <b>Homepage tile:</b> ${escapeHtml(item.title || "")}<br>
-            <b>Slug:</b> ${escapeHtml(item.slug || "")}<br>
-            <b>Link:</b> ${escapeHtml(item.link_url || "")}<br>
-            <b>Image:</b> ${item.image_url ? "Custom image set" : "Using fallback image"}<br>
-            <div class="itemActions" style="justify-content:flex-start;margin-top:10px;">
-              <button class="btn small" onclick="copyText('${escapeJs(item.image_url || "")}')">Copy Image URL</button>
-              <button class="btn orange small" onclick="toggleHomepageMenuCard('${escapeJs(item.id)}')">${item.is_active ? "Hide" : "Show"}</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join("");
-
-    updateHomepageLivePreview();
-  }
-
-  function editHomepageMenuCard(id){
-    const item = homepageMenuCards.find(row => String(row.id) === String(id));
-    if(!item) return showToast("Homepage card not found.", true);
-
-    $("homeCardId").value = item.id || "";
-    $("homeCardSlug").value = item.slug || "";
-    $("homeCardTitle").value = item.title || "";
-    $("homeCardSubtitle").value = item.subtitle || "";
-    $("homeCardImage").value = item.image_url || "";
-    $("homeCardImage").dataset.savedUrl = item.image_url || "";
-    $("homeCardLink").value = item.link_url || "";
-    $("homeCardSort").value = item.sort_order ?? 0;
-    $("homeCardActive").checked = item.is_active !== false;
-
-    setPreview("homeCardPreview", item.image_url || "");
-    updateHomepageLivePreview();
-    showTab("homepage");
-    window.scrollTo({ top:0, behavior:"smooth" });
-  }
-
-  function resetHomepageMenuForm(keepOpen = true){
-    $("homepageMenuForm").reset();
-    $("homeCardId").value = "";
-    $("homeCardSlug").value = "";
-    $("homeCardImage").dataset.savedUrl = "";
-    setPreview("homeCardPreview", "");
-    $("homeCardActive").checked = true;
-    $("homeCardSort").value = 0;
-    updateHomepageLivePreview();
-
-    if(keepOpen) showTab("homepage");
-  }
-
-  function updateHomepageLivePreview(){
-    const preview = $("homeCardLivePreview");
-    if(!preview) return;
-
-    const title = $("homeCardTitle")?.value.trim() || "Preview";
-    const subtitle = $("homeCardSubtitle")?.value.trim() || "Homepage menu card";
-    const image = $("homeCardImage")?.value.trim() || getFallbackImage($("homeCardSlug")?.value || "cakes");
-
-    preview.style.setProperty("--preview-img", `url('${image.replaceAll("'", "\\'")}')`);
-    preview.innerHTML = `
-      <div>
-        <b>${escapeHtml(title)}</b>
-        <span>${escapeHtml(subtitle)}</span>
-      </div>
-    `;
-  }
-
-  ["homeCardTitle","homeCardSubtitle","homeCardImage","homeCardSlug"].forEach(id => {
-    document.addEventListener("input", event => {
-      if(event.target && event.target.id === id) updateHomepageLivePreview();
-    });
-  });
-
-  async function saveHomepageMenuCard(event){
-    event.preventDefault();
-
-    try{
-      const id = $("homeCardId").value.trim();
-      const rawSlug = $("homeCardSlug").value.trim();
-      const title = $("homeCardTitle").value.trim();
-
-      if(!title){
-        showToast("Enter card title.", true);
-        return;
-      }
-
-      const payload = {
-        slug: slugify(rawSlug || title),
-        title,
-        subtitle:$("homeCardSubtitle").value.trim(),
-        image_url:$("homeCardImage").value.trim(),
-        link_url:$("homeCardLink").value.trim() || "#",
-        sort_order:Number($("homeCardSort").value || 0),
-        is_active:$("homeCardActive").checked
-      };
-
-      let result;
-
-      if(id){
-        const { data, error } = await supabaseClient
-          .from("homepage_menu_cards")
-          .update(payload)
-          .eq("id", id)
-          .select()
-          .single();
-
-        if(error) throw error;
-        result = data;
-      }else{
-        const { data, error } = await supabaseClient
-          .from("homepage_menu_cards")
-          .insert(payload)
-          .select()
-          .single();
-
-        if(error) throw error;
-        result = data;
-      }
-
-      const existingIndex = homepageMenuCards.findIndex(item => String(item.id) === String(result.id));
-      if(existingIndex >= 0){
-        homepageMenuCards[existingIndex] = result;
-      }else{
-        homepageMenuCards.push(result);
-      }
-
-      homepageMenuCards.sort((a,b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
-
-      renderHomepageMenuCards();
-      editHomepageMenuCard(result.id);
-      showToast("Homepage menu card saved.");
-    }catch(err){
-      console.error(err);
-      showToast(err.message || "Homepage menu card save failed.", true);
-    }
-  }
-
-  async function toggleHomepageMenuCard(id){
-    const item = homepageMenuCards.find(row => String(row.id) === String(id));
-    if(!item) return showToast("Homepage card not found.", true);
-
-    try{
-      const { data, error } = await supabaseClient
-        .from("homepage_menu_cards")
-        .update({ is_active: !item.is_active })
-        .eq("id", id)
-        .select()
-        .single();
-
-      if(error) throw error;
-
-      const index = homepageMenuCards.findIndex(row => String(row.id) === String(id));
-      if(index >= 0) homepageMenuCards[index] = data;
-
-      renderHomepageMenuCards();
-      showToast(data.is_active ? "Homepage card shown." : "Homepage card hidden.");
-    }catch(err){
-      console.error(err);
-      showToast(err.message || "Could not update homepage card.", true);
-    }
   }
 
   function renderSetupLists(){
@@ -3757,34 +3612,6 @@
         return { saved:true, message:"Occasion photo uploaded and saved." };
       }
 
-      if(targetInputId === "homeCardImage"){
-        const cardId = $("homeCardId")?.value || "";
-
-        if(!cardId){
-          return { saved:false, message:"Image uploaded. Choose or save a homepage card first." };
-        }
-
-        const { data, error } = await supabaseClient
-          .from("homepage_menu_cards")
-          .update({ image_url:newUrl })
-          .eq("id", cardId)
-          .select("id,image_url")
-          .single();
-
-        if(error) throw error;
-        if(!data || data.image_url !== newUrl){
-          throw new Error("Supabase did not confirm the saved homepage card image URL.");
-        }
-
-        const row = homepageMenuCards.find(item => String(item.id) === String(cardId));
-        if(row) row.image_url = newUrl;
-
-        $("homeCardImage").dataset.savedUrl = newUrl;
-        renderHomepageMenuCards();
-        updateHomepageLivePreview();
-        return { saved:true, message:"Homepage menu image uploaded and saved." };
-      }
-
       if(targetInputId === "setLogoUrl" || targetInputId === "setHeroImage"){
         const field = targetInputId === "setLogoUrl" ? "logo_url" : "hero_image_url";
         const payload = { id:1, [field]:newUrl };
@@ -3803,6 +3630,27 @@
         siteSettings = { ...siteSettings, [field]:newUrl };
         $(targetInputId).dataset.savedUrl = newUrl;
         return { saved:true, message: targetInputId === "setLogoUrl" ? "Logo uploaded and saved." : "Hero image uploaded and saved." };
+      }
+
+      if(String(targetInputId).startsWith("homeCardImage-")){
+        const cardId = String(targetInputId).replace("homeCardImage-", "");
+
+        const { data, error } = await supabaseClient
+          .from("homepage_menu_cards")
+          .update({ image_url:newUrl })
+          .eq("id", cardId)
+          .select()
+          .single();
+
+        if(error) throw error;
+        if(!data || data.image_url !== newUrl){
+          throw new Error("Supabase did not confirm the saved homepage menu image URL.");
+        }
+
+        const row = homepageMenuCards.find(item => String(item.id) === String(cardId));
+        if(row) Object.assign(row, data);
+        renderHomepageMenuCards();
+        return { saved:true, message:"Homepage menu image uploaded and saved." };
       }
 
       return { saved:false, message:"Image uploaded. Now click Save to store it." };
@@ -4233,3 +4081,103 @@
       return `${escapeHtml(a.name || "Add-on")} ${a.quote_required ? "(Quote)" : a.price ? "(" + money(a.price) + ")" : ""}`;
     }).join(", ");
   }
+
+  function money(value){
+    const symbol = siteSettings.currency || "$";
+    const num = Number(value || 0);
+    return symbol + num.toFixed(2).replace(".00","");
+  }
+
+  function formatDate(value){
+    if(!value) return "Not selected";
+
+    try{
+      const d = new Date(value + "T00:00:00");
+      return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+    }catch{
+      return value;
+    }
+  }
+
+  function formatBytes(bytes){
+    const num = Number(bytes || 0);
+
+    if(num < 1024) return num + " B";
+    if(num < 1024 * 1024) return (num / 1024).toFixed(1).replace(".0","") + " KB";
+    if(num < 1024 * 1024 * 1024) return (num / 1024 / 1024).toFixed(1).replace(".0","") + " MB";
+
+    return (num / 1024 / 1024 / 1024).toFixed(2).replace(".00","") + " GB";
+  }
+
+  function normalizePhone(value){
+    return String(value || "").replace(/[^\d]/g,"");
+  }
+
+  function slugify(value){
+    return String(value || "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g,"-")
+      .replace(/^-+|-+$/g,"");
+  }
+
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function escapeJs(value){
+    return String(value ?? "")
+      .replaceAll("\\","\\\\")
+      .replaceAll("'","\\'")
+      .replaceAll("\n","\\n")
+      .replaceAll("\r","");
+  }
+
+  function escapeClass(value){
+    return String(value || "").replace(/[^a-zA-Z0-9_-]/g,"");
+  }
+
+  function nl2br(value){
+    return String(value || "").replaceAll("\n","<br>");
+  }
+
+  function toTitle(value){
+    return String(value || "")
+      .replaceAll("-"," ")
+      .replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  function getFallbackImage(category){
+    const key = String(category || "").toLowerCase();
+
+    const images = {
+      cakes:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80",
+      cupcakes:"https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80",
+      muffins:"https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=900&q=80",
+      brownies:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80",
+      baklava:"https://images.unsplash.com/photo-1627311745837-68d6b11f0e41?auto=format&fit=crop&w=900&q=80"
+    };
+
+    return images[key] || images.cakes;
+  }
+
+  function showToast(message,isError = false){
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.style.background = isError ? "var(--red)" : "var(--purple)";
+    toast.classList.add("show");
+
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2600);
+  }
+</script>
+
+</body>
+</html>
