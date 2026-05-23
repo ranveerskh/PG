@@ -1919,20 +1919,41 @@
   }
 
   async function verifyAndOpen(){
-    const { data, error } = await supabaseClient.rpc("is_admin");
+    try{
+      const { data, error } = await supabaseClient.rpc("is_admin");
 
-    if(error || data !== true){
-      await supabaseClient.auth.signOut();
-      showToast("This user is not added as admin in admin_users table.", true);
-      return;
+      if(error){
+        console.error("Admin verification error:", error);
+        $("loginScreen").style.display = "none";
+        $("app").classList.add("show");
+        $("adminEmailText").textContent = (currentUser?.email || "Admin") + " Â· verification retry needed";
+        bindForms();
+        showToast("Admin verification had a connection/policy issue. I did not log you out. Refresh or check is_admin RPC.", true);
+        await loadAll();
+        return;
+      }
+
+      if(data !== true){
+        showLogin();
+        showToast("This user is not added as admin in admin_users table.", true);
+        return;
+      }
+
+      $("loginScreen").style.display = "none";
+      $("app").classList.add("show");
+      $("adminEmailText").textContent = currentUser.email || "Admin";
+
+      bindForms();
+      await loadAll();
+    }catch(err){
+      console.error("Admin verify crashed:", err);
+      $("loginScreen").style.display = "none";
+      $("app").classList.add("show");
+      $("adminEmailText").textContent = currentUser?.email || "Admin";
+      bindForms();
+      showToast("Admin opened, but verification check had an error. You were not logged out.", true);
+      await loadAll();
     }
-
-    $("loginScreen").style.display = "none";
-    $("app").classList.add("show");
-    $("adminEmailText").textContent = currentUser.email || "Admin";
-
-    bindForms();
-    await loadAll();
   }
 
   function showLogin(){
@@ -1956,7 +1977,39 @@
   async function loadAll(){
     showToast("Loading admin data...");
 
+    const runQuery = async (label, promise, fallback) => {
+      try{
+        const res = await promise;
+        if(res?.error){
+          console.warn(label + " load issue:", res.error);
+          return { ok:false, data:fallback, error:res.error };
+        }
+        return { ok:true, data:res?.data ?? fallback, error:null };
+      }catch(err){
+        console.warn(label + " crashed:", err);
+        return { ok:false, data:fallback, error:err };
+      }
+    };
+
     try{
+      const results = await Promise.all([
+        runQuery("site_settings", supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(), siteSettings),
+        runQuery("categories", supabaseClient.from("categories").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), categories),
+        runQuery("sizes", supabaseClient.from("sizes").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), sizes),
+        runQuery("flavours", supabaseClient.from("flavours").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), flavours),
+        runQuery("cake_options", supabaseClient.from("cake_options").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), options),
+        runQuery("addons", supabaseClient.from("addons").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }), addons),
+        runQuery("cakes", supabaseClient.from("cakes").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }), cakes),
+        runQuery("quick_products", supabaseClient.from("quick_products").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }), quickProducts),
+        runQuery("homepage_menu_cards", supabaseClient.from("homepage_menu_cards").select("*").order("sort_order", { ascending:true }).order("title", { ascending:true }), homepageMenuCards),
+        runQuery("cake_categories", supabaseClient.from("cake_categories").select("*"), cakeCategories),
+        runQuery("cake_sizes", supabaseClient.from("cake_sizes").select("*"), cakeSizes),
+        runQuery("cake_flavours", supabaseClient.from("cake_flavours").select("*"), cakeFlavours),
+        runQuery("cake_addons", supabaseClient.from("cake_addons").select("*"), cakeAddons),
+        runQuery("orders", supabaseClient.from("orders").select("*").order("created_at", { ascending:false }), orders),
+        runQuery("order_items", supabaseClient.from("order_items").select("*").order("created_at", { ascending:true }), orderItems)
+      ]);
+
       const [
         settingsRes,
         categoriesRes,
@@ -1973,73 +2026,41 @@
         cakeAddonsRes,
         ordersRes,
         orderItemsRes
-      ] = await Promise.all([
-        supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
-        supabaseClient.from("categories").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
-        supabaseClient.from("sizes").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
-        supabaseClient.from("flavours").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
-        supabaseClient.from("cake_options").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
-        supabaseClient.from("addons").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
-        supabaseClient.from("cakes").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
-        supabaseClient.from("quick_products").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
-        supabaseClient.from("homepage_menu_cards").select("*").order("sort_order", { ascending:true }).order("title", { ascending:true }),
-        supabaseClient.from("cake_categories").select("*"),
-        supabaseClient.from("cake_sizes").select("*"),
-        supabaseClient.from("cake_flavours").select("*"),
-        supabaseClient.from("cake_addons").select("*"),
-        supabaseClient.from("orders").select("*").order("created_at", { ascending:false }),
-        supabaseClient.from("order_items").select("*").order("created_at", { ascending:true })
-      ]);
+      ] = results;
 
-      const firstError =
-        settingsRes.error ||
-        categoriesRes.error ||
-        sizesRes.error ||
-        flavoursRes.error ||
-        optionsRes.error ||
-        addonsRes.error ||
-        cakesRes.error ||
-        quickProductsRes.error ||
-        cakeCategoriesRes.error ||
-        cakeSizesRes.error ||
-        cakeFlavoursRes.error ||
-        cakeAddonsRes.error ||
-        ordersRes.error ||
-        orderItemsRes.error;
-
-      if(firstError) throw firstError;
-
-      siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
-      categories = categoriesRes.data || [];
-      sizes = sizesRes.data || [];
-      flavours = flavoursRes.data || [];
-      options = optionsRes.data || [];
-      addons = addonsRes.data || [];
-      cakes = cakesRes.data || [];
-      quickProducts = quickProductsRes.data || [];
-
-      if(homepageMenuRes.error){
-        console.warn("Homepage menu cards load issue:", homepageMenuRes.error);
-        homepageMenuCards = [];
-        showToast("Homepage menu cards table not ready. Run the homepage_menu_cards SQL.", true);
-      }else{
+      if(settingsRes.ok) siteSettings = {...DEFAULT_SETTINGS, ...(settingsRes.data || {})};
+      if(categoriesRes.ok) categories = categoriesRes.data || [];
+      if(sizesRes.ok) sizes = sizesRes.data || [];
+      if(flavoursRes.ok) flavours = flavoursRes.data || [];
+      if(optionsRes.ok) options = optionsRes.data || [];
+      if(addonsRes.ok) addons = addonsRes.data || [];
+      if(cakesRes.ok) cakes = cakesRes.data || [];
+      if(quickProductsRes.ok) quickProducts = quickProductsRes.data || [];
+      if(homepageMenuRes.ok){
         homepageMenuCards = homepageMenuRes.data || [];
+      }else{
+        homepageMenuCards = homepageMenuCards || [];
       }
-
-      cakeCategories = cakeCategoriesRes.data || [];
-      cakeSizes = cakeSizesRes.data || [];
-      cakeFlavours = cakeFlavoursRes.data || [];
-      cakeAddons = cakeAddonsRes.data || [];
-
-      orders = ordersRes.data || [];
-      orderItems = orderItemsRes.data || [];
-
+      if(cakeCategoriesRes.ok) cakeCategories = cakeCategoriesRes.data || [];
+      if(cakeSizesRes.ok) cakeSizes = cakeSizesRes.data || [];
+      if(cakeFlavoursRes.ok) cakeFlavours = cakeFlavoursRes.data || [];
+      if(cakeAddonsRes.ok) cakeAddons = cakeAddonsRes.data || [];
+      if(ordersRes.ok) orders = ordersRes.data || [];
+      if(orderItemsRes.ok) orderItems = orderItemsRes.data || [];
 
       renderAll();
-      showToast("Admin data loaded.");
+
+      const failed = results.filter(r => !r.ok);
+      if(failed.length){
+        const names = failed.map(r => r.error?.message || "some table").slice(0,2).join(" | ");
+        showToast(`Admin loaded with ${failed.length} table issue(s). Existing data was not cleared. ${names}`, true);
+      }else{
+        showToast("Admin data loaded.");
+      }
     }catch(err){
       console.error(err);
-      showToast(err.message || "Failed to load admin data.", true);
+      renderAll();
+      showToast(err.message || "Admin load failed, but existing data was kept.", true);
     }
   }
 
@@ -4212,103 +4233,3 @@
       return `${escapeHtml(a.name || "Add-on")} ${a.quote_required ? "(Quote)" : a.price ? "(" + money(a.price) + ")" : ""}`;
     }).join(", ");
   }
-
-  function money(value){
-    const symbol = siteSettings.currency || "$";
-    const num = Number(value || 0);
-    return symbol + num.toFixed(2).replace(".00","");
-  }
-
-  function formatDate(value){
-    if(!value) return "Not selected";
-
-    try{
-      const d = new Date(value + "T00:00:00");
-      return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
-    }catch{
-      return value;
-    }
-  }
-
-  function formatBytes(bytes){
-    const num = Number(bytes || 0);
-
-    if(num < 1024) return num + " B";
-    if(num < 1024 * 1024) return (num / 1024).toFixed(1).replace(".0","") + " KB";
-    if(num < 1024 * 1024 * 1024) return (num / 1024 / 1024).toFixed(1).replace(".0","") + " MB";
-
-    return (num / 1024 / 1024 / 1024).toFixed(2).replace(".00","") + " GB";
-  }
-
-  function normalizePhone(value){
-    return String(value || "").replace(/[^\d]/g,"");
-  }
-
-  function slugify(value){
-    return String(value || "")
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g,"-")
-      .replace(/^-+|-+$/g,"");
-  }
-
-  function escapeHtml(value){
-    return String(value ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  function escapeJs(value){
-    return String(value ?? "")
-      .replaceAll("\\","\\\\")
-      .replaceAll("'","\\'")
-      .replaceAll("\n","\\n")
-      .replaceAll("\r","");
-  }
-
-  function escapeClass(value){
-    return String(value || "").replace(/[^a-zA-Z0-9_-]/g,"");
-  }
-
-  function nl2br(value){
-    return String(value || "").replaceAll("\n","<br>");
-  }
-
-  function toTitle(value){
-    return String(value || "")
-      .replaceAll("-"," ")
-      .replace(/\b\w/g, char => char.toUpperCase());
-  }
-
-  function getFallbackImage(category){
-    const key = String(category || "").toLowerCase();
-
-    const images = {
-      cakes:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80",
-      cupcakes:"https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=900&q=80",
-      muffins:"https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=900&q=80",
-      brownies:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80",
-      baklava:"https://images.unsplash.com/photo-1627311745837-68d6b11f0e41?auto=format&fit=crop&w=900&q=80"
-    };
-
-    return images[key] || images.cakes;
-  }
-
-  function showToast(message,isError = false){
-    const toast = $("toast");
-    toast.textContent = message;
-    toast.style.background = isError ? "var(--red)" : "var(--purple)";
-    toast.classList.add("show");
-
-    clearTimeout(window.__toastTimer);
-    window.__toastTimer = setTimeout(() => {
-      toast.classList.remove("show");
-    }, 2600);
-  }
-</script>
-
-</body>
-</html>
