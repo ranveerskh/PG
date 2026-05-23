@@ -639,6 +639,95 @@
       color:var(--green);
     }
 
+
+    .setupJumpBar{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding:2px 0 12px;
+      margin-bottom:8px;
+      scrollbar-width:none;
+    }
+
+    .setupJumpBar::-webkit-scrollbar{display:none}
+
+    .jumpBtn{
+      flex:0 0 auto;
+      min-height:38px;
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--purple);
+      font-size:12px;
+      font-weight:1000;
+      box-shadow:0 8px 18px rgba(100,13,107,.04);
+      white-space:nowrap;
+    }
+
+    .jumpBtn:hover{
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      color:#fff;
+      transform:translateY(-1px);
+    }
+
+    .setupAnchor{
+      scroll-margin-top:88px;
+    }
+
+    .homepageCardPreview{
+      width:76px;
+      height:56px;
+      border-radius:16px;
+      object-fit:cover;
+      background:#f1e4f2;
+      border:1px solid var(--line);
+      flex:0 0 auto;
+    }
+
+    .homepageSlug{
+      display:inline-flex;
+      width:max-content;
+      max-width:100%;
+      margin-top:7px;
+      padding:5px 7px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff7ff;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .homepagePreviewCard{
+      min-height:116px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg,rgba(100,13,107,.04),rgba(100,13,107,.72)),
+        var(--preview-img) center/cover;
+      padding:12px;
+      display:flex;
+      align-items:flex-end;
+      box-shadow:0 8px 18px rgba(100,13,107,.05);
+    }
+
+    .homepagePreviewCard b{
+      color:#fff;
+      font-size:15px;
+      letter-spacing:-.035em;
+      text-shadow:0 8px 18px rgba(0,0,0,.30);
+    }
+
+    .homepagePreviewCard span{
+      display:block;
+      margin-top:3px;
+      color:rgba(255,255,255,.86);
+      font-size:11px;
+      line-height:1.35;
+    }
+
     .productModeBox{
       border:1px solid var(--line);
       background:#fff;
@@ -950,7 +1039,7 @@
 
 <section id="loginScreen" class="loginScreen">
   <div class="loginCard">
-    <div class="logo" style="margin-bottom:14px;">🍰</div>
+    <div class="logo" style="margin-bottom:14px;">ð°</div>
     <h2>Admin Login</h2>
     <p>Login to manage Siffat Cakes website, products, cake setup and settings.</p>
 
@@ -976,7 +1065,7 @@
   <header class="topbar">
     <div class="wrap nav">
       <div class="brand">
-        <div class="logo">🍰</div>
+        <div class="logo">ð°</div>
         <div>
           <h1>Siffat Cakes Website Manager</h1>
           <p id="adminEmailText">Managing website</p>
@@ -997,6 +1086,7 @@
     <div class="tabs">
       <button class="tabBtn active" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</button>
       <button class="tabBtn" data-tab="products" onclick="showTab('products')">Products</button>
+      <button class="tabBtn" data-tab="homepage" onclick="showTab('homepage')">Homepage Menu</button>
       <button class="tabBtn" data-tab="setup" onclick="showTab('setup')">Cake Setup</button>
       <button class="tabBtn" data-tab="settings" onclick="showTab('settings')">Website Settings</button>
     </div>
@@ -1253,10 +1343,108 @@
       </div>
     </section>
 
-    <section id="setupPanel" class="panel">
-      <div class="setupGrid">
+
+    <section id="homepagePanel" class="panel">
+      <div class="layout2">
+        <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Homepage Menu Cards</h3>
+              <p>Edit the main mobile menu tiles: Cakes, Cupcakes, Muffins, Brownies, Baklava and Custom Cake.</p>
+            </div>
+            <button class="btn small" onclick="resetHomepageMenuForm(false)">Clear</button>
+          </div>
+
+          <div class="cardBody">
+            <form id="homepageMenuForm">
+              <input type="hidden" id="homeCardId">
+
+              <div class="field">
+                <label>Slug</label>
+                <input id="homeCardSlug" placeholder="cakes / cupcakes / custom-cake">
+                <div class="hint">Keep existing slugs stable. Recommended: cakes, cupcakes, muffins, brownies, baklava, custom-cake.</div>
+              </div>
+
+              <div class="field">
+                <label>Title</label>
+                <input id="homeCardTitle" required placeholder="Cakes">
+              </div>
+
+              <div class="field">
+                <label>Small Subtitle</label>
+                <input id="homeCardSubtitle" placeholder="Custom cakes">
+              </div>
+
+              <div class="field">
+                <label>Link URL</label>
+                <input id="homeCardLink" required placeholder="category.html?cat=cakes">
+              </div>
+
+              <div class="field">
+                <label>Menu Card Image</label>
+                <div class="imageBox">
+                  <div class="imageInputRow">
+                    <input id="homeCardImage" placeholder="Paste image link..." oninput="previewImageFromInput('homeCardImage','homeCardPreview')">
+                  </div>
+
+                  <div class="uploadRow">
+                    <input id="homeCardImageFile" type="file" accept="image/png,image/jpeg,image/webp">
+                    <button class="btn small" type="button" onclick="uploadAndSet('homeCardImageFile','homeCardImage','homeCardPreview','homepage')">Upload</button>
+                    <button class="btn small" type="button" onclick="clearImageField('homeCardImage','homeCardPreview','homeCardImageFile')">Clear</button>
+                  </div>
+
+                  <img id="homeCardPreview" class="imagePreview" alt="Homepage card preview">
+                  <div class="hint">This image controls the homepage menu tile. Product images stay separate.</div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Sort Order</label>
+                <input id="homeCardSort" type="number" value="0">
+              </div>
+
+              <label class="checkRow"><input id="homeCardActive" type="checkbox" checked> Active on homepage</label>
+
+              <div id="homeCardLivePreview" class="homepagePreviewCard" style="--preview-img:url('')">
+                <div>
+                  <b>Preview</b>
+                  <span>Menu card preview</span>
+                </div>
+              </div>
+
+              <button class="btn primary block" type="submit" style="margin-top:12px;">Save Homepage Card</button>
+            </form>
+          </div>
+        </div>
 
         <div class="card">
+          <div class="cardHead">
+            <div>
+              <h3>Current Homepage Menu</h3>
+              <p>Tap edit to change title, image, link, order or visibility.</p>
+            </div>
+            <button class="btn small" onclick="loadAll()">Refresh</button>
+          </div>
+
+          <div class="cardBody">
+            <div id="homepageMenuCardsList" class="list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="setupPanel" class="panel">
+      <div class="setupJumpBar">
+        <button class="jumpBtn" onclick="scrollToSetup('setupOccasionsCard')">Cake Occasions</button>
+        <button class="jumpBtn" onclick="scrollToSetup('setupSizesCard')">Sizes</button>
+        <button class="jumpBtn" onclick="scrollToSetup('setupFlavoursCard')">Flavours</button>
+        <button class="jumpBtn" onclick="scrollToSetup('setupOptionsCard')">Options</button>
+        <button class="jumpBtn" onclick="scrollToSetup('setupAddonsCard')">Add-ons</button>
+      </div>
+
+      <div class="setupGrid">
+
+        <div class="card setupAnchor" id="setupOccasionsCard">
           <div class="cardHead">
             <div>
               <h3>Cake Occasions</h3>
@@ -1325,7 +1513,7 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card setupAnchor" id="setupSizesCard">
           <div class="cardHead">
             <div>
               <h3>Sizes & Servings</h3>
@@ -1339,7 +1527,7 @@
               <div class="formPanelTitle">
                 <div>
                   <h4 id="sizeFormTitle">Add Size</h4>
-                  <p>Example: 8 inch · serves 10-14 · $65.</p>
+                  <p>Example: 8 inch Â· serves 10-14 Â· $65.</p>
                 </div>
                 <button class="btn small" type="button" onclick="closePanel('sizeFormPanel')">Close</button>
               </div>
@@ -1361,7 +1549,7 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card setupAnchor" id="setupFlavoursCard">
           <div class="cardHead">
             <div>
               <h3>Flavours</h3>
@@ -1396,7 +1584,7 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card setupAnchor" id="setupOptionsCard">
           <div class="cardHead">
             <div>
               <h3>Options</h3>
@@ -1432,7 +1620,7 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card setupAnchor" id="setupAddonsCard">
           <div class="cardHead">
             <div>
               <h3>Add-ons</h3>
@@ -1669,6 +1857,7 @@
   let addons = [];
   let cakes = [];
   let quickProducts = [];
+  let homepageMenuCards = [];
 
   let cakeCategories = [];
   let cakeSizes = [];
@@ -1761,6 +1950,7 @@
     $("flavourForm").addEventListener("submit", saveFlavour);
     $("optionForm").addEventListener("submit", saveOption);
     $("addonForm").addEventListener("submit", saveAddon);
+    $("homepageMenuForm").addEventListener("submit", saveHomepageMenuCard);
   }
 
   async function loadAll(){
@@ -1776,6 +1966,7 @@
         addonsRes,
         cakesRes,
         quickProductsRes,
+        homepageMenuRes,
         cakeCategoriesRes,
         cakeSizesRes,
         cakeFlavoursRes,
@@ -1791,6 +1982,7 @@
         supabaseClient.from("addons").select("*").order("sort_order", { ascending:true }).order("name", { ascending:true }),
         supabaseClient.from("cakes").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
         supabaseClient.from("quick_products").select("*").order("sort_order", { ascending:true }).order("created_at", { ascending:false }),
+        supabaseClient.from("homepage_menu_cards").select("*").order("sort_order", { ascending:true }).order("title", { ascending:true }),
         supabaseClient.from("cake_categories").select("*"),
         supabaseClient.from("cake_sizes").select("*"),
         supabaseClient.from("cake_flavours").select("*"),
@@ -1826,6 +2018,14 @@
       cakes = cakesRes.data || [];
       quickProducts = quickProductsRes.data || [];
 
+      if(homepageMenuRes.error){
+        console.warn("Homepage menu cards load issue:", homepageMenuRes.error);
+        homepageMenuCards = [];
+        showToast("Homepage menu cards table not ready. Run the homepage_menu_cards SQL.", true);
+      }else{
+        homepageMenuCards = homepageMenuRes.data || [];
+      }
+
       cakeCategories = cakeCategoriesRes.data || [];
       cakeSizes = cakeSizesRes.data || [];
       cakeFlavours = cakeFlavoursRes.data || [];
@@ -1849,6 +2049,7 @@
     fillSettingsForm();
     fillProductSelects();
     renderProducts();
+    renderHomepageMenuCards();
     renderSetupLists();
   }
 
@@ -1862,6 +2063,15 @@
     });
 
     $(tab + "Panel").classList.add("active");
+  }
+
+  function scrollToSetup(id){
+    showTab("setup");
+
+    window.setTimeout(() => {
+      const el = $(id);
+      if(el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+    }, 80);
   }
 
   function openPanel(id){
@@ -1999,9 +2209,9 @@
 
   function fillProductSelects(){
     fillMulti("cakeCategoriesSelect", categories, "name");
-    fillMulti("cakeSizesSelect", sizes, item => `${item.name} ${item.servings ? "· " + item.servings : ""} · ${item.quote_required ? "Quote" : money(item.price)}`);
-    fillMulti("cakeFlavoursSelect", flavours, item => `${item.name} · ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}`);
-    fillMulti("cakeAddonsSelect", addons, item => `${item.name} · ${item.quote_required ? "Quote" : money(item.price)}`);
+    fillMulti("cakeSizesSelect", sizes, item => `${item.name} ${item.servings ? "Â· " + item.servings : ""} Â· ${item.quote_required ? "Quote" : money(item.price)}`);
+    fillMulti("cakeFlavoursSelect", flavours, item => `${item.name} Â· ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}`);
+    fillMulti("cakeAddonsSelect", addons, item => `${item.name} Â· ${item.quote_required ? "Quote" : money(item.price)}`);
   }
 
   function fillMulti(id, rows, labelKey){
@@ -2212,7 +2422,7 @@
             <div class="compactMain">
               <div class="itemTitle">${escapeHtml(cake.name || "Cake")}</div>
               <div class="itemMeta">
-                Customizable Cake · Starting ${money(cake.starting_price)} · ${escapeHtml(cake.price_type || "estimated")} · ${cake.is_active ? "Active" : "Inactive"} ${cake.is_featured ? "· Featured" : ""}
+                Customizable Cake Â· Starting ${money(cake.starting_price)} Â· ${escapeHtml(cake.price_type || "estimated")} Â· ${cake.is_active ? "Active" : "Inactive"} ${cake.is_featured ? "Â· Featured" : ""}
               </div>
               <div class="tags">
                 ${cats.slice(0,3).map(x => `<span class="tag">${escapeHtml(x)}</span>`).join("")}
@@ -2251,7 +2461,7 @@
             <div class="compactMain">
               <div class="itemTitle">${escapeHtml(product.name || "Dessert")}</div>
               <div class="itemMeta">
-                Quick Dessert · ${toTitle(product.category)} ${product.variant ? "· " + escapeHtml(product.variant) : ""} · ${product.quote_required ? "Quote" : money(product.price)} · ${product.is_active ? "Active" : "Inactive"} ${product.is_featured ? "· Featured" : ""}
+                Quick Dessert Â· ${toTitle(product.category)} ${product.variant ? "Â· " + escapeHtml(product.variant) : ""} Â· ${product.quote_required ? "Quote" : money(product.price)} Â· ${product.is_active ? "Active" : "Inactive"} ${product.is_featured ? "Â· Featured" : ""}
               </div>
               <div class="tags">
                 <span class="tag">${toTitle(product.category)}</span>
@@ -2402,6 +2612,207 @@
     showToast("Quick dessert deleted.");
   }
 
+
+  function renderHomepageMenuCards(){
+    const box = $("homepageMenuCardsList");
+    if(!box) return;
+
+    if(!homepageMenuCards.length){
+      box.innerHTML = `
+        <div class="loading">
+          No homepage menu cards found.<br>
+          Run the homepage_menu_cards SQL first, then refresh admin.
+        </div>
+      `;
+      updateHomepageLivePreview();
+      return;
+    }
+
+    box.innerHTML = homepageMenuCards.map(item => {
+      const domId = "home-menu-" + item.id;
+      const img = item.image_url || getFallbackImage(item.slug || "cakes");
+
+      return `
+        <div class="compactItem" id="${domId}">
+          <div class="compactTop" onclick="toggleCompact('${domId}')">
+            <div class="rowWithImage">
+              <img class="homepageCardPreview" src="${escapeHtml(addCacheBustToImageUrl(img))}" onerror="this.src='${getFallbackImage("cakes")}'">
+              <div class="compactMain">
+                <div class="itemTitle">${escapeHtml(item.title || "Menu Card")}</div>
+                <div class="itemMeta">
+                  ${escapeHtml(item.subtitle || "")}<br>
+                  ${escapeHtml(item.link_url || "")}
+                </div>
+                <span class="homepageSlug">${escapeHtml(item.slug || "")} Â· Sort ${Number(item.sort_order || 0)} Â· ${item.is_active ? "Active" : "Hidden"}</span>
+              </div>
+            </div>
+            <div class="itemActions">
+              <button class="btn small" onclick="event.stopPropagation(); editHomepageMenuCard('${escapeJs(item.id)}')">Edit</button>
+            </div>
+          </div>
+
+          <div class="compactDetails">
+            <b>Homepage tile:</b> ${escapeHtml(item.title || "")}<br>
+            <b>Slug:</b> ${escapeHtml(item.slug || "")}<br>
+            <b>Link:</b> ${escapeHtml(item.link_url || "")}<br>
+            <b>Image:</b> ${item.image_url ? "Custom image set" : "Using fallback image"}<br>
+            <div class="itemActions" style="justify-content:flex-start;margin-top:10px;">
+              <button class="btn small" onclick="copyText('${escapeJs(item.image_url || "")}')">Copy Image URL</button>
+              <button class="btn orange small" onclick="toggleHomepageMenuCard('${escapeJs(item.id)}')">${item.is_active ? "Hide" : "Show"}</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    updateHomepageLivePreview();
+  }
+
+  function editHomepageMenuCard(id){
+    const item = homepageMenuCards.find(row => String(row.id) === String(id));
+    if(!item) return showToast("Homepage card not found.", true);
+
+    $("homeCardId").value = item.id || "";
+    $("homeCardSlug").value = item.slug || "";
+    $("homeCardTitle").value = item.title || "";
+    $("homeCardSubtitle").value = item.subtitle || "";
+    $("homeCardImage").value = item.image_url || "";
+    $("homeCardImage").dataset.savedUrl = item.image_url || "";
+    $("homeCardLink").value = item.link_url || "";
+    $("homeCardSort").value = item.sort_order ?? 0;
+    $("homeCardActive").checked = item.is_active !== false;
+
+    setPreview("homeCardPreview", item.image_url || "");
+    updateHomepageLivePreview();
+    showTab("homepage");
+    window.scrollTo({ top:0, behavior:"smooth" });
+  }
+
+  function resetHomepageMenuForm(keepOpen = true){
+    $("homepageMenuForm").reset();
+    $("homeCardId").value = "";
+    $("homeCardSlug").value = "";
+    $("homeCardImage").dataset.savedUrl = "";
+    setPreview("homeCardPreview", "");
+    $("homeCardActive").checked = true;
+    $("homeCardSort").value = 0;
+    updateHomepageLivePreview();
+
+    if(keepOpen) showTab("homepage");
+  }
+
+  function updateHomepageLivePreview(){
+    const preview = $("homeCardLivePreview");
+    if(!preview) return;
+
+    const title = $("homeCardTitle")?.value.trim() || "Preview";
+    const subtitle = $("homeCardSubtitle")?.value.trim() || "Homepage menu card";
+    const image = $("homeCardImage")?.value.trim() || getFallbackImage($("homeCardSlug")?.value || "cakes");
+
+    preview.style.setProperty("--preview-img", `url('${image.replaceAll("'", "\\'")}')`);
+    preview.innerHTML = `
+      <div>
+        <b>${escapeHtml(title)}</b>
+        <span>${escapeHtml(subtitle)}</span>
+      </div>
+    `;
+  }
+
+  ["homeCardTitle","homeCardSubtitle","homeCardImage","homeCardSlug"].forEach(id => {
+    document.addEventListener("input", event => {
+      if(event.target && event.target.id === id) updateHomepageLivePreview();
+    });
+  });
+
+  async function saveHomepageMenuCard(event){
+    event.preventDefault();
+
+    try{
+      const id = $("homeCardId").value.trim();
+      const rawSlug = $("homeCardSlug").value.trim();
+      const title = $("homeCardTitle").value.trim();
+
+      if(!title){
+        showToast("Enter card title.", true);
+        return;
+      }
+
+      const payload = {
+        slug: slugify(rawSlug || title),
+        title,
+        subtitle:$("homeCardSubtitle").value.trim(),
+        image_url:$("homeCardImage").value.trim(),
+        link_url:$("homeCardLink").value.trim() || "#",
+        sort_order:Number($("homeCardSort").value || 0),
+        is_active:$("homeCardActive").checked
+      };
+
+      let result;
+
+      if(id){
+        const { data, error } = await supabaseClient
+          .from("homepage_menu_cards")
+          .update(payload)
+          .eq("id", id)
+          .select()
+          .single();
+
+        if(error) throw error;
+        result = data;
+      }else{
+        const { data, error } = await supabaseClient
+          .from("homepage_menu_cards")
+          .insert(payload)
+          .select()
+          .single();
+
+        if(error) throw error;
+        result = data;
+      }
+
+      const existingIndex = homepageMenuCards.findIndex(item => String(item.id) === String(result.id));
+      if(existingIndex >= 0){
+        homepageMenuCards[existingIndex] = result;
+      }else{
+        homepageMenuCards.push(result);
+      }
+
+      homepageMenuCards.sort((a,b) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+
+      renderHomepageMenuCards();
+      editHomepageMenuCard(result.id);
+      showToast("Homepage menu card saved.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Homepage menu card save failed.", true);
+    }
+  }
+
+  async function toggleHomepageMenuCard(id){
+    const item = homepageMenuCards.find(row => String(row.id) === String(id));
+    if(!item) return showToast("Homepage card not found.", true);
+
+    try{
+      const { data, error } = await supabaseClient
+        .from("homepage_menu_cards")
+        .update({ is_active: !item.is_active })
+        .eq("id", id)
+        .select()
+        .single();
+
+      if(error) throw error;
+
+      const index = homepageMenuCards.findIndex(row => String(row.id) === String(id));
+      if(index >= 0) homepageMenuCards[index] = data;
+
+      renderHomepageMenuCards();
+      showToast(data.is_active ? "Homepage card shown." : "Homepage card hidden.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Could not update homepage card.", true);
+    }
+  }
+
   function renderSetupLists(){
     renderOccasionList();
     renderSizeList();
@@ -2429,7 +2840,7 @@
               <img class="miniPreview" src="${escapeHtml(img)}" onerror="this.src='${getFallbackImage("cakes")}'">
               <div class="compactMain">
                 <div class="itemTitle">${escapeHtml(item.name)}</div>
-                <div class="itemMeta">${escapeHtml(item.slug || "")} · ${item.is_active ? "Active" : "Inactive"} · Sort ${item.sort_order ?? 0}</div>
+                <div class="itemMeta">${escapeHtml(item.slug || "")} Â· ${item.is_active ? "Active" : "Inactive"} Â· Sort ${item.sort_order ?? 0}</div>
               </div>
             </div>
             <div class="itemActions" onclick="event.stopPropagation()">
@@ -2541,8 +2952,8 @@
         <div class="compactItem" id="${domId}">
           <div class="compactTop" onclick="toggleCompact('${domId}')">
             <div class="compactMain">
-              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : money(item.price)}</div>
-              <div class="itemMeta">${escapeHtml(item.servings || "No servings")} · ${item.is_active ? "Active" : "Inactive"}</div>
+              <div class="itemTitle">${escapeHtml(item.name)} Â· ${item.quote_required ? "Quote" : money(item.price)}</div>
+              <div class="itemMeta">${escapeHtml(item.servings || "No servings")} Â· ${item.is_active ? "Active" : "Inactive"}</div>
             </div>
             <div class="itemActions" onclick="event.stopPropagation()">
               <button class="btn small" onclick="editSize('${item.id}')">Edit</button>
@@ -2645,8 +3056,8 @@
         <div class="compactItem" id="${domId}">
           <div class="compactTop" onclick="toggleCompact('${domId}')">
             <div class="compactMain">
-              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}</div>
-              <div class="itemMeta">${item.quote_required ? "Quote required" : "Fixed extra"} · ${item.is_active ? "Active" : "Inactive"}</div>
+              <div class="itemTitle">${escapeHtml(item.name)} Â· ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}</div>
+              <div class="itemMeta">${item.quote_required ? "Quote required" : "Fixed extra"} Â· ${item.is_active ? "Active" : "Inactive"}</div>
             </div>
             <div class="itemActions" onclick="event.stopPropagation()">
               <button class="btn small" onclick="editFlavour('${item.id}')">Edit</button>
@@ -2746,8 +3157,8 @@
         <div class="compactItem" id="${domId}">
           <div class="compactTop" onclick="toggleCompact('${domId}')">
             <div class="compactMain">
-              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}</div>
-              <div class="itemMeta">${escapeHtml(item.option_type || "option")} · ${item.is_active ? "Active" : "Inactive"}</div>
+              <div class="itemTitle">${escapeHtml(item.name)} Â· ${item.quote_required ? "Quote" : "+" + money(item.extra_price)}</div>
+              <div class="itemMeta">${escapeHtml(item.option_type || "option")} Â· ${item.is_active ? "Active" : "Inactive"}</div>
             </div>
             <div class="itemActions" onclick="event.stopPropagation()">
               <button class="btn small" onclick="editOption('${item.id}')">Edit</button>
@@ -2850,8 +3261,8 @@
         <div class="compactItem" id="${domId}">
           <div class="compactTop" onclick="toggleCompact('${domId}')">
             <div class="compactMain">
-              <div class="itemTitle">${escapeHtml(item.name)} · ${item.quote_required ? "Quote" : money(item.price)}</div>
-              <div class="itemMeta">${escapeHtml(item.description || "No description")} · ${item.is_active ? "Active" : "Inactive"}</div>
+              <div class="itemTitle">${escapeHtml(item.name)} Â· ${item.quote_required ? "Quote" : money(item.price)}</div>
+              <div class="itemMeta">${escapeHtml(item.description || "No description")} Â· ${item.is_active ? "Active" : "Inactive"}</div>
             </div>
             <div class="itemActions" onclick="event.stopPropagation()">
               <button class="btn small" onclick="editAddon('${item.id}')">Edit</button>
@@ -2982,10 +3393,10 @@
       <div class="orderCard" id="${domId}">
         <div class="orderTop" onclick="toggleOrder('${order.id}')">
           <div>
-            <h4>${escapeHtml(order.customer_name || "Customer")} · ${hasQuote ? "Quote" : money(order.estimated_total)}</h4>
+            <h4>${escapeHtml(order.customer_name || "Customer")} Â· ${hasQuote ? "Quote" : money(order.estimated_total)}</h4>
             <p>
-              ${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}<br>
-              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
+              ${escapeHtml(order.customer_phone || "")}${order.customer_email ? " Â· " + escapeHtml(order.customer_email) : ""}<br>
+              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} Â· ${escapeHtml(order.delivery_type || "")}<br>
               Order ID: ${escapeHtml(shortId)}
             </p>
           </div>
@@ -3075,9 +3486,9 @@
       <div class="orderItem">
         <b>${escapeHtml(item.cake_name || "Cake")}</b><br>
         <b>Type:</b> Custom Cake<br>
-        <b>Size:</b> ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""} · ${money(item.size_price)}<br>
-        <b>Flavour:</b> ${escapeHtml(item.flavour_name || "")} · +${money(item.flavour_extra_price)}<br>
-        <b>Option:</b> ${escapeHtml(item.option_name || "")} · +${money(item.option_extra_price)}<br>
+        <b>Size:</b> ${escapeHtml(item.size_name || "")} ${item.servings ? "Â· " + escapeHtml(item.servings) : ""} Â· ${money(item.size_price)}<br>
+        <b>Flavour:</b> ${escapeHtml(item.flavour_name || "")} Â· +${money(item.flavour_extra_price)}<br>
+        <b>Option:</b> ${escapeHtml(item.option_name || "")} Â· +${money(item.option_extra_price)}<br>
         <b>Quantity:</b> ${item.quantity || 1}<br>
         <b>Message on Cake:</b> ${escapeHtml(item.message_on_cake || "")}<br>
         <b>Special Notes:</b> ${escapeHtml(item.special_notes || "")}<br>
@@ -3325,6 +3736,34 @@
         return { saved:true, message:"Occasion photo uploaded and saved." };
       }
 
+      if(targetInputId === "homeCardImage"){
+        const cardId = $("homeCardId")?.value || "";
+
+        if(!cardId){
+          return { saved:false, message:"Image uploaded. Choose or save a homepage card first." };
+        }
+
+        const { data, error } = await supabaseClient
+          .from("homepage_menu_cards")
+          .update({ image_url:newUrl })
+          .eq("id", cardId)
+          .select("id,image_url")
+          .single();
+
+        if(error) throw error;
+        if(!data || data.image_url !== newUrl){
+          throw new Error("Supabase did not confirm the saved homepage card image URL.");
+        }
+
+        const row = homepageMenuCards.find(item => String(item.id) === String(cardId));
+        if(row) row.image_url = newUrl;
+
+        $("homeCardImage").dataset.savedUrl = newUrl;
+        renderHomepageMenuCards();
+        updateHomepageLivePreview();
+        return { saved:true, message:"Homepage menu image uploaded and saved." };
+      }
+
       if(targetInputId === "setLogoUrl" || targetInputId === "setHeroImage"){
         const field = targetInputId === "setLogoUrl" ? "logo_url" : "hero_image_url";
         const payload = { id:1, [field]:newUrl };
@@ -3536,7 +3975,7 @@
           <img class="galleryThumb" src="${escapeHtml(file.url)}" alt="${escapeHtml(file.name)}" loading="lazy">
           <div class="galleryInfo">
             <b>${escapeHtml(file.name)}</b>
-            <span>${escapeHtml(file.folder)} · ${formatBytes(file.size)}</span>
+            <span>${escapeHtml(file.folder)} Â· ${formatBytes(file.size)}</span>
             <span>${isUsed ? "Used in: " + escapeHtml(usage.join(", ")) : "Unused image"}</span>
             <input class="copyInput" readonly value="${escapeHtml(file.url)}">
             <div class="itemActions" style="justify-content:flex-start;margin-top:8px;">
