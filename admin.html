@@ -886,53 +886,6 @@ transform:translateX(-50%) translateY(0);
 display:none!important;
 }
 
-
-.setupSwitches{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-margin-bottom:14px;
-border:1px solid var(--line);
-background:rgba(255,255,255,.92);
-border-radius:22px;
-padding:12px;
-box-shadow:var(--shadow2);
-}
-
-.setupSwitches .btn{
-min-height:34px;
-padding:7px 10px;
-font-size:12px;
-}
-
-.homeMenuGrid{
-display:grid;
-grid-template-columns:repeat(2,minmax(0,1fr));
-gap:10px;
-}
-
-.homeCardPreview{
-width:70px;
-height:54px;
-border-radius:16px;
-object-fit:cover;
-background:#f1e4f2;
-border:1px solid var(--line);
-flex:0 0 auto;
-}
-
-.noticeBox{
-border:1px solid var(--line);
-background:#fff7ff;
-border-radius:18px;
-padding:12px;
-color:var(--muted);
-font-size:12px;
-font-weight:800;
-line-height:1.45;
-margin-bottom:12px;
-}
-
 @media(max-width:1120px){
 .gridStats{
 grid-template-columns:repeat(3,1fr);
@@ -989,10 +942,6 @@ width:100%;
 .galleryGrid{
 grid-template-columns:1fr;
 }
-
-.homeMenuGrid{
-grid-template-columns:1fr;
-}
 }
 </style>
 </head>
@@ -1047,7 +996,6 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <main class="wrap main">
 <div class="tabs">
 <button class="tabBtn active" data-tab="dashboard" onclick="showTab('dashboard')">Dashboard</button>
-<button class="tabBtn" data-tab="homepage" onclick="showTab('homepage')">Homepage Menu</button>
 <button class="tabBtn" data-tab="products" onclick="showTab('products')">Products</button>
 <button class="tabBtn" data-tab="setup" onclick="showTab('setup')">Cake Setup</button>
 <button class="tabBtn" data-tab="settings" onclick="showTab('settings')">Website Settings</button>
@@ -1121,103 +1069,6 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 </div>
 </section>
-
-
-<section id="homepagePanel" class="panel">
-<div class="card">
-<div class="cardHead">
-<div>
-<h3>Homepage Menu Cards</h3>
-<p>Control the main homepage tile photos separately from product photos.</p>
-</div>
-<div class="itemActions">
-<button class="btn small" onclick="loadHomepageMenuCardsSafe()">Refresh</button>
-<button class="btn primary small" onclick="seedHomepageMenuCards()">Create Default Cards</button>
-</div>
-</div>
-
-<div class="cardBody">
-<div id="homepageMenuWarning" class="noticeBox hidden"></div>
-
-<div id="homeCardFormPanel" class="formPanel">
-<div class="formPanelTitle">
-<div>
-<h4 id="homeCardFormTitle">Edit Homepage Card</h4>
-<p>These cards appear on the index page main menu: Cakes, Cupcakes, Muffins, Brownies, Baklava, Custom Cake.</p>
-</div>
-<button class="btn small" type="button" onclick="closePanel('homeCardFormPanel')">Close</button>
-</div>
-
-<form id="homeCardForm">
-<input type="hidden" id="homeCardId">
-
-<div class="formGrid">
-<div class="field">
-<label>Slug</label>
-<input id="homeCardSlug" placeholder="cakes / cupcakes / custom-cake">
-<div class="hint">Use simple slug. Example: cakes, cupcakes, muffins, brownies, baklava, custom-cake.</div>
-</div>
-
-<div class="field">
-<label>Title</label>
-<input id="homeCardTitle" required placeholder="Cakes">
-</div>
-
-<div class="field">
-<label>Subtitle</label>
-<input id="homeCardSubtitle" placeholder="Custom cakes">
-</div>
-
-<div class="field">
-<label>Link URL</label>
-<input id="homeCardLink" required placeholder="category.html?cat=cakes">
-</div>
-
-<div class="field full">
-<label>Menu Card Image</label>
-<div class="imageBox">
-<div class="imageInputRow">
-<input id="homeCardImageUrl" placeholder="Paste image link..." oninput="previewImageFromInput('homeCardImageUrl','homeCardImagePreview')">
-</div>
-
-<div class="uploadRow">
-<input id="homeCardImageFile" type="file" accept="image/png,image/jpeg,image/webp">
-<button class="btn small" type="button" onclick="uploadAndSet('homeCardImageFile','homeCardImageUrl','homeCardImagePreview','homepage-menu')">Upload Image</button>
-<button class="btn small" type="button" onclick="clearImageField('homeCardImageUrl','homeCardImagePreview','homeCardImageFile')">Clear</button>
-</div>
-
-<img id="homeCardImagePreview" class="imagePreview" alt="Homepage card preview">
-<div class="hint">Upload here to change the menu card photo on index page.</div>
-</div>
-</div>
-
-<div class="field">
-<label>Sort Order</label>
-<input id="homeCardSort" type="number" value="0">
-</div>
-
-<div class="field">
-<label>Visibility</label>
-<label class="checkRow"><input id="homeCardActive" type="checkbox" checked> Active</label>
-</div>
-
-<div class="full">
-<button class="btn primary" type="submit">Save Homepage Card</button>
-<button class="btn" type="button" onclick="resetHomeCardForm(true)" style="margin-left:8px;">Clear</button>
-</div>
-</div>
-</form>
-</div>
-
-<div class="searchRow">
-<input id="homeCardSearch" placeholder="Search homepage cards..." oninput="renderHomepageMenuCards()">
-</div>
-
-<div id="homepageMenuCardsList" class="homeMenuGrid"></div>
-</div>
-</div>
-</section>
-
 
 <section id="productsPanel" class="panel">
 <div class="card">
@@ -1403,17 +1254,9 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </section>
 
 <section id="setupPanel" class="panel">
-<div class="setupSwitches">
-<button class="btn primary small" onclick="scrollToSetupCard('setupOccasionsCard')">Cake Occasions</button>
-<button class="btn small" onclick="scrollToSetupCard('setupSizesCard')">Sizes</button>
-<button class="btn small" onclick="scrollToSetupCard('setupFlavoursCard')">Flavours</button>
-<button class="btn small" onclick="scrollToSetupCard('setupOptionsCard')">Options</button>
-<button class="btn small" onclick="scrollToSetupCard('setupAddonsCard')">Add-ons</button>
-</div>
-
 <div class="setupGrid">
 
-<div class="card" id="setupOccasionsCard">
+<div class="card">
 <div class="cardHead">
 <div>
 <h3>Cake Occasions</h3>
@@ -1482,7 +1325,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 </div>
 
-<div class="card" id="setupSizesCard">
+<div class="card">
 <div class="cardHead">
 <div>
 <h3>Sizes & Servings</h3>
@@ -1518,7 +1361,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 </div>
 
-<div class="card" id="setupFlavoursCard">
+<div class="card">
 <div class="cardHead">
 <div>
 <h3>Flavours</h3>
@@ -1553,7 +1396,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 </div>
 
-<div class="card" id="setupOptionsCard">
+<div class="card">
 <div class="cardHead">
 <div>
 <h3>Options</h3>
@@ -1589,7 +1432,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 </div>
 
-<div class="card" id="setupAddonsCard">
+<div class="card">
 <div class="cardHead">
 <div>
 <h3>Add-ons</h3>
@@ -1826,9 +1669,6 @@ let options = [];
 let addons = [];
 let cakes = [];
 let quickProducts = [];
-let homepageMenuCards = [];
-let homepageMenuCardsReady = true;
-let homepageMenuCardsError = "";
 
 let cakeCategories = [];
 let cakeSizes = [];
@@ -1921,9 +1761,6 @@ $("sizeForm").addEventListener("submit", saveSize);
 $("flavourForm").addEventListener("submit", saveFlavour);
 $("optionForm").addEventListener("submit", saveOption);
 $("addonForm").addEventListener("submit", saveAddon);
-
-const homeForm = $("homeCardForm");
-if(homeForm) homeForm.addEventListener("submit", saveHomepageMenuCard);
 }
 
 async function loadAll(){
@@ -1997,7 +1834,6 @@ cakeAddons = cakeAddonsRes.data || [];
 orders = ordersRes.data || [];
 orderItems = orderItemsRes.data || [];
 
-await loadHomepageMenuCardsSafe();
 
 renderAll();
 showToast("Admin data loaded.");
@@ -2013,7 +1849,6 @@ renderRecentOrders();
 fillSettingsForm();
 fillProductSelects();
 renderProducts();
-renderHomepageMenuCards();
 renderSetupLists();
 }
 
@@ -2040,230 +1875,6 @@ $(id).classList.remove("open");
 function toggleCompact(id){
 const el = $(id);
 if(el) el.classList.toggle("open");
-}
-
-function scrollToSetupCard(id){
-const el = $(id);
-if(!el) return;
-el.scrollIntoView({ behavior:"smooth", block:"start" });
-el.style.outline = "3px solid rgba(100,13,107,.22)";
-setTimeout(() => {
-el.style.outline = "";
-}, 1300);
-}
-
-async function loadHomepageMenuCardsSafe(){
-try{
-const { data, error } = await supabaseClient
-.from("homepage_menu_cards")
-.select("*")
-.order("sort_order", { ascending:true })
-.order("title", { ascending:true });
-
-if(error) throw error;
-
-homepageMenuCards = data || [];
-homepageMenuCardsReady = true;
-homepageMenuCardsError = "";
-}catch(err){
-console.warn("homepage_menu_cards load failed:", err);
-homepageMenuCards = [];
-homepageMenuCardsReady = false;
-homepageMenuCardsError = err.message || "Homepage menu cards table is not ready.";
-}
-
-renderHomepageMenuCards();
-}
-
-function renderHomepageMenuCards(){
-const box = $("homepageMenuCardsList");
-const warning = $("homepageMenuWarning");
-if(!box) return;
-
-if(warning){
-if(homepageMenuCardsReady){
-warning.classList.add("hidden");
-warning.textContent = "";
-}else{
-warning.classList.remove("hidden");
-warning.innerHTML = `${escapeHtml(homepageMenuCardsError)}<br>Run the homepage_menu_cards SQL first. Your old admin data will still work.`;
-}
-}
-
-if(!homepageMenuCardsReady){
-box.innerHTML = `<div class="loading">Homepage menu cards table is not ready yet.</div>`;
-return;
-}
-
-const search = ($("homeCardSearch")?.value || "").trim().toLowerCase();
-
-let rows = [...homepageMenuCards];
-
-if(search){
-rows = rows.filter(item => `${item.slug || ""} ${item.title || ""} ${item.subtitle || ""}`.toLowerCase().includes(search));
-}
-
-if(!rows.length){
-box.innerHTML = `<div class="loading">No homepage menu cards yet. Click Create Default Cards.</div>`;
-return;
-}
-
-box.innerHTML = rows.map(item => {
-const domId = "home-card-" + item.id;
-const img = item.image_url || getFallbackImage(homeCardFallbackKey(item.slug));
-return `
-<div class="compactItem" id="${domId}">
-<div class="compactTop" onclick="toggleCompact('${domId}')">
-<div class="rowWithImage">
-<img class="homeCardPreview" src="${escapeHtml(img)}" onerror="this.src='${getFallbackImage("cakes")}'">
-<div class="compactMain">
-<div class="itemTitle">${escapeHtml(item.title || "Homepage Card")}</div>
-<div class="itemMeta">${escapeHtml(item.slug || "")} Â· ${item.is_active ? "Active" : "Hidden"} Â· Sort ${item.sort_order ?? 0}</div>
-<div class="tags">
-<span class="tag">${escapeHtml(item.link_url || "")}</span>
-${item.subtitle ? `<span class="tag">${escapeHtml(item.subtitle)}</span>` : ""}
-</div>
-</div>
-</div>
-<div class="itemActions" onclick="event.stopPropagation()">
-<button class="btn small" onclick="editHomepageMenuCard('${item.id}')">Edit</button>
-<button class="btn red small" onclick="deleteHomepageMenuCard('${item.id}')">Delete</button>
-</div>
-</div>
-<div class="compactDetails">
-<b>Image:</b> ${escapeHtml(item.image_url || "Fallback/default image")}<br>
-<b>Link:</b> ${escapeHtml(item.link_url || "")}<br>
-<b>Updated:</b> ${escapeHtml(item.updated_at || "")}
-</div>
-</div>
-`;
-}).join("");
-}
-
-function homeCardFallbackKey(slug){
-const s = String(slug || "").toLowerCase();
-if(s === "custom-cake" || s === "custom") return "cakes";
-return s;
-}
-
-function openHomeCardForm(){
-resetHomeCardForm(false);
-openPanel("homeCardFormPanel");
-showTab("homepage");
-}
-
-function editHomepageMenuCard(id){
-const item = homepageMenuCards.find(row => String(row.id) === String(id));
-if(!item) return;
-
-$("homeCardId").value = item.id || "";
-$("homeCardSlug").value = item.slug || "";
-$("homeCardTitle").value = item.title || "";
-$("homeCardSubtitle").value = item.subtitle || "";
-$("homeCardLink").value = item.link_url || "";
-$("homeCardImageUrl").value = item.image_url || "";
-$("homeCardImageUrl").dataset.savedUrl = item.image_url || "";
-$("homeCardSort").value = item.sort_order ?? 0;
-$("homeCardActive").checked = item.is_active !== false;
-setPreview("homeCardImagePreview", item.image_url || "");
-$("homeCardFormTitle").textContent = "Edit Homepage Menu Card";
-openPanel("homeCardFormPanel");
-showTab("homepage");
-window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function resetHomeCardForm(close = false){
-const form = $("homeCardForm");
-if(form) form.reset();
-if($("homeCardId")) $("homeCardId").value = "";
-if($("homeCardSort")) $("homeCardSort").value = 0;
-if($("homeCardActive")) $("homeCardActive").checked = true;
-if($("homeCardImageUrl")) $("homeCardImageUrl").dataset.savedUrl = "";
-setPreview("homeCardImagePreview", "");
-if($("homeCardFormTitle")) $("homeCardFormTitle").textContent = "Add Homepage Menu Card";
-if(close) closePanel("homeCardFormPanel");
-}
-
-async function saveHomepageMenuCard(event){
-if(event) event.preventDefault();
-
-try{
-const id = $("homeCardId").value;
-const title = $("homeCardTitle").value.trim();
-const slug = slugify($("homeCardSlug").value.trim() || title);
-
-if(!title || !slug){
-showToast("Card title and slug are required.", true);
-return;
-}
-
-const payload = {
-slug,
-title,
-subtitle:$("homeCardSubtitle").value.trim(),
-image_url:$("homeCardImageUrl").value.trim(),
-link_url:$("homeCardLink").value.trim() || "#",
-sort_order:Number($("homeCardSort").value || 0),
-is_active:$("homeCardActive").checked
-};
-
-const result = id
-? await supabaseClient.from("homepage_menu_cards").update(payload).eq("id", id).select().single()
-: await supabaseClient.from("homepage_menu_cards").insert(payload).select().single();
-
-if(result.error) throw result.error;
-
-await loadHomepageMenuCardsSafe();
-resetHomeCardForm(true);
-showToast("Homepage menu card saved.");
-}catch(err){
-console.error(err);
-showToast(err.message || "Homepage menu card save failed.", true);
-}
-}
-
-async function deleteHomepageMenuCard(id){
-if(!confirm("Delete this homepage menu card?")) return;
-
-try{
-const { error } = await supabaseClient
-.from("homepage_menu_cards")
-.delete()
-.eq("id", id);
-
-if(error) throw error;
-
-await loadHomepageMenuCardsSafe();
-showToast("Homepage menu card deleted.");
-}catch(err){
-console.error(err);
-showToast(err.message || "Could not delete homepage card.", true);
-}
-}
-
-async function seedHomepageMenuCards(){
-const defaults = [
-{ slug:"cakes", title:"Cakes", subtitle:"Custom cakes", link_url:"category.html?cat=cakes", sort_order:1, is_active:true },
-{ slug:"cupcakes", title:"Cupcakes", subtitle:"Quick desserts", link_url:"category.html?cat=cupcakes", sort_order:2, is_active:true },
-{ slug:"muffins", title:"Muffins", subtitle:"Fresh muffins", link_url:"category.html?cat=muffins", sort_order:3, is_active:true },
-{ slug:"brownies", title:"Brownies", subtitle:"Rich brownies", link_url:"category.html?cat=brownies", sort_order:4, is_active:true },
-{ slug:"baklava", title:"Baklava", subtitle:"Sweet layers", link_url:"category.html?cat=baklava", sort_order:5, is_active:true },
-{ slug:"custom-cake", title:"Custom Cake", subtitle:"Start custom order", link_url:"cake.html?custom=true", sort_order:6, is_active:true }
-];
-
-try{
-const { error } = await supabaseClient
-.from("homepage_menu_cards")
-.upsert(defaults, { onConflict:"slug" });
-
-if(error) throw error;
-
-await loadHomepageMenuCardsSafe();
-showToast("Default homepage cards created.");
-}catch(err){
-console.error(err);
-showToast(err.message || "Could not create default cards. Run SQL first.", true);
-}
 }
 
 function renderStats(){
@@ -3553,31 +3164,37 @@ printWindow.print();
 }
 
   async function uploadAndSet(fileInputId,targetInputId,previewId,folder){
+  async function uploadAndSet(fileInputId, targetInputId, previewId, folder){
 const fileInput = $(fileInputId);
 const targetInput = $(targetInputId);
 const button = document.querySelector(`button[onclick*="${fileInputId}"]`);
 
 clearUploadStatus(fileInputId);
 
-if(!fileInput || !targetInput){
-showToast("Upload fields not found on this page.", true);
-return;
-}
+    if(!fileInput || !fileInput.files || !fileInput.files[0]){
+    if(!fileInput || !targetInput){
+      showToast("Upload fields not found on this page.", true);
+      return;
+    }
 
-const file = fileInput.files?.[0];
+    const file = fileInput.files?.[0];
 
-if(!file){
+    if(!file){
 setUploadStatus(fileInputId, "Choose an image first.", true);
 showToast("Choose an image first.", true);
 return;
 }
 
-const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    const file = fileInput.files[0];
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
-if(!allowedTypes.includes(file.type)){
-const msg = "Only JPG, PNG, or WEBP images are allowed.";
-setUploadStatus(fileInputId, msg, true);
-showToast(msg, true);
+    if(!file.type.startsWith("image/")){
+      setUploadStatus(fileInputId, "Only image files are allowed.", true);
+      showToast("Only image files are allowed.", true);
+    if(!allowedTypes.includes(file.type)){
+      const msg = "Only JPG, PNG, or WEBP images are allowed.";
+      setUploadStatus(fileInputId, msg, true);
+      showToast(msg, true);
 return;
 }
 
@@ -3588,18 +3205,24 @@ showToast(msg, true);
 return;
 }
 
-const oldUrlBeforeUpload = targetInput.value.trim();
-const safeFolder = String(folder || "products").replace(/[^a-zA-Z0-9/_-]/g, "-");
-const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
-const fileName = `${Date.now()}-${Math.random().toString(16).slice(2)}.${ext}`;
-const path = `${safeFolder}/${fileName}`;
+    const savedUrl = targetInput?.dataset?.savedUrl || "";
+    const currentUrlBeforeUpload = targetInput?.value?.trim() || "";
+    const oldUrlBeforeUpload = targetInput.value.trim();
+    const safeFolder = String(folder || "products").replace(/[^a-zA-Z0-9/_-]/g, "-");
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+    const fileName = `${Date.now()}-${Math.random().toString(16).slice(2)}.${ext}`;
+    const path = `${safeFolder}/${fileName}`;
 
 try{
 if(button) button.disabled = true;
 setUploadStatus(fileInputId, "Uploading image... please wait.");
 showToast("Uploading image...");
 
-const { error:uploadError } = await supabaseClient.storage
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+      const path = `${folder}/${Date.now()}-${Math.random().toString(16).slice(2)}-${safeName}`;
+
+      const { error } = await supabaseClient.storage
+      const { error:uploadError } = await supabaseClient.storage
 .from(STORAGE_BUCKET)
 .upload(path, file, {
 cacheControl:"3600",
@@ -3607,34 +3230,53 @@ upsert:false,
 contentType:file.type
 });
 
-if(uploadError) throw uploadError;
+      if(error) throw error;
+      if(uploadError) throw uploadError;
 
-const { data:urlData } = supabaseClient.storage
+      const { data } = supabaseClient.storage
+      const { data:urlData } = supabaseClient.storage
 .from(STORAGE_BUCKET)
 .getPublicUrl(path);
 
-const newUrl = urlData.publicUrl;
+      const newUrl = data.publicUrl;
+      const newUrl = urlData.publicUrl;
 
 targetInput.value = newUrl;
 fileInput.value = "";
-setPreview(previewId, addCacheBustToImageUrl(newUrl));
+setPreview(previewId, newUrl);
 
-setUploadStatus(fileInputId, "Image uploaded. Saving URL...");
-showToast("Image uploaded. Saving URL...");
+      const autoSaveResult = await autoSaveUploadedImage(targetInputId, newUrl, currentUrlBeforeUpload);
+      setUploadStatus(fileInputId, "Image uploaded. Saving URL to database...");
+      showToast("Image uploaded. Saving URL...");
 
-const saveResult = await autoSaveUploadedImage(targetInputId, newUrl, oldUrlBeforeUpload);
+      if(
+        currentUrlBeforeUpload &&
+        currentUrlBeforeUpload !== savedUrl &&
+        currentUrlBeforeUpload !== newUrl &&
+        isSupabaseStorageUrl(currentUrlBeforeUpload)
+      ){
+        await deleteStorageFileFromUrl(currentUrlBeforeUpload, true);
+      }
+      const saveResult = await autoSaveUploadedImage(targetInputId, newUrl, oldUrlBeforeUpload);
 
-if(saveResult.saved){
-targetInput.dataset.savedUrl = newUrl;
-setUploadStatus(fileInputId, saveResult.message || "Image uploaded and saved.", false, true);
-showToast(saveResult.message || "Image uploaded and saved.");
+      if(saveResult.saved){
+        targetInput.dataset.savedUrl = newUrl;
+        setPreview(previewId, addCacheBustToImageUrl(newUrl));
 
-if(oldUrlBeforeUpload && oldUrlBeforeUpload !== newUrl && isSupabaseStorageUrl(oldUrlBeforeUpload)){
-await deleteStorageFileFromUrl(oldUrlBeforeUpload, true);
-}
+      if(autoSaveResult && autoSaveResult.saved){
+        setUploadStatus(fileInputId, "Image uploaded and saved successfully.", false, true);
+        showToast("Image uploaded and saved.");
+        if(oldUrlBeforeUpload && oldUrlBeforeUpload !== newUrl && isSupabaseStorageUrl(oldUrlBeforeUpload)){
+          await deleteStorageFileFromUrl(oldUrlBeforeUpload, true);
+        }
+
+        setUploadStatus(fileInputId, saveResult.message || "Photo uploaded and saved to database.", false, true);
+        showToast("Photo uploaded and saved.");
 }else{
-setUploadStatus(fileInputId, saveResult.message || "Image uploaded. Now click Save to store it.", false, true);
-showToast(saveResult.message || "Image uploaded. Now click Save.");
+        setUploadStatus(fileInputId, "Image uploaded. Now save this new product/form.", false, true);
+        showToast("Image uploaded. Now save the form.");
+        setUploadStatus(fileInputId, saveResult.message || "Image uploaded. Now click Save to store it.", false, true);
+        showToast(saveResult.message || "Image uploaded. Now click Save.");
 }
 }catch(err){
 console.error(err);
@@ -3646,32 +3288,37 @@ if(button) button.disabled = false;
 }
 }
 
-async function autoSaveUploadedImage(targetInputId,newUrl,oldUrl){
+
+  async function autoSaveUploadedImage(targetInputId,newUrl,oldUrl){
+  async function autoSaveUploadedImage(targetInputId, newUrl, oldUrl){
 try{
-if(!newUrl) return { saved:false, message:"No image URL found." };
+      if(!newUrl) return { saved:false };
+      if(!newUrl) return { saved:false, message:"No image URL found." };
 
 if(targetInputId === "productImageUrl"){
 const productId = $("productId")?.value || "";
-const kind = $("productEditKind")?.value || $("productType")?.value || "cake";
+        const kind = $("productEditKind")?.value || $("productType")?.value || "";
+        const kind = $("productEditKind")?.value || $("productType")?.value || "cake";
 
 if(!productId){
-return { saved:false, message:"Image uploaded. Fill product details and click Save Product." };
+          return { saved:false };
+          return { saved:false, message:"Image uploaded. Fill product details and click Save Product." };
 }
 
 const table = kind === "quick" ? "quick_products" : "cakes";
-
-const { data, error } = await supabaseClient
+        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
 .from(table)
 .update({ image_url:newUrl })
-.eq("id", productId)
-.select("id,image_url")
-.single();
+          .eq("id", productId);
+          .eq("id", productId)
+          .select("id,image_url")
+          .single();
 
 if(error) throw error;
-
-if(!data || data.image_url !== newUrl){
-throw new Error("Supabase did not confirm the saved image URL.");
-}
+        if(!data || data.image_url !== newUrl){
+          throw new Error("Supabase did not confirm the saved image URL.");
+        }
 
 if(kind === "quick"){
 const row = quickProducts.find(item => String(item.id) === String(productId));
@@ -3682,103 +3329,86 @@ if(row) row.image_url = newUrl;
 }
 
 $("productImageUrl").dataset.savedUrl = newUrl;
+        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
 renderProducts();
-return { saved:true, message:"Product photo uploaded and saved." };
+        return { saved:true };
+        return { saved:true, message:"Product photo uploaded and saved." };
 }
 
 if(targetInputId === "occasionImage"){
 const occasionId = $("occasionId")?.value || "";
 
 if(!occasionId){
-return { saved:false, message:"Image uploaded. Fill occasion details and click Save Occasion." };
+          return { saved:false };
+          return { saved:false, message:"Image uploaded. Fill occasion details and click Save Occasion." };
 }
 
-const { data, error } = await supabaseClient
+        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
 .from("categories")
 .update({ image_url:newUrl })
-.eq("id", occasionId)
-.select("id,image_url")
-.single();
+          .eq("id", occasionId);
+          .eq("id", occasionId)
+          .select("id,image_url")
+          .single();
 
 if(error) throw error;
-
-if(!data || data.image_url !== newUrl){
-throw new Error("Supabase did not confirm the saved occasion image URL.");
-}
+        if(!data || data.image_url !== newUrl){
+          throw new Error("Supabase did not confirm the saved occasion image URL.");
+        }
 
 const row = categories.find(item => String(item.id) === String(occasionId));
 if(row) row.image_url = newUrl;
 
 $("occasionImage").dataset.savedUrl = newUrl;
+        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
 renderOccasionList();
-fillProductSelects();
-return { saved:true, message:"Occasion photo uploaded and saved." };
+        return { saved:true };
+        fillProductSelects();
+        return { saved:true, message:"Occasion photo uploaded and saved." };
 }
 
 if(targetInputId === "setLogoUrl" || targetInputId === "setHeroImage"){
 const field = targetInputId === "setLogoUrl" ? "logo_url" : "hero_image_url";
-const payload = { id:1, [field]:newUrl };
+        const payload = { ...siteSettings, id:1, [field]:newUrl };
+        const payload = { id:1, [field]:newUrl };
 
 const { data, error } = await supabaseClient
 .from("site_settings")
 .upsert(payload, { onConflict:"id" })
-.select("id,logo_url,hero_image_url")
+          .select()
+          .select("id,logo_url,hero_image_url")
 .single();
 
 if(error) throw error;
+        if(!data || data[field] !== newUrl){
+          throw new Error("Supabase did not confirm the saved website image URL.");
+        }
 
-if(!data || data[field] !== newUrl){
-throw new Error("Supabase did not confirm the saved website image URL.");
-}
-
-siteSettings = { ...siteSettings, [field]:newUrl };
+        siteSettings = { ...siteSettings, ...(data || payload) };
+        siteSettings = { ...siteSettings, [field]:newUrl };
 $(targetInputId).dataset.savedUrl = newUrl;
-return {
-saved:true,
-message: targetInputId === "setLogoUrl" ? "Logo uploaded and saved." : "Hero image uploaded and saved."
-};
+        await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
+        return { saved:true };
+        return { saved:true, message: targetInputId === "setLogoUrl" ? "Logo uploaded and saved." : "Hero image uploaded and saved." };
 }
 
-if(targetInputId === "homeCardImageUrl"){
-const homeCardId = $("homeCardId")?.value || "";
-
-if(!homeCardId){
-return { saved:false, message:"Image uploaded. Fill card details and click Save Homepage Card." };
-}
-
-const { data, error } = await supabaseClient
-.from("homepage_menu_cards")
-.update({ image_url:newUrl })
-.eq("id", homeCardId)
-.select("id,image_url")
-.single();
-
-if(error) throw error;
-
-if(!data || data.image_url !== newUrl){
-throw new Error("Supabase did not confirm the saved homepage card image URL.");
-}
-
-const row = homepageMenuCards.find(item => String(item.id) === String(homeCardId));
-if(row) row.image_url = newUrl;
-
-$("homeCardImageUrl").dataset.savedUrl = newUrl;
-renderHomepageMenuCards();
-return { saved:true, message:"Homepage menu image uploaded and saved." };
-}
-
-return { saved:false, message:"Image uploaded. Now click Save to store it." };
+      return { saved:false };
+      return { saved:false, message:"Image uploaded. Now click Save to store it." };
 }catch(err){
-console.error("Image uploaded but database save failed:", err);
-return { saved:false, message:"Image uploaded, but database save failed: " + (err.message || err) };
+      console.error("Image uploaded but auto-save failed:", err);
+      showToast("Image uploaded, but saving URL failed: " + (err.message || err), true);
+      return { saved:false, error:err };
+      console.error("Image uploaded but database save failed:", err);
+      return { saved:false, message:"Image uploaded, but database save failed: " + (err.message || err) };
 }
 }
 
-function addCacheBustToImageUrl(url){
-if(!url) return "";
-const sep = String(url).includes("?") ? "&" : "?";
-return `${url}${sep}v=${Date.now()}`;
-}
+  function addCacheBustToImageUrl(url){
+    if(!url) return "";
+    const sep = String(url).includes("?") ? "&" : "?";
+    return `${url}${sep}v=${Date.now()}`;
+  }
 
 function getOrCreateUploadStatus(fileInputId){
 const fileInput = $(fileInputId);
@@ -4070,10 +3700,6 @@ quickProducts.forEach(item => {
 if(item.image_url === url) count++;
 });
 
-homepageMenuCards.forEach(item => {
-if(item.image_url === url) count++;
-});
-
 return count;
 }
 
@@ -4093,10 +3719,6 @@ if(item.image_url === url) usage.push("Cake");
 
 quickProducts.forEach(item => {
 if(item.image_url === url) usage.push("Dessert");
-});
-
-homepageMenuCards.forEach(item => {
-if(item.image_url === url) usage.push("Homepage Menu");
 });
 
 return [...new Set(usage)];
