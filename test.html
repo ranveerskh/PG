@@ -1837,6 +1837,62 @@
       }
     }
 
+  
+
+    /* Ranveer mobile premium cleanup: compact, less text, no noisy brochure blocks */
+    @media(max-width:640px){
+      body{background:#fff8ff;}
+      .wrap{width:min(100vw - 20px,1480px);}
+      .topbar{background:rgba(255,255,255,.94);}
+      .nav{min-height:54px;}
+      .logo{width:34px;height:34px;font-size:16px;box-shadow:0 8px 18px rgba(100,13,107,.16);}
+      .brandText h1{font-size:16px;max-width:145px;letter-spacing:-.035em;}
+      .cartBtn,.mobileMenuBtn,.orderTopBtn{min-height:34px;padding:7px 10px;font-size:12px;box-shadow:0 7px 16px rgba(100,13,107,.07);}
+      .orderTopBtn{padding-inline:14px;}
+      .cartBtn svg,.mobileMenuBtn svg{width:17px;height:17px;}
+      .cartCount{min-width:19px;height:19px;font-size:10px;}
+
+      .heroShell{padding:10px 0 8px;}
+      .heroGrid{display:block;}
+      .heroMain{min-height:0;border-radius:22px;padding:18px 16px;box-shadow:0 14px 30px rgba(100,13,107,.14);}
+      .brandPill,.heroText,.heroStats,.notice,.heroSide,.promiseStrip,#quickDesserts,#how{display:none!important;}
+      .heroTitle{font-size:31px;line-height:1.02;letter-spacing:-.075em;max-width:100%;}
+      .heroButtons{margin-top:14px;gap:8px;}
+      .heroButtons .primaryBtn,.heroButtons .ghostBtn{min-height:38px;padding:9px 13px;font-size:12px;}
+
+      .section{padding:8px 0;}
+      .section.tight{padding-top:8px;}
+      .sectionHead{margin:8px 0 9px;display:block;}
+      .sectionHead h2{font-size:25px;line-height:1.02;letter-spacing:-.065em;}
+      .sectionHead p,.sectionAction{display:none!important;}
+
+      .menuGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+      .menuCard{min-height:86px;height:86px;border-radius:18px;padding:11px;box-shadow:0 8px 18px rgba(100,13,107,.08);}
+      .menuCard b{font-size:14px;line-height:1.05;}
+      .menuCard span,.countPill{display:none!important;}
+
+      .occasionShell{border:0;background:transparent;box-shadow:none;padding:0;border-radius:0;}
+      .occasionGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+      .occasionCard{min-height:74px;height:74px;border-radius:18px;padding:9px;background:#fff!important;box-shadow:0 8px 18px rgba(100,13,107,.07);border:1px solid rgba(100,13,107,.13);display:grid;grid-template-columns:48px 1fr;gap:9px;align-items:center;}
+      .occasionCard::before{content:"";width:48px;height:48px;border-radius:14px;background:var(--img) center/cover;display:block;}
+      .occasionCard b{color:var(--purple);font-size:13px;text-shadow:none;line-height:1.1;}
+      .occasionCard span{display:none!important;}
+
+      .productGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+      .productCard{border-radius:18px;box-shadow:0 8px 18px rgba(100,13,107,.07);}
+      .productImage{height:118px;}
+      .badge{padding:5px 7px;font-size:9px;top:7px;left:7px;}
+      .badge.right{display:none;}
+      .productBody{padding:9px;}
+      .productBody h3{font-size:12px;min-height:30px;line-height:1.22;}
+      .productDesc,.miniTags{display:none!important;}
+      .productMeta{margin-top:8px;gap:6px;align-items:center;}
+      .price{font-size:11px;}
+      .smallBtn{min-height:31px;padding:7px 9px;font-size:10px;}
+      .empty,.loader{min-height:86px;padding:14px;border-radius:18px;font-size:12px;}
+      .footer{padding-bottom:76px;}
+    }
+
   </style>
 </head>
 
@@ -2249,6 +2305,13 @@
   document.addEventListener("DOMContentLoaded", () => {
     $("year").textContent = new Date().getFullYear();
     updateCartCount();
+
+    // Show the core mobile menu immediately. Live Supabase data updates it after loading.
+    // This prevents the homepage from sitting on "Loading menu..." when Supabase is slow/cold.
+    applySettings();
+    renderMainCategories();
+    renderOccasions();
+
     applyCachedHomeData();
     init();
   });
@@ -2298,9 +2361,14 @@
   }
 
   function renderLoadingState(){
-    if(!cakeOccasions.length) $("occasionGrid").innerHTML = `<div class="loader">Loading cake occasions...</div>`;
+    // Keep menu/occasion shell visible on mobile instead of replacing it with big loading boxes.
+    if(!$("mainCategoryGrid").children.length || $("mainCategoryGrid").textContent.includes("Loading menu")){
+      renderMainCategories();
+    }
+    if(!cakeOccasions.length && (!$("occasionGrid").children.length || $("occasionGrid").textContent.includes("Loading cake occasions"))){
+      renderOccasions();
+    }
     if(!cakes.length && !quickProducts.length) $("featuredGrid").innerHTML = `<div class="loader">Loading popular picks...</div>`;
-    if(!quickProducts.length) $("quickProductGrid").innerHTML = `<div class="loader">Loading quick desserts...</div>`;
   }
 
   async function loadHomeDataWithRetry(){
@@ -2906,4 +2974,68 @@
 
     if(words.length < 4) return clean;
 
-    const 
+    const lastTwo = words.splice(-2).join(" ");
+    return `${words.join(" ")} <span>${lastTwo}</span>`;
+  }
+
+  function getFallbackImage(key){
+    return FALLBACKS[key] || FALLBACKS.dessert;
+  }
+
+  function normalizePhone(value){
+    return String(value || "").replace(/[^\d]/g, "");
+  }
+
+  function slugify(value){
+    return String(value || "")
+      .toLowerCase()
+      .trim()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function titleCase(value){
+    return String(value || "")
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  function withTimeout(promise, ms){
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out. Retrying.")), ms))
+    ]);
+  }
+
+  function cacheBustImage(url){
+    const clean = String(url || "");
+    if(!clean) return clean;
+    if(!clean.includes("supabase.co/storage")) return clean;
+    const sep = clean.includes("?") ? "&" : "?";
+    return `${clean}${sep}v=${Date.now()}`;
+  }
+
+  function wait(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function escapeCssUrl(value){
+    return String(value ?? "")
+      .replaceAll("\\","\\\\")
+      .replaceAll('"','\\"')
+      .replaceAll("'","\\'");
+  }
+</script>
+
+</body>
+</html>
