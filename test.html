@@ -251,17 +251,6 @@
       font-size:13px;
     }
 
-    .navSvg{
-      width:18px;
-      height:18px;
-      flex:0 0 auto;
-      fill:none;
-      stroke:currentColor;
-      stroke-width:2;
-      stroke-linecap:round;
-      stroke-linejoin:round;
-    }
-
     .cartCount{
       min-width:21px;
       height:21px;
@@ -273,6 +262,25 @@
       color:#fff;
       font-size:11px;
       font-weight:1000;
+    }
+
+    .navSvg{
+      width:18px;
+      height:18px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2.25;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      flex:0 0 auto;
+    }
+
+    .iconCart{
+      font-size:0;
+    }
+
+    .orderTopBtn{
+      min-width:76px;
     }
 
     .mobileMenuBtn{
@@ -1696,255 +1704,136 @@
       }
     }
 
-
     /* =========================================================
-       ULTRA COMPACT PREMIUM MOBILE OVERRIDES
-       Goal: less description, smaller header, cleaner shopping flow.
+       MOBILE POLISH V2 - cleaner header + different occasion style
     ========================================================= */
     @media(max-width:640px){
-      :root{
-        --shadow:0 14px 34px rgba(100,13,107,.12);
-        --shadow2:0 8px 20px rgba(100,13,107,.075);
-      }
-
-      body{
-        background:linear-gradient(180deg,#fbf4fb 0%,#fff 38%,#fff 100%);
-      }
-
-      .wrap{width:min(100vw - 18px,1480px)}
-
       .topbar{
-        background:rgba(255,255,255,.96);
+        background:rgba(255,255,255,.88);
         border-bottom:1px solid rgba(100,13,107,.10);
-        box-shadow:0 6px 22px rgba(100,13,107,.055);
+        box-shadow:0 10px 28px rgba(100,13,107,.07);
       }
 
       .nav{
         min-height:50px;
-        gap:6px;
-      }
-
-      .brand{gap:7px; flex:1 1 auto; min-width:0}
-      .logo{width:32px;height:32px;font-size:15px;border-width:1px;box-shadow:0 8px 18px rgba(100,13,107,.16)}
-      .brandText h1{font-size:15px;max-width:142px;letter-spacing:-.04em}
-      .brandText p{display:none}
-
-      .navActions{gap:6px; flex:0 0 auto}
-      .navSvg{width:17px;height:17px}
-
-      .cartBtn,
-      .mobileMenuBtn,
-      #topWhatsappBtn{
-        min-height:36px;
-        height:36px;
-        padding:0 10px;
-        border-radius:999px;
-        box-shadow:0 8px 18px rgba(100,13,107,.055);
-      }
-
-      .cartBtn{
-        min-width:50px;
-        background:#fff;
-      }
-
-      .cartCount{
-        min-width:18px;
-        height:18px;
-        font-size:10px;
-        margin-left:-3px;
-      }
-
-      .mobileMenuBtn{
-        color:var(--purple);
-        background:#fff;
-        border-color:rgba(100,13,107,.13);
-        font-size:0;
-        width:38px;
-        padding:0;
-      }
-
-      .mobileMenuBtn .navText{display:none}
-
-      #topWhatsappBtn{
-        width:38px;
-        padding:0;
-        font-size:0;
-        background:linear-gradient(135deg,var(--purple),var(--purple2));
-      }
-
-      #topWhatsappBtn .waText{display:none}
-
-      .mobileMenu{
-        padding:8px 0 10px;
-      }
-
-      .mobileMenu a{
-        padding:10px 11px;
-        border-radius:14px;
-        font-size:12px;
-      }
-
-      .heroShell{padding:8px 0 6px}
-      .heroGrid{display:block}
-      .heroSide{display:none!important}
-
-      .heroMain{
-        padding:14px;
-        border-radius:20px;
-        min-height:0;
-        box-shadow:0 14px 32px rgba(100,13,107,.15);
-      }
-
-      .heroMain::before{opacity:.13;background-size:32px 32px}
-      .heroMain::after{width:135px;height:135px;right:-54px;bottom:-52px}
-      .brandPill{display:none}
-
-      .heroTitle{
-        font-size:28px;
-        line-height:1.02;
-        letter-spacing:-.07em;
-        max-width:330px;
-      }
-
-      .heroText{display:none}
-
-      .heroButtons{
-        margin-top:12px;
         gap:7px;
       }
 
-      .heroButtons .primaryBtn,
-      .heroButtons .ghostBtn{
-        min-height:34px;
-        padding:8px 11px;
+      .brandText h1{
+        font-size:15px;
+        max-width:132px;
+      }
+
+      .navActions{
+        gap:6px;
+      }
+
+      .cartBtn.iconCart,
+      .mobileMenuBtn.iconMenu{
+        width:40px;
+        height:36px;
+        min-height:36px;
+        padding:0;
+        border-radius:999px;
+        background:rgba(255,255,255,.86);
+        border-color:rgba(100,13,107,.14);
+        color:var(--purple);
+        box-shadow:0 8px 18px rgba(100,13,107,.07);
+      }
+
+      .mobileMenuBtn .menuText{
+        display:none;
+      }
+
+      .cartBtn.iconCart{
+        width:auto;
+        min-width:58px;
+        padding:0 9px;
+        gap:5px;
+      }
+
+      .cartBtn.iconCart .navSvg,
+      .mobileMenuBtn.iconMenu .navSvg{
+        width:17px;
+        height:17px;
+      }
+
+      .cartCount{
+        min-width:20px;
+        height:20px;
+        padding:0 6px;
+        font-size:10px;
+        background:linear-gradient(135deg,var(--purple),var(--purple2));
+      }
+
+      #topWhatsappBtn.orderTopBtn{
+        min-width:54px;
+        min-height:36px;
+        padding:0 12px;
+        border-radius:999px;
         font-size:12px;
-        box-shadow:none;
+        letter-spacing:-.02em;
+        box-shadow:0 10px 22px rgba(100,13,107,.20);
       }
 
-      .heroButtons .ghostBtn:nth-child(3){display:none!important}
-      .heroStats{display:none}
-      .notice{display:none}
-
-      .section{padding:9px 0}
-      .section.tight{padding-top:8px}
-
-      .sectionHead{
-        margin-bottom:8px;
-        gap:4px;
+      .heroButtons .primaryBtn{
+        min-width:118px;
       }
 
-      .sectionHead h2{
-        font-size:21px;
-        line-height:1.05;
-        letter-spacing:-.055em;
+      .heroButtons .ghostBtn{
+        min-width:142px;
       }
-
-      .sectionHead p{display:none}
-      .sectionAction{display:none}
-
-      .menuGrid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:8px;
-      }
-
-      .menuCard{
-        min-height:78px;
-        border-radius:17px;
-        padding:9px;
-        box-shadow:0 7px 18px rgba(100,13,107,.075);
-      }
-
-      .menuCard::after{background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.10))}
-      .countPill{display:none}
-      .menuCard b{font-size:13px;line-height:1.1}
-      .menuCard span{display:none}
-
-      .promiseStrip{display:none}
 
       .occasionShell{
         padding:0;
-        background:transparent;
         border:0;
+        background:transparent;
         box-shadow:none;
       }
 
       .occasionGrid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
         gap:8px;
       }
 
       .occasionCard{
-        min-height:74px;
-        border-radius:17px;
-        padding:9px;
-        box-shadow:0 7px 18px rgba(100,13,107,.075);
-      }
-
-      .occasionCard b{font-size:13px;line-height:1.1}
-      .occasionCard span{display:none}
-
-      .productGrid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
+        min-height:62px;
+        padding:8px;
+        border-radius:18px;
+        background:rgba(255,255,255,.86)!important;
+        border:1px solid rgba(100,13,107,.12);
+        box-shadow:0 8px 18px rgba(100,13,107,.055);
+        display:flex;
+        align-items:center;
         gap:9px;
       }
 
-      .productCard{
-        border-radius:18px;
-        box-shadow:0 8px 20px rgba(100,13,107,.075);
+      .occasionCard::before{
+        content:"";
+        width:46px;
+        height:46px;
+        border-radius:14px;
+        flex:0 0 auto;
+        background:var(--img) center/cover;
+        box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);
       }
 
-      .productImage{height:112px}
-      .badge{display:none}
-      .productBody{padding:9px}
-
-      .productBody h3{
-        font-size:12px;
-        line-height:1.18;
-        min-height:29px;
-        display:-webkit-box;
-        -webkit-line-clamp:2;
-        -webkit-box-orient:vertical;
-        overflow:hidden;
+      .occasionCard:hover{
+        transform:none;
       }
 
-      .productDesc,
-      .miniTags{display:none!important}
-
-      .productMeta{
-        margin-top:7px;
-        gap:6px;
-        flex-direction:column;
-        align-items:stretch;
+      .occasionCard b{
+        color:var(--purple);
+        text-shadow:none;
+        font-size:13px;
+        line-height:1.08;
       }
 
-      .price{font-size:12px;line-height:1.1}
-      .smallBtn{width:100%;min-height:30px;padding:6px 8px;font-size:11px;border-radius:12px}
-
-      #quickDesserts{display:none}
-      #how{display:none}
-
-      .bottomCTA{
-        margin-top:4px;
-        margin-bottom:18px;
-        padding:14px;
-        border-radius:20px;
+      .occasionCard span{
+        display:none;
       }
 
-      .bottomCTA b{font-size:18px;line-height:1.05}
-      .bottomCTA span{display:none}
-      .bottomCTA .heroButtons{margin-top:10px}
-      .bottomCTA .ghostBtn{display:none}
-
-      .footer{padding:14px 0 calc(22px + env(safe-area-inset-bottom))}
-      .footerSmall{display:none}
-      .footerLinks{display:none}
-
-      .loader,
-      .empty{
-        min-height:74px;
-        padding:14px 10px;
-        border-radius:16px;
-        font-size:12px;
+      .menuCard{
+        box-shadow:0 10px 22px rgba(100,13,107,.10);
       }
     }
 
@@ -1970,28 +1859,22 @@
       <a class="navLink" href="#popular">Popular Picks</a>
       <a class="navLink" href="#how">How It Works</a>
 
-      <a class="cartBtn" href="cart.html" aria-label="Open cart">
+      <a class="cartBtn iconCart" href="cart.html" aria-label="Open cart">
         <svg class="navSvg" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6.2 6.5h14.1l-1.4 7.2a2 2 0 0 1-2 1.6H9.3a2 2 0 0 1-2-1.6L5.5 4.2H3"/>
-          <circle cx="9.3" cy="19.1" r="1.35"/>
-          <circle cx="17.1" cy="19.1" r="1.35"/>
+          <path d="M6.5 6.5h14l-1.5 8.2a2 2 0 0 1-2 1.65H9.3a2 2 0 0 1-1.95-1.55L5.6 4.8H3.5"/>
+          <circle cx="9.5" cy="20" r="1.35"/>
+          <circle cx="17" cy="20" r="1.35"/>
         </svg>
         <span class="cartCount" id="cartCount">0</span>
       </a>
 
-      <button class="ghostBtn mobileMenuBtn" type="button" onclick="toggleMobileMenu()" aria-label="Open menu">
+      <button class="ghostBtn mobileMenuBtn iconMenu" type="button" onclick="toggleMobileMenu()" aria-label="Open menu">
         <svg class="navSvg" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 7h16M4 12h16M4 17h16"/>
+          <path d="M5 7.5h14M5 12h14M5 16.5h14"/>
         </svg>
-        <span class="navText">Menu</span>
+        <span class="menuText">Menu</span>
       </button>
-      <a class="primaryBtn" id="topWhatsappBtn" href="#" target="_blank" rel="noopener" aria-label="Contact on WhatsApp">
-        <svg class="navSvg" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7.4 19.2 4.5 20l.8-2.8A8 8 0 1 1 12 20a7.9 7.9 0 0 1-4.6-.8Z"/>
-          <path d="M9.1 8.5c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.6c.1.3.1.5-.1.7l-.4.5c.7 1.2 1.6 2.1 2.9 2.7l.5-.5c.2-.2.4-.3.7-.1l1.6.7c.3.1.4.3.4.6v.4c0 .3 0 .5-.3.7-.4.4-1 .7-1.8.7-2.8 0-7.2-3.9-7.2-7.1 0-.7.3-1.3.7-1.7Z"/>
-        </svg>
-        <span class="waText">WhatsApp</span>
-      </a>
+      <a class="primaryBtn orderTopBtn" id="topWhatsappBtn" href="#" target="_blank" rel="noopener">Order</a>
     </nav>
   </div>
 
@@ -2020,7 +1903,7 @@
           </p>
 
           <div class="heroButtons">
-            <a class="primaryBtn" href="#menu">Explore Menu</a>
+            <a class="primaryBtn" href="#menu">Start Order</a>
             <a class="ghostBtn" href="cake.html?custom=true">Create Custom Cake</a>
             <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank" rel="noopener">Need Today?</a>
           </div>
@@ -3023,68 +2906,4 @@
 
     if(words.length < 4) return clean;
 
-    const lastTwo = words.splice(-2).join(" ");
-    return `${words.join(" ")} <span>${lastTwo}</span>`;
-  }
-
-  function getFallbackImage(key){
-    return FALLBACKS[key] || FALLBACKS.dessert;
-  }
-
-  function normalizePhone(value){
-    return String(value || "").replace(/[^\d]/g, "");
-  }
-
-  function slugify(value){
-    return String(value || "")
-      .toLowerCase()
-      .trim()
-      .replace(/&/g, "and")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  }
-
-  function titleCase(value){
-    return String(value || "")
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, char => char.toUpperCase());
-  }
-
-  function withTimeout(promise, ms){
-    return Promise.race([
-      promise,
-      new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out. Retrying.")), ms))
-    ]);
-  }
-
-  function cacheBustImage(url){
-    const clean = String(url || "");
-    if(!clean) return clean;
-    if(!clean.includes("supabase.co/storage")) return clean;
-    const sep = clean.includes("?") ? "&" : "?";
-    return `${clean}${sep}v=${Date.now()}`;
-  }
-
-  function wait(ms){
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  function escapeHtml(value){
-    return String(value ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  function escapeCssUrl(value){
-    return String(value ?? "")
-      .replaceAll("\\","\\\\")
-      .replaceAll('"','\\"')
-      .replaceAll("'","\\'");
-  }
-</script>
-
-</body>
-</html>
+    const 
