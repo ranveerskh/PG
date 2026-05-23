@@ -1912,7 +1912,7 @@
     <nav class="navActions" aria-label="Main navigation">
       <a class="navLink" href="#menu">Menu</a>
       <a class="navLink" href="#occasions">Cake Occasions</a>
-      <a class="navLink" href="#popular">Popular Picks</a>
+      <a class="navLink" href="#popular">Best Sellers</a>
       <a class="navLink" href="#how">How It Works</a>
 
       <a class="cartBtn iconCart" href="cart.html" aria-label="Open cart">
@@ -1930,14 +1930,14 @@
         </svg>
         <span class="menuText">Menu</span>
       </button>
-      <a class="primaryBtn orderTopBtn" id="topWhatsappBtn" href="#" target="_blank" rel="noopener">Order</a>
+      <a class="primaryBtn orderTopBtn" id="topWhatsappBtn" href="#" target="_blank" rel="noopener">Contact</a>
     </nav>
   </div>
 
   <div class="wrap mobileMenu" id="mobileMenu">
     <a href="#menu" onclick="toggleMobileMenu(false)">Main Menu</a>
     <a href="#occasions" onclick="toggleMobileMenu(false)">Cake Occasions</a>
-    <a href="#popular" onclick="toggleMobileMenu(false)">Popular Picks</a>
+    <a href="#popular" onclick="toggleMobileMenu(false)">Best Sellers</a>
     <a href="cake.html?custom=true">Create Custom Cake</a>
     <a href="cart.html">Cart</a>
   </div>
@@ -2096,8 +2096,8 @@
     <div class="wrap">
       <div class="sectionHead">
         <div>
-          <h2>Popular picks</h2>
-          <p>Featured cakes and quick desserts from admin appear together here, so the homepage does not feel empty.</p>
+          <h2>Best Sellers</h2>
+          <p>Customer favourites from cakes and quick desserts.</p>
         </div>
         <a class="ghostBtn sectionAction" href="#menu">Browse Menu</a>
       </div>
@@ -2678,7 +2678,7 @@
           <div class="productImage">
             <img src="${escapeHtml(cacheBustImage(image))}" alt="${escapeHtml(product.name)}" loading="lazy" onerror="this.src='${escapeHtml(getFallbackImage(product.category || product.kind || "dessert"))}'">
             <div class="badge">${escapeHtml(badgeText)}</div>
-            ${product.featured ? `<div class="badge right">Featured</div>` : ""}
+            ${product.featured ? `<div class="badge right">Best Seller</div>` : ""}
           </div>
         </a>
 
