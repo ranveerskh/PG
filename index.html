@@ -264,6 +264,25 @@
       font-weight:1000;
     }
 
+    .navSvg{
+      width:18px;
+      height:18px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2.25;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      flex:0 0 auto;
+    }
+
+    .iconCart{
+      font-size:0;
+    }
+
+    .orderTopBtn{
+      min-width:76px;
+    }
+
     .mobileMenuBtn{
       display:none;
     }
@@ -1308,6 +1327,559 @@
         justify-content:flex-start;
       }
     }
+
+    @media(max-width:640px){
+      body{
+        background:
+          radial-gradient(circle at 0% 0%, rgba(100,13,107,.10), transparent 28%),
+          linear-gradient(180deg,#fbf4fb,#fff 38%,#fff);
+        padding-bottom:env(safe-area-inset-bottom);
+      }
+
+      .wrap{
+        width:min(100vw - 16px,1480px);
+      }
+
+      .topbar{
+        background:rgba(255,255,255,.94);
+      }
+
+      .nav{
+        min-height:54px;
+        gap:8px;
+      }
+
+      .logo{
+        width:36px;
+        height:36px;
+        font-size:18px;
+      }
+
+      .brand{
+        gap:8px;
+      }
+
+      .brandText h1{
+        font-size:15px;
+        max-width:122px;
+        letter-spacing:-.04em;
+      }
+
+      .cartBtn{
+        min-height:34px;
+        padding:7px 9px;
+        gap:5px;
+      }
+
+      .cartCount{
+        min-width:18px;
+        height:18px;
+        font-size:10px;
+      }
+
+      .mobileMenuBtn,
+      .primaryBtn,
+      .ghostBtn,
+      .cartBtn{
+        min-height:34px;
+        padding:8px 10px;
+        font-size:12px;
+      }
+
+      #topWhatsappBtn{
+        padding-inline:12px;
+      }
+
+      .heroShell{
+        padding:10px 0 8px;
+      }
+
+      .heroGrid{
+        gap:0;
+      }
+
+      .heroMain{
+        min-height:0;
+        padding:16px;
+        border-radius:22px;
+        align-items:flex-start;
+      }
+
+      .heroMain::after{
+        width:180px;
+        height:180px;
+        right:-70px;
+        bottom:-70px;
+      }
+
+      .brandPill{
+        padding:6px 9px;
+        font-size:10px;
+        margin-bottom:10px;
+        max-width:100%;
+      }
+
+      .heroTitle{
+        font-size:31px;
+        line-height:1.02;
+        letter-spacing:-.07em;
+        max-width:100%;
+      }
+
+      .heroText{
+        margin-top:10px;
+        font-size:13px;
+        line-height:1.45;
+        max-width:100%;
+      }
+
+      .heroButtons{
+        margin-top:13px;
+        gap:7px;
+      }
+
+      .heroButtons .ghostBtn:nth-child(3){
+        display:none;
+      }
+
+      .heroStats{
+        margin-top:13px;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:7px;
+      }
+
+      .heroStat{
+        min-height:0;
+        padding:8px;
+        border-radius:15px;
+      }
+
+      .heroStat b{
+        font-size:18px;
+        line-height:1;
+      }
+
+      .heroStat span{
+        margin-top:4px;
+        font-size:9px;
+        line-height:1.22;
+      }
+
+      .notice{
+        margin-top:10px;
+        padding:9px 10px;
+        border-radius:15px;
+        font-size:11px;
+        line-height:1.32;
+      }
+
+      .heroSide{
+        display:none;
+      }
+
+      .section{
+        padding:12px 0;
+      }
+
+      .section.tight{
+        padding-top:6px;
+      }
+
+      .sectionHead{
+        margin-bottom:9px;
+        gap:8px;
+      }
+
+      .sectionHead h2{
+        font-size:25px;
+        line-height:1.02;
+        letter-spacing:-.06em;
+      }
+
+      .sectionHead p{
+        margin-top:5px;
+        font-size:12px;
+        line-height:1.38;
+      }
+
+      .sectionAction{
+        min-height:34px;
+        padding:8px 11px;
+      }
+
+      .menuGrid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:8px;
+      }
+
+      .menuCard{
+        min-height:98px;
+        border-radius:19px;
+        padding:10px;
+      }
+
+      .menuCard b{
+        font-size:14px;
+      }
+
+      .menuCard span{
+        font-size:10px;
+        line-height:1.24;
+        max-height:25px;
+      }
+
+      .countPill{
+        margin-bottom:6px;
+        padding:5px 7px;
+        font-size:9px;
+      }
+
+      .promiseStrip{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:8px;
+      }
+
+      .promiseCard{
+        min-height:0;
+        padding:10px;
+        border-radius:18px;
+        gap:8px;
+      }
+
+      .promiseIcon{
+        width:32px;
+        height:32px;
+        border-radius:13px;
+        font-size:15px;
+      }
+
+      .promiseCard b{
+        font-size:11px;
+      }
+
+      .promiseCard span{
+        display:none;
+      }
+
+      .occasionShell{
+        padding:10px;
+        border-radius:22px;
+      }
+
+      .occasionGrid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:8px;
+      }
+
+      .occasionCard{
+        min-height:98px;
+        border-radius:18px;
+        padding:10px;
+      }
+
+      .occasionCard b{
+        font-size:13px;
+      }
+
+      .occasionCard span{
+        font-size:10px;
+        line-height:1.22;
+        max-height:25px;
+      }
+
+      .productGrid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
+      }
+
+      .productCard{
+        border-radius:18px;
+      }
+
+      .productImage{
+        height:122px;
+      }
+
+      .badge{
+        top:7px;
+        left:7px;
+        max-width:calc(100% - 14px);
+        padding:5px 7px;
+        font-size:9px;
+      }
+
+      .badge.right{
+        display:none;
+      }
+
+      .productBody{
+        padding:10px;
+      }
+
+      .productBody h3{
+        font-size:12px;
+        line-height:1.22;
+        min-height:31px;
+      }
+
+      .productDesc,
+      .miniTags{
+        display:none;
+      }
+
+      .productMeta{
+        margin-top:8px;
+        align-items:flex-start;
+        flex-direction:column;
+        gap:7px;
+      }
+
+      .price{
+        font-size:12px;
+      }
+
+      .smallBtn{
+        width:100%;
+        min-height:32px;
+        padding:7px 8px;
+        font-size:11px;
+      }
+
+      .categoryTabs{
+        padding-bottom:9px;
+      }
+
+      .chip{
+        min-height:34px;
+        padding:8px 11px;
+        font-size:11px;
+      }
+
+      .howGrid{
+        grid-template-columns:1fr;
+        gap:8px;
+      }
+
+      .step{
+        padding:11px;
+        border-radius:18px;
+      }
+
+      .stepNum{
+        width:34px;
+        height:34px;
+        border-radius:14px;
+      }
+
+      .bottomCTA{
+        padding:15px;
+        border-radius:22px;
+        margin-bottom:18px;
+      }
+
+      .bottomCTA b{
+        font-size:20px;
+      }
+
+      .bottomCTA span{
+        font-size:12px;
+      }
+
+      .footer{
+        padding:16px 0 calc(24px + env(safe-area-inset-bottom));
+      }
+
+      .loader,
+      .empty{
+        min-height:90px;
+        padding:16px 12px;
+        border-radius:18px;
+        font-size:12px;
+      }
+    }
+
+    @media(max-width:640px){
+      .topbar{
+        background:rgba(255,255,255,.88);
+        border-bottom:1px solid rgba(100,13,107,.10);
+        box-shadow:0 10px 28px rgba(100,13,107,.07);
+      }
+
+      .nav{
+        min-height:50px;
+        gap:7px;
+      }
+
+      .brandText h1{
+        font-size:15px;
+        max-width:132px;
+      }
+
+      .navActions{
+        gap:6px;
+      }
+
+      .cartBtn.iconCart,
+      .mobileMenuBtn.iconMenu{
+        width:40px;
+        height:36px;
+        min-height:36px;
+        padding:0;
+        border-radius:999px;
+        background:rgba(255,255,255,.86);
+        border-color:rgba(100,13,107,.14);
+        color:var(--purple);
+        box-shadow:0 8px 18px rgba(100,13,107,.07);
+      }
+
+      .mobileMenuBtn .menuText{
+        display:none;
+      }
+
+      .cartBtn.iconCart{
+        width:auto;
+        min-width:58px;
+        padding:0 9px;
+        gap:5px;
+      }
+
+      .cartBtn.iconCart .navSvg,
+      .mobileMenuBtn.iconMenu .navSvg{
+        width:17px;
+        height:17px;
+      }
+
+      .cartCount{
+        min-width:20px;
+        height:20px;
+        padding:0 6px;
+        font-size:10px;
+        background:linear-gradient(135deg,var(--purple),var(--purple2));
+      }
+
+      #topWhatsappBtn.orderTopBtn{
+        min-width:54px;
+        min-height:36px;
+        padding:0 12px;
+        border-radius:999px;
+        font-size:12px;
+        letter-spacing:-.02em;
+        box-shadow:0 10px 22px rgba(100,13,107,.20);
+      }
+
+      .heroButtons .primaryBtn{
+        min-width:118px;
+      }
+
+      .heroButtons .ghostBtn{
+        min-width:142px;
+      }
+
+      .occasionShell{
+        padding:0;
+        border:0;
+        background:transparent;
+        box-shadow:none;
+      }
+
+      .occasionGrid{
+        gap:8px;
+      }
+
+      .occasionCard{
+        min-height:62px;
+        padding:8px;
+        border-radius:18px;
+        background:rgba(255,255,255,.86)!important;
+        border:1px solid rgba(100,13,107,.12);
+        box-shadow:0 8px 18px rgba(100,13,107,.055);
+        display:flex;
+        align-items:center;
+        gap:9px;
+      }
+
+      .occasionCard::before{
+        content:"";
+        width:46px;
+        height:46px;
+        border-radius:14px;
+        flex:0 0 auto;
+        background:var(--img) center/cover;
+        box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);
+      }
+
+      .occasionCard:hover{
+        transform:none;
+      }
+
+      .occasionCard b{
+        color:var(--purple);
+        text-shadow:none;
+        font-size:13px;
+        line-height:1.08;
+      }
+
+      .occasionCard span{
+        display:none;
+      }
+
+      .menuCard{
+        box-shadow:0 10px 22px rgba(100,13,107,.10);
+      }
+    }
+
+    @media(max-width:640px){
+      body{background:#fff8ff;}
+      .wrap{width:min(100vw - 20px,1480px);}
+      .topbar{background:rgba(255,255,255,.94);}
+      .nav{min-height:54px;}
+      .logo{width:34px;height:34px;font-size:16px;box-shadow:0 8px 18px rgba(100,13,107,.16);}
+      .brandText h1{font-size:16px;max-width:145px;letter-spacing:-.035em;}
+      .cartBtn,.mobileMenuBtn,.orderTopBtn{min-height:34px;padding:7px 10px;font-size:12px;box-shadow:0 7px 16px rgba(100,13,107,.07);}
+      .orderTopBtn{padding-inline:14px;}
+      .cartBtn svg,.mobileMenuBtn svg{width:17px;height:17px;}
+      .cartCount{min-width:19px;height:19px;font-size:10px;}
+
+      .heroShell{padding:10px 0 8px;}
+      .heroGrid{display:block;}
+      .heroMain{min-height:0;border-radius:22px;padding:18px 16px;box-shadow:0 14px 30px rgba(100,13,107,.14);}
+      .brandPill,.heroText,.heroStats,.notice,.heroSide,.promiseStrip,#quickDesserts,#how{display:none!important;}
+      .heroTitle{font-size:31px;line-height:1.02;letter-spacing:-.075em;max-width:100%;}
+      .heroButtons{margin-top:14px;gap:8px;}
+      .heroButtons .primaryBtn,.heroButtons .ghostBtn{min-height:38px;padding:9px 13px;font-size:12px;}
+
+      .section{padding:8px 0;}
+      .section.tight{padding-top:8px;}
+      .sectionHead{margin:8px 0 9px;display:block;}
+      .sectionHead h2{font-size:25px;line-height:1.02;letter-spacing:-.065em;}
+      .sectionHead p,.sectionAction{display:none!important;}
+
+      .menuGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+      .menuCard{min-height:86px;height:86px;border-radius:18px;padding:11px;box-shadow:0 8px 18px rgba(100,13,107,.08);}
+      .menuCard b{font-size:14px;line-height:1.05;}
+      .menuCard span,.countPill{display:none!important;}
+
+      .occasionShell{border:0;background:transparent;box-shadow:none;padding:0;border-radius:0;}
+      .occasionGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+      .occasionCard{min-height:74px;height:74px;border-radius:18px;padding:9px;background:#fff!important;box-shadow:0 8px 18px rgba(100,13,107,.07);border:1px solid rgba(100,13,107,.13);display:grid;grid-template-columns:48px 1fr;gap:9px;align-items:center;}
+      .occasionCard::before{content:"";width:48px;height:48px;border-radius:14px;background:var(--img) center/cover;display:block;}
+      .occasionCard b{color:var(--purple);font-size:13px;text-shadow:none;line-height:1.1;}
+      .occasionCard span{display:none!important;}
+
+      .productGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+      .productCard{border-radius:18px;box-shadow:0 8px 18px rgba(100,13,107,.07);}
+      .productImage{height:118px;}
+      .badge{padding:5px 7px;font-size:9px;top:7px;left:7px;}
+      .badge.right{display:none;}
+      .productBody{padding:9px;}
+      .productBody h3{font-size:12px;min-height:30px;line-height:1.22;}
+      .productDesc,.miniTags{display:none!important;}
+      .productMeta{margin-top:8px;gap:6px;align-items:center;}
+      .price{font-size:11px;}
+      .smallBtn{min-height:31px;padding:7px 9px;font-size:10px;}
+      .empty,.loader{min-height:86px;padding:14px;border-radius:18px;font-size:12px;}
+      .footer{padding-bottom:76px;}
+    }
   </style>
 </head>
 
@@ -1327,22 +1899,32 @@
     <nav class="navActions" aria-label="Main navigation">
       <a class="navLink" href="#menu">Menu</a>
       <a class="navLink" href="#occasions">Cake Occasions</a>
-      <a class="navLink" href="#popular">Popular Picks</a>
+      <a class="navLink" href="#popular">Best Sellers</a>
       <a class="navLink" href="#how">How It Works</a>
 
-      <a class="cartBtn" href="cart.html" aria-label="Open cart">
-        🛒 <span class="cartCount" id="cartCount">0</span>
+      <a class="cartBtn iconCart" href="cart.html" aria-label="Open cart">
+        <svg class="navSvg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.5 6.5h14l-1.5 8.2a2 2 0 0 1-2 1.65H9.3a2 2 0 0 1-1.95-1.55L5.6 4.8H3.5"/>
+          <circle cx="9.5" cy="20" r="1.35"/>
+          <circle cx="17" cy="20" r="1.35"/>
+        </svg>
+        <span class="cartCount" id="cartCount">0</span>
       </a>
 
-      <button class="ghostBtn mobileMenuBtn" type="button" onclick="toggleMobileMenu()">Menu</button>
-      <a class="primaryBtn" id="topWhatsappBtn" href="#" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="ghostBtn mobileMenuBtn iconMenu" type="button" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <svg class="navSvg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 7.5h14M5 12h14M5 16.5h14"/>
+        </svg>
+        <span class="menuText">Menu</span>
+      </button>
+      <a class="primaryBtn orderTopBtn" id="topWhatsappBtn" href="#" target="_blank" rel="noopener">Contact</a>
     </nav>
   </div>
 
   <div class="wrap mobileMenu" id="mobileMenu">
     <a href="#menu" onclick="toggleMobileMenu(false)">Main Menu</a>
     <a href="#occasions" onclick="toggleMobileMenu(false)">Cake Occasions</a>
-    <a href="#popular" onclick="toggleMobileMenu(false)">Popular Picks</a>
+    <a href="#popular" onclick="toggleMobileMenu(false)">Best Sellers</a>
     <a href="cake.html?custom=true">Create Custom Cake</a>
     <a href="cart.html">Cart</a>
   </div>
@@ -1364,7 +1946,7 @@
           </p>
 
           <div class="heroButtons">
-            <a class="primaryBtn" href="#menu">Explore Menu</a>
+            <a class="primaryBtn" href="#menu">Start Order</a>
             <a class="ghostBtn" href="cake.html?custom=true">Create Custom Cake</a>
             <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank" rel="noopener">Need Today?</a>
           </div>
@@ -1501,8 +2083,8 @@
     <div class="wrap">
       <div class="sectionHead">
         <div>
-          <h2>Popular picks</h2>
-          <p>Featured cakes and quick desserts from admin appear together here, so the homepage does not feel empty.</p>
+          <h2>Best Sellers</h2>
+          <p>Customer favourites from cakes and quick desserts.</p>
         </div>
         <a class="ghostBtn sectionAction" href="#menu">Browse Menu</a>
       </div>
@@ -1618,7 +2200,7 @@
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const CART_KEY = "cakeShopCartV1";
-  const CACHE_KEY = "siffatHomeCacheV4";
+  const CACHE_KEY = "siffatHomeCacheV5";
   const CACHE_MAX_AGE_MS = 1000 * 60 * 60 * 12;
   const LOAD_TIMEOUT_MS = 9000;
   const LOAD_RETRY_DELAYS = [0, 900, 1800, 3500];
@@ -1702,6 +2284,7 @@
   let cakes = [];
   let quickProducts = [];
   let cakeCategoryLinks = [];
+  let homepageMenuCards = [];
   let currentQuickFilter = "all";
   let lastLoadAt = 0;
 
@@ -1710,6 +2293,11 @@
   document.addEventListener("DOMContentLoaded", () => {
     $("year").textContent = new Date().getFullYear();
     updateCartCount();
+
+    applySettings();
+    renderMainCategories();
+    renderOccasions();
+
     applyCachedHomeData();
     init();
   });
@@ -1759,9 +2347,17 @@
   }
 
   function renderLoadingState(){
-    if(!cakeOccasions.length) $("occasionGrid").innerHTML = `<div class="loader">Loading cake occasions...</div>`;
-    if(!cakes.length && !quickProducts.length) $("featuredGrid").innerHTML = `<div class="loader">Loading popular picks...</div>`;
-    if(!quickProducts.length) $("quickProductGrid").innerHTML = `<div class="loader">Loading quick desserts...</div>`;
+    if(!$("mainCategoryGrid").children.length || $("mainCategoryGrid").textContent.includes("Loading menu")){
+      renderMainCategories();
+    }
+
+    if(!cakeOccasions.length && (!$("occasionGrid").children.length || $("occasionGrid").textContent.includes("Loading cake occasions"))){
+      renderOccasions();
+    }
+
+    if(!cakes.length && !quickProducts.length){
+      $("featuredGrid").innerHTML = `<div class="loader">Loading popular picks...</div>`;
+    }
   }
 
   async function loadHomeDataWithRetry(){
@@ -1772,6 +2368,7 @@
 
       if(delay){
         await wait(delay);
+
         if(attempt >= 2){
           showToast("Waking up website data. Retrying...", true);
         }
@@ -1807,10 +2404,11 @@
       withTimeout(supabaseClient.from("categories").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }), LOAD_TIMEOUT_MS),
       withTimeout(supabaseClient.from("cakes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }), LOAD_TIMEOUT_MS),
       withTimeout(supabaseClient.from("quick_products").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }), LOAD_TIMEOUT_MS),
-      withTimeout(supabaseClient.from("cake_categories").select("*"), LOAD_TIMEOUT_MS)
+      withTimeout(supabaseClient.from("cake_categories").select("*"), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("homepage_menu_cards").select("*").order("sort_order", { ascending:true }).order("title", { ascending:true }), LOAD_TIMEOUT_MS)
     ]);
 
-    const [settingsRes, occasionsRes, cakesRes, quickRes, linksRes] = requests.map(result => {
+    const [settingsRes, occasionsRes, cakesRes, quickRes, linksRes, homeCardsRes] = requests.map(result => {
       if(result.status === "fulfilled") return result.value;
       return { data:null, error:result.reason || new Error("Request failed") };
     });
@@ -1820,6 +2418,7 @@
     reportSupabaseIssue("cakes", cakesRes.error);
     reportSupabaseIssue("quick_products", quickRes.error);
     reportSupabaseIssue("cake_categories", linksRes.error);
+    reportSupabaseIssue("homepage_menu_cards", homeCardsRes.error);
 
     if(!settingsRes.error && settingsRes.data){
       siteSettings = { ...DEFAULT_SETTINGS, ...settingsRes.data };
@@ -1841,7 +2440,11 @@
       cakeCategoryLinks = Array.isArray(linksRes.data) ? linksRes.data : [];
     }
 
-    if(settingsRes.error && occasionsRes.error && cakesRes.error && quickRes.error){
+    if(!homeCardsRes.error){
+      homepageMenuCards = Array.isArray(homeCardsRes.data) ? homeCardsRes.data : [];
+    }
+
+    if(settingsRes.error && occasionsRes.error && cakesRes.error && quickRes.error && homeCardsRes.error){
       throw new Error("All homepage Supabase requests failed.");
     }
   }
@@ -1893,6 +2496,9 @@
 
     ["topWhatsappBtn","urgentWhatsappBtn","bottomWhatsappBtn"].forEach(id => {
       const el = $(id);
+
+      if(!el) return;
+
       el.href = whatsappHref;
       el.onclick = whatsapp ? null : (event) => {
         event.preventDefault();
@@ -1918,15 +2524,17 @@
   function renderHeroShortcuts(){
     const shortcuts = ["cupcakes","brownies"]
       .map(slug => {
-        const item = findFirstQuickByCategory(slug);
+        const savedCard = getHomepageMenuCard(slug);
         const meta = getMainCategoryMeta(slug);
-        const image = item?.image_url || getFallbackImage(slug);
+        const image = savedCard?.image_url || getCategoryImage(slug);
+        const title = savedCard?.title || meta.name;
+        const count = getQuickCategoryCount(slug);
 
         return `
           <a class="quickHeroCard" href="category.html?cat=${encodeURIComponent(slug)}" style="--img:url('${escapeCssUrl(cacheBustImage(image))}')">
             <div>
-              <b>${escapeHtml(meta.name)}</b>
-              <span>${getQuickCategoryCount(slug)} items</span>
+              <b>${escapeHtml(title)}</b>
+              <span>${count} items</span>
             </div>
           </a>
         `;
@@ -1939,8 +2547,26 @@
   function renderMainCategories(){
     const grid = $("mainCategoryGrid");
 
-    grid.innerHTML = MAIN_CATEGORIES.map(item => {
-      const image = getCategoryImage(item.slug);
+    const rows = MAIN_CATEGORIES
+      .map(item => {
+        const savedCard = getHomepageMenuCard(item.slug);
+
+        if(savedCard && savedCard.is_active === false){
+          return null;
+        }
+
+        return {
+          ...item,
+          name: savedCard?.title || item.name,
+          description: savedCard?.subtitle || item.description,
+          href: savedCard?.link_url || item.href,
+          image_url: savedCard?.image_url || ""
+        };
+      })
+      .filter(Boolean);
+
+    grid.innerHTML = rows.map(item => {
+      const image = item.image_url || getCategoryImage(item.slug);
       const count = getCategoryCount(item.slug);
       const countText = item.slug === "custom"
         ? "Start from scratch"
@@ -1963,7 +2589,12 @@
   function renderOccasions(){
     const grid = $("occasionGrid");
 
-    if(!cakeOccasions.length){
+    const cakeOnlyOccasions = cakeOccasions.filter(item => {
+      const slug = slugify(item.slug || item.name || "");
+      return !["cupcakes","cupcake","muffins","muffin","brownies","brownie","baklava","baklawa","desserts","dessert"].includes(slug);
+    });
+
+    if(!cakeOnlyOccasions.length){
       grid.innerHTML = `
         <a class="occasionCard" href="category.html?cat=cakes" style="--img:url('${escapeCssUrl(getFallbackImage("cakes"))}')">
           <div>
@@ -1982,7 +2613,7 @@
       return;
     }
 
-    grid.innerHTML = cakeOccasions.slice(0, 12).map(item => {
+    grid.innerHTML = cakeOnlyOccasions.slice(0, 10).map(item => {
       const image = item.image_url || getFallbackImage("cakes");
       const slug = item.slug || item.id;
       const href = `category.html?cat=cakes&occasion=${encodeURIComponent(slug)}`;
@@ -2066,7 +2697,7 @@
           <div class="productImage">
             <img src="${escapeHtml(cacheBustImage(image))}" alt="${escapeHtml(product.name)}" loading="lazy" onerror="this.src='${escapeHtml(getFallbackImage(product.category || product.kind || "dessert"))}'">
             <div class="badge">${escapeHtml(badgeText)}</div>
-            ${product.featured ? `<div class="badge right">Featured</div>` : ""}
+            ${product.featured ? `<div class="badge right">Best Seller</div>` : ""}
           </div>
         </a>
 
@@ -2179,18 +2810,36 @@
     };
   }
 
+  function getHomepageMenuCard(slug){
+    const cleanSlug = slugify(slug);
+    const wanted = cleanSlug === "custom" ? "custom-cake" : cleanSlug;
+
+    return homepageMenuCards.find(card => slugify(card.slug || "") === wanted)
+      || homepageMenuCards.find(card => slugify(card.title || "") === cleanSlug)
+      || null;
+  }
+
   function getCategoryImage(slug){
-    if(slug === "cakes"){
+    const cleanSlug = slugify(slug);
+    const savedCard = getHomepageMenuCard(cleanSlug);
+
+    if(savedCard?.image_url){
+      return savedCard.image_url;
+    }
+
+    if(cleanSlug === "cakes"){
       return cakes.find(item => item.image_url)?.image_url
         || cakeOccasions.find(item => item.image_url)?.image_url
         || getFallbackImage("cakes");
     }
 
-    if(slug === "custom"){
-      return siteSettings.hero_image_url || cakes.find(item => item.image_url)?.image_url || getFallbackImage("custom");
+    if(cleanSlug === "custom"){
+      return siteSettings.hero_image_url
+        || cakes.find(item => item.image_url)?.image_url
+        || getFallbackImage("custom");
     }
 
-    return findFirstQuickByCategory(slug)?.image_url || getFallbackImage(slug);
+    return findFirstQuickByCategory(cleanSlug)?.image_url || getFallbackImage(cleanSlug);
   }
 
   function getCategoryCount(slug){
@@ -2284,6 +2933,7 @@
       cakes = Array.isArray(cached.cakes) ? cached.cakes : [];
       quickProducts = Array.isArray(cached.quickProducts) ? cached.quickProducts : [];
       cakeCategoryLinks = Array.isArray(cached.cakeCategoryLinks) ? cached.cakeCategoryLinks : [];
+      homepageMenuCards = Array.isArray(cached.homepageMenuCards) ? cached.homepageMenuCards : [];
 
       applySettings();
       renderAll();
@@ -2300,7 +2950,8 @@
         cakeOccasions,
         cakes,
         quickProducts,
-        cakeCategoryLinks
+        cakeCategoryLinks,
+        homepageMenuCards
       }));
     }catch(err){
       console.warn("Could not save homepage cache:", err);
@@ -2367,6 +3018,7 @@
   }
 
   function getFallbackImage(key){
+    if(key === "custom-cake") return FALLBACKS.custom;
     return FALLBACKS[key] || FALLBACKS.dessert;
   }
 
