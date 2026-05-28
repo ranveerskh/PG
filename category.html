@@ -18,6 +18,7 @@
       --muted:#725a76;
       --purple:#640D6B;
       --purple2:#7a1281;
+      --purple3:#8f2b95;
       --soft:#fff7ff;
       --line:rgba(100,13,107,.16);
       --shadow:0 18px 45px rgba(100,13,107,.12);
@@ -34,10 +35,17 @@
       -webkit-tap-highlight-color:transparent;
     }
 
-    html{scroll-behavior:smooth}
+    html{
+      width:100%;
+      min-height:100%;
+      scroll-behavior:smooth;
+      background:var(--bg);
+    }
 
     body{
+      width:100%;
       min-height:100vh;
+      overflow-x:hidden;
       background:
         radial-gradient(circle at 0% 0%, rgba(100,13,107,.11), transparent 32%),
         radial-gradient(circle at 100% 0%, rgba(122,18,129,.09), transparent 28%),
@@ -45,20 +53,39 @@
       color:var(--text);
     }
 
-    a{color:inherit;text-decoration:none}
-    button,input,select{font:inherit}
-    button{border:none;cursor:pointer}
-    input,select{min-width:0}
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,input,select{
+      font:inherit;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      background:none;
+    }
+
+    input,select{
+      min-width:0;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
 
     .wrap{
       width:min(1280px, calc(100% - 32px));
-      margin:auto;
+      margin-inline:auto;
     }
 
     .topbar{
       position:sticky;
       top:0;
-      z-index:50;
+      z-index:80;
       background:rgba(255,255,255,.90);
       backdrop-filter:blur(18px);
       border-bottom:1px solid var(--line);
@@ -85,8 +112,8 @@
       border-radius:50%;
       display:grid;
       place-items:center;
-      background:var(--purple);
-      color:white;
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      color:#fff;
       box-shadow:0 12px 28px rgba(100,13,107,.22);
       font-size:20px;
       overflow:hidden;
@@ -99,7 +126,7 @@
       height:100%;
       object-fit:cover;
       display:block;
-      background:white;
+      background:#fff;
     }
 
     .brand h1{
@@ -121,12 +148,15 @@
       overflow:hidden;
       text-overflow:ellipsis;
       max-width:280px;
+      font-weight:750;
     }
 
     .navActions{
       display:flex;
       align-items:center;
+      justify-content:flex-end;
       gap:8px;
+      min-width:0;
     }
 
     .navLink{
@@ -137,6 +167,7 @@
       font-size:13px;
       font-weight:900;
       transition:.18s ease;
+      white-space:nowrap;
     }
 
     .navLink:hover{
@@ -145,7 +176,11 @@
       border-color:rgba(100,13,107,.12);
     }
 
-    .primaryBtn,.ghostBtn,.cartBtn,.smallBtn,.qtyBtn{
+    .primaryBtn,
+    .ghostBtn,
+    .cartBtn,
+    .smallBtn,
+    .qtyBtn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -157,9 +192,10 @@
     }
 
     .primaryBtn{
+      min-height:40px;
       padding:11px 15px;
       background:linear-gradient(135deg,var(--purple),var(--purple2));
-      color:white;
+      color:#fff;
       box-shadow:0 12px 28px rgba(100,13,107,.22);
     }
 
@@ -169,9 +205,10 @@
     }
 
     .ghostBtn{
+      min-height:40px;
       padding:10px 13px;
       border:1px solid var(--line);
-      background:white;
+      background:#fff;
       color:var(--purple);
       box-shadow:0 8px 18px rgba(100,13,107,.05);
     }
@@ -182,6 +219,7 @@
     }
 
     .cartBtn{
+      min-height:40px;
       padding:10px 12px;
       border:1px solid var(--line);
       background:#fff;
@@ -198,12 +236,25 @@
       display:grid;
       place-items:center;
       background:var(--purple);
-      color:white;
+      color:#fff;
       font-size:11px;
       font-weight:1000;
     }
 
-    .mobileMenuBtn{display:none}
+    .navSvg{
+      width:18px;
+      height:18px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2.25;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      flex:0 0 auto;
+    }
+
+    .mobileMenuBtn{
+      display:none;
+    }
 
     .mobileMenu{
       display:none;
@@ -225,6 +276,7 @@
       font-weight:900;
       font-size:13px;
       color:var(--purple);
+      box-shadow:0 8px 16px rgba(100,13,107,.04);
     }
 
     .pageHero{
@@ -235,7 +287,7 @@
       min-height:300px;
       border:1px solid var(--line);
       background:
-        linear-gradient(180deg,rgba(100,13,107,.12),rgba(100,13,107,.78)),
+        linear-gradient(180deg,rgba(100,13,107,.08),rgba(100,13,107,.78)),
         var(--hero-img) center/cover;
       border-radius:30px;
       padding:26px;
@@ -246,7 +298,17 @@
       gap:18px;
       overflow:hidden;
       position:relative;
-      color:white;
+      color:#fff;
+    }
+
+    .heroBox::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 15% 15%,rgba(255,255,255,.16),transparent 32%),
+        radial-gradient(circle at 90% 12%,rgba(255,255,255,.10),transparent 26%);
+      pointer-events:none;
     }
 
     .heroBox::after{
@@ -256,7 +318,7 @@
       background-image:
         radial-gradient(circle at 18px 18px,rgba(255,255,255,.10) 1px,transparent 1px);
       background-size:38px 38px;
-      opacity:.16;
+      opacity:.14;
       pointer-events:none;
     }
 
@@ -298,6 +360,7 @@
       color:rgba(255,255,255,.87);
       font-size:14px;
       line-height:1.6;
+      font-weight:650;
     }
 
     .heroActions{
@@ -310,14 +373,14 @@
     }
 
     .heroBox .primaryBtn{
-      background:white;
+      background:#fff;
       color:var(--purple);
       box-shadow:0 14px 30px rgba(0,0,0,.14);
     }
 
     .heroBox .ghostBtn{
       background:rgba(255,255,255,.11);
-      color:white;
+      color:#fff;
       border-color:rgba(255,255,255,.22);
       box-shadow:none;
     }
@@ -372,7 +435,7 @@
       min-height:43px;
       border:1px solid var(--line);
       outline:none;
-      background:white;
+      background:#fff;
       color:var(--purple);
       border-radius:999px;
       padding:0 13px;
@@ -389,7 +452,9 @@
       margin-bottom:6px;
     }
 
-    .filterRow::-webkit-scrollbar{display:none}
+    .filterRow::-webkit-scrollbar{
+      display:none;
+    }
 
     .chip{
       flex:0 0 auto;
@@ -405,7 +470,7 @@
     }
 
     .chip.active{
-      color:white;
+      color:#fff;
       border-color:rgba(100,13,107,.40);
       background:linear-gradient(135deg,var(--purple),var(--purple2));
     }
@@ -422,6 +487,7 @@
       color:var(--purple);
       font-size:24px;
       letter-spacing:-.055em;
+      line-height:1.05;
     }
 
     .contentHead p{
@@ -429,13 +495,14 @@
       color:var(--muted);
       font-size:13px;
       line-height:1.45;
+      font-weight:650;
     }
 
     .resultPill{
       padding:9px 11px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:white;
+      background:#fff;
       color:var(--purple);
       font-size:12px;
       font-weight:1000;
@@ -457,6 +524,7 @@
       overflow:hidden;
       box-shadow:var(--shadow2);
       transition:.18s ease;
+      min-width:0;
     }
 
     .productCard:hover{
@@ -521,6 +589,7 @@
       min-height:34px;
       max-height:38px;
       overflow:hidden;
+      font-weight:600;
     }
 
     .miniTags{
@@ -528,6 +597,7 @@
       gap:6px;
       flex-wrap:wrap;
       margin-top:9px;
+      min-height:25px;
     }
 
     .miniTag{
@@ -555,7 +625,7 @@
       border-radius:999px;
       padding:0 10px;
       outline:none;
-      background:white;
+      background:#fff;
       color:var(--purple);
       font-size:12px;
       font-weight:900;
@@ -565,7 +635,7 @@
       display:flex;
       align-items:center;
       border:1px solid var(--line);
-      background:white;
+      background:#fff;
       border-radius:999px;
       overflow:hidden;
       height:38px;
@@ -575,7 +645,7 @@
       width:34px;
       height:36px;
       border-radius:0;
-      background:white;
+      background:#fff;
       color:var(--purple);
       font-size:16px;
     }
@@ -587,7 +657,7 @@
       text-align:center;
       color:var(--text);
       font-weight:1000;
-      background:white;
+      background:#fff;
     }
 
     .productMeta{
@@ -606,6 +676,7 @@
     }
 
     .smallBtn{
+      min-height:36px;
       padding:9px 11px;
       background:rgba(100,13,107,.09);
       border:1px solid rgba(100,13,107,.14);
@@ -615,7 +686,7 @@
 
     .smallBtn:hover{
       background:var(--purple);
-      color:white;
+      color:#fff;
     }
 
     .customCTA{
@@ -624,7 +695,7 @@
       background:
         radial-gradient(circle at 12% 18%,rgba(255,255,255,.14),transparent 32%),
         linear-gradient(135deg,var(--purple),var(--purple2));
-      color:white;
+      color:#fff;
       border-radius:28px;
       box-shadow:var(--shadow);
       padding:18px;
@@ -648,11 +719,15 @@
       pointer-events:none;
     }
 
+    .customCTA > *{
+      position:relative;
+      z-index:1;
+    }
+
     .customCTA h3{
       font-size:22px;
       letter-spacing:-.05em;
-      position:relative;
-      z-index:1;
+      line-height:1.05;
     }
 
     .customCTA p{
@@ -661,20 +736,18 @@
       font-size:13px;
       line-height:1.5;
       max-width:680px;
-      position:relative;
-      z-index:1;
+      font-weight:650;
     }
 
     .customCTA .ctaActions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      position:relative;
-      z-index:1;
+      justify-content:flex-end;
     }
 
     .customCTA .primaryBtn{
-      background:white;
+      background:#fff;
       color:var(--purple);
       box-shadow:0 14px 30px rgba(0,0,0,.12);
     }
@@ -682,11 +755,12 @@
     .customCTA .ghostBtn{
       background:rgba(255,255,255,.11);
       border-color:rgba(255,255,255,.20);
-      color:white;
+      color:#fff;
       box-shadow:none;
     }
 
-    .empty,.loader{
+    .empty,
+    .loader{
       grid-column:1/-1;
       padding:28px 14px;
       text-align:center;
@@ -695,6 +769,7 @@
       border-radius:22px;
       background:rgba(255,255,255,.70);
       line-height:1.55;
+      font-weight:750;
     }
 
     .empty strong{
@@ -706,13 +781,13 @@
       left:50%;
       bottom:18px;
       transform:translateX(-50%) translateY(20px);
-      z-index:100;
+      z-index:200;
       opacity:0;
       pointer-events:none;
       padding:12px 14px;
       border-radius:999px;
       background:var(--purple);
-      color:white;
+      color:#fff;
       font-size:13px;
       font-weight:1000;
       box-shadow:0 18px 36px rgba(100,13,107,.24);
@@ -748,6 +823,13 @@
       font-size:13px;
     }
 
+    .footerSmall{
+      display:block;
+      margin-top:4px;
+      line-height:1.45;
+      font-weight:650;
+    }
+
     .footerLinks{
       display:flex;
       gap:10px;
@@ -764,7 +846,13 @@
       display:none !important;
     }
 
-    @media(max-width:1040px){
+    @media(max-width:1120px){
+      .productGrid{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    @media(max-width:920px){
       .heroBox{
         align-items:flex-start;
         flex-direction:column;
@@ -780,12 +868,36 @@
     }
 
     @media(max-width:760px){
+      body{
+        background:
+          radial-gradient(circle at 0% 0%, rgba(100,13,107,.08), transparent 26%),
+          linear-gradient(180deg,#fff8ff,#fff 40%,#fff);
+        padding-bottom:env(safe-area-inset-bottom);
+      }
+
       .wrap{
         width:min(100% - 18px,1280px);
       }
 
+      .topbar{
+        background:rgba(255,255,255,.94);
+        box-shadow:0 10px 28px rgba(100,13,107,.07);
+      }
+
       .nav{
-        min-height:58px;
+        min-height:54px;
+        gap:8px;
+      }
+
+      .logo{
+        width:36px;
+        height:36px;
+        font-size:18px;
+        box-shadow:0 8px 18px rgba(100,13,107,.16);
+      }
+
+      .brand{
+        gap:8px;
       }
 
       .brand p{
@@ -793,7 +905,13 @@
       }
 
       .brand h1{
-        max-width:150px;
+        font-size:16px;
+        max-width:145px;
+        letter-spacing:-.035em;
+      }
+
+      .navActions{
+        gap:6px;
       }
 
       .navLink{
@@ -804,61 +922,276 @@
         display:inline-flex;
       }
 
-      .primaryBtn{
-        padding:10px 12px;
-        font-size:13px;
+      .cartBtn,
+      .mobileMenuBtn{
+        min-height:36px;
+        padding:8px 10px;
+        font-size:0;
+        border-radius:999px;
+        background:rgba(255,255,255,.88);
+        border-color:rgba(100,13,107,.14);
+        box-shadow:0 8px 18px rgba(100,13,107,.07);
       }
 
-      .ghostBtn,.cartBtn{
-        padding:10px 11px;
-        font-size:13px;
+      .cartBtn{
+        min-width:58px;
+        font-size:0;
+        gap:5px;
+      }
+
+      .cartBtn .navSvg,
+      .mobileMenuBtn .navSvg{
+        width:17px;
+        height:17px;
+      }
+
+      .cartCount{
+        min-width:20px;
+        height:20px;
+        font-size:10px;
+        background:linear-gradient(135deg,var(--purple),var(--purple2));
+      }
+
+      #topWhatsappBtn{
+        min-height:36px;
+        padding:0 12px;
+        font-size:12px;
+        box-shadow:0 10px 22px rgba(100,13,107,.20);
       }
 
       .pageHero{
-        padding-top:12px;
+        padding:10px 0 8px;
       }
 
       .heroBox{
-        padding:19px;
-        border-radius:24px;
-        min-height:270px;
+        min-height:0;
+        padding:16px;
+        border-radius:22px;
+        box-shadow:0 14px 30px rgba(100,13,107,.14);
+        gap:12px;
+      }
+
+      .crumb{
+        padding:6px 9px;
+        font-size:10px;
+        margin-bottom:9px;
       }
 
       .heroBox h2{
-        font-size:39px;
+        font-size:31px;
         line-height:1.02;
+        letter-spacing:-.075em;
       }
 
       .heroBox p{
-        font-size:13px;
+        margin-top:8px;
+        font-size:12px;
+        line-height:1.4;
+        max-width:100%;
+      }
+
+      .notice{
+        display:none;
+      }
+
+      .heroActions{
+        width:100%;
+        gap:8px;
+      }
+
+      .heroActions .primaryBtn,
+      .heroActions .ghostBtn{
+        min-height:36px;
+        padding:8px 11px;
+        font-size:11px;
+      }
+
+      .heroActions .ghostBtn:last-child{
+        display:none;
       }
 
       .tools{
+        margin:9px 0 8px;
         grid-template-columns:1fr;
+        gap:8px;
+      }
+
+      .searchBox{
+        padding:9px 11px;
+      }
+
+      .searchBox input{
+        font-size:12px;
       }
 
       .sortBox select{
         width:100%;
+        min-height:38px;
+        font-size:12px;
+      }
+
+      .filterRow{
+        gap:7px;
+        margin-bottom:2px;
+        padding-bottom:7px;
+      }
+
+      .chip{
+        min-height:34px;
+        padding:8px 11px;
+        font-size:11px;
       }
 
       .contentHead{
-        align-items:flex-start;
-        flex-direction:column;
+        margin:10px 0 9px;
         gap:8px;
+        align-items:flex-start;
+      }
+
+      .contentHead h3{
+        font-size:23px;
+        letter-spacing:-.06em;
+      }
+
+      .contentHead p{
+        display:none;
+      }
+
+      .resultPill{
+        padding:7px 9px;
+        font-size:10px;
       }
 
       .productGrid{
-        grid-template-columns:1fr;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
+        margin-bottom:14px;
+      }
+
+      .productCard{
+        border-radius:18px;
+        box-shadow:0 8px 18px rgba(100,13,107,.07);
+      }
+
+      .productCard:hover{
+        transform:none;
       }
 
       .productImg{
-        height:215px;
+        height:118px;
+      }
+
+      .badge{
+        top:7px;
+        left:7px;
+        max-width:calc(100% - 14px);
+        padding:5px 7px;
+        font-size:9px;
+      }
+
+      .productBody{
+        padding:9px;
+      }
+
+      .productBody h4{
+        font-size:12px;
+        line-height:1.22;
+        min-height:30px;
+        margin-bottom:0;
+      }
+
+      .productDesc,
+      .miniTags{
+        display:none;
+      }
+
+      .quickControls{
+        grid-template-columns:1fr;
+        gap:6px;
+        margin-top:8px;
+      }
+
+      .variantSelect{
+        min-height:31px;
+        padding:0 8px;
+        font-size:10px;
+      }
+
+      .qtyControl{
+        height:31px;
+        width:100%;
+      }
+
+      .qtyBtn{
+        height:29px;
+        flex:1;
+        min-width:30px;
+        font-size:14px;
+      }
+
+      .qtyInput{
+        width:40px;
+        font-size:11px;
+      }
+
+      .productMeta{
+        margin-top:8px;
+        align-items:stretch;
+        flex-direction:column;
+        gap:6px;
+      }
+
+      .price{
+        font-size:11px;
+      }
+
+      .smallBtn{
+        width:100%;
+        min-height:31px;
+        padding:7px 8px;
+        font-size:10px;
       }
 
       .customCTA{
+        padding:14px;
+        border-radius:22px;
         align-items:flex-start;
         flex-direction:column;
-        border-radius:24px;
+        margin:8px 0 20px;
+      }
+
+      .customCTA h3{
+        font-size:20px;
+      }
+
+      .customCTA p{
+        font-size:12px;
+        line-height:1.38;
+      }
+
+      .customCTA .ctaActions{
+        width:100%;
+        justify-content:flex-start;
+        gap:8px;
+      }
+
+      .customCTA .primaryBtn,
+      .customCTA .ghostBtn{
+        min-height:35px;
+        padding:8px 11px;
+        font-size:11px;
+      }
+
+      .empty,
+      .loader{
+        min-height:86px;
+        padding:14px;
+        border-radius:18px;
+        font-size:12px;
+      }
+
+      .footer{
+        padding:16px 0 calc(24px + env(safe-area-inset-bottom));
       }
 
       .footerLinks{
@@ -872,7 +1205,7 @@
 
 <header class="topbar">
   <div class="wrap nav">
-    <a href="index.html" class="brand">
+    <a href="index.html" class="brand" aria-label="Siffat Cakes homepage">
       <div id="siteLogo" class="logo">🍰</div>
       <div>
         <h1 id="siteBrandName">Siffat Cakes</h1>
@@ -882,21 +1215,31 @@
 
     <div class="navActions">
       <a class="navLink" href="index.html">Home</a>
-      <a class="navLink" href="index.html#mainCategories">Menu</a>
+      <a class="navLink" href="index.html#menu">Menu</a>
       <a class="navLink" href="cake.html?custom=true">Custom Cake</a>
 
       <a class="cartBtn" href="cart.html" aria-label="Open cart">
-        🛒 <span class="cartCount" id="cartCount">0</span>
+        <svg class="navSvg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6.5 6.5h14l-1.5 8.2a2 2 0 0 1-2 1.65H9.3a2 2 0 0 1-1.95-1.55L5.6 4.8H3.5"/>
+          <circle cx="9.5" cy="20" r="1.35"/>
+          <circle cx="17" cy="20" r="1.35"/>
+        </svg>
+        <span class="cartCount" id="cartCount">0</span>
       </a>
 
-      <button class="ghostBtn mobileMenuBtn" onclick="toggleMobileMenu()">Menu</button>
-      <a class="primaryBtn" id="topWhatsappBtn" href="#" target="_blank">WhatsApp</a>
+      <button class="ghostBtn mobileMenuBtn" type="button" onclick="toggleMobileMenu()" aria-label="Open menu">
+        <svg class="navSvg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 7.5h14M5 12h14M5 16.5h14"/>
+        </svg>
+      </button>
+
+      <a class="primaryBtn" id="topWhatsappBtn" href="#" target="_blank" rel="noopener">Contact</a>
     </div>
   </div>
 
   <div class="wrap mobileMenu" id="mobileMenu">
     <a href="index.html">Home</a>
-    <a href="index.html#mainCategories">Main Menu</a>
+    <a href="index.html#menu">Main Menu</a>
     <a href="category.html?cat=cakes">Cakes</a>
     <a href="cake.html?custom=true">Create Custom Cake</a>
     <a href="cart.html">Cart</a>
@@ -922,8 +1265,8 @@
 
       <div class="heroActions" id="heroActions">
         <a class="primaryBtn" href="cake.html?custom=true">Custom Cake</a>
-        <a class="ghostBtn" href="index.html#mainCategories">All Menu</a>
-        <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank">Need Today?</a>
+        <a class="ghostBtn" href="index.html#menu">All Menu</a>
+        <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank" rel="noopener">Need Today?</a>
       </div>
     </div>
   </section>
@@ -969,7 +1312,7 @@
 
       <div class="ctaActions">
         <a class="primaryBtn" href="cake.html?custom=true">Start Custom Cake</a>
-        <a class="ghostBtn" id="customWhatsappBtn" href="#" target="_blank">WhatsApp Directly</a>
+        <a class="ghostBtn" id="customWhatsappBtn" href="#" target="_blank" rel="noopener">WhatsApp Directly</a>
       </div>
     </div>
   </section>
@@ -979,12 +1322,12 @@
   <div class="wrap footerInner">
     <div>
       <div class="footerBrand">© <span id="year"></span> <span id="footerBrand">Siffat Cakes</span></div>
-      <span id="footerAddress">381 Talbot Street, St. Thomas</span>
+      <span class="footerSmall" id="footerAddress">381 Talbot Street, St. Thomas</span>
     </div>
 
     <div class="footerLinks">
       <a href="index.html">Home</a>
-      <a href="index.html#mainCategories">Menu</a>
+      <a href="index.html#menu">Menu</a>
       <a href="category.html?cat=cakes">Cakes</a>
       <a href="cake.html?custom=true">Custom Cake</a>
       <a href="cart.html">Cart</a>
@@ -1000,6 +1343,10 @@
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const CART_KEY = "cakeShopCartV1";
+  const CACHE_KEY = "siffatCategoryCacheV3";
+  const CACHE_MAX_AGE_MS = 1000 * 60 * 60 * 12;
+  const LOAD_TIMEOUT_MS = 9000;
+  const LOAD_RETRY_DELAYS = [0, 900, 1800, 3500];
 
   const DEFAULT_SETTINGS = {
     brand_name:"Siffat Cakes",
@@ -1107,129 +1454,172 @@
   let cakes = [];
   let cakeCategories = [];
   let quickProducts = [];
+  let homepageMenuCards = [];
   let currentCategory = null;
   let currentOccasion = "all";
+  let lastLoadAt = 0;
 
   const $ = (id) => document.getElementById(id);
 
   document.addEventListener("DOMContentLoaded", () => {
+    $("year").textContent = new Date().getFullYear();
+    updateCartCount();
+
+    applyCachedCategoryData();
+
     init().catch(err => {
       console.error("Category init failed:", err);
       showPageError(err.message || "Unknown category page error");
     });
   });
 
-  async function init(){
-    $("year").textContent = new Date().getFullYear();
-
+  window.addEventListener("pageshow", () => {
     updateCartCount();
-    await loadData();
-    resolveCurrentCategory();
-    applySettings();
-    renderCategoryHero();
-    renderFilters();
-    renderCurrentList();
-  }
 
-  async function loadData(){
-    await Promise.all([
-      loadSettings(),
-      loadCategories(),
-      loadCakes(),
-      loadCakeRelations(),
-      loadQuickProducts()
-    ]);
-  }
+    if(Date.now() - lastLoadAt > 1000 * 60 * 5){
+      init(true).catch(err => console.warn("Category refresh failed:", err));
+    }
+  });
 
-  async function loadSettings(){
+  document.addEventListener("visibilitychange", () => {
+    if(!document.hidden){
+      updateCartCount();
+
+      if(Date.now() - lastLoadAt > 1000 * 60 * 5){
+        init(true).catch(err => console.warn("Category visibility refresh failed:", err));
+      }
+    }
+  });
+
+  async function init(silent = false){
     try{
-      const res = await supabaseClient
-        .from("site_settings")
-        .select("*")
-        .eq("id", 1)
-        .maybeSingle();
+      if(!silent){
+        showInitialLoadingIfNeeded();
+      }
 
-      if(res.error) throw res.error;
-      siteSettings = {...DEFAULT_SETTINGS, ...(res.data || {})};
+      await loadDataWithRetry();
+
+      resolveCurrentCategory();
+      applySettings();
+      renderCategoryHero();
+      renderFilters();
+      renderCurrentList();
+      saveCategoryCache();
+
+      lastLoadAt = Date.now();
     }catch(err){
-      console.warn("Settings load issue:", err.message);
-      siteSettings = {...DEFAULT_SETTINGS};
+      console.warn("Live category load failed:", err?.message || err);
+
+      resolveCurrentCategory();
+      applySettings();
+      renderCategoryHero();
+      renderFilters();
+      renderCurrentList();
+
+      if(!cakes.length && !quickProducts.length){
+        showPageError("Products could not load right now. Please refresh or check Supabase access.");
+      }
     }
   }
 
-  async function loadCategories(){
-    try{
-      const res = await supabaseClient
-        .from("categories")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order", { ascending:true })
-        .order("name", { ascending:true });
-
-      if(res.error) throw res.error;
-      categories = Array.isArray(res.data) ? res.data : [];
-    }catch(err){
-      console.warn("Categories load issue:", err.message);
-      categories = [];
+  function showInitialLoadingIfNeeded(){
+    if($("productGrid").textContent.includes("Loading products")){
+      $("productGrid").innerHTML = `<div class="loader">Loading products...</div>`;
     }
   }
 
-  async function loadCakes(){
-    try{
-      const res = await supabaseClient
-        .from("cakes")
-        .select("*")
-        .eq("is_active", true)
-        .order("sort_order", { ascending:true })
-        .order("created_at", { ascending:false });
+  async function loadDataWithRetry(){
+    let lastErr = null;
 
-      if(res.error) throw res.error;
-      cakes = Array.isArray(res.data) ? res.data : [];
-    }catch(err){
-      console.warn("Cakes load issue:", err.message);
-      cakes = [];
-    }
-  }
+    for(let attempt = 0; attempt < LOAD_RETRY_DELAYS.length; attempt++){
+      const delay = LOAD_RETRY_DELAYS[attempt];
 
-  async function loadCakeRelations(){
-    try{
-      const res = await supabaseClient
-        .from("cake_categories")
-        .select("*");
+      if(delay){
+        await wait(delay);
+        if(attempt >= 2){
+          showToast("Waking up website data...");
+        }
+      }
 
-      if(res.error) throw res.error;
-      cakeCategories = Array.isArray(res.data) ? res.data : [];
-    }catch(err){
-      console.warn("Cake relation load issue:", err.message);
-      cakeCategories = [];
-    }
-  }
-
-  async function loadQuickProducts(){
-    const possibleTables = ["products", "quick_products", "dessert_products"];
-
-    for(const tableName of possibleTables){
       try{
-        const res = await supabaseClient
-          .from(tableName)
-          .select("*");
-
-        if(res.error) throw res.error;
-
-        quickProducts = Array.isArray(res.data)
-          ? res.data
-              .filter(item => item.is_active !== false && item.active !== false)
-              .sort((a,b) => Number(a.sort_order || 0) - Number(b.sort_order || 0))
-          : [];
-
-        console.log("Quick products loaded from:", tableName, quickProducts);
+        await warmSupabase();
+        await loadData();
         return;
       }catch(err){
-        console.warn(`Quick products table skipped: ${tableName}`, err.message);
+        lastErr = err;
+        console.warn(`Category load attempt ${attempt + 1} failed:`, err?.message || err);
       }
     }
 
-    quickProducts = [];
+    throw lastErr || new Error("Category data failed to load.");
+  }
+
+  async function warmSupabase(){
+    try{
+      await withTimeout(
+        supabaseClient.from("site_settings").select("id").eq("id", 1).maybeSingle(),
+        LOAD_TIMEOUT_MS
+      );
+    }catch(err){
+      console.warn("Supabase warm-up skipped:", err?.message || err);
+    }
+  }
+
+  async function loadData(){
+    const requests = await Promise.allSettled([
+      withTimeout(supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("categories").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("cakes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("cake_categories").select("*"), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("quick_products").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("homepage_menu_cards").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("title", { ascending:true }), LOAD_TIMEOUT_MS)
+    ]);
+
+    const [settingsRes, categoriesRes, cakesRes, cakeRelationsRes, quickRes, homeCardsRes] = requests.map(result => {
+      if(result.status === "fulfilled") return result.value;
+      return { data:null, error:result.reason || new Error("Request failed") };
+    });
+
+    reportSupabaseIssue("site_settings", settingsRes.error);
+    reportSupabaseIssue("categories", categoriesRes.error);
+    reportSupabaseIssue("cakes", cakesRes.error);
+    reportSupabaseIssue("cake_categories", cakeRelationsRes.error);
+    reportSupabaseIssue("quick_products", quickRes.error);
+    reportSupabaseIssue("homepage_menu_cards", homeCardsRes.error);
+
+    if(!settingsRes.error && settingsRes.data){
+      siteSettings = {...DEFAULT_SETTINGS, ...settingsRes.data};
+    }
+
+    if(!categoriesRes.error){
+      categories = Array.isArray(categoriesRes.data) ? categoriesRes.data : [];
+    }
+
+    if(!cakesRes.error){
+      cakes = Array.isArray(cakesRes.data) ? cakesRes.data : [];
+    }
+
+    if(!cakeRelationsRes.error){
+      cakeCategories = Array.isArray(cakeRelationsRes.data) ? cakeRelationsRes.data : [];
+    }
+
+    if(!quickRes.error){
+      quickProducts = Array.isArray(quickRes.data) ? quickRes.data : [];
+    }
+
+    if(!homeCardsRes.error){
+      homepageMenuCards = Array.isArray(homeCardsRes.data) ? homeCardsRes.data : [];
+    }
+
+    if(settingsRes.error && categoriesRes.error && cakesRes.error && quickRes.error){
+      throw new Error("All category page Supabase requests failed.");
+    }
+  }
+
+  function reportSupabaseIssue(label, error){
+    if(error){
+      console.warn(`[${label}]`, error.message || error);
+    }
   }
 
   function resolveCurrentCategory(){
@@ -1242,19 +1632,23 @@
       return;
     }
 
-    currentCategory = MAIN_CATEGORIES.find(cat => cat.slug === normalizedCat) || null;
+    const baseCategory = MAIN_CATEGORIES.find(cat => cat.slug === normalizedCat) || null;
+
     currentOccasion = slugify(params.get("occasion") || "all");
 
-    if(currentCategory){
-      const adminMain = findAdminMainCategory(currentCategory.slug);
-      if(adminMain){
-        currentCategory = {
-          ...currentCategory,
-          description: adminMain.description || currentCategory.description,
-          image_url: adminMain.image_url || currentCategory.image_url
-        };
-      }
+    if(!baseCategory){
+      currentCategory = null;
+      return;
     }
+
+    const homeCard = findHomepageMenuCard(baseCategory.slug);
+    const adminMain = findAdminMainCategory(baseCategory.slug);
+
+    currentCategory = {
+      ...baseCategory,
+      description: adminMain?.description || baseCategory.description,
+      image_url: homeCard?.image_url || adminMain?.image_url || baseCategory.image_url
+    };
   }
 
   function applySettings(){
@@ -1270,7 +1664,7 @@
     $("footerAddress").textContent = buildFooterInfo();
 
     if(logo){
-      $("siteLogo").innerHTML = `<img src="${escapeHtml(logo)}" alt="${escapeHtml(brand)}" onerror="this.parentElement.textContent='🍰'">`;
+      $("siteLogo").innerHTML = `<img src="${escapeHtml(cacheBustImage(logo))}" alt="${escapeHtml(brand)}" onerror="this.parentElement.textContent='🍰'">`;
     }else{
       $("siteLogo").textContent = "🍰";
     }
@@ -1299,6 +1693,7 @@
     document.title = `${currentCategory.name} - ${brand}`;
 
     $("crumbText").textContent = isCakePage ? "Customizable Cakes" : "Quick Add Desserts";
+
     $("categoryTitle").innerHTML = isCakePage
       ? `Cakes <span>collection.</span>`
       : `${escapeHtml(currentCategory.name)} <span>menu.</span>`;
@@ -1306,27 +1701,29 @@
     $("categoryDesc").textContent = currentCategory.description || "";
 
     $("listTitle").textContent = isCakePage ? "Choose a Cake Design" : currentCategory.name;
+
     $("listSubtitle").textContent = isCakePage
       ? "Cake occasions are filters here. Select a cake, then customize size, flavour, message and add-ons."
       : "Choose quantity and add products directly to your cart. No cake customization form needed.";
 
-    $("heroBox").style.setProperty("--hero-img", `url("${escapeCssUrl(image)}")`);
+    $("heroBox").style.setProperty("--hero-img", `url("${escapeCssUrl(cacheBustImage(image))}")`);
 
     $("heroActions").innerHTML = isCakePage
       ? `
         <a class="primaryBtn" href="cake.html?custom=true">Create Custom Cake</a>
-        <a class="ghostBtn" href="index.html#mainCategories">All Menu</a>
-        <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank">Need Today?</a>
+        <a class="ghostBtn" href="index.html#menu">All Menu</a>
+        <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank" rel="noopener">Need Today?</a>
       `
       : `
         <a class="primaryBtn" href="cart.html">View Cart</a>
         <a class="ghostBtn" href="category.html?cat=cakes">Browse Cakes</a>
-        <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank">Need Today?</a>
+        <a class="ghostBtn" id="urgentWhatsappBtn" href="#" target="_blank" rel="noopener">Need Today?</a>
       `;
 
     setupWhatsappLinks(normalizePhone(siteSettings.whatsapp_number || ""));
 
     $("bottomTitle").textContent = isCakePage ? "Want a cake from scratch?" : "Planning a cake too?";
+
     $("bottomText").textContent = isCakePage
       ? "Start a custom cake request with your size, flavour, message and special notes."
       : "Desserts are quick-add items. For fully customized designs, use the custom cake request page.";
@@ -1416,7 +1813,7 @@
         <article class="productCard">
           <a href="${href}">
             <div class="productImg">
-              <img src="${escapeHtml(image)}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='${FALLBACK_IMAGES.cakes}'">
+              <img src="${escapeHtml(cacheBustImage(image))}" alt="${escapeHtml(cake.name || "Cake")}" loading="lazy" onerror="this.src='${FALLBACK_IMAGES.cakes}'">
               <div class="badge">${escapeHtml(badge)}${cake.is_featured ? " · Featured" : ""}</div>
             </div>
           </a>
@@ -1431,7 +1828,7 @@
             </div>
 
             <div class="productMeta">
-              <div class="price">${priceText}</div>
+              <div class="price">${escapeHtml(priceText)}</div>
               <a class="smallBtn" href="${href}">Customize</a>
             </div>
           </div>
@@ -1463,7 +1860,7 @@
         <div class="empty">
           <strong>No ${escapeHtml(currentCategory.name.toLowerCase())} products found yet.</strong><br>
           Add quick products later from admin, or contact the shop directly on WhatsApp.<br><br>
-          <a class="primaryBtn" id="emptyWhatsappBtn" href="#">Ask on WhatsApp</a>
+          <a class="primaryBtn" id="emptyWhatsappBtn" href="#" target="_blank" rel="noopener">Ask on WhatsApp</a>
         </div>
       `;
 
@@ -1481,7 +1878,7 @@
       return `
         <article class="productCard">
           <div class="productImg">
-            <img src="${escapeHtml(image)}" alt="${escapeHtml(product.name || currentCategory.name)}" loading="lazy" onerror="this.src='${FALLBACK_IMAGES[currentCategory.slug] || FALLBACK_IMAGES.default}'">
+            <img src="${escapeHtml(cacheBustImage(image))}" alt="${escapeHtml(product.name || currentCategory.name)}" loading="lazy" onerror="this.src='${FALLBACK_IMAGES[currentCategory.slug] || FALLBACK_IMAGES.default}'">
             <div class="badge">${escapeHtml(currentCategory.name)}${product.is_featured ? " · Featured" : ""}</div>
           </div>
 
@@ -1514,7 +1911,7 @@
             </div>
 
             <div class="productMeta">
-              <div class="price">${priceText}</div>
+              <div class="price">${escapeHtml(priceText)}</div>
               <button class="smallBtn addQuickBtn" type="button" data-add-id="${escapeHtml(id)}">Add to Cart</button>
             </div>
           </div>
@@ -1572,26 +1969,43 @@
 
     const cart = getCart();
 
-    cart.push({
-      cart_id:"quick_" + Date.now() + "_" + Math.random().toString(16).slice(2),
-      item_type:"quick_product",
-      product_type:"quick_add",
-      product_id:product.id,
-      name:product.name || currentCategory.name,
-      category:currentCategory.slug,
-      category_name:currentCategory.name,
-      image_url:image,
-      description:product.description || "",
-      variant:selectedVariant,
-      flavour:selectedVariant,
-      quantity:quantity,
-      unit_price:quoteRequired ? null : unitPrice,
-      estimated_unit_price:quoteRequired ? null : unitPrice,
-      estimated_total:quoteRequired ? null : unitPrice * quantity,
-      price_type:quoteRequired ? "quote" : "fixed",
-      quote_required:quoteRequired,
-      added_at:new Date().toISOString()
+    const existing = cart.find(item => {
+      const sameType = String(item.type || item.kind || item.item_type || "") === "quick";
+      const sameProduct = String(item.product_id || item.id || "") === String(product.id);
+      const sameVariant = String(item.variant || item.flavour || "") === String(selectedVariant || "");
+      return sameType && sameProduct && sameVariant;
     });
+
+    if(existing){
+      existing.quantity = Number(existing.quantity || 1) + quantity;
+      existing.estimated_total = quoteRequired ? null : Number(existing.quantity || 1) * unitPrice;
+    }else{
+      cart.push({
+        cartId:"quick_" + Date.now() + "_" + Math.random().toString(16).slice(2),
+        cart_id:"quick_" + Date.now() + "_" + Math.random().toString(16).slice(2),
+        item_type:"quick",
+        product_type:"quick_add",
+        type:"quick",
+        kind:"quick",
+        id:product.id,
+        product_id:product.id,
+        name:product.name || currentCategory.name,
+        category:currentCategory.slug,
+        category_name:currentCategory.name,
+        image_url:image,
+        description:product.description || "",
+        variant:selectedVariant,
+        flavour:selectedVariant,
+        quantity:quantity,
+        unit_price:quoteRequired ? 0 : unitPrice,
+        price:quoteRequired ? 0 : unitPrice,
+        estimated_unit_price:quoteRequired ? null : unitPrice,
+        estimated_total:quoteRequired ? null : unitPrice * quantity,
+        price_type:quoteRequired ? "quote" : "fixed",
+        quote_required:quoteRequired,
+        added_at:new Date().toISOString()
+      });
+    }
 
     saveCart(cart);
     updateCartCount();
@@ -1666,6 +2080,16 @@
       });
 
     return Array.from(merged.values());
+  }
+
+  function findHomepageMenuCard(mainSlug){
+    const target = normalizeMainCategory(mainSlug);
+
+    return homepageMenuCards.find(card => {
+      const slugSlug = normalizeMainCategory(card.slug || "");
+      const titleSlug = normalizeMainCategory(card.title || "");
+      return slugSlug === target || titleSlug === target;
+    }) || null;
   }
 
   function findAdminOccasionCategory(occasionSlug){
@@ -1765,12 +2189,13 @@
     if(!price) return "Estimate on request";
 
     const currency = siteSettings.currency || "$";
+    const pretty = price.toFixed(2).replace(".00", "");
 
     if(cake.price_type === "fixed"){
-      return currency + price.toFixed(2).replace(".00", "");
+      return currency + pretty;
     }
 
-    return "From " + currency + price.toFixed(2).replace(".00", "");
+    return "From " + currency + pretty;
   }
 
   function getQuickPriceText(product){
@@ -1810,7 +2235,7 @@
       <div class="empty">
         <strong>Category not found.</strong><br>
         This category does not exist or is unavailable.<br><br>
-        <a class="primaryBtn" href="index.html#mainCategories">Back to Menu</a>
+        <a class="primaryBtn" href="index.html#menu">Back to Menu</a>
       </div>
     `;
   }
@@ -1823,7 +2248,7 @@
         <div class="empty">
           <strong>Page error</strong><br>
           ${escapeHtml(message)}<br><br>
-          Open browser console for details.
+          Please refresh the page.
         </div>
       `;
     }
@@ -1843,7 +2268,7 @@
       el.href = normalUrl;
       el.onclick = phone ? null : function(e){
         e.preventDefault();
-        alert("WhatsApp number is not added yet. Add it in admin settings.");
+        showToast("WhatsApp number is not added yet.");
       };
     });
 
@@ -1852,7 +2277,7 @@
       urgent.href = urgentUrl;
       urgent.onclick = phone ? null : function(e){
         e.preventDefault();
-        alert("WhatsApp number is not added yet. Add it in admin settings.");
+        showToast("WhatsApp number is not added yet.");
       };
     }
   }
@@ -1866,7 +2291,7 @@
 
     el.onclick = phone ? null : function(e){
       e.preventDefault();
-      alert("WhatsApp number is not added yet. Add it in admin settings.");
+      showToast("WhatsApp number is not added yet.");
     };
   }
 
@@ -1898,6 +2323,47 @@
 
   function saveCart(cart){
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
+
+  function applyCachedCategoryData(){
+    try{
+      const raw = localStorage.getItem(CACHE_KEY);
+      if(!raw) return;
+
+      const cached = JSON.parse(raw);
+      if(!cached || Date.now() - Number(cached.savedAt || 0) > CACHE_MAX_AGE_MS) return;
+
+      siteSettings = {...DEFAULT_SETTINGS, ...(cached.siteSettings || {})};
+      categories = Array.isArray(cached.categories) ? cached.categories : [];
+      cakes = Array.isArray(cached.cakes) ? cached.cakes : [];
+      cakeCategories = Array.isArray(cached.cakeCategories) ? cached.cakeCategories : [];
+      quickProducts = Array.isArray(cached.quickProducts) ? cached.quickProducts : [];
+      homepageMenuCards = Array.isArray(cached.homepageMenuCards) ? cached.homepageMenuCards : [];
+
+      resolveCurrentCategory();
+      applySettings();
+      renderCategoryHero();
+      renderFilters();
+      renderCurrentList();
+    }catch(err){
+      console.warn("Could not apply category cache:", err);
+    }
+  }
+
+  function saveCategoryCache(){
+    try{
+      localStorage.setItem(CACHE_KEY, JSON.stringify({
+        savedAt:Date.now(),
+        siteSettings,
+        categories,
+        cakes,
+        cakeCategories,
+        quickProducts,
+        homepageMenuCards
+      }));
+    }catch(err){
+      console.warn("Could not save category cache:", err);
+    }
   }
 
   function showToast(message){
@@ -1959,6 +2425,7 @@
     return String(value || "")
       .toLowerCase()
       .trim()
+      .replace(/&/g, "and")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
   }
@@ -1969,6 +2436,26 @@
     }
 
     return String(value).replace(/"/g, '\\"');
+  }
+
+  function withTimeout(promise, ms){
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out. Retrying.")), ms))
+    ]);
+  }
+
+  function wait(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function cacheBustImage(url){
+    const clean = String(url || "");
+    if(!clean) return clean;
+    if(!clean.includes("supabase.co/storage")) return clean;
+
+    const sep = clean.includes("?") ? "&" : "?";
+    return `${clean}${sep}v=${Date.now()}`;
   }
 
   function escapeHtml(value){
