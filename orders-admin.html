@@ -24,7 +24,6 @@
       --orange:#b54708;
       --blue:#175cd3;
       --soft:#fff7ff;
-      --dark:#1d141f;
     }
 
     *{
@@ -32,6 +31,7 @@
       margin:0;
       padding:0;
       font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-tap-highlight-color:transparent;
     }
 
     html,body{
@@ -51,7 +51,6 @@
 
     button,input,select,textarea{font:inherit}
     button{border:0;cursor:pointer}
-    button:disabled{cursor:not-allowed}
     a{color:inherit;text-decoration:none}
 
     .wrap{
@@ -74,7 +73,6 @@
       align-items:center;
       justify-content:space-between;
       gap:12px;
-      padding:8px 0;
     }
 
     .brand{
@@ -85,8 +83,8 @@
     }
 
     .logo{
-      width:44px;
-      height:44px;
+      width:42px;
+      height:42px;
       border-radius:50%;
       display:grid;
       place-items:center;
@@ -103,8 +101,8 @@
       width:100%;
       height:100%;
       object-fit:cover;
-      display:block;
       background:#fff;
+      display:block;
     }
 
     .brand h1{
@@ -123,7 +121,7 @@
       color:var(--muted);
       font-size:11px;
       white-space:nowrap;
-      max-width:380px;
+      max-width:360px;
       overflow:hidden;
       text-overflow:ellipsis;
     }
@@ -161,6 +159,7 @@
 
     .btn:disabled{
       opacity:.55;
+      cursor:not-allowed;
       transform:none!important;
     }
 
@@ -195,20 +194,19 @@
       color:var(--blue);
     }
 
-    .btn.dark{
-      background:rgba(29,20,31,.08);
-      border-color:rgba(29,20,31,.14);
-      color:var(--dark);
-    }
-
     .btn.small{
       min-height:34px;
       padding:7px 10px;
       font-size:12px;
     }
 
-    .btn.block{
-      width:100%;
+    .btn.block{width:100%}
+
+    .viewBtn.active{
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      color:#fff;
+      border-color:rgba(100,13,107,.30);
+      box-shadow:0 12px 26px rgba(100,13,107,.18);
     }
 
     .loginScreen{
@@ -245,8 +243,11 @@
     .app.show{display:block}
 
     .main{
-      padding:16px 0 34px;
+      padding:14px 0 34px;
     }
+
+    .viewPanel{display:none}
+    .viewPanel.active{display:block}
 
     .card{
       border:1px solid var(--line);
@@ -259,7 +260,7 @@
     }
 
     .cardHead{
-      padding:14px;
+      padding:13px 14px;
       border-bottom:1px solid var(--line);
       display:flex;
       align-items:flex-start;
@@ -282,7 +283,7 @@
     }
 
     .cardBody{
-      padding:14px;
+      padding:13px 14px;
     }
 
     .field{
@@ -324,100 +325,94 @@
       line-height:1.45;
     }
 
-    .full{
-      grid-column:1/-1;
-    }
+    .full{grid-column:1/-1}
 
-    .gridStats{
+    .orderBoard{
       display:grid;
       grid-template-columns:repeat(6,1fr);
-      gap:10px;
-      margin-bottom:12px;
+      gap:9px;
     }
 
-    .statBtn{
+    .boardCard{
+      min-height:72px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.92);
-      border-radius:20px;
-      padding:14px;
-      box-shadow:var(--shadow2);
-      min-width:0;
+      background:rgba(255,255,255,.88);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:0 8px 18px rgba(100,13,107,.04);
       text-align:left;
-      transition:.18s ease;
-      min-height:84px;
+      transition:.16s ease;
+      color:var(--text);
     }
 
-    .statBtn:hover{
-      transform:translateY(-2px);
-      border-color:rgba(100,13,107,.28);
+    .boardCard:hover{
+      transform:translateY(-1px);
+      border-color:rgba(100,13,107,.26);
       background:#fff7ff;
     }
 
-    .statBtn.active{
+    .boardCard.active{
       background:linear-gradient(135deg,var(--purple),var(--purple2));
       color:#fff;
-      border-color:rgba(100,13,107,.38);
-      box-shadow:0 14px 28px rgba(100,13,107,.22);
+      border-color:rgba(100,13,107,.30);
+      box-shadow:0 16px 32px rgba(100,13,107,.22);
     }
 
-    .statBtn b{
+    .boardCard b{
       display:block;
-      color:var(--purple);
-      font-size:25px;
+      font-size:24px;
+      line-height:1;
       letter-spacing:-.06em;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      color:var(--purple);
+      margin-bottom:8px;
     }
 
-    .statBtn span{
-      display:block;
-      margin-top:5px;
-      color:var(--muted);
-      font-size:12px;
-      font-weight:850;
-      line-height:1.25;
-    }
-
-    .statBtn.green b{color:var(--green)}
-    .statBtn.orange b{color:var(--orange)}
-    .statBtn.red b{color:var(--red)}
-    .statBtn.blue b{color:var(--blue)}
-
-    .statBtn.active b,
-    .statBtn.active span{
+    .boardCard.active b,
+    .boardCard.active span{
       color:#fff;
     }
 
-    .activeFilterLine{
+    .boardCard span{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:1000;
+      line-height:1.2;
+    }
+
+    .boardCard.pending b{color:var(--orange)}
+    .boardCard.confirmed b{color:var(--blue)}
+    .boardCard.ready b{color:var(--green)}
+    .boardCard.cancelled b{color:var(--red)}
+    .boardCard.active b{color:#fff}
+
+    .boardFooter{
+      margin-top:11px;
       display:flex;
       align-items:center;
-      gap:8px;
+      justify-content:space-between;
+      gap:10px;
       flex-wrap:wrap;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
     }
 
     .filterPill{
       display:inline-flex;
       align-items:center;
-      gap:6px;
-      border:1px solid rgba(100,13,107,.20);
+      gap:7px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
       background:#fff7ff;
       color:var(--purple);
-      padding:7px 10px;
-      border-radius:999px;
-      font-weight:1000;
       font-size:12px;
+      font-weight:1000;
     }
 
     .searchRow{
-      display:grid;
-      grid-template-columns:minmax(260px,1fr) 160px 160px 160px 190px auto;
+      display:flex;
       gap:8px;
       margin-bottom:12px;
-      align-items:center;
+      flex-wrap:wrap;
     }
 
     .searchRow input,
@@ -430,25 +425,11 @@
       padding:0 13px;
       outline:none;
       box-shadow:0 8px 18px rgba(100,13,107,.035);
-      width:100%;
-      min-width:0;
     }
 
-    .reportGrid{
-      display:grid;
-      grid-template-columns:160px 160px 160px 160px 1fr;
-      gap:8px;
-      align-items:end;
-    }
-
-    .reportGrid .field{
-      margin-bottom:0;
-    }
-
-    .customDates{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
+    .searchRow input{
+      flex:1;
+      min-width:250px;
     }
 
     .list{
@@ -474,7 +455,7 @@
       opacity:0;
       pointer-events:none;
       z-index:200;
-      max-width:min(740px,calc(100% - 24px));
+      max-width:min(720px,calc(100% - 24px));
       background:var(--purple);
       color:#fff;
       border-radius:999px;
@@ -506,7 +487,7 @@
     .status.InProgress{color:#4a5fd0}
     .status.Ready,.status.ReadyForPickup,.status.OutForDelivery,.status.Completed{color:var(--green)}
     .status.Cancelled{color:var(--red)}
-    .status.Deleted{color:var(--red);background:rgba(180,35,24,.08);border-color:rgba(180,35,24,.18)}
+    .status.Deleted{color:var(--red)}
 
     .orderCard{
       border:1px solid var(--line);
@@ -516,13 +497,8 @@
       box-shadow:0 8px 18px rgba(100,13,107,.035);
     }
 
-    .orderCard.deleted{
-      border-color:rgba(180,35,24,.22);
-      background:rgba(180,35,24,.025);
-    }
-
     .orderTop{
-      padding:13px;
+      padding:12px 13px;
       display:flex;
       justify-content:space-between;
       gap:10px;
@@ -559,7 +535,7 @@
 
     .formGrid{
       display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
+      grid-template-columns:repeat(3,minmax(0,1fr));
       gap:10px;
     }
 
@@ -567,6 +543,30 @@
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:10px;
+    }
+
+    .sectionTitle{
+      color:var(--purple);
+      font-weight:1000;
+      margin:13px 0 8px;
+      font-size:13px;
+    }
+
+    .pillRow{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .pill{
+      padding:5px 7px;
+      border:1px solid var(--line);
+      background:#fff7ff;
+      color:var(--muted);
+      border-radius:999px;
+      font-size:10px;
+      font-weight:900;
     }
 
     .orderItems{
@@ -589,35 +589,42 @@
       color:var(--text);
     }
 
-    .sectionTitle{
-      color:var(--purple);
-      font-weight:1000;
-      margin:13px 0 8px;
-      font-size:13px;
+    .statusButtons{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:7px;
     }
 
-    .pillRow{
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      margin-top:8px;
-      align-items:center;
-    }
-
-    .pill{
-      padding:5px 7px;
+    .statusChoice{
+      min-height:40px;
+      border-radius:14px;
       border:1px solid var(--line);
-      background:#fff7ff;
-      color:var(--muted);
-      border-radius:999px;
-      font-size:10px;
-      font-weight:900;
+      background:#fff;
+      color:var(--purple);
+      font-size:12px;
+      font-weight:1000;
+      padding:8px;
+      transition:.16s ease;
     }
 
-    .pill.strong{
-      color:var(--purple);
-      border-color:rgba(100,13,107,.20);
-      background:rgba(100,13,107,.06);
+    .statusChoice:hover{
+      background:#fff7ff;
+      transform:translateY(-1px);
+    }
+
+    .statusChoice.active{
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      color:#fff;
+      border-color:rgba(100,13,107,.32);
+      box-shadow:0 12px 24px rgba(100,13,107,.16);
+    }
+
+    .actionStrip{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:12px;
     }
 
     .copyBox{
@@ -628,84 +635,6 @@
       padding:10px;
       font-size:12px;
       color:var(--muted);
-    }
-
-    .workflowButtons{
-      display:grid;
-      grid-template-columns:repeat(6,1fr);
-      gap:8px;
-    }
-
-    .workflowBtn{
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--purple);
-      border-radius:16px;
-      padding:11px 9px;
-      font-size:12px;
-      font-weight:1000;
-      transition:.18s ease;
-      min-height:44px;
-    }
-
-    .workflowBtn:hover{
-      transform:translateY(-1px);
-      background:#fff7ff;
-    }
-
-    .workflowBtn.active{
-      background:linear-gradient(135deg,var(--purple),var(--purple2));
-      color:#fff;
-      border-color:rgba(100,13,107,.36);
-      box-shadow:0 12px 24px rgba(100,13,107,.18);
-    }
-
-    .auditGrid{
-      display:grid;
-      grid-template-columns:repeat(5,minmax(0,1fr));
-      gap:8px;
-    }
-
-    .auditBox{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:16px;
-      padding:10px;
-      min-height:76px;
-    }
-
-    .auditBox b{
-      display:block;
-      color:var(--purple);
-      font-size:12px;
-      margin-bottom:5px;
-    }
-
-    .auditBox span{
-      display:block;
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.35;
-      overflow-wrap:anywhere;
-    }
-
-    .history{
-      display:grid;
-      gap:7px;
-    }
-
-    .historyItem{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:15px;
-      padding:9px;
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.45;
-    }
-
-    .historyItem b{
-      color:var(--text);
     }
 
     .dangerZone{
@@ -723,64 +652,90 @@
       margin-bottom:8px;
     }
 
-    .deletedBox{
-      border:1px solid rgba(180,35,24,.22);
+    .reportGrid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:10px;
+      align-items:end;
+    }
+
+    .reportActions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .reportSummary{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .reportBox{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:18px;
+      padding:13px;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
+    }
+
+    .reportBox b{
+      display:block;
+      color:var(--purple);
+      font-size:23px;
+      letter-spacing:-.05em;
+    }
+
+    .reportBox span{
+      display:block;
+      margin-top:6px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:850;
+    }
+
+    .deletedNotice{
+      border:1px solid rgba(180,35,24,.18);
       background:rgba(180,35,24,.06);
+      color:#7a271a;
       border-radius:18px;
       padding:12px;
-      color:#7a271a;
       font-size:12px;
-      line-height:1.45;
+      font-weight:850;
+      line-height:1.5;
       margin-bottom:12px;
     }
 
-    .deletedBox b{
+    .deletedBadge{
+      display:inline-flex;
+      padding:7px 9px;
+      border-radius:999px;
+      border:1px solid rgba(180,35,24,.18);
+      background:rgba(180,35,24,.07);
       color:var(--red);
+      font-size:11px;
+      font-weight:1000;
     }
 
-    .emptyExport{
-      border:1px dashed var(--line);
-      background:rgba(255,255,255,.65);
-      border-radius:18px;
-      padding:12px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
-    }
-
-    @media(max-width:1240px){
-      .gridStats{
-        grid-template-columns:repeat(4,1fr);
-      }
-
-      .searchRow{
-        grid-template-columns:1fr 1fr 1fr;
-      }
-
-      .reportGrid{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .formGrid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-
-      .workflowButtons{
-        grid-template-columns:repeat(3,1fr);
-      }
-
-      .auditGrid{
-        grid-template-columns:repeat(2,1fr);
-      }
+    @media(max-width:1180px){
+      .orderBoard{grid-template-columns:repeat(4,1fr)}
+      .reportGrid{grid-template-columns:repeat(2,1fr)}
+      .reportSummary{grid-template-columns:repeat(3,1fr)}
     }
 
     @media(max-width:920px){
+      .formGrid,
       .miniGrid{
         grid-template-columns:1fr;
       }
 
       .orderTop{
         flex-direction:column;
+      }
+
+      .statusButtons{
+        grid-template-columns:repeat(2,1fr);
       }
     }
 
@@ -792,6 +747,7 @@
       .nav{
         align-items:flex-start;
         flex-direction:column;
+        padding:10px 0;
       }
 
       .navActions{
@@ -799,34 +755,38 @@
         justify-content:flex-start;
       }
 
-      .gridStats{
+      .orderBoard{
         grid-template-columns:repeat(2,1fr);
       }
 
-      .searchRow,
+      .boardCard{
+        min-height:64px;
+        padding:10px;
+      }
+
+      .boardCard b{
+        font-size:22px;
+      }
+
+      .searchRow input{
+        min-width:100%;
+      }
+
       .reportGrid,
-      .formGrid,
-      .auditGrid{
+      .reportSummary{
         grid-template-columns:1fr;
-      }
-
-      .workflowButtons{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .brand h1{
-        max-width:250px;
       }
     }
   </style>
 </head>
 
 <body>
+
 <section id="loginScreen" class="loginScreen">
   <div class="loginCard">
     <div class="logo" style="margin-bottom:14px;">🍰</div>
     <h2>Order Manager Login</h2>
-    <p>Login to manage customer orders, change order status, message customers, print orders, export CSV and restore deleted orders.</p>
+    <p>Login to manage daily customer orders, update statuses, message customers, export reports and manage deleted orders.</p>
 
     <div class="field">
       <label>Email</label>
@@ -846,15 +806,18 @@
   <header class="topbar">
     <div class="wrap nav">
       <div class="brand">
-        <div id="adminLogo" class="logo">🍰</div>
+        <div id="managerLogo" class="logo">🍰</div>
         <div>
-          <h1 id="adminBrandTitle">Siffat Cakes Order Manager</h1>
+          <h1 id="managerTitle">Siffat Cakes Order Manager</h1>
           <p id="adminEmailText">Managing orders</p>
         </div>
       </div>
 
       <div class="navActions">
         <span class="btn green small">Connected</span>
+        <button class="btn small viewBtn active" id="viewBtn-orders" onclick="showView('orders')">Orders</button>
+        <button class="btn small viewBtn" id="viewBtn-reports" onclick="showView('reports')">Reports</button>
+        <button class="btn small viewBtn" id="viewBtn-deleted" onclick="showView('deleted')">Deleted</button>
         <a class="btn small" href="track.html" target="_blank">Track Page</a>
         <a class="btn small" href="index.html" target="_blank">View Site</a>
         <button class="btn small" onclick="loadAll()">Refresh</button>
@@ -864,157 +827,192 @@
   </header>
 
   <main class="wrap main">
-    <section class="card">
-      <div class="cardHead">
-        <div>
-          <h3>Order Board</h3>
-          <p>Restaurant-style order workflow. Click any box below to filter orders quickly.</p>
-        </div>
-        <div class="navActions">
+
+    <section id="ordersView" class="viewPanel active">
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Order Board</h3>
+            <p>Compact restaurant-style workflow. Click any box to filter orders quickly.</p>
+          </div>
           <button class="btn primary small" onclick="loadAll()">Refresh Orders</button>
         </div>
-      </div>
 
-      <div class="cardBody">
-        <div id="statsGrid" class="gridStats"></div>
+        <div class="cardBody">
+          <div id="orderBoard" class="orderBoard"></div>
 
-        <div class="activeFilterLine">
-          <span class="filterPill" id="activeBoardFilter">Filter: Active Orders</span>
-          <span>Use <b>Save Only</b> to update silently. Use <b>Save + WhatsApp</b> only when you want to notify the customer.</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="cardHead">
-        <div>
-          <h3>Reports / Print / CSV</h3>
-          <p>Export weekly, monthly, yearly or custom order data. Deleted orders are excluded unless selected.</p>
-        </div>
-        <div class="navActions">
-          <button class="btn orange small" onclick="purgeOldDeletedOrders()">Purge Deleted 30+ Days</button>
-        </div>
-      </div>
-
-      <div class="cardBody">
-        <div class="reportGrid">
-          <div class="field">
-            <label>Range</label>
-            <select id="reportRange" onchange="toggleReportCustomDates()">
-              <option value="today">Today</option>
-              <option value="week">This Week</option>
-              <option value="month" selected>This Month</option>
-              <option value="year">This Year</option>
-              <option value="all">All Time</option>
-              <option value="custom">Custom Dates</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Status</label>
-            <select id="reportStatus">
-              <option value="all">All Statuses</option>
-              <option value="Pending">Pending</option>
-              <option value="Confirmed">Confirmed</option>
-              <option value="InProgress">In Progress</option>
-              <option value="Ready">Ready / Delivery</option>
-              <option value="Completed">Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Deleted</label>
-            <select id="reportDeleted">
-              <option value="active">Active Only</option>
-              <option value="deleted">Deleted Only</option>
-              <option value="all">Active + Deleted</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Output</label>
-            <select id="reportOutputBasis">
-              <option value="created">Use Created Date</option>
-              <option value="needed">Use Needed Date</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Actions</label>
-            <div class="navActions" style="justify-content:flex-start;">
-              <button class="btn primary small" onclick="exportOrdersCsv()">Export CSV</button>
-              <button class="btn small" onclick="printReportSummary()">Print Summary</button>
-              <button class="btn small" onclick="printReportOrders()">Print Orders</button>
-            </div>
-          </div>
-
-          <div id="customReportDates" class="field full" style="display:none;">
-            <label>Custom Date Range</label>
-            <div class="customDates">
-              <input id="reportStartDate" type="date">
-              <input id="reportEndDate" type="date">
-            </div>
+          <div class="boardFooter">
+            <span class="filterPill" id="currentBoardFilter">Filter: Active Orders</span>
+            <p class="hint">Use <b>Save Only</b> to update silently. Use <b>Save + WhatsApp</b> only when you want to notify the customer.</p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="card">
-      <div class="cardHead">
-        <div>
-          <h3>Orders</h3>
-          <p>Compact cards for daily order management. Expand any order for full details, status, invoice and privacy tools.</p>
-        </div>
-        <div class="navActions">
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Orders</h3>
+            <p>Daily order management. Expand an order for full details, status, invoice and privacy tools.</p>
+          </div>
           <button class="btn small" onclick="clearBoardFilter()">Clear Board Filter</button>
-          <button class="btn primary small" onclick="loadAll()">Refresh Orders</button>
-        </div>
-      </div>
-
-      <div class="cardBody">
-        <div class="searchRow">
-          <input id="orderSearch" placeholder="Search name, phone, email, order ID, tracking code..." oninput="renderOrders()">
-
-          <select id="dateFilter" onchange="renderOrders()">
-            <option value="all">All Dates</option>
-            <option value="today">Needed Today</option>
-            <option value="tomorrow">Needed Tomorrow</option>
-            <option value="week">Needed This Week</option>
-            <option value="month">Needed This Month</option>
-            <option value="year">Needed This Year</option>
-          </select>
-
-          <select id="orderTypeFilter" onchange="renderOrders()">
-            <option value="all">Pickup + Delivery</option>
-            <option value="Pickup">Pickup</option>
-            <option value="Delivery">Delivery</option>
-          </select>
-
-          <select id="deletedFilter" onchange="renderOrders()">
-            <option value="active">Active Only</option>
-            <option value="deleted">Deleted Only</option>
-            <option value="all">Active + Deleted</option>
-          </select>
-
-          <select id="orderSort" onchange="renderOrders()">
-            <option value="needed_soon">Needed date soonest</option>
-            <option value="newest">Newest first</option>
-            <option value="oldest">Oldest first</option>
-            <option value="needed_late">Needed date latest</option>
-            <option value="status">Status A-Z</option>
-            <option value="total_high">Total high to low</option>
-            <option value="total_low">Total low to high</option>
-          </select>
-
-          <button class="btn small" onclick="resetSearchFilters()">Reset</button>
         </div>
 
-        <div id="ordersList" class="list">
-          <div class="loading">Loading orders...</div>
+        <div class="cardBody">
+          <div class="searchRow">
+            <input id="orderSearch" placeholder="Search name, phone, email, order ID, tracking code..." oninput="renderOrders()">
+
+            <select id="orderDateFilter" onchange="renderOrders()">
+              <option value="all">All Dates</option>
+              <option value="today">Needed Today</option>
+              <option value="tomorrow">Needed Tomorrow</option>
+              <option value="week">Needed This Week</option>
+              <option value="month">Needed This Month</option>
+            </select>
+
+            <select id="orderTypeFilter" onchange="renderOrders()">
+              <option value="all">Pickup + Delivery</option>
+              <option value="Pickup">Pickup</option>
+              <option value="Delivery">Delivery</option>
+            </select>
+
+            <select id="orderSort" onchange="renderOrders()">
+              <option value="needed_soon">Needed date soonest</option>
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="needed_late">Needed date latest</option>
+              <option value="status">Status A-Z</option>
+              <option value="total_high">Total high to low</option>
+              <option value="total_low">Total low to high</option>
+            </select>
+
+            <button class="btn small" onclick="resetOrderFilters()">Reset</button>
+          </div>
+
+          <div id="ordersList" class="list">
+            <div class="loading">Loading orders...</div>
+          </div>
         </div>
-      </div>
+      </section>
     </section>
+
+    <section id="reportsView" class="viewPanel">
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Reports / Print / CSV</h3>
+            <p>Export weekly, monthly, yearly or custom order data. Deleted orders are excluded unless selected.</p>
+          </div>
+          <button class="btn small" onclick="refreshReportPreview()">Refresh Preview</button>
+        </div>
+
+        <div class="cardBody">
+          <div class="reportGrid">
+            <div class="field">
+              <label>Range</label>
+              <select id="reportRange" onchange="toggleCustomReportDates(); refreshReportPreview();">
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month" selected>This Month</option>
+                <option value="year">This Year</option>
+                <option value="lifetime">Lifetime</option>
+                <option value="custom">Custom Dates</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Status</label>
+              <select id="reportStatus" onchange="refreshReportPreview()">
+                <option value="all">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="InProgress">In Progress</option>
+                <option value="Ready">Ready / Delivery</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Deleted</label>
+              <select id="reportDeleted" onchange="refreshReportPreview()">
+                <option value="active">Active Only</option>
+                <option value="include">Include Deleted</option>
+                <option value="deleted">Deleted Only</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Date Basis</label>
+              <select id="reportDateBasis" onchange="refreshReportPreview()">
+                <option value="created">Use Created Date</option>
+                <option value="needed">Use Needed Date</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Actions</label>
+              <div class="reportActions">
+                <button class="btn primary small" onclick="exportReportCSV()">Export CSV</button>
+                <button class="btn small" onclick="printReportSummary()">Print Summary</button>
+                <button class="btn small" onclick="printReportOrders()">Print Orders</button>
+              </div>
+            </div>
+
+            <div id="customDateFields" class="full" style="display:none;">
+              <div class="miniGrid">
+                <div class="field">
+                  <label>From</label>
+                  <input id="reportFrom" type="date" onchange="refreshReportPreview()">
+                </div>
+
+                <div class="field">
+                  <label>To</label>
+                  <input id="reportTo" type="date" onchange="refreshReportPreview()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="reportSummary" class="reportSummary"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="deletedView" class="viewPanel">
+      <section class="card">
+        <div class="cardHead">
+          <div>
+            <h3>Deleted Orders</h3>
+            <p>Deleted orders stay here for 30 days. Restore if deleted by mistake, or permanently delete after 30 days.</p>
+          </div>
+
+          <div class="navActions">
+            <button class="btn orange small" onclick="purgeOldDeletedOrders()">Purge Deleted 30+ Days</button>
+            <button class="btn small" onclick="loadAll()">Refresh Deleted</button>
+          </div>
+        </div>
+
+        <div class="cardBody">
+          <div class="deletedNotice">
+            Deleted orders should stay here for 30 days for safety. Each deleted order shows who deleted it, when it was deleted, and how many days are left before permanent deletion.
+          </div>
+
+          <div class="searchRow">
+            <input id="deletedSearch" placeholder="Search deleted orders..." oninput="renderDeletedOrders()">
+            <select id="deletedSort" onchange="renderDeletedOrders()">
+              <option value="newest_deleted">Newest deleted first</option>
+              <option value="oldest_deleted">Oldest deleted first</option>
+              <option value="days_left">Days left lowest first</option>
+            </select>
+          </div>
+
+          <div id="deletedOrdersList" class="list">
+            <div class="loading">Loading deleted orders...</div>
+          </div>
+        </div>
+      </section>
+    </section>
+
   </main>
 </div>
 
@@ -1041,29 +1039,15 @@
     { value:"Cancelled", label:"Cancelled" }
   ];
 
-  const BOARD_FILTER_LABELS = {
-    active:"Active Orders",
-    pending:"Pending",
-    confirmed:"Confirmed",
-    inprogress:"In Progress",
-    ready:"Ready / Delivery",
-    completed:"Completed",
-    cancelled:"Cancelled",
-    today:"Needed Today",
-    tomorrow:"Needed Tomorrow",
-    week:"This Week Active",
-    quote:"Quote Orders",
-    all:"All Orders"
-  };
-
   const $ = id => document.getElementById(id);
 
   let currentUser = null;
+  let authOpening = false;
+
   let orders = [];
   let orderItems = [];
-  let activityLogs = [];
   let boardFilter = "active";
-  let openingAdmin = false;
+  let currentView = "orders";
 
   let siteSettings = {
     brand_name:"Siffat Cakes",
@@ -1081,35 +1065,24 @@
   initAuth();
 
   async function initAuth(){
-    try{
-      const { data } = await supabaseClient.auth.getSession();
+    const { data } = await supabaseClient.auth.getSession();
 
-      if(data.session?.user){
-        currentUser = data.session.user;
-        await verifyAndOpen();
-      }else{
-        showLogin();
-      }
-
-      supabaseClient.auth.onAuthStateChange(async (_event, session) => {
-        if(session?.user){
-          currentUser = session.user;
-          await verifyAndOpen();
-        }else{
-          currentUser = null;
-          showLogin();
-        }
-      });
-
-      window.addEventListener("focus", () => {
-        if($("app").classList.contains("show")){
-          loadAll(false);
-        }
-      });
-    }catch(err){
-      console.error(err);
+    if(data.session?.user){
+      currentUser = data.session.user;
+      await verifyAndOpen();
+    }else{
       showLogin();
     }
+
+    supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+      if(session?.user){
+        currentUser = session.user;
+        await verifyAndOpen();
+      }else{
+        currentUser = null;
+        showLogin();
+      }
+    });
   }
 
   async function loginAdmin(){
@@ -1142,8 +1115,8 @@
   }
 
   async function verifyAndOpen(){
-    if(openingAdmin) return;
-    openingAdmin = true;
+    if(authOpening) return;
+    authOpening = true;
 
     try{
       const { data, error } = await supabaseClient.rpc("is_admin");
@@ -1151,6 +1124,7 @@
       if(error || data !== true){
         await supabaseClient.auth.signOut();
         showToast("This user is not added as admin.", true);
+        showLogin();
         return;
       }
 
@@ -1164,7 +1138,7 @@
       showToast(err.message || "Admin verification failed.", true);
       showLogin();
     }finally{
-      openingAdmin = false;
+      authOpening = false;
     }
   }
 
@@ -1172,22 +1146,19 @@
     try{
       if(showMessage) showToast("Loading orders...");
 
-      const [settingsRes, ordersRes, itemsRes, logsRes] = await Promise.all([
+      const [settingsRes, ordersRes, itemsRes] = await Promise.all([
         supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
         supabaseClient.from("orders").select("*").order("created_at", { ascending:false }),
-        supabaseClient.from("order_items").select("*").order("created_at", { ascending:true }),
-        supabaseClient.from("order_activity_log").select("*").order("created_at", { ascending:false })
+        supabaseClient.from("order_items").select("*").order("created_at", { ascending:true })
       ]);
 
       if(settingsRes.error) console.warn(settingsRes.error.message);
       if(ordersRes.error) throw ordersRes.error;
       if(itemsRes.error) throw itemsRes.error;
-      if(logsRes.error) console.warn("Activity log load issue:", logsRes.error.message);
 
       siteSettings = {...siteSettings, ...(settingsRes.data || {})};
       orders = ordersRes.data || [];
       orderItems = itemsRes.data || [];
-      activityLogs = logsRes.error ? [] : (logsRes.data || []);
 
       applyBranding();
       renderAll();
@@ -1201,226 +1172,247 @@
 
   function applyBranding(){
     const brand = siteSettings.brand_name || "Siffat Cakes";
-    $("adminBrandTitle").textContent = brand + " Order Manager";
+    const logo = siteSettings.logo_url || "";
 
-    if(siteSettings.logo_url){
-      $("adminLogo").innerHTML = `<img src="${escapeHtml(cacheBustImage(siteSettings.logo_url))}" alt="${escapeHtml(brand)}" onerror="this.parentElement.textContent='🍰'">`;
+    $("managerTitle").textContent = brand + " Order Manager";
+
+    if(logo){
+      $("managerLogo").innerHTML = `<img src="${escapeHtml(cacheBustImage(logo))}" alt="${escapeHtml(brand)}" onerror="this.parentElement.textContent='🍰'">`;
     }else{
-      $("adminLogo").textContent = "🍰";
+      $("managerLogo").textContent = "🍰";
     }
   }
 
   function renderAll(){
-    renderStats();
+    renderOrderBoard();
     renderOrders();
+    refreshReportPreview();
+    renderDeletedOrders();
   }
 
-  function renderStats(){
-    const activeOrders = orders.filter(o => !isDeleted(o));
-    const allOrders = orders;
-    const today = getDateKey(new Date());
-    const tomorrow = getDateKey(addDays(new Date(), 1));
+  function showView(view){
+    currentView = view;
 
-    const stats = [
-      { key:"pending", label:"Pending", count:countStatus(activeOrders,"Pending"), tone:"orange" },
-      { key:"confirmed", label:"Confirmed", count:countStatus(activeOrders,"Confirmed"), tone:"blue" },
-      { key:"inprogress", label:"In Progress", count:countStatus(activeOrders,"InProgress"), tone:"" },
-      { key:"ready", label:"Ready / Delivery", count:countStatus(activeOrders,"Ready"), tone:"green" },
-      { key:"completed", label:"Completed", count:countStatus(activeOrders,"Completed"), tone:"green" },
-      { key:"cancelled", label:"Cancelled", count:countStatus(activeOrders,"Cancelled"), tone:"red" },
-      { key:"today", label:"Needed Today", count:activeOrders.filter(o => o.needed_date === today).length, tone:"orange" },
-      { key:"tomorrow", label:"Needed Tomorrow", count:activeOrders.filter(o => o.needed_date === tomorrow).length, tone:"blue" },
-      { key:"week", label:"This Week Active", count:activeOrders.filter(o => isThisWeek(o.needed_date) && !isFinalStatus(o.status)).length, tone:"" },
-      { key:"quote", label:"Quote Orders", count:activeOrders.filter(o => isQuoteOrder(o)).length, tone:"orange" },
-      { key:"active", label:"Total Active", count:activeOrders.length, tone:"green" },
-      { key:"all", label:"All Orders", count:allOrders.length, tone:"" }
+    document.querySelectorAll(".viewPanel").forEach(panel => panel.classList.remove("active"));
+    document.querySelectorAll(".viewBtn").forEach(btn => btn.classList.remove("active"));
+
+    $(view + "View").classList.add("active");
+    $("viewBtn-" + view).classList.add("active");
+
+    if(view === "orders") renderOrders();
+    if(view === "reports") refreshReportPreview();
+    if(view === "deleted") renderDeletedOrders();
+  }
+
+  function renderOrderBoard(){
+    const activeOrders = orders.filter(order => !isDeletedOrder(order));
+    const workflowOrders = activeOrders.filter(order => isWorkflowActive(order));
+
+    const boardItems = [
+      { key:"pending", label:"Pending", value:countStatus(activeOrders,"Pending"), cls:"pending" },
+      { key:"confirmed", label:"Confirmed", value:countStatus(activeOrders,"Confirmed"), cls:"confirmed" },
+      { key:"inprogress", label:"In Progress", value:countStatus(activeOrders,"InProgress"), cls:"" },
+      { key:"ready", label:"Ready / Delivery", value:countStatus(activeOrders,"Ready"), cls:"ready" },
+      { key:"completed", label:"Completed", value:countStatus(activeOrders,"Completed"), cls:"ready" },
+      { key:"cancelled", label:"Cancelled", value:countStatus(activeOrders,"Cancelled"), cls:"cancelled" },
+      { key:"today", label:"Needed Today", value:activeOrders.filter(isNeededToday).length, cls:"cancelled" },
+      { key:"tomorrow", label:"Needed Tomorrow", value:activeOrders.filter(isNeededTomorrow).length, cls:"confirmed" },
+      { key:"week", label:"This Week Active", value:workflowOrders.filter(isNeededThisWeek).length, cls:"" },
+      { key:"quote", label:"Quote Orders", value:activeOrders.filter(isQuoteOrder).length, cls:"pending" },
+      { key:"active", label:"Total Active", value:workflowOrders.length, cls:"ready" },
+      { key:"all", label:"All Orders", value:activeOrders.length, cls:"" }
     ];
 
-    $("statsGrid").innerHTML = stats.map(stat => `
-      <button class="statBtn ${stat.tone} ${boardFilter === stat.key ? "active" : ""}" onclick="setBoardFilter('${stat.key}')">
-        <b>${escapeHtml(stat.count)}</b>
-        <span>${escapeHtml(stat.label)}</span>
+    $("orderBoard").innerHTML = boardItems.map(item => `
+      <button class="boardCard ${item.cls || ""} ${boardFilter === item.key ? "active" : ""}" onclick="setBoardFilter('${item.key}')">
+        <b>${item.value}</b>
+        <span>${escapeHtml(item.label)}</span>
       </button>
     `).join("");
 
-    $("activeBoardFilter").textContent = "Filter: " + (BOARD_FILTER_LABELS[boardFilter] || "Active Orders");
+    $("currentBoardFilter").textContent = "Filter: " + getBoardFilterLabel(boardFilter);
   }
 
   function setBoardFilter(filter){
-    boardFilter = filter || "active";
-
-    if(filter === "all"){
-      $("deletedFilter").value = "all";
-    }else if(filter === "cancelled"){
-      $("deletedFilter").value = "active";
-    }else{
-      $("deletedFilter").value = "active";
-    }
-
-    renderStats();
+    boardFilter = filter;
+    renderOrderBoard();
     renderOrders();
   }
 
   function clearBoardFilter(){
     boardFilter = "active";
-    renderStats();
+    renderOrderBoard();
     renderOrders();
   }
 
-  function resetSearchFilters(){
+  function resetOrderFilters(){
     $("orderSearch").value = "";
-    $("dateFilter").value = "all";
+    $("orderDateFilter").value = "all";
     $("orderTypeFilter").value = "all";
-    $("deletedFilter").value = "active";
     $("orderSort").value = "needed_soon";
     boardFilter = "active";
-    renderAll();
+    renderOrderBoard();
+    renderOrders();
+  }
+
+  function getBoardFilterLabel(filter){
+    const labels = {
+      pending:"Pending",
+      confirmed:"Confirmed",
+      inprogress:"In Progress",
+      ready:"Ready / Delivery",
+      completed:"Completed",
+      cancelled:"Cancelled",
+      today:"Needed Today",
+      tomorrow:"Needed Tomorrow",
+      week:"This Week Active",
+      quote:"Quote Orders",
+      active:"Active Orders",
+      all:"All Orders"
+    };
+
+    return labels[filter] || "Active Orders";
   }
 
   function renderOrders(){
     const box = $("ordersList");
-    let rows = getFilteredOrders();
+    const search = ($("orderSearch")?.value || "").trim().toLowerCase();
+    const dateFilter = $("orderDateFilter")?.value || "all";
+    const typeFilter = $("orderTypeFilter")?.value || "all";
+    const sort = $("orderSort")?.value || "needed_soon";
+
+    let rows = orders.filter(order => !isDeletedOrder(order));
+
+    rows = applyBoardFilter(rows, boardFilter);
+
+    if(dateFilter === "today") rows = rows.filter(isNeededToday);
+    if(dateFilter === "tomorrow") rows = rows.filter(isNeededTomorrow);
+    if(dateFilter === "week") rows = rows.filter(isNeededThisWeek);
+    if(dateFilter === "month") rows = rows.filter(isNeededThisMonth);
+
+    if(typeFilter !== "all"){
+      rows = rows.filter(order => String(order.delivery_type || "").toLowerCase() === typeFilter.toLowerCase());
+    }
+
+    if(search){
+      rows = rows.filter(order => {
+        const combined = [
+          order.id,
+          getTrackingCode(order),
+          order.customer_name,
+          order.customer_phone,
+          order.customer_email,
+          order.needed_date,
+          order.status,
+          order.delivery_type
+        ].join(" ").toLowerCase();
+
+        return combined.includes(search);
+      });
+    }
+
+    rows.sort((a,b) => sortOrders(a,b,sort));
 
     if(!rows.length){
-      box.innerHTML = `<div class="loading">No orders found.</div>`;
+      box.innerHTML = `<div class="loading">No orders found for this filter.</div>`;
       return;
     }
 
     box.innerHTML = rows.map(renderOrderRow).join("");
   }
 
-  function getFilteredOrders(){
-    const search = ($("orderSearch")?.value || "").trim().toLowerCase();
-    const dateFilter = $("dateFilter")?.value || "all";
-    const typeFilter = $("orderTypeFilter")?.value || "all";
-    const deletedFilter = $("deletedFilter")?.value || "active";
-    const sort = $("orderSort")?.value || "needed_soon";
-
-    let rows = [...orders];
-
-    if(deletedFilter === "active") rows = rows.filter(o => !isDeleted(o));
-    if(deletedFilter === "deleted") rows = rows.filter(o => isDeleted(o));
-
-    rows = applyBoardFilter(rows, boardFilter);
-
-    if(typeFilter !== "all"){
-      rows = rows.filter(o => String(o.delivery_type || "").toLowerCase() === typeFilter.toLowerCase());
-    }
-
-    if(dateFilter !== "all"){
-      rows = rows.filter(o => dateMatches(o.needed_date, dateFilter));
-    }
-
-    if(search){
-      rows = rows.filter(o => {
-        const text = [
-          o.id,
-          getTrackingCode(o),
-          o.customer_name,
-          o.customer_phone,
-          o.customer_email,
-          o.needed_date,
-          o.status,
-          o.delivery_type,
-          o.last_updated_by_email,
-          o.confirmed_by_email,
-          o.prepared_by_email,
-          o.ready_by_email,
-          o.completed_by_email,
-          o.cancelled_by_email
-        ].join(" ").toLowerCase();
-
-        return text.includes(search);
-      });
-    }
-
-    rows.sort((a,b)=>sortOrders(a,b,sort));
-    return rows;
-  }
-
   function applyBoardFilter(rows, filter){
-    if(!filter || filter === "active"){
-      return rows.filter(o => !isDeleted(o));
-    }
+    if(filter === "all") return rows;
 
-    if(filter === "all"){
-      return rows;
-    }
+    if(filter === "active") return rows.filter(isWorkflowActive);
+    if(filter === "pending") return rows.filter(order => sameStatus(order.status,"Pending"));
+    if(filter === "confirmed") return rows.filter(order => sameStatus(order.status,"Confirmed"));
+    if(filter === "inprogress") return rows.filter(order => sameStatus(order.status,"InProgress"));
+    if(filter === "ready") return rows.filter(order => sameStatus(order.status,"Ready"));
+    if(filter === "completed") return rows.filter(order => sameStatus(order.status,"Completed"));
+    if(filter === "cancelled") return rows.filter(order => sameStatus(order.status,"Cancelled"));
+    if(filter === "today") return rows.filter(isNeededToday);
+    if(filter === "tomorrow") return rows.filter(isNeededTomorrow);
+    if(filter === "week") return rows.filter(order => isWorkflowActive(order) && isNeededThisWeek(order));
+    if(filter === "quote") return rows.filter(isQuoteOrder);
 
-    if(filter === "pending") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "pending");
-    if(filter === "confirmed") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "confirmed");
-    if(filter === "inprogress") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "inprogress");
-    if(filter === "ready") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "ready");
-    if(filter === "completed") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "completed");
-    if(filter === "cancelled") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "cancelled");
-    if(filter === "today") return rows.filter(o => !isDeleted(o) && o.needed_date === getDateKey(new Date()));
-    if(filter === "tomorrow") return rows.filter(o => !isDeleted(o) && o.needed_date === getDateKey(addDays(new Date(),1)));
-    if(filter === "week") return rows.filter(o => !isDeleted(o) && isThisWeek(o.needed_date) && !isFinalStatus(o.status));
-    if(filter === "quote") return rows.filter(o => !isDeleted(o) && isQuoteOrder(o));
-
-    return rows;
+    return rows.filter(isWorkflowActive);
   }
 
   function renderOrderRow(order){
     const id = String(order.id);
     const items = orderItems.filter(item => String(item.order_id) === id);
-    const logs = activityLogs.filter(log => String(log.order_id) === id);
     const shortId = id.slice(0,8).toUpperCase();
     const trackingCode = getTrackingCode(order);
     const hasQuote = isQuoteOrder(order);
-    const deleted = isDeleted(order);
-    const customerDeleted = truthy(order.customer_data_deleted);
-    const dbStatus = toDbStatus(order.status || "Pending");
-    const statusClass = deleted ? "Deleted" : escapeClass(dbStatus);
+    const safeStatus = toDbStatus(order.status || "Pending");
+    const statusClass = escapeClass(safeStatus);
     const trackLink = getTrackLink(trackingCode);
-    const deletedInfo = getDeletedInfo(order);
+    const adminTrail = getAdminTrail(order);
 
     return `
-      <div class="orderCard ${deleted ? "deleted" : ""}" id="order-${escapeAttr(id)}">
+      <div class="orderCard" id="order-${escapeAttr(id)}">
         <div class="orderTop" onclick="toggleOrder('${escapeJs(id)}')">
           <div>
-            <h4>
-              ${customerDeleted ? "Deleted Customer" : escapeHtml(order.customer_name || "Customer")}
-              · ${hasQuote ? "Quote" : money(order.estimated_total)}
-              ${deleted ? " · Deleted" : ""}
-            </h4>
-
+            <h4>${escapeHtml(order.customer_name || "Customer")} · ${hasQuote ? "Quote" : money(order.estimated_total)}</h4>
             <p>
-              ${customerDeleted ? "Customer data removed" : `${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}`}<br>
+              ${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}<br>
               Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
               Order ID: ${escapeHtml(shortId)} · Tracking: ${escapeHtml(trackingCode)}
-              ${order.last_updated_by_email ? `<br>Last updated by: ${escapeHtml(order.last_updated_by_email)} ${order.last_updated_at ? "· " + escapeHtml(formatDateTime(order.last_updated_at)) : ""}` : ""}
             </p>
 
             <div class="pillRow">
               <span class="pill">${items.length} item(s)</span>
               <span class="pill">${escapeHtml(order.delivery_type || "No type")}</span>
-              <span class="pill">Created ${formatDateTime(order.created_at)}</span>
-              ${hasQuote ? `<span class="pill strong">Quote Required</span>` : ""}
-              ${deleted ? `<span class="pill strong">Deleted ${deletedInfo.daysText}</span>` : ""}
+              <span class="pill">Created: ${formatDateTime(order.created_at)}</span>
+              ${adminTrail ? `<span class="pill">${escapeHtml(adminTrail)}</span>` : ""}
             </div>
           </div>
 
           <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;" onclick="event.stopPropagation()">
-            <span class="status ${statusClass}">${deleted ? "Deleted" : escapeHtml(formatStatusLabel(order.status || "Pending"))}</span>
+            <span class="status ${statusClass}">${escapeHtml(formatStatusLabel(order.status || "Pending"))}</span>
             <button class="btn small" onclick="toggleOrder('${escapeJs(id)}')">Details</button>
           </div>
         </div>
 
         <div class="orderBody">
-          ${deleted ? renderDeletedNotice(order) : ""}
+          <div class="sectionTitle">Quick Status</div>
+          <input type="hidden" id="status-${escapeAttr(id)}" value="${escapeHtml(safeStatus)}">
 
-          <div class="sectionTitle">Fast Status Buttons</div>
-          <div class="workflowButtons" id="workflow-${escapeAttr(id)}">
-            ${ORDER_STATUSES.map(s => `
-              <button class="workflowBtn ${normalizeStatus(dbStatus) === normalizeStatus(s.value) ? "active" : ""}" onclick="selectStatus('${escapeJs(id)}','${escapeJs(s.value)}')">
-                ${escapeHtml(s.label)}
+          <div class="statusButtons" id="statusButtons-${escapeAttr(id)}">
+            ${ORDER_STATUSES.map(status => `
+              <button
+                class="statusChoice ${sameStatus(safeStatus,status.value) ? "active" : ""}"
+                onclick="pickStatus('${escapeJs(id)}','${escapeJs(status.value)}')">
+                ${escapeHtml(status.label)}
               </button>
             `).join("")}
           </div>
 
-          <div class="sectionTitle">Save / Notify</div>
-          <div class="pillRow">
+          <div class="formGrid" style="margin-top:12px;">
+            <div class="field">
+              <label>Tracking Code</label>
+              <input id="tracking-${escapeAttr(id)}" value="${escapeHtml(trackingCode)}">
+            </div>
+
+            <div class="field">
+              <label>Estimated / Final Total</label>
+              <input id="total-${escapeAttr(id)}" type="number" step="0.01" value="${Number(order.estimated_total || 0)}">
+            </div>
+
+            <div class="field">
+              <label>Prepared / Updated By</label>
+              <input readonly value="${escapeHtml(getAdminTrail(order) || currentUser?.email || "Admin")}">
+            </div>
+
+            <div class="field full">
+              <label>Admin Note / History</label>
+              <textarea id="note-${escapeAttr(id)}" placeholder="Private admin note...">${escapeHtml(order.admin_note || "")}</textarea>
+              <div class="hint">When you save, your admin email is added into this note/history for tracking.</div>
+            </div>
+          </div>
+
+          <div class="actionStrip">
             <button class="btn primary small" onclick="saveOrderChanges('${escapeJs(id)}', false)">Save Only</button>
             <button class="btn green small" onclick="saveOrderChanges('${escapeJs(id)}', true)">Save + WhatsApp</button>
             <button class="btn small" onclick="whatsappCustomer('${escapeJs(id)}')">WhatsApp Customer</button>
@@ -1428,51 +1420,23 @@
             <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print Order</button>
           </div>
 
-          <div class="sectionTitle">Order Controls</div>
-          <div class="formGrid">
-            <div class="field">
-              <label>Status</label>
-              <select id="status-${escapeAttr(id)}" onchange="updateWorkflowHighlight('${escapeJs(id)}')">
-                ${ORDER_STATUSES.map(s => `<option value="${escapeHtml(s.value)}" ${normalizeStatus(order.status)===normalizeStatus(s.value)?"selected":""}>${escapeHtml(s.label)}</option>`).join("")}
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Tracking Code</label>
-              <input id="tracking-${escapeAttr(id)}" value="${escapeHtml(trackingCode)}">
-            </div>
-
-            <div class="field">
-              <label>Estimated Total</label>
-              <input id="total-${escapeAttr(id)}" type="number" step="0.01" value="${Number(order.estimated_total || 0)}">
-            </div>
-
-            <div class="field">
-              <label>Order Type</label>
-              <input value="${escapeHtml(order.delivery_type || "")}" readonly>
-            </div>
-
-            <div class="field full">
-              <label>Admin Note</label>
-              <textarea id="note-${escapeAttr(id)}" placeholder="Private admin note...">${escapeHtml(order.admin_note || "")}</textarea>
-            </div>
-          </div>
-
           <div class="miniGrid">
             <div>
               <div class="sectionTitle">Customer</div>
               <div class="orderItem">
-                <b>Name:</b> ${customerDeleted ? "Deleted Customer" : escapeHtml(order.customer_name || "")}<br>
-                <b>Phone:</b> ${customerDeleted ? "Removed" : escapeHtml(order.customer_phone || "")}<br>
-                <b>Email:</b> ${customerDeleted ? "Removed" : escapeHtml(order.customer_email || "")}<br>
-                <b>Address:</b> ${customerDeleted ? "Removed" : escapeHtml(buildAddress(order) || "No address")}<br>
-                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}
+                <b>Name:</b> ${escapeHtml(order.customer_name || "")}<br>
+                <b>Phone:</b> ${escapeHtml(order.customer_phone || "")}<br>
+                <b>Email:</b> ${escapeHtml(order.customer_email || "")}<br>
+                <b>Delivery Type:</b> ${escapeHtml(order.delivery_type || "")}<br>
+                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
+                <b>Order Note:</b> ${escapeHtml(order.order_note || "")}
               </div>
             </div>
 
             <div>
               <div class="sectionTitle">Tracking Link</div>
               <input class="copyBox" id="tracklink-${escapeAttr(id)}" readonly value="${escapeHtml(trackLink)}">
+
               <div class="pillRow">
                 <button class="btn small" onclick="copyField('tracklink-${escapeJs(id)}')">Copy Link</button>
                 <a class="btn small" href="${escapeHtml(trackLink)}" target="_blank">Open Track</a>
@@ -1480,87 +1444,36 @@
             </div>
           </div>
 
-          <div class="sectionTitle">Admin Responsibility / History</div>
-          <div class="auditGrid">
-            ${renderAuditBox("Confirmed", order.confirmed_by_email, order.confirmed_at)}
-            ${renderAuditBox("Prepared", order.prepared_by_email, order.prepared_at)}
-            ${renderAuditBox("Ready", order.ready_by_email, order.ready_at)}
-            ${renderAuditBox("Completed", order.completed_by_email, order.completed_at)}
-            ${renderAuditBox("Cancelled", order.cancelled_by_email, order.cancelled_at)}
-          </div>
-
           <div class="sectionTitle">Items</div>
           <div class="orderItems">
             ${items.length ? items.map(renderOrderItem).join("") : `<div class="loading">No items found for this order.</div>`}
           </div>
 
-          <div class="sectionTitle">Activity Log</div>
-          <div class="history">
-            ${logs.length ? logs.slice(0,12).map(renderHistoryItem).join("") : `<div class="historyItem">No activity log yet. New saves will appear here.</div>`}
-          </div>
-
           <div class="dangerZone">
-            <b>Deleted / Privacy Tools</b>
+            <b>Delete Tools</b>
             <div class="pillRow">
-              ${deleted
-                ? `
-                  <button class="btn green small" onclick="restoreDeletedOrder('${escapeJs(id)}')">Restore Order</button>
-                  <button class="btn red small" ${deletedInfo.canDelete ? "" : "disabled"} onclick="permanentDeleteOrder('${escapeJs(id)}')">Permanent Delete</button>
-                `
-                : `
-                  <button class="btn orange small" onclick="softDeleteOrder('${escapeJs(id)}')">Move to Deleted 30 Days</button>
-                  <button class="btn red small" onclick="anonymizeOrder('${escapeJs(id)}')">Delete Customer Data</button>
-                `
-              }
+              <button class="btn red small" onclick="moveOrderToDeleted('${escapeJs(id)}')">Move to Deleted</button>
             </div>
-            <p class="hint" style="margin-top:8px;">
-              Deleted orders stay recoverable for 30 days. Permanent delete is only available after the recovery period.
-            </p>
+            <p class="hint" style="margin-top:8px;">Deleted orders move to the Deleted section and can be restored within 30 days.</p>
           </div>
         </div>
       </div>
     `;
   }
 
-  function renderDeletedNotice(order){
-    const info = getDeletedInfo(order);
+  function pickStatus(id,status){
+    const input = $("status-" + id);
+    if(input) input.value = toDbStatus(status);
 
-    return `
-      <div class="deletedBox">
-        <b>This order is in Deleted.</b><br>
-        Deleted by: ${escapeHtml(order.deleted_by_email || "Unknown admin")}<br>
-        Deleted at: ${escapeHtml(formatDateTime(order.deleted_at))}<br>
-        Permanent delete available: ${escapeHtml(formatDateTime(order.deleted_until || ""))}<br>
-        ${info.canDelete ? "This order can now be permanently deleted." : `Recovery time left: ${escapeHtml(info.daysText)}.`}
-      </div>
-    `;
-  }
+    const container = $("statusButtons-" + id);
+    if(!container) return;
 
-  function renderAuditBox(label, email, date){
-    return `
-      <div class="auditBox">
-        <b>${escapeHtml(label)}</b>
-        <span>${email ? escapeHtml(email) : "Not recorded yet"}</span>
-        <span>${date ? escapeHtml(formatDateTime(date)) : ""}</span>
-      </div>
-    `;
-  }
+    Array.from(container.querySelectorAll(".statusChoice")).forEach(btn => btn.classList.remove("active"));
 
-  function renderHistoryItem(log){
-    const oldStatus = log.old_status ? formatStatusLabel(log.old_status) : "";
-    const newStatus = log.new_status ? formatStatusLabel(log.new_status) : "";
-    const statusText = oldStatus && newStatus && oldStatus !== newStatus
-      ? `${oldStatus} → ${newStatus}`
-      : newStatus || oldStatus || "";
+    const buttons = Array.from(container.querySelectorAll(".statusChoice"));
+    const target = buttons.find(btn => normalizeStatus(btn.textContent) === normalizeStatus(formatStatusLabel(status)));
 
-    return `
-      <div class="historyItem">
-        <b>${escapeHtml(toTitle(log.action_type || "Update"))}${statusText ? " · " + escapeHtml(statusText) : ""}</b><br>
-        ${log.admin_email ? `Admin: ${escapeHtml(log.admin_email)}<br>` : ""}
-        ${log.note ? `Note: ${escapeHtml(log.note)}<br>` : ""}
-        ${log.created_at ? escapeHtml(formatDateTime(log.created_at)) : ""}
-      </div>
-    `;
+    if(target) target.classList.add("active");
   }
 
   function renderOrderItem(item){
@@ -1597,249 +1510,835 @@
     `;
   }
 
-  function selectStatus(id, status){
-    const select = $("status-" + id);
-    if(!select) return;
-
-    select.value = toDbStatus(status);
-    updateWorkflowHighlight(id);
-  }
-
-  function updateWorkflowHighlight(id){
-    const select = $("status-" + id);
-    const wrap = $("workflow-" + id);
-    if(!select || !wrap) return;
-
-    const selected = normalizeStatus(select.value);
-    wrap.querySelectorAll(".workflowBtn").forEach(btn => {
-      const txt = normalizeStatus(btn.textContent);
-      const isActive =
-        (selected === "pending" && txt.includes("pending")) ||
-        (selected === "confirmed" && txt.includes("confirmed")) ||
-        (selected === "inprogress" && txt.includes("progress")) ||
-        (selected === "ready" && txt.includes("ready")) ||
-        (selected === "completed" && txt.includes("completed")) ||
-        (selected === "cancelled" && txt.includes("cancelled"));
-
-      btn.classList.toggle("active", isActive);
-    });
-  }
-
-  async function saveOrderChanges(id, notifyCustomer){
+  async function saveOrderChanges(id, notifyCustomer = false){
     const order = orders.find(o => String(o.id) === String(id));
     if(!order) return showToast("Order not found.", true);
 
     const status = toDbStatus($("status-" + id).value);
-    const admin_note = $("note-" + id).value.trim();
     const tracking_code = ($("tracking-" + id).value || "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
     const estimated_total = Number($("total-" + id)?.value || 0);
-    const phone = normalizePhone(order.customer_phone || "");
+    const oldNote = $("note-" + id).value.trim();
 
-    let whatsappTab = null;
+    const adminEmail = currentUser?.email || "Unknown admin";
+    const auditLine = `[${new Date().toLocaleString()}] ${adminEmail}: set status to ${formatStatusLabel(status)}${notifyCustomer ? " + WhatsApp notification" : " · saved only"}.`;
+
+    const admin_note = oldNote
+      ? oldNote + "\n" + auditLine
+      : auditLine;
+
+    showToast(notifyCustomer ? "Saving and preparing WhatsApp..." : "Saving order update...");
+
+    const result = await updateOrderSmart(id, {
+      status,
+      tracking_code,
+      estimated_total,
+      admin_note,
+      adminEmail
+    });
+
+    if(result.error){
+      showToast(result.error.message || "Order update failed.", true);
+      return;
+    }
+
+    await loadAll(false);
 
     if(notifyCustomer){
-      if(!phone){
-        showToast("Customer phone number is missing. Use Save Only.", true);
-        return;
-      }
-
-      whatsappTab = window.open("about:blank", "_blank");
-
-      if(whatsappTab){
-        whatsappTab.document.write(`<html><body style="font-family:Arial;padding:24px;color:#640D6B;"><h3>Preparing WhatsApp...</h3><p>Saving order first.</p></body></html>`);
-        whatsappTab.document.close();
-      }
+      sendCustomerStatusWhatsApp(order, status, tracking_code);
     }
 
-    try{
-      showToast(notifyCustomer ? "Saving and preparing WhatsApp..." : "Saving order update...");
-
-      const { data, error } = await supabaseClient.rpc("admin_update_order_v2", {
-        p_order_id:id,
-        p_status:status,
-        p_admin_note:admin_note,
-        p_tracking_code:tracking_code,
-        p_estimated_total:estimated_total,
-        p_action_note: notifyCustomer ? "Saved with WhatsApp notification." : "Saved only."
-      });
-
-      if(error) throw error;
-
-      if(notifyCustomer){
-        const updatedOrder = {
-          ...order,
-          status,
-          tracking_code:tracking_code || getTrackingCode(order),
-          estimated_total
-        };
-
-        const msg = buildStatusWhatsAppMessage(updatedOrder);
-        const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-
-        await supabaseClient.rpc("admin_log_order_action", {
-          p_order_id:id,
-          p_action_type:"whatsapp_customer_opened",
-          p_note:"Admin opened WhatsApp notification for customer.",
-          p_metadata:{ status, tracking_code:updatedOrder.tracking_code }
-        }).catch(() => {});
-
-        if(whatsappTab && !whatsappTab.closed){
-          whatsappTab.location.href = url;
-        }else{
-          window.open(url, "_blank");
-        }
-      }
-
-      await loadAll(false);
-      showToast(notifyCustomer ? "Saved. WhatsApp opened." : "Order saved.");
-    }catch(err){
-      console.error(err);
-
-      if(whatsappTab && !whatsappTab.closed){
-        whatsappTab.close();
-      }
-
-      showToast(err.message || "Order update failed. Check SQL functions.", true);
-    }
+    showToast(notifyCustomer ? "Order saved. WhatsApp opened." : "Order saved.");
   }
 
-  async function softDeleteOrder(id){
-    if(!confirm("Move this order to Deleted for 30 days? You can restore it during this time.")) return;
+  async function updateOrderSmart(id,data){
+    const rpcAttempts = [
+      {
+        fn:"admin_update_order_v2",
+        args:{
+          p_order_id:id,
+          p_status:data.status,
+          p_admin_note:data.admin_note,
+          p_tracking_code:data.tracking_code,
+          p_estimated_total:data.estimated_total,
+          p_admin_email:data.adminEmail
+        }
+      },
+      {
+        fn:"admin_update_order",
+        args:{
+          p_order_id:id,
+          p_status:data.status,
+          p_admin_note:data.admin_note,
+          p_tracking_code:data.tracking_code,
+          p_estimated_total:data.estimated_total
+        }
+      },
+      {
+        fn:"admin_update_order",
+        args:{
+          p_order_id:id,
+          p_status:data.status,
+          p_admin_note:data.admin_note,
+          p_tracking_code:data.tracking_code
+        }
+      }
+    ];
 
-    try{
-      const { error } = await supabaseClient.rpc("admin_soft_delete_order", {
-        p_order_id:id,
-        p_note:"Moved to Deleted from order manager."
-      });
-
-      if(error) throw error;
-
-      await loadAll(false);
-      showToast("Order moved to Deleted for 30 days.");
-    }catch(err){
-      console.error(err);
-      showToast(err.message || "Could not move order to Deleted.", true);
+    for(const attempt of rpcAttempts){
+      try{
+        const { error } = await supabaseClient.rpc(attempt.fn, attempt.args);
+        if(!error) return { error:null };
+      }catch(err){
+        console.warn("RPC update attempt failed:", attempt.fn, err.message || err);
+      }
     }
+
+    const preparedFields = {};
+    const statusNorm = normalizeStatus(data.status);
+
+    if(statusNorm === "confirmed"){
+      preparedFields.confirmed_by_email = data.adminEmail;
+      preparedFields.confirmed_at = new Date().toISOString();
+    }
+
+    if(["inprogress","ready","completed"].includes(statusNorm)){
+      preparedFields.prepared_by_email = data.adminEmail;
+      preparedFields.prepared_at = new Date().toISOString();
+    }
+
+    const updateAttempts = [
+      {
+        status:data.status,
+        tracking_code:data.tracking_code,
+        estimated_total:data.estimated_total,
+        admin_note:data.admin_note,
+        updated_by_email:data.adminEmail,
+        last_status_by_email:data.adminEmail,
+        updated_at:new Date().toISOString(),
+        ...preparedFields
+      },
+      {
+        status:data.status,
+        tracking_code:data.tracking_code,
+        estimated_total:data.estimated_total,
+        admin_note:data.admin_note,
+        updated_by_email:data.adminEmail,
+        updated_at:new Date().toISOString()
+      },
+      {
+        status:data.status,
+        tracking_code:data.tracking_code,
+        estimated_total:data.estimated_total,
+        admin_note:data.admin_note
+      },
+      {
+        status:data.status,
+        estimated_total:data.estimated_total,
+        admin_note:data.admin_note
+      },
+      {
+        status:data.status,
+        estimated_total:data.estimated_total
+      },
+      {
+        status:data.status
+      }
+    ];
+
+    let lastError = null;
+
+    for(const payload of updateAttempts){
+      const { error } = await supabaseClient.from("orders").update(payload).eq("id", id);
+
+      if(!error){
+        return { error:null };
+      }
+
+      lastError = error;
+    }
+
+    return { error:lastError };
+  }
+
+  async function moveOrderToDeleted(id){
+    const order = orders.find(o => String(o.id) === String(id));
+    if(!order) return;
+
+    const ok = confirm("Move this order to Deleted? It can be restored for 30 days.");
+    if(!ok) return;
+
+    const adminEmail = currentUser?.email || "Unknown admin";
+    const deletedAt = new Date().toISOString();
+    const oldNote = order.admin_note || "";
+    const auditLine = `[${new Date().toLocaleString()}] ${adminEmail}: moved order to Deleted.`;
+
+    const rpcAttempts = [
+      { fn:"admin_soft_delete_order", args:{ p_order_id:id, p_admin_email:adminEmail } },
+      { fn:"admin_delete_order_soft", args:{ p_order_id:id, p_admin_email:adminEmail } }
+    ];
+
+    for(const attempt of rpcAttempts){
+      try{
+        const { error } = await supabaseClient.rpc(attempt.fn, attempt.args);
+        if(!error){
+          await loadAll(false);
+          showToast("Order moved to Deleted.");
+          return;
+        }
+      }catch(err){
+        console.warn("Soft delete RPC skipped:", err.message || err);
+      }
+    }
+
+    const attempts = [
+      {
+        deleted_at:deletedAt,
+        deleted_by_email:adminEmail,
+        deleted_by_user_id:currentUser?.id || null,
+        is_deleted:true,
+        archived:true,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      },
+      {
+        deleted_at:deletedAt,
+        deleted_by_email:adminEmail,
+        is_deleted:true,
+        archived:true,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      },
+      {
+        deleted_at:deletedAt,
+        deleted_by_email:adminEmail,
+        archived:true,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      },
+      {
+        deleted_at:deletedAt,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      },
+      {
+        archived:true,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      }
+    ];
+
+    let lastError = null;
+
+    for(const payload of attempts){
+      const { error } = await supabaseClient.from("orders").update(payload).eq("id", id);
+      if(!error){
+        await loadAll(false);
+        showToast("Order moved to Deleted.");
+        return;
+      }
+      lastError = error;
+    }
+
+    showToast(lastError?.message || "Could not move order to Deleted.", true);
+  }
+
+  function renderDeletedOrders(){
+    const box = $("deletedOrdersList");
+    if(!box) return;
+
+    const search = ($("deletedSearch")?.value || "").trim().toLowerCase();
+    const sort = $("deletedSort")?.value || "newest_deleted";
+
+    let rows = orders.filter(isDeletedOrder);
+
+    if(search){
+      rows = rows.filter(order => {
+        const combined = [
+          order.id,
+          getTrackingCode(order),
+          order.customer_name,
+          order.customer_phone,
+          order.customer_email,
+          order.deleted_by_email,
+          order.admin_note
+        ].join(" ").toLowerCase();
+
+        return combined.includes(search);
+      });
+    }
+
+    rows.sort((a,b) => {
+      if(sort === "oldest_deleted") return String(getDeletedDate(a) || "").localeCompare(String(getDeletedDate(b) || ""));
+      if(sort === "days_left") return getDaysLeftBeforePermanentDelete(a) - getDaysLeftBeforePermanentDelete(b);
+      return String(getDeletedDate(b) || "").localeCompare(String(getDeletedDate(a) || ""));
+    });
+
+    if(!rows.length){
+      box.innerHTML = `<div class="loading">No deleted orders found.</div>`;
+      return;
+    }
+
+    box.innerHTML = rows.map(renderDeletedOrderRow).join("");
+  }
+
+  function renderDeletedOrderRow(order){
+    const id = String(order.id);
+    const deletedAt = getDeletedDate(order);
+    const deletedBy = order.deleted_by_email || order.deleted_by || order.updated_by_email || "Unknown admin";
+    const daysLeft = getDaysLeftBeforePermanentDelete(order);
+    const canPermanentDelete = daysLeft <= 0;
+    const items = orderItems.filter(item => String(item.order_id) === id);
+
+    return `
+      <div class="orderCard" id="deleted-${escapeAttr(id)}">
+        <div class="orderTop" onclick="toggleDeletedOrder('${escapeJs(id)}')">
+          <div>
+            <h4>${escapeHtml(order.customer_name || "Customer")} · ${money(order.estimated_total)}</h4>
+            <p>
+              Deleted by: ${escapeHtml(deletedBy)}<br>
+              Deleted: ${deletedAt ? formatDateTime(deletedAt) : "Unknown date"}<br>
+              Order ID: ${escapeHtml(id.slice(0,8).toUpperCase())} · Tracking: ${escapeHtml(getTrackingCode(order))}
+            </p>
+
+            <div class="pillRow">
+              <span class="deletedBadge">${canPermanentDelete ? "Ready for permanent delete" : daysLeft + " day(s) left"}</span>
+              <span class="pill">${items.length} item(s)</span>
+              <span class="pill">${escapeHtml(formatStatusLabel(order.status || "Pending"))}</span>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;" onclick="event.stopPropagation()">
+            <span class="status Deleted">Deleted</span>
+            <button class="btn small" onclick="toggleDeletedOrder('${escapeJs(id)}')">Details</button>
+          </div>
+        </div>
+
+        <div class="orderBody">
+          <div class="miniGrid">
+            <div>
+              <div class="sectionTitle">Deleted Order Info</div>
+              <div class="orderItem">
+                <b>Customer:</b> ${escapeHtml(order.customer_name || "")}<br>
+                <b>Phone:</b> ${escapeHtml(order.customer_phone || "")}<br>
+                <b>Email:</b> ${escapeHtml(order.customer_email || "")}<br>
+                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
+                <b>Deleted By:</b> ${escapeHtml(deletedBy)}<br>
+                <b>Deleted At:</b> ${deletedAt ? formatDateTime(deletedAt) : "Unknown"}
+              </div>
+            </div>
+
+            <div>
+              <div class="sectionTitle">Restore / Delete</div>
+              <div class="orderItem">
+                <b>30-day rule:</b> ${canPermanentDelete ? "This order can now be permanently deleted." : daysLeft + " day(s) left before permanent delete."}<br>
+                <b>Admin note:</b><br>${escapeHtml(order.admin_note || "No admin note")}
+              </div>
+            </div>
+          </div>
+
+          <div class="sectionTitle">Items</div>
+          <div class="orderItems">
+            ${items.length ? items.map(renderOrderItem).join("") : `<div class="loading">No items found for this order.</div>`}
+          </div>
+
+          <div class="actionStrip">
+            <button class="btn green small" onclick="restoreDeletedOrder('${escapeJs(id)}')">Restore Order</button>
+            <button class="btn red small" onclick="permanentDeleteOrder('${escapeJs(id)}', ${canPermanentDelete ? "true" : "false"})">
+              Permanent Delete${canPermanentDelete ? "" : " Early"}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   async function restoreDeletedOrder(id){
-    if(!confirm("Restore this deleted order back to active orders?")) return;
+    const order = orders.find(o => String(o.id) === String(id));
+    if(!order) return;
 
-    try{
-      const { error } = await supabaseClient.rpc("admin_restore_deleted_order", {
-        p_order_id:id,
-        p_note:"Restored from Deleted."
-      });
+    const ok = confirm("Restore this deleted order back to Orders?");
+    if(!ok) return;
 
-      if(error) throw error;
+    const adminEmail = currentUser?.email || "Unknown admin";
+    const auditLine = `[${new Date().toLocaleString()}] ${adminEmail}: restored deleted order.`;
+    const oldNote = order.admin_note || "";
 
-      await loadAll(false);
-      showToast("Order restored.");
-    }catch(err){
-      console.error(err);
-      showToast(err.message || "Could not restore order.", true);
+    const rpcAttempts = [
+      { fn:"admin_restore_order", args:{ p_order_id:id, p_admin_email:adminEmail } },
+      { fn:"admin_restore_deleted_order", args:{ p_order_id:id, p_admin_email:adminEmail } }
+    ];
+
+    for(const attempt of rpcAttempts){
+      try{
+        const { error } = await supabaseClient.rpc(attempt.fn, attempt.args);
+        if(!error){
+          await loadAll(false);
+          showToast("Order restored.");
+          showView("orders");
+          return;
+        }
+      }catch(err){
+        console.warn("Restore RPC skipped:", err.message || err);
+      }
     }
+
+    const attempts = [
+      {
+        deleted_at:null,
+        deleted_by_email:null,
+        deleted_by_user_id:null,
+        is_deleted:false,
+        archived:false,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      },
+      {
+        deleted_at:null,
+        deleted_by_email:null,
+        is_deleted:false,
+        archived:false,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      },
+      {
+        deleted_at:null,
+        deleted_by_email:null,
+        archived:false,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      },
+      {
+        archived:false,
+        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
+      }
+    ];
+
+    let lastError = null;
+
+    for(const payload of attempts){
+      const { error } = await supabaseClient.from("orders").update(payload).eq("id", id);
+      if(!error){
+        await loadAll(false);
+        showToast("Order restored.");
+        showView("orders");
+        return;
+      }
+      lastError = error;
+    }
+
+    showToast(lastError?.message || "Could not restore order.", true);
   }
 
-  async function permanentDeleteOrder(id){
-    if(!confirm("Permanently delete this order? This cannot be undone.")) return;
+  async function permanentDeleteOrder(id, allowedByDate = false){
+    if(!allowedByDate){
+      const okEarly = confirm("This order may be under 30 days old. Permanently delete early anyway?");
+      if(!okEarly) return;
+    }
+
+    const ok = confirm("Permanently delete this order and its items? This cannot be undone.");
+    if(!ok) return;
 
     try{
-      const { error } = await supabaseClient.rpc("admin_permanent_delete_order", {
-        p_order_id:id
-      });
+      const rpcAttempts = [
+        { fn:"admin_permanent_delete_order", args:{ p_order_id:id } },
+        { fn:"admin_delete_order_permanent", args:{ p_order_id:id } },
+        { fn:"admin_delete_order", args:{ p_order_id:id } }
+      ];
 
-      if(error) throw error;
+      for(const attempt of rpcAttempts){
+        try{
+          const { error } = await supabaseClient.rpc(attempt.fn, attempt.args);
+          if(!error){
+            await loadAll(false);
+            showToast("Order permanently deleted.");
+            return;
+          }
+        }catch(err){
+          console.warn("Permanent delete RPC skipped:", err.message || err);
+        }
+      }
+
+      const itemsDelete = await supabaseClient.from("order_items").delete().eq("order_id", id);
+      if(itemsDelete.error) throw itemsDelete.error;
+
+      const orderDelete = await supabaseClient.from("orders").delete().eq("id", id);
+      if(orderDelete.error) throw orderDelete.error;
 
       await loadAll(false);
       showToast("Order permanently deleted.");
     }catch(err){
       console.error(err);
-      showToast(err.message || "Permanent delete failed. It may still be inside 30-day recovery.", true);
+      showToast(err.message || "Permanent delete failed.", true);
     }
   }
 
   async function purgeOldDeletedOrders(){
-    if(!confirm("Permanently delete all Deleted orders older than 30 days?")) return;
+    const oldDeleted = orders.filter(order => isDeletedOrder(order) && getDaysLeftBeforePermanentDelete(order) <= 0);
 
-    try{
-      const { data, error } = await supabaseClient.rpc("admin_purge_old_deleted_orders");
-
-      if(error) throw error;
-
-      await loadAll(false);
-      showToast(`Purge complete. Deleted count: ${data?.deleted_count || 0}`);
-    }catch(err){
-      console.error(err);
-      showToast(err.message || "Purge failed.", true);
+    if(!oldDeleted.length){
+      showToast("No deleted orders older than 30 days.");
+      return;
     }
+
+    const ok = confirm(`Permanently delete ${oldDeleted.length} deleted order(s) older than 30 days?`);
+    if(!ok) return;
+
+    for(const order of oldDeleted){
+      const id = String(order.id);
+      await supabaseClient.from("order_items").delete().eq("order_id", id);
+      await supabaseClient.from("orders").delete().eq("id", id);
+    }
+
+    await loadAll(false);
+    showToast("Old deleted orders purged.");
   }
 
-  async function anonymizeOrder(id){
-    if(!confirm("Delete customer personal data from this order? This keeps the order record but removes name, phone, email and address fields.")) return;
+  function refreshReportPreview(){
+    const box = $("reportSummary");
+    if(!box) return;
 
-    try{
-      const { error } = await supabaseClient.rpc("admin_anonymize_order", { p_order_id:id });
+    const rows = getReportRows();
+    const total = rows.reduce((sum,order) => sum + Number(order.estimated_total || 0), 0);
+    const quoteCount = rows.filter(isQuoteOrder).length;
+    const completed = rows.filter(order => sameStatus(order.status,"Completed")).length;
+    const deleted = rows.filter(isDeletedOrder).length;
+    const itemsCount = rows.reduce((sum,order) => sum + orderItems.filter(item => String(item.order_id) === String(order.id)).length, 0);
 
-      if(error) throw error;
+    box.innerHTML = `
+      <div class="reportBox"><b>${rows.length}</b><span>Orders</span></div>
+      <div class="reportBox"><b>${itemsCount}</b><span>Items</span></div>
+      <div class="reportBox"><b>${money(total)}</b><span>Estimated Total</span></div>
+      <div class="reportBox"><b>${completed}</b><span>Completed</span></div>
+      <div class="reportBox"><b>${quoteCount}</b><span>Quote Orders</span></div>
+      <div class="reportBox"><b>${deleted}</b><span>Deleted Included</span></div>
+    `;
+  }
 
-      await loadAll(false);
-      showToast("Customer data deleted.");
-    }catch(err){
-      console.error(err);
-      showToast("Customer data delete needs the older privacy SQL function: " + (err.message || ""), true);
+  function getReportRows(){
+    const range = $("reportRange")?.value || "month";
+    const status = $("reportStatus")?.value || "all";
+    const deletedMode = $("reportDeleted")?.value || "active";
+    const basis = $("reportDateBasis")?.value || "created";
+
+    let rows = [...orders];
+
+    if(deletedMode === "active") rows = rows.filter(order => !isDeletedOrder(order));
+    if(deletedMode === "deleted") rows = rows.filter(isDeletedOrder);
+
+    if(status !== "all"){
+      rows = rows.filter(order => sameStatus(order.status,status));
     }
+
+    rows = rows.filter(order => isOrderInsideReportRange(order, range, basis));
+
+    return rows.sort((a,b) => String(b.created_at || "").localeCompare(String(a.created_at || "")));
+  }
+
+  function isOrderInsideReportRange(order, range, basis){
+    if(range === "lifetime") return true;
+
+    const value = basis === "needed" ? order.needed_date : order.created_at;
+    if(!value) return false;
+
+    const d = basis === "needed" ? new Date(String(value) + "T00:00:00") : new Date(value);
+    if(Number.isNaN(d.getTime())) return false;
+
+    const now = new Date();
+
+    if(range === "today"){
+      return d.toDateString() === now.toDateString();
+    }
+
+    if(range === "week"){
+      const start = startOfWeek(now);
+      const end = new Date(start);
+      end.setDate(end.getDate() + 7);
+      return d >= start && d < end;
+    }
+
+    if(range === "month"){
+      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+    }
+
+    if(range === "year"){
+      return d.getFullYear() === now.getFullYear();
+    }
+
+    if(range === "custom"){
+      const fromValue = $("reportFrom")?.value || "";
+      const toValue = $("reportTo")?.value || "";
+
+      if(!fromValue && !toValue) return true;
+
+      const from = fromValue ? new Date(fromValue + "T00:00:00") : null;
+      const to = toValue ? new Date(toValue + "T23:59:59") : null;
+
+      if(from && d < from) return false;
+      if(to && d > to) return false;
+
+      return true;
+    }
+
+    return true;
+  }
+
+  function toggleCustomReportDates(){
+    const show = $("reportRange")?.value === "custom";
+    $("customDateFields").style.display = show ? "block" : "none";
+  }
+
+  function exportReportCSV(){
+    const rows = getReportRows();
+
+    if(!rows.length){
+      showToast("No report rows to export.", true);
+      return;
+    }
+
+    const headers = [
+      "Order ID",
+      "Tracking Code",
+      "Created At",
+      "Needed Date",
+      "Needed Time",
+      "Status",
+      "Customer Name",
+      "Phone",
+      "Email",
+      "Delivery Type",
+      "Estimated Total",
+      "Items Count",
+      "Quote Order",
+      "Deleted",
+      "Deleted At",
+      "Deleted By",
+      "Admin Note"
+    ];
+
+    const lines = [headers.map(csvCell).join(",")];
+
+    rows.forEach(order => {
+      const items = orderItems.filter(item => String(item.order_id) === String(order.id));
+
+      const row = [
+        order.id || "",
+        getTrackingCode(order),
+        order.created_at || "",
+        order.needed_date || "",
+        order.needed_time || "",
+        formatStatusLabel(order.status || ""),
+        order.customer_name || "",
+        order.customer_phone || "",
+        order.customer_email || "",
+        order.delivery_type || "",
+        Number(order.estimated_total || 0),
+        items.length,
+        isQuoteOrder(order) ? "Yes" : "No",
+        isDeletedOrder(order) ? "Yes" : "No",
+        getDeletedDate(order) || "",
+        order.deleted_by_email || "",
+        order.admin_note || ""
+      ];
+
+      lines.push(row.map(csvCell).join(","));
+    });
+
+    const filename = `siffat-cakes-orders-${new Date().toISOString().slice(0,10)}.csv`;
+    downloadFile(filename, lines.join("\n"), "text/csv;charset=utf-8;");
+    showToast("CSV exported.");
+  }
+
+  function printReportSummary(){
+    const rows = getReportRows();
+
+    if(!rows.length){
+      showToast("No report rows to print.", true);
+      return;
+    }
+
+    const total = rows.reduce((sum,order) => sum + Number(order.estimated_total || 0), 0);
+    const quoteCount = rows.filter(isQuoteOrder).length;
+    const completed = rows.filter(order => sameStatus(order.status,"Completed")).length;
+    const deleted = rows.filter(isDeletedOrder).length;
+
+    const win = window.open("", "_blank");
+    if(!win){
+      showToast("Popup blocked. Allow popups to print.", true);
+      return;
+    }
+
+    win.document.write(`
+      <!doctype html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Siffat Cakes Report</title>
+        <style>
+          body{font-family:Arial,sans-serif;margin:24px;color:#1d141f}
+          h1{color:#640D6B}
+          table{width:100%;border-collapse:collapse;margin-top:16px}
+          th,td{border:1px solid #e8d6ea;padding:8px;text-align:left;font-size:12px}
+          th{background:#640D6B;color:#fff}
+          .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+          .box{border:1px solid #e8d6ea;border-radius:12px;padding:12px}
+          .box b{display:block;color:#640D6B;font-size:22px}
+          @media print{button{display:none}}
+        </style>
+      </head>
+      <body>
+        <button onclick="window.print()">Print</button>
+        <h1>${escapeHtml(siteSettings.brand_name || "Siffat Cakes")} Order Report</h1>
+        <p>Generated: ${escapeHtml(new Date().toLocaleString())}</p>
+
+        <div class="stats">
+          <div class="box"><b>${rows.length}</b><span>Orders</span></div>
+          <div class="box"><b>${money(total)}</b><span>Total</span></div>
+          <div class="box"><b>${completed}</b><span>Completed</span></div>
+          <div class="box"><b>${quoteCount}</b><span>Quote</span></div>
+          <div class="box"><b>${deleted}</b><span>Deleted</span></div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Customer</th>
+              <th>Needed</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Deleted</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map(order => `
+              <tr>
+                <td>${escapeHtml(String(order.id || "").slice(0,8).toUpperCase())}</td>
+                <td>${escapeHtml(order.customer_name || "")}</td>
+                <td>${escapeHtml(formatDate(order.needed_date))}</td>
+                <td>${escapeHtml(formatStatusLabel(order.status || ""))}</td>
+                <td>${escapeHtml(money(order.estimated_total))}</td>
+                <td>${isDeletedOrder(order) ? "Yes" : "No"}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </body>
+      </html>
+    `);
+
+    win.document.close();
+    win.focus();
+  }
+
+  function printReportOrders(){
+    const rows = getReportRows();
+
+    if(!rows.length){
+      showToast("No report orders to print.", true);
+      return;
+    }
+
+    const win = window.open("", "_blank");
+    if(!win){
+      showToast("Popup blocked. Allow popups to print.", true);
+      return;
+    }
+
+    win.document.write(`
+      <!doctype html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Siffat Cakes Orders Print</title>
+        <style>
+          body{font-family:Arial,sans-serif;margin:22px;color:#1d141f;background:#fff}
+          .top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px;border-bottom:2px solid #640D6B;padding-bottom:12px}
+          h1{margin:0;color:#640D6B}
+          .order{border:1px solid #e8d6ea;border-radius:14px;padding:12px;margin:0 0 14px;break-inside:avoid}
+          .order h2{margin:0 0 6px;color:#640D6B;font-size:18px}
+          .meta{color:#725a76;font-size:12px;line-height:1.55}
+          .items{margin-top:10px;border-top:1px solid #e8d6ea;padding-top:8px}
+          .item{font-size:12px;margin-bottom:8px;line-height:1.5}
+          @media print{button{display:none}.order{page-break-inside:avoid}}
+        </style>
+      </head>
+      <body>
+        <button onclick="window.print()">Print</button>
+
+        <div class="top">
+          <div>
+            <h1>${escapeHtml(siteSettings.brand_name || "Siffat Cakes")} Orders</h1>
+            <div class="meta">Generated: ${escapeHtml(new Date().toLocaleString())}</div>
+          </div>
+          <div class="meta">Total Orders: ${rows.length}</div>
+        </div>
+
+        ${rows.map(order => {
+          const items = orderItems.filter(item => String(item.order_id) === String(order.id));
+
+          return `
+            <section class="order">
+              <h2>${escapeHtml(order.customer_name || "Customer")} · ${escapeHtml(money(order.estimated_total))}</h2>
+              <div class="meta">
+                Order ID: ${escapeHtml(String(order.id || "").slice(0,8).toUpperCase())}<br>
+                Tracking: ${escapeHtml(getTrackingCode(order))}<br>
+                Status: ${escapeHtml(formatStatusLabel(order.status || ""))}<br>
+                Needed: ${escapeHtml(formatDate(order.needed_date))} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
+                Phone: ${escapeHtml(order.customer_phone || "")}<br>
+                Email: ${escapeHtml(order.customer_email || "")}<br>
+                Type: ${escapeHtml(order.delivery_type || "")}
+              </div>
+              <div class="items">
+                ${items.length ? items.map(item => `<div class="item">${renderPlainOrderItem(item)}</div>`).join("") : "No items found."}
+              </div>
+            </section>
+          `;
+        }).join("")}
+      </body>
+      </html>
+    `);
+
+    win.document.close();
+    win.focus();
   }
 
   function whatsappCustomer(id){
     const order = orders.find(o => String(o.id) === String(id));
     if(!order) return;
 
-    const phone = normalizePhone(order.customer_phone || "");
-    if(!phone) return showToast("Customer phone number missing.", true);
+    sendCustomerStatusWhatsApp(order, order.status || "Pending", getTrackingCode(order));
+  }
 
-    const msg = buildStatusWhatsAppMessage(order);
+  function sendCustomerStatusWhatsApp(order,status,trackingCode){
+    const phone = normalizePhone(order.customer_phone || "");
+
+    if(!phone){
+      showToast("Customer phone number missing.", true);
+      return;
+    }
+
+    const msg = buildCustomerStatusMessage(order, status, trackingCode);
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
-  function buildStatusWhatsAppMessage(order){
-    const status = formatStatusLabel(order.status || "Pending");
-    const trackingCode = getTrackingCode(order);
-    const trackLink = getTrackLink(trackingCode);
-    const name = order.customer_name ? ` ${order.customer_name}` : "";
+  function buildCustomerStatusMessage(order,status,trackingCode){
+    const label = formatStatusLabel(status);
+    const trackLink = getTrackLink(trackingCode || getTrackingCode(order));
+    const name = order.customer_name ? " " + order.customer_name : "";
 
-    let statusLine = "";
-
-    if(normalizeStatus(order.status) === "confirmed"){
-      statusLine = "Your order has been confirmed.";
-    }else if(normalizeStatus(order.status) === "inprogress"){
-      statusLine = "Your order is now being prepared.";
-    }else if(normalizeStatus(order.status) === "ready"){
-      statusLine = order.delivery_type === "Delivery"
-        ? "Your order is ready for delivery update."
-        : "Your order is ready for pickup.";
-    }else if(normalizeStatus(order.status) === "completed"){
-      statusLine = "Your order has been completed. Thank you!";
-    }else if(normalizeStatus(order.status) === "cancelled"){
-      statusLine = "Your order has been cancelled. Please contact us if you have questions.";
-    }else{
-      statusLine = "Your order request has been received and is pending review.";
+    if(sameStatus(status,"Confirmed")){
+      return `Hi${name}, your Siffat Cakes order is confirmed. You can track it here: ${trackLink}`;
     }
 
-    return [
-      `Hi${name},`,
-      "",
-      `Siffat Cakes order update: ${status}`,
-      statusLine,
-      "",
-      `Tracking Code: ${trackingCode}`,
-      `Track Order: ${trackLink}`,
-      "",
-      `Needed Date: ${order.needed_date || "Not selected"} ${order.needed_time || ""}`,
-      `Estimated Total: ${Number(order.estimated_total || 0) ? money(order.estimated_total) : "Quote / Confirm with shop"}`,
-      "",
-      "Please reply here if you have any questions."
-    ].join("\n");
+    if(sameStatus(status,"InProgress")){
+      return `Hi${name}, your Siffat Cakes order is now in progress. You can track it here: ${trackLink}`;
+    }
+
+    if(sameStatus(status,"Ready")){
+      return `Hi${name}, your Siffat Cakes order is ready / ready for delivery update. You can track it here: ${trackLink}`;
+    }
+
+    if(sameStatus(status,"Completed")){
+      return `Hi${name}, your Siffat Cakes order is completed. Thank you for ordering with us.`;
+    }
+
+    if(sameStatus(status,"Cancelled")){
+      return `Hi${name}, your Siffat Cakes order status is cancelled. Please contact us if you have any questions.`;
+    }
+
+    return `Hi${name}, your Siffat Cakes order status is: ${label}. You can track it here: ${trackLink}`;
   }
 
   function copyWhatsAppMessage(id){
@@ -1851,19 +2350,23 @@
     }
 
     navigator.clipboard.writeText(order.whatsapp_message)
-      .then(()=>showToast("WhatsApp message copied."))
-      .catch(()=>showToast("Could not copy message.", true));
+      .then(() => showToast("WhatsApp message copied."))
+      .catch(() => showToast("Could not copy message.", true));
   }
 
   function printOrder(id){
     const order = orders.find(o => String(o.id) === String(id));
-    if(!order) return showToast("Order not found.", true);
+
+    if(!order){
+      showToast("Order not found.", true);
+      return;
+    }
 
     const items = orderItems.filter(item => String(item.order_id) === String(id));
     const win = window.open("", "_blank");
 
     if(!win){
-      showToast("Popup blocked. Allow popups to print order.", true);
+      showToast("Popup blocked. Allow popups to print.", true);
       return;
     }
 
@@ -1876,7 +2379,7 @@
     const brand = siteSettings.brand_name || "Siffat Cakes";
     const logo = siteSettings.logo_url || "";
     const shortId = String(order.id || "").slice(0,8).toUpperCase();
-    const calculatedSubtotal = items.reduce((sum,item)=>sum + Number(item.estimated_item_total || 0), 0);
+    const calculatedSubtotal = items.reduce((sum,item) => sum + Number(item.estimated_item_total || 0), 0);
     const estimatedTotal = Number(order.estimated_total || 0);
     const finalSubtotal = calculatedSubtotal || estimatedTotal;
     const delivery = Number(order.delivery_fee ?? 0);
@@ -1889,7 +2392,13 @@
       tax = Math.round(((finalSubtotal + delivery) * hstRate / 100) * 100) / 100;
     }
 
-    let finalTotal = estimatedTotal || finalSubtotal + delivery + tax;
+    let finalTotal = estimatedTotal;
+
+    if(shouldChargeHst){
+      finalTotal = finalSubtotal + delivery + tax;
+    }else if(!finalTotal){
+      finalTotal = finalSubtotal + delivery + tax;
+    }
 
     return `<!doctype html>
 <html>
@@ -1943,34 +2452,39 @@
         <p>${escapeHtml(siteSettings.business_hours || "")}</p>
       </div>
     </div>
+
     <div class="invoiceTitle">
-      <h2>Order</h2>
+      <h2>Order / Invoice</h2>
       <p><b>Order:</b> ${escapeHtml(shortId)}</p>
-      <p><b>Tracking:</b> ${escapeHtml(getTrackingCode(order))}</p>
       <p><b>Date:</b> ${escapeHtml(formatDateTime(order.created_at))}</p>
+      <p><b>Status:</b> ${escapeHtml(formatStatusLabel(order.status || "Pending"))}</p>
     </div>
   </section>
 
   <section class="grid">
     <div class="box">
       <h3>Customer</h3>
-      <p><b>${escapeHtml(order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || "Customer"))}</b></p>
-      <p class="muted">${order.customer_data_deleted ? "Customer data removed" : escapeHtml(order.customer_phone || "")}</p>
-      <p class="muted">${order.customer_data_deleted ? "" : escapeHtml(order.customer_email || "")}</p>
+      <p><b>${escapeHtml(order.customer_name || "Customer")}</b></p>
+      <p class="muted">${escapeHtml(order.customer_phone || "")}</p>
+      <p class="muted">${escapeHtml(order.customer_email || "")}</p>
     </div>
 
     <div class="box">
       <h3>Order Details</h3>
-      <p><b>Status:</b> ${escapeHtml(formatStatusLabel(order.status || "Pending"))}</p>
       <p><b>Needed:</b> ${escapeHtml(formatDate(order.needed_date))} ${order.needed_time ? escapeHtml(order.needed_time) : ""}</p>
       <p><b>Type:</b> ${escapeHtml(order.delivery_type || "")}</p>
+      <p><b>Tracking:</b> ${escapeHtml(getTrackingCode(order))}</p>
     </div>
   </section>
 
   <section class="items">
     <table>
-      <thead><tr><th>Item</th><th>Qty</th><th>Total</th></tr></thead>
-      <tbody>${items.length ? items.map(renderInvoiceItem).join("") : `<tr><td colspan="3">No items found.</td></tr>`}</tbody>
+      <thead>
+        <tr><th>Item</th><th>Qty</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        ${items.length ? items.map(renderInvoiceItem).join("") : `<tr><td colspan="3">No items found.</td></tr>`}
+      </tbody>
     </table>
   </section>
 
@@ -1981,14 +2495,8 @@
     <div class="grand"><span>Total</span><b>${finalTotal ? money(finalTotal) : "Quote"}</b></div>
   </section>
 
-  <section class="thanks">
-    Thank you for ordering from ${escapeHtml(brand)}. This printout is for order management and customer confirmation.
-  </section>
-
-  <section class="footer">
-    <span>${escapeHtml(brand)}</span>
-    <span>${escapeHtml(siteSettings.whatsapp_number || "")}</span>
-  </section>
+  <section class="thanks">Thank you for ordering from ${escapeHtml(brand)}. Final confirmation can be provided by the shop after review/payment.</section>
+  <section class="footer"><span>${escapeHtml(brand)}</span><span>${escapeHtml(siteSettings.whatsapp_number || "")}</span></section>
 </main>
 </body>
 </html>`;
@@ -2017,279 +2525,40 @@
     `;
   }
 
-  function getReportRows(){
-    const range = $("reportRange").value;
-    const status = $("reportStatus").value;
-    const deletedMode = $("reportDeleted").value;
-    const basis = $("reportOutputBasis").value;
+  function renderPlainOrderItem(item){
+    const info = parseJson(item.product_snapshot || item.quick_product_snapshot || item.snapshot_json || item.addons_json || null);
+    const isQuick = isQuickOrderItem(item);
 
-    let rows = [...orders];
-
-    if(deletedMode === "active") rows = rows.filter(o => !isDeleted(o));
-    if(deletedMode === "deleted") rows = rows.filter(o => isDeleted(o));
-
-    if(status !== "all"){
-      rows = rows.filter(o => normalizeStatus(o.status) === normalizeStatus(status));
+    if(isQuick){
+      return `
+        <b>${escapeHtml(item.cake_name || item.product_name || info.name || "Quick Dessert")}</b><br>
+        Type: Quick Dessert<br>
+        Category: ${escapeHtml(info.categoryName || info.category || item.option_name || "")}<br>
+        Variant: ${escapeHtml(info.variant || item.flavour_name || "")}<br>
+        Qty: ${escapeHtml(item.quantity || 1)}<br>
+        Total: ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : escapeHtml(money(item.estimated_item_total))}
+      `;
     }
 
-    rows = rows.filter(order => {
-      const value = basis === "needed" ? order.needed_date : dateOnly(order.created_at);
-      return reportDateMatches(value, range);
-    });
-
-    rows.sort((a,b)=>sortOrders(a,b,"needed_soon"));
-    return rows;
-  }
-
-  function reportDateMatches(value, range){
-    if(range === "all") return true;
-    if(!value) return false;
-
-    const date = new Date(String(value).includes("T") ? value : value + "T00:00:00");
-    if(Number.isNaN(date.getTime())) return false;
-
-    const today = new Date();
-
-    if(range === "today") return getDateKey(date) === getDateKey(today);
-    if(range === "week") return isThisWeek(getDateKey(date));
-    if(range === "month") return date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth();
-    if(range === "year") return date.getFullYear() === today.getFullYear();
-
-    if(range === "custom"){
-      const start = $("reportStartDate").value;
-      const end = $("reportEndDate").value;
-
-      if(start && getDateKey(date) < start) return false;
-      if(end && getDateKey(date) > end) return false;
-
-      return true;
-    }
-
-    return true;
-  }
-
-  function toggleReportCustomDates(){
-    $("customReportDates").style.display = $("reportRange").value === "custom" ? "flex" : "none";
-  }
-
-  function exportOrdersCsv(){
-    const rows = getReportRows();
-
-    if(!rows.length){
-      showToast("No orders found for this report.", true);
-      return;
-    }
-
-    const headers = [
-      "Created At",
-      "Order ID",
-      "Tracking Code",
-      "Status",
-      "Customer Name",
-      "Phone",
-      "Email",
-      "Needed Date",
-      "Needed Time",
-      "Type",
-      "Estimated Total",
-      "Deleted At",
-      "Deleted By",
-      "Last Updated By",
-      "Confirmed By",
-      "Prepared By",
-      "Ready By",
-      "Completed By",
-      "Cancelled By"
-    ];
-
-    const csvRows = [headers];
-
-    rows.forEach(order => {
-      csvRows.push([
-        order.created_at || "",
-        order.id || "",
-        getTrackingCode(order),
-        formatStatusLabel(order.status || "Pending"),
-        order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || ""),
-        order.customer_data_deleted ? "" : (order.customer_phone || ""),
-        order.customer_data_deleted ? "" : (order.customer_email || ""),
-        order.needed_date || "",
-        order.needed_time || "",
-        order.delivery_type || "",
-        Number(order.estimated_total || 0),
-        order.deleted_at || "",
-        order.deleted_by_email || "",
-        order.last_updated_by_email || "",
-        order.confirmed_by_email || "",
-        order.prepared_by_email || "",
-        order.ready_by_email || "",
-        order.completed_by_email || "",
-        order.cancelled_by_email || ""
-      ]);
-    });
-
-    const csv = csvRows.map(row => row.map(csvCell).join(",")).join("\n");
-    const filename = `siffat-cakes-orders-${$("reportRange").value}-${getDateKey(new Date())}.csv`;
-
-    downloadTextFile(filename, csv, "text/csv;charset=utf-8");
-    showToast("CSV exported.");
-  }
-
-  function printReportSummary(){
-    const rows = getReportRows();
-    const title = getReportTitle();
-    const total = rows.reduce((sum,o)=>sum + Number(o.estimated_total || 0),0);
-    const active = rows.filter(o => !isDeleted(o)).length;
-    const deleted = rows.filter(o => isDeleted(o)).length;
-
-    const html = `
-      <!doctype html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <title>${escapeHtml(title)}</title>
-        <style>
-          body{font-family:Arial,sans-serif;margin:0;background:#f6eff7;color:#1d141f}
-          .page{max-width:980px;margin:0 auto;background:white;min-height:100vh;padding:28px}
-          h1{color:#640D6B;margin:0 0 6px;font-size:30px}
-          p{color:#725a76;margin:0 0 18px}
-          .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-          .box{border:1px solid rgba(100,13,107,.18);border-radius:16px;padding:14px;background:#fff7ff}
-          .box b{display:block;color:#640D6B;font-size:24px}
-          .box span{display:block;color:#725a76;font-size:12px;margin-top:4px}
-          table{width:100%;border-collapse:collapse}
-          th{background:#640D6B;color:white;text-align:left;padding:10px;font-size:12px}
-          td{border-bottom:1px solid rgba(100,13,107,.14);padding:9px;font-size:12px}
-          @media print{body{background:white}.page{padding:0}}
-        </style>
-      </head>
-      <body>
-        <main class="page">
-          <h1>${escapeHtml(title)}</h1>
-          <p>${escapeHtml(siteSettings.brand_name || "Siffat Cakes")} · Printed ${escapeHtml(new Date().toLocaleString())}</p>
-
-          <div class="grid">
-            <div class="box"><b>${rows.length}</b><span>Total Orders</span></div>
-            <div class="box"><b>${active}</b><span>Active Orders</span></div>
-            <div class="box"><b>${deleted}</b><span>Deleted Orders</span></div>
-            <div class="box"><b>${money(total)}</b><span>Estimated Total</span></div>
-          </div>
-
-          <table>
-            <thead>
-              <tr><th>Order</th><th>Customer</th><th>Status</th><th>Needed</th><th>Total</th></tr>
-            </thead>
-            <tbody>
-              ${rows.map(order => `
-                <tr>
-                  <td>${escapeHtml(String(order.id).slice(0,8).toUpperCase())}</td>
-                  <td>${escapeHtml(order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || ""))}</td>
-                  <td>${escapeHtml(isDeleted(order) ? "Deleted" : formatStatusLabel(order.status || "Pending"))}</td>
-                  <td>${escapeHtml(order.needed_date || "")}</td>
-                  <td>${escapeHtml(money(order.estimated_total))}</td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </main>
-        <script>window.onload = () => setTimeout(() => window.print(), 300);<\/script>
-      </body>
-      </html>
-    `;
-
-    openPrintWindow(html);
-  }
-
-  function printReportOrders(){
-    const rows = getReportRows();
-
-    if(!rows.length){
-      showToast("No orders found for this report.", true);
-      return;
-    }
-
-    const title = getReportTitle();
-
-    const html = `
-      <!doctype html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <title>${escapeHtml(title)}</title>
-        <style>
-          body{font-family:Arial,sans-serif;margin:0;background:#f6eff7;color:#1d141f}
-          .page{max-width:1100px;margin:0 auto;background:white;min-height:100vh;padding:28px}
-          h1{color:#640D6B;margin:0 0 6px;font-size:30px}
-          .order{break-inside:avoid;border:1px solid rgba(100,13,107,.18);border-radius:18px;padding:14px;margin:12px 0;background:#fff7ff}
-          .order h2{margin:0 0 6px;font-size:17px}
-          .meta{font-size:12px;color:#725a76;line-height:1.55}
-          .item{background:white;border:1px solid rgba(100,13,107,.14);border-radius:12px;padding:9px;margin-top:7px;font-size:12px;line-height:1.45}
-          @media print{body{background:white}.page{padding:0}.order{box-shadow:none}}
-        </style>
-      </head>
-      <body>
-        <main class="page">
-          <h1>${escapeHtml(title)}</h1>
-          <div class="meta">${escapeHtml(siteSettings.brand_name || "Siffat Cakes")} · Printed ${escapeHtml(new Date().toLocaleString())}</div>
-
-          ${rows.map(order => {
-            const items = orderItems.filter(item => String(item.order_id) === String(order.id));
-            return `
-              <section class="order">
-                <h2>${escapeHtml(order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || "Customer"))} · ${escapeHtml(money(order.estimated_total))}</h2>
-                <div class="meta">
-                  Order: ${escapeHtml(String(order.id).slice(0,8).toUpperCase())} · Tracking: ${escapeHtml(getTrackingCode(order))}<br>
-                  Status: ${escapeHtml(isDeleted(order) ? "Deleted" : formatStatusLabel(order.status || "Pending"))}<br>
-                  Needed: ${escapeHtml(order.needed_date || "")} ${escapeHtml(order.needed_time || "")} · ${escapeHtml(order.delivery_type || "")}<br>
-                  Phone: ${escapeHtml(order.customer_data_deleted ? "Removed" : (order.customer_phone || ""))}
-                </div>
-                ${items.length ? items.map(renderPrintReportItem).join("") : `<div class="item">No items found.</div>`}
-              </section>
-            `;
-          }).join("")}
-        </main>
-        <script>window.onload = () => setTimeout(() => window.print(), 300);<\/script>
-      </body>
-      </html>
-    `;
-
-    openPrintWindow(html);
-  }
-
-  function renderPrintReportItem(item){
     return `
-      <div class="item">
-        <b>${escapeHtml(item.cake_name || item.product_name || "Item")}</b><br>
-        Qty: ${escapeHtml(item.quantity || 1)} · Total: ${Number(item.estimated_item_total || 0) ? escapeHtml(money(item.estimated_item_total)) : "Quote"}<br>
-        ${item.size_name ? `Size: ${escapeHtml(item.size_name)}<br>` : ""}
-        ${item.flavour_name ? `Flavour: ${escapeHtml(item.flavour_name)}<br>` : ""}
-        ${item.message_on_cake ? `Message: ${escapeHtml(item.message_on_cake)}<br>` : ""}
-        ${item.special_notes ? `Notes: ${escapeHtml(item.special_notes)}` : ""}
-      </div>
+      <b>${escapeHtml(item.cake_name || "Cake")}</b><br>
+      Type: Custom Cake<br>
+      Size: ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""}<br>
+      Flavour: ${escapeHtml(item.flavour_name || "")}<br>
+      Option: ${escapeHtml(item.option_name || "")}<br>
+      Qty: ${escapeHtml(item.quantity || 1)}<br>
+      Message: ${escapeHtml(item.message_on_cake || "")}<br>
+      Total: ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : escapeHtml(money(item.estimated_item_total))}
     `;
-  }
-
-  function getReportTitle(){
-    const range = $("reportRange").selectedOptions[0]?.textContent || "Report";
-    const status = $("reportStatus").selectedOptions[0]?.textContent || "All Statuses";
-    const deleted = $("reportDeleted").selectedOptions[0]?.textContent || "Active Only";
-    return `Siffat Cakes Orders · ${range} · ${status} · ${deleted}`;
-  }
-
-  function openPrintWindow(html){
-    const win = window.open("", "_blank");
-    if(!win){
-      showToast("Popup blocked. Allow popups to print.", true);
-      return;
-    }
-
-    win.document.write(html);
-    win.document.close();
-    win.focus();
   }
 
   function toggleOrder(id){
     const el = $("order-" + id);
+    if(el) el.classList.toggle("open");
+  }
+
+  function toggleDeletedOrder(id){
+    const el = $("deleted-" + id);
     if(el) el.classList.toggle("open");
   }
 
@@ -2298,9 +2567,19 @@
   }
 
   function getTrackLink(code){
-    const url = new URL("track.html", location.href);
-    url.searchParams.set("code", code);
-    return url.toString();
+    return `${location.origin}${location.pathname.replace(/[^/]+$/, "track.html")}?code=${encodeURIComponent(code)}`;
+  }
+
+  function getAdminTrail(order){
+    return (
+      order.prepared_by_email ||
+      order.confirmed_by_email ||
+      order.updated_by_email ||
+      order.last_status_by_email ||
+      order.deleted_by_email ||
+      order.admin_email ||
+      ""
+    );
   }
 
   function toDbStatus(value){
@@ -2309,7 +2588,7 @@
     if(s === "pending") return "Pending";
     if(s === "confirmed") return "Confirmed";
     if(s === "inprogress") return "InProgress";
-    if(s === "ready" || s === "readyforpickup" || s === "outfordelivery") return "Ready";
+    if(s === "ready" || s === "readyforpickup" || s === "outfordelivery" || s === "readydelivery") return "Ready";
     if(s === "completed") return "Completed";
     if(s === "cancelled" || s === "canceled") return "Cancelled";
 
@@ -2322,150 +2601,144 @@
     return found ? found.label : db;
   }
 
+  function sameStatus(a,b){
+    return normalizeStatus(toDbStatus(a)) === normalizeStatus(toDbStatus(b));
+  }
+
   function sortOrders(a,b,sort){
-    if(sort === "oldest") return String(a.created_at||"").localeCompare(String(b.created_at||""));
-    if(sort === "newest") return String(b.created_at||"").localeCompare(String(a.created_at||""));
-    if(sort === "needed_soon") return String(a.needed_date||"9999-99-99").localeCompare(String(b.needed_date||"9999-99-99"));
-    if(sort === "needed_late") return String(b.needed_date||"").localeCompare(String(a.needed_date||""));
-    if(sort === "status") return formatStatusLabel(a.status||"").localeCompare(formatStatusLabel(b.status||""));
-    if(sort === "total_high") return Number(b.estimated_total||0)-Number(a.estimated_total||0);
-    if(sort === "total_low") return Number(a.estimated_total||0)-Number(b.estimated_total||0);
-    return String(a.needed_date||"9999-99-99").localeCompare(String(b.needed_date||"9999-99-99"));
+    if(sort === "oldest") return String(a.created_at || "").localeCompare(String(b.created_at || ""));
+    if(sort === "needed_soon") return String(a.needed_date || "9999-99-99").localeCompare(String(b.needed_date || "9999-99-99"));
+    if(sort === "needed_late") return String(b.needed_date || "").localeCompare(String(a.needed_date || ""));
+    if(sort === "status") return formatStatusLabel(a.status || "").localeCompare(formatStatusLabel(b.status || ""));
+    if(sort === "total_high") return Number(b.estimated_total || 0) - Number(a.estimated_total || 0);
+    if(sort === "total_low") return Number(a.estimated_total || 0) - Number(b.estimated_total || 0);
+
+    return String(b.created_at || "").localeCompare(String(a.created_at || ""));
   }
 
   function countStatus(rows,status){
-    return rows.filter(o => normalizeStatus(o.status) === normalizeStatus(status)).length;
+    return rows.filter(order => sameStatus(order.status,status)).length;
   }
 
-  function isFinalStatus(status){
-    const s = normalizeStatus(status);
-    return s === "completed" || s === "cancelled";
+  function isWorkflowActive(order){
+    return !sameStatus(order.status,"Completed") && !sameStatus(order.status,"Cancelled") && !isDeletedOrder(order);
   }
 
   function isQuoteOrder(order){
     const items = orderItems.filter(item => String(item.order_id) === String(order.id));
+
     return Number(order.estimated_total || 0) === 0 || items.some(item => Number(item.estimated_item_total || 0) === 0);
   }
 
-  function isDeleted(order){
-    return !!order.deleted_at;
+  function isNeededToday(order){
+    return isSameDay(order.needed_date, new Date());
   }
 
-  function getDeletedInfo(order){
-    const until = order.deleted_until ? new Date(order.deleted_until) : null;
+  function isNeededTomorrow(order){
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return isSameDay(order.needed_date, d);
+  }
+
+  function isNeededThisWeek(order){
+    if(!order.needed_date) return false;
+
+    const d = new Date(order.needed_date + "T00:00:00");
+    const start = startOfWeek(new Date());
+    const end = new Date(start);
+    end.setDate(end.getDate() + 7);
+
+    return d >= start && d < end;
+  }
+
+  function isNeededThisMonth(order){
+    if(!order.needed_date) return false;
+
+    const d = new Date(order.needed_date + "T00:00:00");
     const now = new Date();
 
-    if(!until || Number.isNaN(until.getTime())){
-      return { canDelete:false, daysText:"unknown" };
-    }
-
-    const ms = until.getTime() - now.getTime();
-
-    if(ms <= 0){
-      return { canDelete:true, daysText:"0 days left" };
-    }
-
-    const days = Math.ceil(ms / (1000 * 60 * 60 * 24));
-    return { canDelete:false, daysText:`${days} day${days === 1 ? "" : "s"} left` };
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
   }
 
-  function dateMatches(value, filter){
-    if(!value) return false;
+  function isSameDay(dateValue, compareDate){
+    if(!dateValue) return false;
 
-    const today = getDateKey(new Date());
-    const tomorrow = getDateKey(addDays(new Date(),1));
+    const d = new Date(dateValue + "T00:00:00");
 
-    if(filter === "today") return value === today;
-    if(filter === "tomorrow") return value === tomorrow;
-    if(filter === "week") return isThisWeek(value);
-    if(filter === "month"){
-      const d = new Date(value + "T00:00:00");
-      const now = new Date();
-      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-    }
-    if(filter === "year"){
-      const d = new Date(value + "T00:00:00");
-      const now = new Date();
-      return d.getFullYear() === now.getFullYear();
-    }
-
-    return true;
-  }
-
-  function isThisWeek(value){
-    if(!value) return false;
-
-    const d = new Date(value + "T00:00:00");
-    if(Number.isNaN(d.getTime())) return false;
-
-    const now = new Date();
-    const start = startOfWeek(now);
-    const end = addDays(start, 6);
-
-    return d >= start && d <= end;
+    return d.getFullYear() === compareDate.getFullYear() &&
+      d.getMonth() === compareDate.getMonth() &&
+      d.getDate() === compareDate.getDate();
   }
 
   function startOfWeek(date){
     const d = new Date(date);
-    d.setHours(0,0,0,0);
     const day = d.getDay();
     const diff = d.getDate() - day;
     d.setDate(diff);
+    d.setHours(0,0,0,0);
     return d;
   }
 
-  function addDays(date, days){
-    const d = new Date(date);
-    d.setDate(d.getDate() + days);
-    return d;
+  function isDeletedOrder(order){
+    return (
+      !!order.deleted_at ||
+      truthy(order.is_deleted) ||
+      truthy(order.deleted) ||
+      normalizeStatus(order.status) === "deleted" ||
+      !!order.deleted_by_email
+    );
   }
 
-  function getDateKey(date){
-    const d = new Date(date);
-    const y = d.getFullYear();
-    const m = String(d.getMonth()+1).padStart(2,"0");
-    const day = String(d.getDate()).padStart(2,"0");
-    return `${y}-${m}-${day}`;
+  function getDeletedDate(order){
+    return order.deleted_at || order.deleted_date || order.removed_at || "";
   }
 
-  function dateOnly(value){
-    if(!value) return "";
-    const d = new Date(value);
-    if(Number.isNaN(d.getTime())) return "";
-    return getDateKey(d);
+  function getDaysLeftBeforePermanentDelete(order){
+    const deletedAt = getDeletedDate(order);
+
+    if(!deletedAt) return 30;
+
+    const deleted = new Date(deletedAt);
+    if(Number.isNaN(deleted.getTime())) return 30;
+
+    const now = new Date();
+    const diffMs = now - deleted;
+    const daysPassed = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    return Math.max(0, 30 - daysPassed);
   }
 
   function isQuickOrderItem(item){
     const raw = String(item.product_type || item.item_type || item.type || "").toLowerCase();
-    return raw.includes("quick") || raw.includes("dessert") || !!item.quick_product_id || !!item.quick_product_snapshot;
+
+    return raw.includes("quick") ||
+      raw.includes("dessert") ||
+      !!item.quick_product_id ||
+      !!item.quick_product_snapshot;
   }
 
   function parseJson(value){
     if(!value) return {};
     if(typeof value === "object") return value;
-    try{ return JSON.parse(value); }catch{ return {}; }
+
+    try{
+      return JSON.parse(value);
+    }catch{
+      return {};
+    }
   }
 
   function formatAddons(value){
     const data = parseJson(value);
 
     if(Array.isArray(data)){
-      return data.map(x=>escapeHtml(x.name || x)).join(", ") || "None";
+      return data.map(x => escapeHtml(x.name || x)).join(", ") || "None";
     }
 
     return "None";
   }
 
-  function buildAddress(order){
-    return [
-      order.address,
-      order.city,
-      order.postal_code
-    ].filter(Boolean).join(", ");
-  }
-
   function normalizeStatus(s){
-    return String(s||"").toLowerCase().replace(/[^a-z]/g,"");
+    return String(s || "").toLowerCase().replace(/[^a-z]/g,"");
   }
 
   function truthy(v){
@@ -2482,9 +2755,7 @@
     if(!value) return "No date";
 
     const d = new Date(value + "T00:00:00");
-    return Number.isNaN(d.getTime())
-      ? value
-      : d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+    return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
   }
 
   function formatDateTime(value){
@@ -2495,7 +2766,7 @@
   }
 
   function normalizePhone(value){
-    return String(value||"").replace(/[^\d]/g,"");
+    return String(value || "").replace(/[^\d]/g,"");
   }
 
   function copyField(id){
@@ -2503,8 +2774,8 @@
     if(!el) return;
 
     navigator.clipboard.writeText(el.value)
-      .then(()=>showToast("Copied."))
-      .catch(()=>showToast("Could not copy.", true));
+      .then(() => showToast("Copied."))
+      .catch(() => showToast("Could not copy.", true));
   }
 
   function csvCell(value){
@@ -2512,8 +2783,8 @@
     return `"${text.replaceAll('"','""')}"`;
   }
 
-  function downloadTextFile(filename, text, type){
-    const blob = new Blob([text], { type });
+  function downloadFile(filename, content, mimeType){
+    const blob = new Blob([content], { type:mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
 
@@ -2525,22 +2796,16 @@
     setTimeout(() => {
       URL.revokeObjectURL(url);
       a.remove();
-    }, 300);
+    }, 0);
   }
 
   function cacheBustImage(url){
     const clean = String(url || "");
     if(!clean) return clean;
     if(!clean.includes("supabase.co/storage")) return clean;
+
     const sep = clean.includes("?") ? "&" : "?";
     return `${clean}${sep}v=${Date.now()}`;
-  }
-
-  function toTitle(value){
-    return String(value || "")
-      .replaceAll("_"," ")
-      .replaceAll("-"," ")
-      .replace(/\b\w/g, char => char.toUpperCase());
   }
 
   function escapeHtml(value){
@@ -2569,17 +2834,17 @@
     return String(value || "").replace(/[^a-zA-Z0-9_-]/g,"");
   }
 
-  function showToast(message,isError=false){
+  function showToast(message,isError = false){
     const toast = $("toast");
+
     toast.textContent = message;
     toast.style.background = isError ? "var(--red)" : "var(--purple)";
     toast.classList.add("show");
 
     clearTimeout(showToast.timer);
-    showToast.timer = setTimeout(() => {
-      toast.classList.remove("show");
-    }, 4200);
+    showToast.timer = setTimeout(() => toast.classList.remove("show"), 3600);
   }
 </script>
+
 </body>
 </html>
