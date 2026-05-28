@@ -202,13 +202,6 @@
 
     .btn.block{width:100%}
 
-    .viewBtn.active{
-      background:linear-gradient(135deg,var(--purple),var(--purple2));
-      color:#fff;
-      border-color:rgba(100,13,107,.30);
-      box-shadow:0 12px 26px rgba(100,13,107,.18);
-    }
-
     .loginScreen{
       min-height:100vh;
       display:grid;
@@ -245,9 +238,6 @@
     .main{
       padding:14px 0 34px;
     }
-
-    .viewPanel{display:none}
-    .viewPanel.active{display:block}
 
     .card{
       border:1px solid var(--line);
@@ -487,7 +477,6 @@
     .status.InProgress{color:#4a5fd0}
     .status.Ready,.status.ReadyForPickup,.status.OutForDelivery,.status.Completed{color:var(--green)}
     .status.Cancelled{color:var(--red)}
-    .status.Deleted{color:var(--red)}
 
     .orderCard{
       border:1px solid var(--line);
@@ -652,76 +641,8 @@
       margin-bottom:8px;
     }
 
-    .reportGrid{
-      display:grid;
-      grid-template-columns:repeat(5,minmax(0,1fr));
-      gap:10px;
-      align-items:end;
-    }
-
-    .reportActions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .reportSummary{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .reportBox{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:18px;
-      padding:13px;
-      box-shadow:0 8px 18px rgba(100,13,107,.035);
-    }
-
-    .reportBox b{
-      display:block;
-      color:var(--purple);
-      font-size:23px;
-      letter-spacing:-.05em;
-    }
-
-    .reportBox span{
-      display:block;
-      margin-top:6px;
-      color:var(--muted);
-      font-size:12px;
-      font-weight:850;
-    }
-
-    .deletedNotice{
-      border:1px solid rgba(180,35,24,.18);
-      background:rgba(180,35,24,.06);
-      color:#7a271a;
-      border-radius:18px;
-      padding:12px;
-      font-size:12px;
-      font-weight:850;
-      line-height:1.5;
-      margin-bottom:12px;
-    }
-
-    .deletedBadge{
-      display:inline-flex;
-      padding:7px 9px;
-      border-radius:999px;
-      border:1px solid rgba(180,35,24,.18);
-      background:rgba(180,35,24,.07);
-      color:var(--red);
-      font-size:11px;
-      font-weight:1000;
-    }
-
     @media(max-width:1180px){
       .orderBoard{grid-template-columns:repeat(4,1fr)}
-      .reportGrid{grid-template-columns:repeat(2,1fr)}
-      .reportSummary{grid-template-columns:repeat(3,1fr)}
     }
 
     @media(max-width:920px){
@@ -771,11 +692,6 @@
       .searchRow input{
         min-width:100%;
       }
-
-      .reportGrid,
-      .reportSummary{
-        grid-template-columns:1fr;
-      }
     }
   </style>
 </head>
@@ -786,7 +702,7 @@
   <div class="loginCard">
     <div class="logo" style="margin-bottom:14px;">🍰</div>
     <h2>Order Manager Login</h2>
-    <p>Login to manage daily customer orders, update statuses, message customers, export reports and manage deleted orders.</p>
+    <p>Login to manage daily customer orders, update statuses, message customers, and print orders.</p>
 
     <div class="field">
       <label>Email</label>
@@ -815,9 +731,6 @@
 
       <div class="navActions">
         <span class="btn green small">Connected</span>
-        <button class="btn small viewBtn active" id="viewBtn-orders" onclick="showView('orders')">Orders</button>
-        <button class="btn small viewBtn" id="viewBtn-reports" onclick="showView('reports')">Reports</button>
-        <button class="btn small viewBtn" id="viewBtn-deleted" onclick="showView('deleted')">Deleted</button>
         <a class="btn small" href="track.html" target="_blank">Track Page</a>
         <a class="btn small" href="index.html" target="_blank">View Site</a>
         <button class="btn small" onclick="loadAll()">Refresh</button>
@@ -828,189 +741,69 @@
 
   <main class="wrap main">
 
-    <section id="ordersView" class="viewPanel active">
-      <section class="card">
-        <div class="cardHead">
-          <div>
-            <h3>Order Board</h3>
-            <p>Compact restaurant-style workflow. Click any box to filter orders quickly.</p>
-          </div>
-          <button class="btn primary small" onclick="loadAll()">Refresh Orders</button>
+    <section class="card">
+      <div class="cardHead">
+        <div>
+          <h3>Order Board</h3>
+          <p>Compact restaurant-style workflow. Click any box to filter orders quickly.</p>
         </div>
+        <button class="btn primary small" onclick="loadAll()">Refresh Orders</button>
+      </div>
 
-        <div class="cardBody">
-          <div id="orderBoard" class="orderBoard"></div>
+      <div class="cardBody">
+        <div id="orderBoard" class="orderBoard"></div>
 
-          <div class="boardFooter">
-            <span class="filterPill" id="currentBoardFilter">Filter: Active Orders</span>
-            <p class="hint">Use <b>Save Only</b> to update silently. Use <b>Save + WhatsApp</b> only when you want to notify the customer.</p>
-          </div>
+        <div class="boardFooter">
+          <span class="filterPill" id="currentBoardFilter">Filter: Active Orders</span>
+          <p class="hint">Use <b>Save Only</b> to update silently. Use <b>Save + WhatsApp</b> only when you want to notify the customer.</p>
         </div>
-      </section>
-
-      <section class="card">
-        <div class="cardHead">
-          <div>
-            <h3>Orders</h3>
-            <p>Daily order management. Expand an order for full details, status, invoice and privacy tools.</p>
-          </div>
-          <button class="btn small" onclick="clearBoardFilter()">Clear Board Filter</button>
-        </div>
-
-        <div class="cardBody">
-          <div class="searchRow">
-            <input id="orderSearch" placeholder="Search name, phone, email, order ID, tracking code..." oninput="renderOrders()">
-
-            <select id="orderDateFilter" onchange="renderOrders()">
-              <option value="all">All Dates</option>
-              <option value="today">Needed Today</option>
-              <option value="tomorrow">Needed Tomorrow</option>
-              <option value="week">Needed This Week</option>
-              <option value="month">Needed This Month</option>
-            </select>
-
-            <select id="orderTypeFilter" onchange="renderOrders()">
-              <option value="all">Pickup + Delivery</option>
-              <option value="Pickup">Pickup</option>
-              <option value="Delivery">Delivery</option>
-            </select>
-
-            <select id="orderSort" onchange="renderOrders()">
-              <option value="needed_soon">Needed date soonest</option>
-              <option value="newest">Newest first</option>
-              <option value="oldest">Oldest first</option>
-              <option value="needed_late">Needed date latest</option>
-              <option value="status">Status A-Z</option>
-              <option value="total_high">Total high to low</option>
-              <option value="total_low">Total low to high</option>
-            </select>
-
-            <button class="btn small" onclick="resetOrderFilters()">Reset</button>
-          </div>
-
-          <div id="ordersList" class="list">
-            <div class="loading">Loading orders...</div>
-          </div>
-        </div>
-      </section>
+      </div>
     </section>
 
-    <section id="reportsView" class="viewPanel">
-      <section class="card">
-        <div class="cardHead">
-          <div>
-            <h3>Reports / Print / CSV</h3>
-            <p>Export weekly, monthly, yearly or custom order data. Deleted orders are excluded unless selected.</p>
-          </div>
-          <button class="btn small" onclick="refreshReportPreview()">Refresh Preview</button>
+    <section class="card">
+      <div class="cardHead">
+        <div>
+          <h3>Orders</h3>
+          <p>Daily order management. Expand an order for full details, status, invoice and soft-delete tools.</p>
+        </div>
+        <button class="btn small" onclick="clearBoardFilter()">Clear Board Filter</button>
+      </div>
+
+      <div class="cardBody">
+        <div class="searchRow">
+          <input id="orderSearch" placeholder="Search name, phone, email, order ID, tracking code..." oninput="renderOrders()">
+
+          <select id="orderDateFilter" onchange="renderOrders()">
+            <option value="all">All Dates</option>
+            <option value="today">Needed Today</option>
+            <option value="tomorrow">Needed Tomorrow</option>
+            <option value="week">Needed This Week</option>
+            <option value="month">Needed This Month</option>
+          </select>
+
+          <select id="orderTypeFilter" onchange="renderOrders()">
+            <option value="all">Pickup + Delivery</option>
+            <option value="Pickup">Pickup</option>
+            <option value="Delivery">Delivery</option>
+          </select>
+
+          <select id="orderSort" onchange="renderOrders()">
+            <option value="needed_soon">Needed date soonest</option>
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="needed_late">Needed date latest</option>
+            <option value="status">Status A-Z</option>
+            <option value="total_high">Total high to low</option>
+            <option value="total_low">Total low to high</option>
+          </select>
+
+          <button class="btn small" onclick="resetOrderFilters()">Reset</button>
         </div>
 
-        <div class="cardBody">
-          <div class="reportGrid">
-            <div class="field">
-              <label>Range</label>
-              <select id="reportRange" onchange="toggleCustomReportDates(); refreshReportPreview();">
-                <option value="today">Today</option>
-                <option value="week">This Week</option>
-                <option value="month" selected>This Month</option>
-                <option value="year">This Year</option>
-                <option value="lifetime">Lifetime</option>
-                <option value="custom">Custom Dates</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Status</label>
-              <select id="reportStatus" onchange="refreshReportPreview()">
-                <option value="all">All Statuses</option>
-                <option value="Pending">Pending</option>
-                <option value="Confirmed">Confirmed</option>
-                <option value="InProgress">In Progress</option>
-                <option value="Ready">Ready / Delivery</option>
-                <option value="Completed">Completed</option>
-                <option value="Cancelled">Cancelled</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Deleted</label>
-              <select id="reportDeleted" onchange="refreshReportPreview()">
-                <option value="active">Active Only</option>
-                <option value="include">Include Deleted</option>
-                <option value="deleted">Deleted Only</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Date Basis</label>
-              <select id="reportDateBasis" onchange="refreshReportPreview()">
-                <option value="created">Use Created Date</option>
-                <option value="needed">Use Needed Date</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label>Actions</label>
-              <div class="reportActions">
-                <button class="btn primary small" onclick="exportReportCSV()">Export CSV</button>
-                <button class="btn small" onclick="printReportSummary()">Print Summary</button>
-                <button class="btn small" onclick="printReportOrders()">Print Orders</button>
-              </div>
-            </div>
-
-            <div id="customDateFields" class="full" style="display:none;">
-              <div class="miniGrid">
-                <div class="field">
-                  <label>From</label>
-                  <input id="reportFrom" type="date" onchange="refreshReportPreview()">
-                </div>
-
-                <div class="field">
-                  <label>To</label>
-                  <input id="reportTo" type="date" onchange="refreshReportPreview()">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="reportSummary" class="reportSummary"></div>
+        <div id="ordersList" class="list">
+          <div class="loading">Loading orders...</div>
         </div>
-      </section>
-    </section>
-
-    <section id="deletedView" class="viewPanel">
-      <section class="card">
-        <div class="cardHead">
-          <div>
-            <h3>Deleted Orders</h3>
-            <p>Deleted orders stay here for 30 days. Restore if deleted by mistake, or permanently delete after 30 days.</p>
-          </div>
-
-          <div class="navActions">
-            <button class="btn orange small" onclick="purgeOldDeletedOrders()">Purge Deleted 30+ Days</button>
-            <button class="btn small" onclick="loadAll()">Refresh Deleted</button>
-          </div>
-        </div>
-
-        <div class="cardBody">
-          <div class="deletedNotice">
-            Deleted orders should stay here for 30 days for safety. Each deleted order shows who deleted it, when it was deleted, and how many days are left before permanent deletion.
-          </div>
-
-          <div class="searchRow">
-            <input id="deletedSearch" placeholder="Search deleted orders..." oninput="renderDeletedOrders()">
-            <select id="deletedSort" onchange="renderDeletedOrders()">
-              <option value="newest_deleted">Newest deleted first</option>
-              <option value="oldest_deleted">Oldest deleted first</option>
-              <option value="days_left">Days left lowest first</option>
-            </select>
-          </div>
-
-          <div id="deletedOrdersList" class="list">
-            <div class="loading">Loading deleted orders...</div>
-          </div>
-        </div>
-      </section>
+      </div>
     </section>
 
   </main>
@@ -1047,7 +840,6 @@
   let orders = [];
   let orderItems = [];
   let boardFilter = "active";
-  let currentView = "orders";
 
   let siteSettings = {
     brand_name:"Siffat Cakes",
@@ -1186,22 +978,6 @@
   function renderAll(){
     renderOrderBoard();
     renderOrders();
-    refreshReportPreview();
-    renderDeletedOrders();
-  }
-
-  function showView(view){
-    currentView = view;
-
-    document.querySelectorAll(".viewPanel").forEach(panel => panel.classList.remove("active"));
-    document.querySelectorAll(".viewBtn").forEach(btn => btn.classList.remove("active"));
-
-    $(view + "View").classList.add("active");
-    $("viewBtn-" + view).classList.add("active");
-
-    if(view === "orders") renderOrders();
-    if(view === "reports") refreshReportPreview();
-    if(view === "deleted") renderDeletedOrders();
   }
 
   function renderOrderBoard(){
@@ -1450,11 +1226,11 @@
           </div>
 
           <div class="dangerZone">
-            <b>Delete Tools</b>
+            <b>Move to Deleted</b>
             <div class="pillRow">
               <button class="btn red small" onclick="moveOrderToDeleted('${escapeJs(id)}')">Move to Deleted</button>
             </div>
-            <p class="hint" style="margin-top:8px;">Deleted orders move to the Deleted section and can be restored within 30 days.</p>
+            <p class="hint" style="margin-top:8px;">This hides the order from employee view. Owner can check or restore deleted orders from Website Manager.</p>
           </div>
         </div>
       </div>
@@ -1468,12 +1244,9 @@
     const container = $("statusButtons-" + id);
     if(!container) return;
 
-    Array.from(container.querySelectorAll(".statusChoice")).forEach(btn => btn.classList.remove("active"));
-
-    const buttons = Array.from(container.querySelectorAll(".statusChoice"));
-    const target = buttons.find(btn => normalizeStatus(btn.textContent) === normalizeStatus(formatStatusLabel(status)));
-
-    if(target) target.classList.add("active");
+    Array.from(container.querySelectorAll(".statusChoice")).forEach(btn => {
+      btn.classList.toggle("active", normalizeStatus(btn.textContent) === normalizeStatus(formatStatusLabel(status)));
+    });
   }
 
   function renderOrderItem(item){
@@ -1522,9 +1295,7 @@
     const adminEmail = currentUser?.email || "Unknown admin";
     const auditLine = `[${new Date().toLocaleString()}] ${adminEmail}: set status to ${formatStatusLabel(status)}${notifyCustomer ? " + WhatsApp notification" : " · saved only"}.`;
 
-    const admin_note = oldNote
-      ? oldNote + "\n" + auditLine
-      : auditLine;
+    const admin_note = oldNote ? oldNote + "\n" + auditLine : auditLine;
 
     showToast(notifyCustomer ? "Saving and preparing WhatsApp..." : "Saving order update...");
 
@@ -1664,7 +1435,7 @@
     const order = orders.find(o => String(o.id) === String(id));
     if(!order) return;
 
-    const ok = confirm("Move this order to Deleted? It can be restored for 30 days.");
+    const ok = confirm("Move this order to Deleted? Owner can restore it later from Website Manager.");
     if(!ok) return;
 
     const adminEmail = currentUser?.email || "Unknown admin";
@@ -1735,563 +1506,6 @@
     }
 
     showToast(lastError?.message || "Could not move order to Deleted.", true);
-  }
-
-  function renderDeletedOrders(){
-    const box = $("deletedOrdersList");
-    if(!box) return;
-
-    const search = ($("deletedSearch")?.value || "").trim().toLowerCase();
-    const sort = $("deletedSort")?.value || "newest_deleted";
-
-    let rows = orders.filter(isDeletedOrder);
-
-    if(search){
-      rows = rows.filter(order => {
-        const combined = [
-          order.id,
-          getTrackingCode(order),
-          order.customer_name,
-          order.customer_phone,
-          order.customer_email,
-          order.deleted_by_email,
-          order.admin_note
-        ].join(" ").toLowerCase();
-
-        return combined.includes(search);
-      });
-    }
-
-    rows.sort((a,b) => {
-      if(sort === "oldest_deleted") return String(getDeletedDate(a) || "").localeCompare(String(getDeletedDate(b) || ""));
-      if(sort === "days_left") return getDaysLeftBeforePermanentDelete(a) - getDaysLeftBeforePermanentDelete(b);
-      return String(getDeletedDate(b) || "").localeCompare(String(getDeletedDate(a) || ""));
-    });
-
-    if(!rows.length){
-      box.innerHTML = `<div class="loading">No deleted orders found.</div>`;
-      return;
-    }
-
-    box.innerHTML = rows.map(renderDeletedOrderRow).join("");
-  }
-
-  function renderDeletedOrderRow(order){
-    const id = String(order.id);
-    const deletedAt = getDeletedDate(order);
-    const deletedBy = order.deleted_by_email || order.deleted_by || order.updated_by_email || "Unknown admin";
-    const daysLeft = getDaysLeftBeforePermanentDelete(order);
-    const canPermanentDelete = daysLeft <= 0;
-    const items = orderItems.filter(item => String(item.order_id) === id);
-
-    return `
-      <div class="orderCard" id="deleted-${escapeAttr(id)}">
-        <div class="orderTop" onclick="toggleDeletedOrder('${escapeJs(id)}')">
-          <div>
-            <h4>${escapeHtml(order.customer_name || "Customer")} · ${money(order.estimated_total)}</h4>
-            <p>
-              Deleted by: ${escapeHtml(deletedBy)}<br>
-              Deleted: ${deletedAt ? formatDateTime(deletedAt) : "Unknown date"}<br>
-              Order ID: ${escapeHtml(id.slice(0,8).toUpperCase())} · Tracking: ${escapeHtml(getTrackingCode(order))}
-            </p>
-
-            <div class="pillRow">
-              <span class="deletedBadge">${canPermanentDelete ? "Ready for permanent delete" : daysLeft + " day(s) left"}</span>
-              <span class="pill">${items.length} item(s)</span>
-              <span class="pill">${escapeHtml(formatStatusLabel(order.status || "Pending"))}</span>
-            </div>
-          </div>
-
-          <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;" onclick="event.stopPropagation()">
-            <span class="status Deleted">Deleted</span>
-            <button class="btn small" onclick="toggleDeletedOrder('${escapeJs(id)}')">Details</button>
-          </div>
-        </div>
-
-        <div class="orderBody">
-          <div class="miniGrid">
-            <div>
-              <div class="sectionTitle">Deleted Order Info</div>
-              <div class="orderItem">
-                <b>Customer:</b> ${escapeHtml(order.customer_name || "")}<br>
-                <b>Phone:</b> ${escapeHtml(order.customer_phone || "")}<br>
-                <b>Email:</b> ${escapeHtml(order.customer_email || "")}<br>
-                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
-                <b>Deleted By:</b> ${escapeHtml(deletedBy)}<br>
-                <b>Deleted At:</b> ${deletedAt ? formatDateTime(deletedAt) : "Unknown"}
-              </div>
-            </div>
-
-            <div>
-              <div class="sectionTitle">Restore / Delete</div>
-              <div class="orderItem">
-                <b>30-day rule:</b> ${canPermanentDelete ? "This order can now be permanently deleted." : daysLeft + " day(s) left before permanent delete."}<br>
-                <b>Admin note:</b><br>${escapeHtml(order.admin_note || "No admin note")}
-              </div>
-            </div>
-          </div>
-
-          <div class="sectionTitle">Items</div>
-          <div class="orderItems">
-            ${items.length ? items.map(renderOrderItem).join("") : `<div class="loading">No items found for this order.</div>`}
-          </div>
-
-          <div class="actionStrip">
-            <button class="btn green small" onclick="restoreDeletedOrder('${escapeJs(id)}')">Restore Order</button>
-            <button class="btn red small" onclick="permanentDeleteOrder('${escapeJs(id)}', ${canPermanentDelete ? "true" : "false"})">
-              Permanent Delete${canPermanentDelete ? "" : " Early"}
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  async function restoreDeletedOrder(id){
-    const order = orders.find(o => String(o.id) === String(id));
-    if(!order) return;
-
-    const ok = confirm("Restore this deleted order back to Orders?");
-    if(!ok) return;
-
-    const adminEmail = currentUser?.email || "Unknown admin";
-    const auditLine = `[${new Date().toLocaleString()}] ${adminEmail}: restored deleted order.`;
-    const oldNote = order.admin_note || "";
-
-    const rpcAttempts = [
-      { fn:"admin_restore_order", args:{ p_order_id:id, p_admin_email:adminEmail } },
-      { fn:"admin_restore_deleted_order", args:{ p_order_id:id, p_admin_email:adminEmail } }
-    ];
-
-    for(const attempt of rpcAttempts){
-      try{
-        const { error } = await supabaseClient.rpc(attempt.fn, attempt.args);
-        if(!error){
-          await loadAll(false);
-          showToast("Order restored.");
-          showView("orders");
-          return;
-        }
-      }catch(err){
-        console.warn("Restore RPC skipped:", err.message || err);
-      }
-    }
-
-    const attempts = [
-      {
-        deleted_at:null,
-        deleted_by_email:null,
-        deleted_by_user_id:null,
-        is_deleted:false,
-        archived:false,
-        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
-      },
-      {
-        deleted_at:null,
-        deleted_by_email:null,
-        is_deleted:false,
-        archived:false,
-        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
-      },
-      {
-        deleted_at:null,
-        deleted_by_email:null,
-        archived:false,
-        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
-      },
-      {
-        archived:false,
-        admin_note:oldNote ? oldNote + "\n" + auditLine : auditLine
-      }
-    ];
-
-    let lastError = null;
-
-    for(const payload of attempts){
-      const { error } = await supabaseClient.from("orders").update(payload).eq("id", id);
-      if(!error){
-        await loadAll(false);
-        showToast("Order restored.");
-        showView("orders");
-        return;
-      }
-      lastError = error;
-    }
-
-    showToast(lastError?.message || "Could not restore order.", true);
-  }
-
-  async function permanentDeleteOrder(id, allowedByDate = false){
-    if(!allowedByDate){
-      const okEarly = confirm("This order may be under 30 days old. Permanently delete early anyway?");
-      if(!okEarly) return;
-    }
-
-    const ok = confirm("Permanently delete this order and its items? This cannot be undone.");
-    if(!ok) return;
-
-    try{
-      const rpcAttempts = [
-        { fn:"admin_permanent_delete_order", args:{ p_order_id:id } },
-        { fn:"admin_delete_order_permanent", args:{ p_order_id:id } },
-        { fn:"admin_delete_order", args:{ p_order_id:id } }
-      ];
-
-      for(const attempt of rpcAttempts){
-        try{
-          const { error } = await supabaseClient.rpc(attempt.fn, attempt.args);
-          if(!error){
-            await loadAll(false);
-            showToast("Order permanently deleted.");
-            return;
-          }
-        }catch(err){
-          console.warn("Permanent delete RPC skipped:", err.message || err);
-        }
-      }
-
-      const itemsDelete = await supabaseClient.from("order_items").delete().eq("order_id", id);
-      if(itemsDelete.error) throw itemsDelete.error;
-
-      const orderDelete = await supabaseClient.from("orders").delete().eq("id", id);
-      if(orderDelete.error) throw orderDelete.error;
-
-      await loadAll(false);
-      showToast("Order permanently deleted.");
-    }catch(err){
-      console.error(err);
-      showToast(err.message || "Permanent delete failed.", true);
-    }
-  }
-
-  async function purgeOldDeletedOrders(){
-    const oldDeleted = orders.filter(order => isDeletedOrder(order) && getDaysLeftBeforePermanentDelete(order) <= 0);
-
-    if(!oldDeleted.length){
-      showToast("No deleted orders older than 30 days.");
-      return;
-    }
-
-    const ok = confirm(`Permanently delete ${oldDeleted.length} deleted order(s) older than 30 days?`);
-    if(!ok) return;
-
-    for(const order of oldDeleted){
-      const id = String(order.id);
-      await supabaseClient.from("order_items").delete().eq("order_id", id);
-      await supabaseClient.from("orders").delete().eq("id", id);
-    }
-
-    await loadAll(false);
-    showToast("Old deleted orders purged.");
-  }
-
-  function refreshReportPreview(){
-    const box = $("reportSummary");
-    if(!box) return;
-
-    const rows = getReportRows();
-    const total = rows.reduce((sum,order) => sum + Number(order.estimated_total || 0), 0);
-    const quoteCount = rows.filter(isQuoteOrder).length;
-    const completed = rows.filter(order => sameStatus(order.status,"Completed")).length;
-    const deleted = rows.filter(isDeletedOrder).length;
-    const itemsCount = rows.reduce((sum,order) => sum + orderItems.filter(item => String(item.order_id) === String(order.id)).length, 0);
-
-    box.innerHTML = `
-      <div class="reportBox"><b>${rows.length}</b><span>Orders</span></div>
-      <div class="reportBox"><b>${itemsCount}</b><span>Items</span></div>
-      <div class="reportBox"><b>${money(total)}</b><span>Estimated Total</span></div>
-      <div class="reportBox"><b>${completed}</b><span>Completed</span></div>
-      <div class="reportBox"><b>${quoteCount}</b><span>Quote Orders</span></div>
-      <div class="reportBox"><b>${deleted}</b><span>Deleted Included</span></div>
-    `;
-  }
-
-  function getReportRows(){
-    const range = $("reportRange")?.value || "month";
-    const status = $("reportStatus")?.value || "all";
-    const deletedMode = $("reportDeleted")?.value || "active";
-    const basis = $("reportDateBasis")?.value || "created";
-
-    let rows = [...orders];
-
-    if(deletedMode === "active") rows = rows.filter(order => !isDeletedOrder(order));
-    if(deletedMode === "deleted") rows = rows.filter(isDeletedOrder);
-
-    if(status !== "all"){
-      rows = rows.filter(order => sameStatus(order.status,status));
-    }
-
-    rows = rows.filter(order => isOrderInsideReportRange(order, range, basis));
-
-    return rows.sort((a,b) => String(b.created_at || "").localeCompare(String(a.created_at || "")));
-  }
-
-  function isOrderInsideReportRange(order, range, basis){
-    if(range === "lifetime") return true;
-
-    const value = basis === "needed" ? order.needed_date : order.created_at;
-    if(!value) return false;
-
-    const d = basis === "needed" ? new Date(String(value) + "T00:00:00") : new Date(value);
-    if(Number.isNaN(d.getTime())) return false;
-
-    const now = new Date();
-
-    if(range === "today"){
-      return d.toDateString() === now.toDateString();
-    }
-
-    if(range === "week"){
-      const start = startOfWeek(now);
-      const end = new Date(start);
-      end.setDate(end.getDate() + 7);
-      return d >= start && d < end;
-    }
-
-    if(range === "month"){
-      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-    }
-
-    if(range === "year"){
-      return d.getFullYear() === now.getFullYear();
-    }
-
-    if(range === "custom"){
-      const fromValue = $("reportFrom")?.value || "";
-      const toValue = $("reportTo")?.value || "";
-
-      if(!fromValue && !toValue) return true;
-
-      const from = fromValue ? new Date(fromValue + "T00:00:00") : null;
-      const to = toValue ? new Date(toValue + "T23:59:59") : null;
-
-      if(from && d < from) return false;
-      if(to && d > to) return false;
-
-      return true;
-    }
-
-    return true;
-  }
-
-  function toggleCustomReportDates(){
-    const show = $("reportRange")?.value === "custom";
-    $("customDateFields").style.display = show ? "block" : "none";
-  }
-
-  function exportReportCSV(){
-    const rows = getReportRows();
-
-    if(!rows.length){
-      showToast("No report rows to export.", true);
-      return;
-    }
-
-    const headers = [
-      "Order ID",
-      "Tracking Code",
-      "Created At",
-      "Needed Date",
-      "Needed Time",
-      "Status",
-      "Customer Name",
-      "Phone",
-      "Email",
-      "Delivery Type",
-      "Estimated Total",
-      "Items Count",
-      "Quote Order",
-      "Deleted",
-      "Deleted At",
-      "Deleted By",
-      "Admin Note"
-    ];
-
-    const lines = [headers.map(csvCell).join(",")];
-
-    rows.forEach(order => {
-      const items = orderItems.filter(item => String(item.order_id) === String(order.id));
-
-      const row = [
-        order.id || "",
-        getTrackingCode(order),
-        order.created_at || "",
-        order.needed_date || "",
-        order.needed_time || "",
-        formatStatusLabel(order.status || ""),
-        order.customer_name || "",
-        order.customer_phone || "",
-        order.customer_email || "",
-        order.delivery_type || "",
-        Number(order.estimated_total || 0),
-        items.length,
-        isQuoteOrder(order) ? "Yes" : "No",
-        isDeletedOrder(order) ? "Yes" : "No",
-        getDeletedDate(order) || "",
-        order.deleted_by_email || "",
-        order.admin_note || ""
-      ];
-
-      lines.push(row.map(csvCell).join(","));
-    });
-
-    const filename = `siffat-cakes-orders-${new Date().toISOString().slice(0,10)}.csv`;
-    downloadFile(filename, lines.join("\n"), "text/csv;charset=utf-8;");
-    showToast("CSV exported.");
-  }
-
-  function printReportSummary(){
-    const rows = getReportRows();
-
-    if(!rows.length){
-      showToast("No report rows to print.", true);
-      return;
-    }
-
-    const total = rows.reduce((sum,order) => sum + Number(order.estimated_total || 0), 0);
-    const quoteCount = rows.filter(isQuoteOrder).length;
-    const completed = rows.filter(order => sameStatus(order.status,"Completed")).length;
-    const deleted = rows.filter(isDeletedOrder).length;
-
-    const win = window.open("", "_blank");
-    if(!win){
-      showToast("Popup blocked. Allow popups to print.", true);
-      return;
-    }
-
-    win.document.write(`
-      <!doctype html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <title>Siffat Cakes Report</title>
-        <style>
-          body{font-family:Arial,sans-serif;margin:24px;color:#1d141f}
-          h1{color:#640D6B}
-          table{width:100%;border-collapse:collapse;margin-top:16px}
-          th,td{border:1px solid #e8d6ea;padding:8px;text-align:left;font-size:12px}
-          th{background:#640D6B;color:#fff}
-          .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-          .box{border:1px solid #e8d6ea;border-radius:12px;padding:12px}
-          .box b{display:block;color:#640D6B;font-size:22px}
-          @media print{button{display:none}}
-        </style>
-      </head>
-      <body>
-        <button onclick="window.print()">Print</button>
-        <h1>${escapeHtml(siteSettings.brand_name || "Siffat Cakes")} Order Report</h1>
-        <p>Generated: ${escapeHtml(new Date().toLocaleString())}</p>
-
-        <div class="stats">
-          <div class="box"><b>${rows.length}</b><span>Orders</span></div>
-          <div class="box"><b>${money(total)}</b><span>Total</span></div>
-          <div class="box"><b>${completed}</b><span>Completed</span></div>
-          <div class="box"><b>${quoteCount}</b><span>Quote</span></div>
-          <div class="box"><b>${deleted}</b><span>Deleted</span></div>
-        </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Order</th>
-              <th>Customer</th>
-              <th>Needed</th>
-              <th>Status</th>
-              <th>Total</th>
-              <th>Deleted</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rows.map(order => `
-              <tr>
-                <td>${escapeHtml(String(order.id || "").slice(0,8).toUpperCase())}</td>
-                <td>${escapeHtml(order.customer_name || "")}</td>
-                <td>${escapeHtml(formatDate(order.needed_date))}</td>
-                <td>${escapeHtml(formatStatusLabel(order.status || ""))}</td>
-                <td>${escapeHtml(money(order.estimated_total))}</td>
-                <td>${isDeletedOrder(order) ? "Yes" : "No"}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      </body>
-      </html>
-    `);
-
-    win.document.close();
-    win.focus();
-  }
-
-  function printReportOrders(){
-    const rows = getReportRows();
-
-    if(!rows.length){
-      showToast("No report orders to print.", true);
-      return;
-    }
-
-    const win = window.open("", "_blank");
-    if(!win){
-      showToast("Popup blocked. Allow popups to print.", true);
-      return;
-    }
-
-    win.document.write(`
-      <!doctype html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <title>Siffat Cakes Orders Print</title>
-        <style>
-          body{font-family:Arial,sans-serif;margin:22px;color:#1d141f;background:#fff}
-          .top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px;border-bottom:2px solid #640D6B;padding-bottom:12px}
-          h1{margin:0;color:#640D6B}
-          .order{border:1px solid #e8d6ea;border-radius:14px;padding:12px;margin:0 0 14px;break-inside:avoid}
-          .order h2{margin:0 0 6px;color:#640D6B;font-size:18px}
-          .meta{color:#725a76;font-size:12px;line-height:1.55}
-          .items{margin-top:10px;border-top:1px solid #e8d6ea;padding-top:8px}
-          .item{font-size:12px;margin-bottom:8px;line-height:1.5}
-          @media print{button{display:none}.order{page-break-inside:avoid}}
-        </style>
-      </head>
-      <body>
-        <button onclick="window.print()">Print</button>
-
-        <div class="top">
-          <div>
-            <h1>${escapeHtml(siteSettings.brand_name || "Siffat Cakes")} Orders</h1>
-            <div class="meta">Generated: ${escapeHtml(new Date().toLocaleString())}</div>
-          </div>
-          <div class="meta">Total Orders: ${rows.length}</div>
-        </div>
-
-        ${rows.map(order => {
-          const items = orderItems.filter(item => String(item.order_id) === String(order.id));
-
-          return `
-            <section class="order">
-              <h2>${escapeHtml(order.customer_name || "Customer")} · ${escapeHtml(money(order.estimated_total))}</h2>
-              <div class="meta">
-                Order ID: ${escapeHtml(String(order.id || "").slice(0,8).toUpperCase())}<br>
-                Tracking: ${escapeHtml(getTrackingCode(order))}<br>
-                Status: ${escapeHtml(formatStatusLabel(order.status || ""))}<br>
-                Needed: ${escapeHtml(formatDate(order.needed_date))} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
-                Phone: ${escapeHtml(order.customer_phone || "")}<br>
-                Email: ${escapeHtml(order.customer_email || "")}<br>
-                Type: ${escapeHtml(order.delivery_type || "")}
-              </div>
-              <div class="items">
-                ${items.length ? items.map(item => `<div class="item">${renderPlainOrderItem(item)}</div>`).join("") : "No items found."}
-              </div>
-            </section>
-          `;
-        }).join("")}
-      </body>
-      </html>
-    `);
-
-    win.document.close();
-    win.focus();
   }
 
   function whatsappCustomer(id){
@@ -2525,40 +1739,8 @@
     `;
   }
 
-  function renderPlainOrderItem(item){
-    const info = parseJson(item.product_snapshot || item.quick_product_snapshot || item.snapshot_json || item.addons_json || null);
-    const isQuick = isQuickOrderItem(item);
-
-    if(isQuick){
-      return `
-        <b>${escapeHtml(item.cake_name || item.product_name || info.name || "Quick Dessert")}</b><br>
-        Type: Quick Dessert<br>
-        Category: ${escapeHtml(info.categoryName || info.category || item.option_name || "")}<br>
-        Variant: ${escapeHtml(info.variant || item.flavour_name || "")}<br>
-        Qty: ${escapeHtml(item.quantity || 1)}<br>
-        Total: ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : escapeHtml(money(item.estimated_item_total))}
-      `;
-    }
-
-    return `
-      <b>${escapeHtml(item.cake_name || "Cake")}</b><br>
-      Type: Custom Cake<br>
-      Size: ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""}<br>
-      Flavour: ${escapeHtml(item.flavour_name || "")}<br>
-      Option: ${escapeHtml(item.option_name || "")}<br>
-      Qty: ${escapeHtml(item.quantity || 1)}<br>
-      Message: ${escapeHtml(item.message_on_cake || "")}<br>
-      Total: ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : escapeHtml(money(item.estimated_item_total))}
-    `;
-  }
-
   function toggleOrder(id){
     const el = $("order-" + id);
-    if(el) el.classList.toggle("open");
-  }
-
-  function toggleDeletedOrder(id){
-    const el = $("deleted-" + id);
     if(el) el.classList.toggle("open");
   }
 
@@ -2689,24 +1871,6 @@
     );
   }
 
-  function getDeletedDate(order){
-    return order.deleted_at || order.deleted_date || order.removed_at || "";
-  }
-
-  function getDaysLeftBeforePermanentDelete(order){
-    const deletedAt = getDeletedDate(order);
-
-    if(!deletedAt) return 30;
-
-    const deleted = new Date(deletedAt);
-    if(Number.isNaN(deleted.getTime())) return 30;
-
-    const now = new Date();
-    const diffMs = now - deleted;
-    const daysPassed = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    return Math.max(0, 30 - daysPassed);
-  }
-
   function isQuickOrderItem(item){
     const raw = String(item.product_type || item.item_type || item.type || "").toLowerCase();
 
@@ -2776,27 +1940,6 @@
     navigator.clipboard.writeText(el.value)
       .then(() => showToast("Copied."))
       .catch(() => showToast("Could not copy.", true));
-  }
-
-  function csvCell(value){
-    const text = String(value ?? "");
-    return `"${text.replaceAll('"','""')}"`;
-  }
-
-  function downloadFile(filename, content, mimeType){
-    const blob = new Blob([content], { type:mimeType });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-      a.remove();
-    }, 0);
   }
 
   function cacheBustImage(url){
