@@ -702,7 +702,7 @@
   <div class="loginCard">
     <div class="logo" style="margin-bottom:14px;">🍰</div>
     <h2>Order Manager Login</h2>
-    <p>Login to manage daily customer orders, update statuses, message customers, and print orders.</p>
+    <p>Login to manage daily customer orders, update statuses, message customers and print orders.</p>
 
     <div class="field">
       <label>Email</label>
@@ -733,7 +733,8 @@
         <span class="btn green small">Connected</span>
         <a class="btn small" href="track.html" target="_blank">Track Page</a>
         <a class="btn small" href="index.html" target="_blank">View Site</a>
-        <button class="btn small" onclick="loadAll()">Refresh</button>
+        <button class="btn small" onclick="loadAll()">Refresh Orders</button>
+        <button class="btn blue small" onclick="hardRefreshPage()">Hard Refresh</button>
         <button class="btn red small" onclick="logoutAdmin()">Sign Out</button>
       </div>
     </div>
@@ -764,7 +765,7 @@
       <div class="cardHead">
         <div>
           <h3>Orders</h3>
-          <p>Daily order management. Expand an order for full details, status, invoice and soft-delete tools.</p>
+          <p>Daily order management. Expand an order for full details, status, invoice and delete tools.</p>
         </div>
         <button class="btn small" onclick="clearBoardFilter()">Clear Board Filter</button>
       </div>
@@ -1159,6 +1160,7 @@
             ${ORDER_STATUSES.map(status => `
               <button
                 class="statusChoice ${sameStatus(safeStatus,status.value) ? "active" : ""}"
+                data-status="${escapeHtml(status.value)}"
                 onclick="pickStatus('${escapeJs(id)}','${escapeJs(status.value)}')">
                 ${escapeHtml(status.label)}
               </button>
@@ -1226,11 +1228,11 @@
           </div>
 
           <div class="dangerZone">
-            <b>Move to Deleted</b>
+            <b>Delete Tools</b>
             <div class="pillRow">
               <button class="btn red small" onclick="moveOrderToDeleted('${escapeJs(id)}')">Move to Deleted</button>
             </div>
-            <p class="hint" style="margin-top:8px;">This hides the order from employee view. Owner can check or restore deleted orders from Website Manager.</p>
+            <p class="hint" style="margin-top:8px;">This hides the order from employee page. Owner can review/restore deleted orders from Website Manager.</p>
           </div>
         </div>
       </div>
@@ -1244,9 +1246,11 @@
     const container = $("statusButtons-" + id);
     if(!container) return;
 
-    Array.from(container.querySelectorAll(".statusChoice")).forEach(btn => {
-      btn.classList.toggle("active", normalizeStatus(btn.textContent) === normalizeStatus(formatStatusLabel(status)));
-    });
+    const buttons = Array.from(container.querySelectorAll(".statusChoice"));
+    buttons.forEach(btn => btn.classList.remove("active"));
+
+    const target = buttons.find(btn => sameStatus(btn.dataset.status, status));
+    if(target) target.classList.add("active");
   }
 
   function renderOrderItem(item){
@@ -1295,7 +1299,9 @@
     const adminEmail = currentUser?.email || "Unknown admin";
     const auditLine = `[${new Date().toLocaleString()}] ${adminEmail}: set status to ${formatStatusLabel(status)}${notifyCustomer ? " + WhatsApp notification" : " · saved only"}.`;
 
-    const admin_note = oldNote ? oldNote + "\n" + auditLine : auditLine;
+    const admin_note = oldNote
+      ? oldNote + "\n" + auditLine
+      : auditLine;
 
     showToast(notifyCustomer ? "Saving and preparing WhatsApp..." : "Saving order update...");
 
@@ -1312,13 +1318,15 @@
       return;
     }
 
-    await loadAll(false);
-
     if(notifyCustomer){
       sendCustomerStatusWhatsApp(order, status, tracking_code);
+      showToast("Order saved. WhatsApp opened. Refreshing...");
+      hardRefreshPage(1200);
+      return;
     }
 
-    showToast(notifyCustomer ? "Order saved. WhatsApp opened." : "Order saved.");
+    showToast("Order saved. Refreshing...");
+    hardRefreshPage(700);
   }
 
   async function updateOrderSmart(id,data){
@@ -1435,7 +1443,7 @@
     const order = orders.find(o => String(o.id) === String(id));
     if(!order) return;
 
-    const ok = confirm("Move this order to Deleted? Owner can restore it later from Website Manager.");
+    const ok = confirm("Move this order to Deleted? Owner can review or restore it from Website Manager.");
     if(!ok) return;
 
     const adminEmail = currentUser?.email || "Unknown admin";
@@ -1452,8 +1460,8 @@
       try{
         const { error } = await supabaseClient.rpc(attempt.fn, attempt.args);
         if(!error){
-          await loadAll(false);
-          showToast("Order moved to Deleted.");
+          showToast("Order moved to Deleted. Refreshing...");
+          hardRefreshPage(900);
           return;
         }
       }catch(err){
@@ -1498,8 +1506,8 @@
     for(const payload of attempts){
       const { error } = await supabaseClient.from("orders").update(payload).eq("id", id);
       if(!error){
-        await loadAll(false);
-        showToast("Order moved to Deleted.");
+        showToast("Order moved to Deleted. Refreshing...");
+        hardRefreshPage(900);
         return;
       }
       lastError = error;
@@ -1593,26 +1601,36 @@
     const brand = siteSettings.brand_name || "Siffat Cakes";
     const logo = siteSettings.logo_url || "";
     const shortId = String(order.id || "").slice(0,8).toUpperCase();
-    const calculatedSubtotal = items.reduce((sum,item) => sum + Number(item.estimated_item_total || 0), 0);
+
+    const itemSubtotal = items.reduce((sum,item) => sum + Number(item.estimated_item_total || 0), 0);
+    const savedSubtotal = Number(order.subtotal ?? order.estimated_subtotal ?? order.known_subtotal ?? 0);
     const estimatedTotal = Number(order.estimated_total || 0);
-    const finalSubtotal = calculatedSubtotal || estimatedTotal;
-    const delivery = Number(order.delivery_fee ?? 0);
+
+    const subtotal = itemSubtotal > 0
+      ? itemSubtotal
+      : savedSubtotal > 0
+        ? savedSubtotal
+        : estimatedTotal;
+
+    const delivery = getInvoiceDeliveryFee(order);
     const savedTax = Number(order.hst_amount ?? order.tax_amount ?? order.hst ?? 0);
     const hstRate = Number(siteSettings.hst_rate ?? 13);
-    const shouldChargeHst = truthy(siteSettings.charge_hst) || savedTax > 0;
-    let tax = savedTax;
 
-    if(!tax && shouldChargeHst && finalSubtotal > 0){
-      tax = Math.round(((finalSubtotal + delivery) * hstRate / 100) * 100) / 100;
-    }
+    const shouldChargeHst =
+      truthy(siteSettings.charge_hst) ||
+      savedTax > 0 ||
+      truthy(order.charge_hst) ||
+      Number(order.hst_rate || 0) > 0;
 
-    let finalTotal = estimatedTotal;
+    const taxableBase = subtotal + delivery;
 
-    if(shouldChargeHst){
-      finalTotal = finalSubtotal + delivery + tax;
-    }else if(!finalTotal){
-      finalTotal = finalSubtotal + delivery + tax;
-    }
+    const hstAmount = savedTax > 0
+      ? savedTax
+      : shouldChargeHst && taxableBase > 0
+        ? roundMoney(taxableBase * (hstRate / 100))
+        : 0;
+
+    const invoiceTotal = taxableBase + hstAmount;
 
     return `<!doctype html>
 <html>
@@ -1645,7 +1663,7 @@
     td:last-child,th:last-child{text-align:right}
     .itemName{font-weight:700;color:#1d141f}
     .itemMeta{margin-top:4px;color:#725a76;font-size:11px;line-height:1.42}
-    .totals{margin-left:auto;width:280px;margin-top:14px;border:1px solid rgba(100,13,107,.18);border-radius:14px;overflow:hidden}
+    .totals{margin-left:auto;width:300px;margin-top:14px;border:1px solid rgba(100,13,107,.18);border-radius:14px;overflow:hidden}
     .totals div{display:flex;justify-content:space-between;padding:9px 12px;border-top:1px solid rgba(100,13,107,.10)}
     .totals div:first-child{border-top:0}
     .totals .grand{background:#640D6B;color:white;font-weight:800;font-size:15px}
@@ -1703,10 +1721,10 @@
   </section>
 
   <section class="totals">
-    <div><span>Subtotal</span><b>${finalSubtotal ? money(finalSubtotal) : "Quote"}</b></div>
+    <div><span>Subtotal</span><b>${subtotal ? money(subtotal) : "Quote"}</b></div>
     ${delivery ? `<div><span>Delivery</span><b>${money(delivery)}</b></div>` : ""}
-    ${shouldChargeHst ? `<div><span>HST (${hstRate}%)</span><b>${money(tax)}</b></div>` : ""}
-    <div class="grand"><span>Total</span><b>${finalTotal ? money(finalTotal) : "Quote"}</b></div>
+    ${shouldChargeHst ? `<div><span>HST (${hstRate}%)</span><b>${money(hstAmount)}</b></div>` : ""}
+    <div class="grand"><span>Total</span><b>${invoiceTotal ? money(invoiceTotal) : "Quote"}</b></div>
   </section>
 
   <section class="thanks">Thank you for ordering from ${escapeHtml(brand)}. Final confirmation can be provided by the shop after review/payment.</section>
@@ -1714,6 +1732,20 @@
 </main>
 </body>
 </html>`;
+  }
+
+  function getInvoiceDeliveryFee(order){
+    if(order.delivery_fee !== undefined && order.delivery_fee !== null){
+      return Number(order.delivery_fee || 0);
+    }
+
+    const isDelivery = String(order.delivery_type || "").toLowerCase() === "delivery";
+
+    if(isDelivery){
+      return Number(siteSettings.default_delivery_fee || 0);
+    }
+
+    return 0;
   }
 
   function renderInvoiceItem(item){
@@ -1866,6 +1898,7 @@
       !!order.deleted_at ||
       truthy(order.is_deleted) ||
       truthy(order.deleted) ||
+      truthy(order.archived) ||
       normalizeStatus(order.status) === "deleted" ||
       !!order.deleted_by_email
     );
@@ -1909,6 +1942,10 @@
     return v === true || v === "true" || v === 1 || v === "1";
   }
 
+  function roundMoney(value){
+    return Math.round(Number(value || 0) * 100) / 100;
+  }
+
   function money(value){
     const currency = siteSettings.currency || "$";
     const n = Number(value || 0);
@@ -1940,6 +1977,16 @@
     navigator.clipboard.writeText(el.value)
       .then(() => showToast("Copied."))
       .catch(() => showToast("Could not copy.", true));
+  }
+
+  function hardRefreshPage(delay = 0){
+    showToast("Hard refreshing page...");
+
+    setTimeout(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.set("_refresh", Date.now().toString());
+      window.location.replace(url.toString());
+    }, delay);
   }
 
   function cacheBustImage(url){
