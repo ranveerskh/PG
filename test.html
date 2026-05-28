@@ -1328,11 +1328,6 @@
       }
     }
 
-
-    /* =========================================================
-       MOBILE COMPACT VERSION - for phone-first ordering
-       Keeps desktop layout, but makes phone view shorter/faster.
-    ========================================================= */
     @media(max-width:640px){
       body{
         background:
@@ -1478,7 +1473,6 @@
         line-height:1.32;
       }
 
-      /* On phone, skip the big photo + shortcut block so menu appears fast. */
       .heroSide{
         display:none;
       }
@@ -1704,9 +1698,6 @@
       }
     }
 
-    /* =========================================================
-       MOBILE POLISH V2 - cleaner header + different occasion style
-    ========================================================= */
     @media(max-width:640px){
       .topbar{
         background:rgba(255,255,255,.88);
@@ -1837,9 +1828,6 @@
       }
     }
 
-  
-
-    /* Ranveer mobile premium cleanup: compact, less text, no noisy brochure blocks */
     @media(max-width:640px){
       body{background:#fff8ff;}
       .wrap{width:min(100vw - 20px,1480px);}
@@ -1892,7 +1880,6 @@
       .empty,.loader{min-height:86px;padding:14px;border-radius:18px;font-size:12px;}
       .footer{padding-bottom:76px;}
     }
-
   </style>
 </head>
 
@@ -1902,7 +1889,7 @@
 <header class="topbar">
   <div class="wrap nav">
     <a href="index.html" class="brand" aria-label="Siffat Cakes homepage">
-      <div id="siteLogo" class="logo">ð°</div>
+      <div id="siteLogo" class="logo">🍰</div>
       <div class="brandText">
         <h1 id="siteBrandName">Siffat Cakes</h1>
         <p id="siteTagline">Eggless Cakes & Desserts</p>
@@ -1994,7 +1981,7 @@
               <b id="heroPhotoTitle">Freshly made for your celebration</b>
               <span id="heroPhotoText">Cakes, cupcakes, brownies, muffins and baklava.</span>
             </div>
-            <div class="photoBadge">â¦</div>
+            <div class="photoBadge">✦</div>
           </div>
         </div>
 
@@ -2040,7 +2027,7 @@
     <div class="wrap">
       <div class="promiseStrip">
         <div class="promiseCard">
-          <div class="promiseIcon">ð°</div>
+          <div class="promiseIcon">🍰</div>
           <div>
             <b>Custom cakes</b>
             <span>Choose size, flavour, message and add-ons for cake orders.</span>
@@ -2048,7 +2035,7 @@
         </div>
 
         <div class="promiseCard">
-          <div class="promiseIcon">â¡</div>
+          <div class="promiseIcon">⚡</div>
           <div>
             <b>Quick desserts</b>
             <span>Cupcakes, muffins, brownies and baklava stay simple to order.</span>
@@ -2056,7 +2043,7 @@
         </div>
 
         <div class="promiseCard">
-          <div class="promiseIcon">ð¬</div>
+          <div class="promiseIcon">💬</div>
           <div>
             <b>WhatsApp confirmation</b>
             <span>Customer sends the order request and shop confirms final details.</span>
@@ -2064,7 +2051,7 @@
         </div>
 
         <div class="promiseCard">
-          <div class="promiseIcon">â¨</div>
+          <div class="promiseIcon">✨</div>
           <div>
             <b>Fresh & personal</b>
             <span>Good for birthdays, anniversaries, gifts and special events.</span>
@@ -2189,7 +2176,7 @@
 <footer class="footer">
   <div class="wrap footerInner">
     <div>
-      <div class="footerBrand">Â© <span id="year"></span> <span id="footerBrand">Siffat Cakes</span></div>
+      <div class="footerBrand">© <span id="year"></span> <span id="footerBrand">Siffat Cakes</span></div>
       <span class="footerSmall" id="footerAddress">381 Talbot Street, St. Thomas</span>
       <span class="footerSmall" id="footerHours"></span>
     </div>
@@ -2213,7 +2200,7 @@
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const CART_KEY = "cakeShopCartV1";
-  const CACHE_KEY = "siffatHomeCacheV4";
+  const CACHE_KEY = "siffatHomeCacheV5";
   const CACHE_MAX_AGE_MS = 1000 * 60 * 60 * 12;
   const LOAD_TIMEOUT_MS = 9000;
   const LOAD_RETRY_DELAYS = [0, 900, 1800, 3500];
@@ -2297,6 +2284,7 @@
   let cakes = [];
   let quickProducts = [];
   let cakeCategoryLinks = [];
+  let homepageMenuCards = [];
   let currentQuickFilter = "all";
   let lastLoadAt = 0;
 
@@ -2306,8 +2294,6 @@
     $("year").textContent = new Date().getFullYear();
     updateCartCount();
 
-    // Show the core mobile menu immediately. Live Supabase data updates it after loading.
-    // This prevents the homepage from sitting on "Loading menu..." when Supabase is slow/cold.
     applySettings();
     renderMainCategories();
     renderOccasions();
@@ -2361,14 +2347,17 @@
   }
 
   function renderLoadingState(){
-    // Keep menu/occasion shell visible on mobile instead of replacing it with big loading boxes.
     if(!$("mainCategoryGrid").children.length || $("mainCategoryGrid").textContent.includes("Loading menu")){
       renderMainCategories();
     }
+
     if(!cakeOccasions.length && (!$("occasionGrid").children.length || $("occasionGrid").textContent.includes("Loading cake occasions"))){
       renderOccasions();
     }
-    if(!cakes.length && !quickProducts.length) $("featuredGrid").innerHTML = `<div class="loader">Loading popular picks...</div>`;
+
+    if(!cakes.length && !quickProducts.length){
+      $("featuredGrid").innerHTML = `<div class="loader">Loading popular picks...</div>`;
+    }
   }
 
   async function loadHomeDataWithRetry(){
@@ -2379,6 +2368,7 @@
 
       if(delay){
         await wait(delay);
+
         if(attempt >= 2){
           showToast("Waking up website data. Retrying...", true);
         }
@@ -2414,10 +2404,11 @@
       withTimeout(supabaseClient.from("categories").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("name", { ascending:true }), LOAD_TIMEOUT_MS),
       withTimeout(supabaseClient.from("cakes").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }), LOAD_TIMEOUT_MS),
       withTimeout(supabaseClient.from("quick_products").select("*").eq("is_active", true).order("sort_order", { ascending:true }).order("created_at", { ascending:false }), LOAD_TIMEOUT_MS),
-      withTimeout(supabaseClient.from("cake_categories").select("*"), LOAD_TIMEOUT_MS)
+      withTimeout(supabaseClient.from("cake_categories").select("*"), LOAD_TIMEOUT_MS),
+      withTimeout(supabaseClient.from("homepage_menu_cards").select("*").order("sort_order", { ascending:true }).order("title", { ascending:true }), LOAD_TIMEOUT_MS)
     ]);
 
-    const [settingsRes, occasionsRes, cakesRes, quickRes, linksRes] = requests.map(result => {
+    const [settingsRes, occasionsRes, cakesRes, quickRes, linksRes, homeCardsRes] = requests.map(result => {
       if(result.status === "fulfilled") return result.value;
       return { data:null, error:result.reason || new Error("Request failed") };
     });
@@ -2427,6 +2418,7 @@
     reportSupabaseIssue("cakes", cakesRes.error);
     reportSupabaseIssue("quick_products", quickRes.error);
     reportSupabaseIssue("cake_categories", linksRes.error);
+    reportSupabaseIssue("homepage_menu_cards", homeCardsRes.error);
 
     if(!settingsRes.error && settingsRes.data){
       siteSettings = { ...DEFAULT_SETTINGS, ...settingsRes.data };
@@ -2448,7 +2440,11 @@
       cakeCategoryLinks = Array.isArray(linksRes.data) ? linksRes.data : [];
     }
 
-    if(settingsRes.error && occasionsRes.error && cakesRes.error && quickRes.error){
+    if(!homeCardsRes.error){
+      homepageMenuCards = Array.isArray(homeCardsRes.data) ? homeCardsRes.data : [];
+    }
+
+    if(settingsRes.error && occasionsRes.error && cakesRes.error && quickRes.error && homeCardsRes.error){
       throw new Error("All homepage Supabase requests failed.");
     }
   }
@@ -2485,9 +2481,9 @@
     $("footerHours").textContent = siteSettings.business_hours || "";
 
     if(logo){
-      $("siteLogo").innerHTML = `<img src="${escapeHtml(cacheBustImage(logo))}" alt="${escapeHtml(brand)} logo" onerror="this.parentElement.textContent='ð°'">`;
+      $("siteLogo").innerHTML = `<img src="${escapeHtml(cacheBustImage(logo))}" alt="${escapeHtml(brand)} logo" onerror="this.parentElement.textContent='🍰'">`;
     }else{
-      $("siteLogo").textContent = "ð°";
+      $("siteLogo").textContent = "🍰";
     }
 
     if(heroImage){
@@ -2500,6 +2496,9 @@
 
     ["topWhatsappBtn","urgentWhatsappBtn","bottomWhatsappBtn"].forEach(id => {
       const el = $(id);
+
+      if(!el) return;
+
       el.href = whatsappHref;
       el.onclick = whatsapp ? null : (event) => {
         event.preventDefault();
@@ -2525,15 +2524,17 @@
   function renderHeroShortcuts(){
     const shortcuts = ["cupcakes","brownies"]
       .map(slug => {
-        const item = findFirstQuickByCategory(slug);
+        const savedCard = getHomepageMenuCard(slug);
         const meta = getMainCategoryMeta(slug);
-        const image = item?.image_url || getFallbackImage(slug);
+        const image = savedCard?.image_url || getCategoryImage(slug);
+        const title = savedCard?.title || meta.name;
+        const count = getQuickCategoryCount(slug);
 
         return `
           <a class="quickHeroCard" href="category.html?cat=${encodeURIComponent(slug)}" style="--img:url('${escapeCssUrl(cacheBustImage(image))}')">
             <div>
-              <b>${escapeHtml(meta.name)}</b>
-              <span>${getQuickCategoryCount(slug)} items</span>
+              <b>${escapeHtml(title)}</b>
+              <span>${count} items</span>
             </div>
           </a>
         `;
@@ -2546,8 +2547,26 @@
   function renderMainCategories(){
     const grid = $("mainCategoryGrid");
 
-    grid.innerHTML = MAIN_CATEGORIES.map(item => {
-      const image = getCategoryImage(item.slug);
+    const rows = MAIN_CATEGORIES
+      .map(item => {
+        const savedCard = getHomepageMenuCard(item.slug);
+
+        if(savedCard && savedCard.is_active === false){
+          return null;
+        }
+
+        return {
+          ...item,
+          name: savedCard?.title || item.name,
+          description: savedCard?.subtitle || item.description,
+          href: savedCard?.link_url || item.href,
+          image_url: savedCard?.image_url || ""
+        };
+      })
+      .filter(Boolean);
+
+    grid.innerHTML = rows.map(item => {
+      const image = item.image_url || getCategoryImage(item.slug);
       const count = getCategoryCount(item.slug);
       const countText = item.slug === "custom"
         ? "Start from scratch"
@@ -2791,18 +2810,36 @@
     };
   }
 
+  function getHomepageMenuCard(slug){
+    const cleanSlug = slugify(slug);
+    const wanted = cleanSlug === "custom" ? "custom-cake" : cleanSlug;
+
+    return homepageMenuCards.find(card => slugify(card.slug || "") === wanted)
+      || homepageMenuCards.find(card => slugify(card.title || "") === cleanSlug)
+      || null;
+  }
+
   function getCategoryImage(slug){
-    if(slug === "cakes"){
+    const cleanSlug = slugify(slug);
+    const savedCard = getHomepageMenuCard(cleanSlug);
+
+    if(savedCard?.image_url){
+      return savedCard.image_url;
+    }
+
+    if(cleanSlug === "cakes"){
       return cakes.find(item => item.image_url)?.image_url
         || cakeOccasions.find(item => item.image_url)?.image_url
         || getFallbackImage("cakes");
     }
 
-    if(slug === "custom"){
-      return siteSettings.hero_image_url || cakes.find(item => item.image_url)?.image_url || getFallbackImage("custom");
+    if(cleanSlug === "custom"){
+      return siteSettings.hero_image_url
+        || cakes.find(item => item.image_url)?.image_url
+        || getFallbackImage("custom");
     }
 
-    return findFirstQuickByCategory(slug)?.image_url || getFallbackImage(slug);
+    return findFirstQuickByCategory(cleanSlug)?.image_url || getFallbackImage(cleanSlug);
   }
 
   function getCategoryCount(slug){
@@ -2864,7 +2901,7 @@
     if(siteSettings.service_area) bits.push(siteSettings.service_area);
 
     return bits.length
-      ? bits.join(" Â· ")
+      ? bits.join(" · ")
       : "For urgent orders, custom themes, or questions before ordering, contact us directly on WhatsApp.";
   }
 
@@ -2896,6 +2933,7 @@
       cakes = Array.isArray(cached.cakes) ? cached.cakes : [];
       quickProducts = Array.isArray(cached.quickProducts) ? cached.quickProducts : [];
       cakeCategoryLinks = Array.isArray(cached.cakeCategoryLinks) ? cached.cakeCategoryLinks : [];
+      homepageMenuCards = Array.isArray(cached.homepageMenuCards) ? cached.homepageMenuCards : [];
 
       applySettings();
       renderAll();
@@ -2912,7 +2950,8 @@
         cakeOccasions,
         cakes,
         quickProducts,
-        cakeCategoryLinks
+        cakeCategoryLinks,
+        homepageMenuCards
       }));
     }catch(err){
       console.warn("Could not save homepage cache:", err);
@@ -2979,6 +3018,7 @@
   }
 
   function getFallbackImage(key){
+    if(key === "custom-cake") return FALLBACKS.custom;
     return FALLBACKS[key] || FALLBACKS.dessert;
   }
 
