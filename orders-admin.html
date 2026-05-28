@@ -24,10 +24,21 @@
       --orange:#b54708;
       --blue:#175cd3;
       --soft:#fff7ff;
+      --ink:#1d141f;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-    html,body{width:100%;min-height:100%}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+
+    html,body{
+      width:100%;
+      min-height:100%;
+    }
+
     body{
       min-height:100vh;
       background:
@@ -42,84 +53,659 @@
     button{border:0;cursor:pointer}
     a{color:inherit;text-decoration:none}
 
-    .wrap{width:min(1460px,calc(100% - 28px));margin:auto}
-    .topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-    .nav{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .brand{display:flex;align-items:center;gap:10px;min-width:0}
-    .logo{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--purple);color:#fff;box-shadow:0 12px 28px rgba(100,13,107,.22);font-size:20px;overflow:hidden;flex:0 0 auto;border:2px solid rgba(255,255,255,.85)}
-    .logo img{width:100%;height:100%;object-fit:cover;background:#fff}
-    .brand h1{color:var(--purple);font-size:18px;line-height:1;letter-spacing:-.045em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:340px}
-    .brand p{margin-top:4px;color:var(--muted);font-size:11px;white-space:nowrap;max-width:360px;overflow:hidden;text-overflow:ellipsis}
-    .navActions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .wrap{
+      width:min(1460px,calc(100% - 28px));
+      margin:auto;
+    }
 
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:9px 12px;border-radius:999px;color:var(--purple);font-weight:1000;background:#fff;border:1px solid var(--line);box-shadow:0 8px 18px rgba(100,13,107,.04);transition:.18s ease;white-space:nowrap;font-size:13px}
-    .btn:hover{transform:translateY(-1px);background:#fff7ff}
-    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important}
-    .btn.primary{background:linear-gradient(135deg,var(--purple),var(--purple2));border-color:rgba(100,13,107,.30);color:#fff;box-shadow:0 12px 26px rgba(100,13,107,.20)}
-    .btn.green{background:rgba(22,130,58,.08);border-color:rgba(22,130,58,.22);color:var(--green)}
-    .btn.red{background:rgba(180,35,24,.08);border-color:rgba(180,35,24,.20);color:var(--red)}
-    .btn.orange{background:rgba(181,71,8,.08);border-color:rgba(181,71,8,.20);color:var(--orange)}
-    .btn.blue{background:rgba(23,92,211,.08);border-color:rgba(23,92,211,.20);color:var(--blue)}
-    .btn.small{min-height:34px;padding:7px 10px;font-size:12px}
-    .btn.block{width:100%}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:60;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--line);
+    }
 
-    .loginScreen{min-height:100vh;display:grid;place-items:center;padding:24px}
-    .loginCard{width:min(430px,100%);border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
-    .loginCard h2{color:var(--purple);font-size:30px;letter-spacing:-.065em;margin-bottom:8px}
-    .loginCard p{color:var(--muted);font-size:13px;line-height:1.55;margin-bottom:16px}
-    .app{display:none}.app.show{display:block}
-    .main{padding:16px 0 34px}
+    .nav{
+      min-height:62px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
 
-    .card{border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:24px;box-shadow:var(--shadow2);overflow:hidden;min-width:0;margin-bottom:14px}
-    .cardHead{padding:14px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .cardHead h3{color:var(--purple);font-size:18px;letter-spacing:-.045em}.cardHead p{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.42}
-    .cardBody{padding:14px}
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
 
-    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;min-width:0}.field label{color:var(--purple);font-size:12px;font-weight:1000}
-    .field input,.field select,.field textarea{width:100%;min-height:43px;border:1px solid var(--line);outline:none;border-radius:15px;background:#fff;color:var(--text);padding:11px 12px;box-shadow:0 8px 18px rgba(100,13,107,.035)}
-    .field textarea{min-height:86px;resize:vertical}.hint{font-size:11px;color:var(--muted);line-height:1.45}.full{grid-column:1/-1}
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--purple);
+      color:#fff;
+      box-shadow:0 12px 28px rgba(100,13,107,.22);
+      font-size:20px;
+      overflow:hidden;
+      flex:0 0 auto;
+      border:2px solid rgba(255,255,255,.85);
+    }
 
-    .searchRow{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}.searchRow input,.searchRow select{min-height:42px;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:0 13px;outline:none;box-shadow:0 8px 18px rgba(100,13,107,.035)}.searchRow input{flex:1;min-width:220px}
-    .gridStats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}
-    .stat{border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:20px;padding:14px;box-shadow:var(--shadow2);min-width:0}
-    .stat b{display:block;color:var(--purple);font-size:25px;letter-spacing:-.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .stat span{display:block;margin-top:5px;color:var(--muted);font-size:12px;font-weight:750;line-height:1.25}
-    .stat.green b{color:var(--green)}.stat.orange b{color:var(--orange)}.stat.red b{color:var(--red)}.stat.blue b{color:var(--blue)}
-    .list{display:grid;gap:9px}
-    .loading{padding:22px;border:1px dashed rgba(100,13,107,.22);border-radius:18px;color:var(--muted);text-align:center;background:rgba(255,255,255,.70);line-height:1.5}
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      background:#fff;
+    }
 
-    .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;z-index:200;max-width:min(680px,calc(100% - 24px));background:var(--purple);color:#fff;border-radius:999px;padding:12px 15px;font-size:13px;font-weight:1000;box-shadow:0 18px 36px rgba(100,13,107,.24);transition:.2s ease;text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .brand h1{
+      color:var(--purple);
+      font-size:18px;
+      line-height:1;
+      letter-spacing:-.045em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:340px;
+    }
 
-    .status{padding:7px 9px;border-radius:999px;font-size:11px;font-weight:1000;border:1px solid var(--line);background:#fff7ff;white-space:nowrap}
-    .status.Pending{color:var(--orange)}.status.Confirmed{color:var(--blue)}.status.InProgress{color:#4a5fd0}.status.Ready,.status.ReadyForPickup,.status.OutForDelivery,.status.Completed{color:var(--green)}.status.Cancelled{color:var(--red)}
+    .brand p{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:11px;
+      white-space:nowrap;
+      max-width:360px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
 
-    .orderCard{border:1px solid var(--line);background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 18px rgba(100,13,107,.035)}
-    .orderTop{padding:13px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;cursor:pointer;border-bottom:1px solid transparent}
-    .orderCard.open .orderTop{border-bottom-color:var(--line)}
-    .orderTop h4{font-size:15px;margin-bottom:4px;letter-spacing:-.025em}.orderTop p{color:var(--muted);font-size:12px;line-height:1.45}
-    .orderBody{display:none;padding:13px;background:#fff7ff}.orderCard.open .orderBody{display:block}
-    .formGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-    .orderItems{display:grid;gap:8px;margin-top:10px}.orderItem{border:1px solid var(--line);background:#fff;border-radius:16px;padding:10px;font-size:12px;line-height:1.55;color:var(--muted)}.orderItem b{color:var(--text)}
-    .sectionTitle{color:var(--purple);font-weight:1000;margin:13px 0 8px;font-size:13px}
-    .pillRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.pill{padding:5px 7px;border:1px solid var(--line);background:#fff7ff;color:var(--muted);border-radius:999px;font-size:10px;font-weight:900}
-    .dangerZone{border:1px solid rgba(180,35,24,.22);background:rgba(180,35,24,.05);border-radius:18px;padding:12px;margin-top:12px}
-    .dangerZone b{display:block;color:var(--red);font-size:13px;margin-bottom:8px}
-    .copyBox{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px;font-size:12px;color:var(--muted)}
-    .miniGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-    .revenueNote{font-size:12px;color:var(--muted);line-height:1.45;margin-top:8px}
-    @media(max-width:1120px){.gridStats{grid-template-columns:repeat(3,1fr)}}
-    @media(max-width:920px){.formGrid,.miniGrid{grid-template-columns:1fr}.orderTop{flex-direction:column}}
-    @media(max-width:720px){.wrap{width:min(100% - 16px,1460px)}.nav{align-items:flex-start;flex-direction:column;padding:10px 0}.navActions{width:100%;justify-content:flex-start}.gridStats{grid-template-columns:repeat(2,1fr)}}
+    .navActions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:38px;
+      padding:9px 12px;
+      border-radius:999px;
+      color:var(--purple);
+      font-weight:1000;
+      background:#fff;
+      border:1px solid var(--line);
+      box-shadow:0 8px 18px rgba(100,13,107,.04);
+      transition:.18s ease;
+      white-space:nowrap;
+      font-size:13px;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      background:#fff7ff;
+    }
+
+    .btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      transform:none!important;
+    }
+
+    .btn.primary{
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      border-color:rgba(100,13,107,.30);
+      color:#fff;
+      box-shadow:0 12px 26px rgba(100,13,107,.20);
+    }
+
+    .btn.green{
+      background:rgba(22,130,58,.08);
+      border-color:rgba(22,130,58,.22);
+      color:var(--green);
+    }
+
+    .btn.red{
+      background:rgba(180,35,24,.08);
+      border-color:rgba(180,35,24,.20);
+      color:var(--red);
+    }
+
+    .btn.orange{
+      background:rgba(181,71,8,.08);
+      border-color:rgba(181,71,8,.20);
+      color:var(--orange);
+    }
+
+    .btn.blue{
+      background:rgba(23,92,211,.08);
+      border-color:rgba(23,92,211,.20);
+      color:var(--blue);
+    }
+
+    .btn.small{
+      min-height:34px;
+      padding:7px 10px;
+      font-size:12px;
+    }
+
+    .btn.block{
+      width:100%;
+    }
+
+    .loginScreen{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+
+    .loginCard{
+      width:min(430px,100%);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      border-radius:28px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .loginCard h2{
+      color:var(--purple);
+      font-size:30px;
+      letter-spacing:-.065em;
+      margin-bottom:8px;
+    }
+
+    .loginCard p{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+      margin-bottom:16px;
+    }
+
+    .app{display:none}
+    .app.show{display:block}
+
+    .main{
+      padding:16px 0 34px;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      border-radius:24px;
+      box-shadow:var(--shadow2);
+      overflow:hidden;
+      min-width:0;
+      margin-bottom:14px;
+    }
+
+    .cardHead{
+      padding:14px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .cardHead h3{
+      color:var(--purple);
+      font-size:18px;
+      letter-spacing:-.045em;
+    }
+
+    .cardHead p{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.42;
+    }
+
+    .cardBody{
+      padding:14px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:10px;
+      min-width:0;
+    }
+
+    .field label{
+      color:var(--purple);
+      font-size:12px;
+      font-weight:1000;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      min-height:43px;
+      border:1px solid var(--line);
+      outline:none;
+      border-radius:15px;
+      background:#fff;
+      color:var(--text);
+      padding:11px 12px;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
+    }
+
+    .field textarea{
+      min-height:86px;
+      resize:vertical;
+    }
+
+    .hint{
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .full{
+      grid-column:1/-1;
+    }
+
+    .gridStats{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .stat{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      border-radius:20px;
+      padding:14px;
+      box-shadow:var(--shadow2);
+      min-width:0;
+    }
+
+    .stat b{
+      display:block;
+      color:var(--purple);
+      font-size:25px;
+      letter-spacing:-.06em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .stat span{
+      display:block;
+      margin-top:5px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:750;
+      line-height:1.25;
+    }
+
+    .stat.green b{color:var(--green)}
+    .stat.orange b{color:var(--orange)}
+    .stat.red b{color:var(--red)}
+    .stat.blue b{color:var(--blue)}
+
+    .stageTabs{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      padding-bottom:6px;
+      scrollbar-width:none;
+    }
+
+    .stageTabs::-webkit-scrollbar{
+      display:none;
+    }
+
+    .stageBtn{
+      flex:0 0 auto;
+      min-height:40px;
+      padding:9px 13px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--muted);
+      font-weight:1000;
+      font-size:13px;
+      box-shadow:0 8px 18px rgba(100,13,107,.04);
+      white-space:nowrap;
+    }
+
+    .stageBtn.active{
+      color:#fff;
+      border-color:rgba(100,13,107,.30);
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      box-shadow:0 12px 26px rgba(100,13,107,.18);
+    }
+
+    .searchRow{
+      display:flex;
+      gap:8px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .searchRow input,
+    .searchRow select{
+      min-height:42px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      border-radius:999px;
+      padding:0 13px;
+      outline:none;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
+    }
+
+    .searchRow input{
+      flex:1;
+      min-width:220px;
+    }
+
+    .list{
+      display:grid;
+      gap:10px;
+    }
+
+    .loading{
+      padding:22px;
+      border:1px dashed rgba(100,13,107,.22);
+      border-radius:18px;
+      color:var(--muted);
+      text-align:center;
+      background:rgba(255,255,255,.70);
+      line-height:1.5;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%) translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      z-index:200;
+      max-width:min(680px,calc(100% - 24px));
+      background:var(--purple);
+      color:#fff;
+      border-radius:999px;
+      padding:12px 15px;
+      font-size:13px;
+      font-weight:1000;
+      box-shadow:0 18px 36px rgba(100,13,107,.24);
+      transition:.2s ease;
+      text-align:center;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .status{
+      padding:7px 9px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:1000;
+      border:1px solid var(--line);
+      background:#fff7ff;
+      white-space:nowrap;
+    }
+
+    .status.Pending{color:var(--orange)}
+    .status.Confirmed{color:var(--blue)}
+    .status.InProgress{color:#4a5fd0}
+    .status.Ready,.status.ReadyForPickup,.status.OutForDelivery,.status.Completed{color:var(--green)}
+    .status.Cancelled{color:var(--red)}
+
+    .orderCard{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 8px 18px rgba(100,13,107,.035);
+    }
+
+    .orderTop{
+      padding:13px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:flex-start;
+      cursor:pointer;
+      border-bottom:1px solid transparent;
+    }
+
+    .orderCard.open .orderTop{
+      border-bottom-color:var(--line);
+    }
+
+    .orderTop h4{
+      font-size:15px;
+      margin-bottom:4px;
+      letter-spacing:-.025em;
+      color:var(--ink);
+    }
+
+    .orderTop p{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .orderRight{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:7px;
+    }
+
+    .quickActions{
+      padding:0 13px 13px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      align-items:center;
+    }
+
+    .nextHint{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:850;
+      padding:7px 9px;
+      border-radius:999px;
+      background:#fff7ff;
+      border:1px solid var(--line);
+    }
+
+    .orderBody{
+      display:none;
+      padding:13px;
+      background:#fff7ff;
+    }
+
+    .orderCard.open .orderBody{
+      display:block;
+    }
+
+    .formGrid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .miniGrid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .sectionTitle{
+      color:var(--purple);
+      font-weight:1000;
+      margin:13px 0 8px;
+      font-size:13px;
+    }
+
+    .orderItems{
+      display:grid;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .orderItem{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:16px;
+      padding:10px;
+      font-size:12px;
+      line-height:1.55;
+      color:var(--muted);
+    }
+
+    .orderItem b{
+      color:var(--text);
+    }
+
+    .pillRow{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .pill{
+      padding:5px 7px;
+      border:1px solid var(--line);
+      background:#fff7ff;
+      color:var(--muted);
+      border-radius:999px;
+      font-size:10px;
+      font-weight:900;
+    }
+
+    .copyBox{
+      width:100%;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:14px;
+      padding:10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .toolBox{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:18px;
+      padding:12px;
+      margin-top:12px;
+    }
+
+    .toolBox b{
+      display:block;
+      color:var(--purple);
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .dangerZone{
+      border:1px solid rgba(180,35,24,.22);
+      background:rgba(180,35,24,.05);
+      border-radius:18px;
+      padding:12px;
+      margin-top:12px;
+    }
+
+    .dangerZone b{
+      display:block;
+      color:var(--red);
+      font-size:13px;
+      margin-bottom:8px;
+    }
+
+    .boardNote{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.45;
+      margin-top:8px;
+    }
+
+    @media(max-width:1120px){
+      .gridStats{grid-template-columns:repeat(3,1fr)}
+    }
+
+    @media(max-width:920px){
+      .formGrid,
+      .miniGrid{
+        grid-template-columns:1fr;
+      }
+
+      .orderTop{
+        grid-template-columns:1fr;
+      }
+
+      .orderRight{
+        align-items:flex-start;
+      }
+    }
+
+    @media(max-width:720px){
+      .wrap{
+        width:min(100% - 16px,1460px);
+      }
+
+      .nav{
+        align-items:flex-start;
+        flex-direction:column;
+        padding:10px 0;
+      }
+
+      .navActions{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .gridStats{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
   </style>
 </head>
+
 <body>
+
 <section id="loginScreen" class="loginScreen">
   <div class="loginCard">
     <div class="logo" style="margin-bottom:14px;">🍰</div>
     <h2>Order Manager Login</h2>
-    <p>Login to manage customer orders, statuses, tracking links, revenue, printing and safe deletion.</p>
-    <div class="field"><label>Email</label><input id="loginEmail" type="email" placeholder="admin@email.com"></div>
-    <div class="field"><label>Password</label><input id="loginPassword" type="password" placeholder="Password"></div>
+    <p>Login to manage customer orders, status updates, tracking links, WhatsApp updates, printing and order tools.</p>
+
+    <div class="field">
+      <label>Email</label>
+      <input id="loginEmail" type="email" placeholder="admin@email.com">
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input id="loginPassword" type="password" placeholder="Password">
+    </div>
+
     <button class="btn primary block" onclick="loginAdmin()">Login</button>
   </div>
 </section>
@@ -129,8 +715,12 @@
     <div class="wrap nav">
       <div class="brand">
         <div class="logo">🍰</div>
-        <div><h1>Siffat Cakes Order Manager</h1><p id="adminEmailText">Managing orders</p></div>
+        <div>
+          <h1>Siffat Cakes Order Manager</h1>
+          <p id="adminEmailText">Managing orders</p>
+        </div>
       </div>
+
       <div class="navActions">
         <span class="btn green small">Connected</span>
         <a class="btn small" href="admin.html">Website Manager</a>
@@ -146,51 +736,80 @@
     <section class="card">
       <div class="cardHead">
         <div>
-          <h3>Revenue Overview</h3>
-          <p>Monthly, yearly and lifetime totals are calculated from order estimated totals.</p>
+          <h3>Order Board</h3>
+          <p>Restaurant-style order workflow. Move orders step by step and message customers only when needed.</p>
         </div>
+
         <div class="navActions">
-          <select id="revenueBasis" class="btn small" onchange="renderStats()">
-            <option value="non_cancelled">Revenue = all non-cancelled orders</option>
-            <option value="completed">Revenue = completed orders only</option>
-          </select>
-          <button class="btn small" onclick="renderStats()">Refresh Revenue</button>
+          <button class="btn primary small" onclick="loadAll()">Refresh Orders</button>
         </div>
       </div>
+
       <div class="cardBody">
         <div id="statsGrid" class="gridStats"></div>
-        <p class="revenueNote">Note: this is estimated order revenue, not payment-verified revenue. Quote orders with $0 are not counted as revenue until the final amount is saved.</p>
+
+        <div class="stageTabs" id="stageTabs">
+          <button class="stageBtn active" data-stage="active" onclick="setStage('active')">Active Orders</button>
+          <button class="stageBtn" data-stage="Pending" onclick="setStage('Pending')">Pending</button>
+          <button class="stageBtn" data-stage="Confirmed" onclick="setStage('Confirmed')">Confirmed</button>
+          <button class="stageBtn" data-stage="InProgress" onclick="setStage('InProgress')">In Progress</button>
+          <button class="stageBtn" data-stage="Ready" onclick="setStage('Ready')">Ready / Delivery</button>
+          <button class="stageBtn" data-stage="Completed" onclick="setStage('Completed')">Completed</button>
+          <button class="stageBtn" data-stage="Cancelled" onclick="setStage('Cancelled')">Cancelled</button>
+          <button class="stageBtn" data-stage="all" onclick="setStage('all')">All Orders</button>
+        </div>
+
+        <p class="boardNote">
+          Use <b>Save Only</b> to update tracking silently. Use <b>Save + WhatsApp</b> when you want to notify the customer.
+        </p>
       </div>
     </section>
 
     <section class="card">
       <div class="cardHead">
-        <div><h3>Orders</h3><p>Search, filter, sort, update status, open tracking links, print clean invoices and clean customer data.</p></div>
-        <div class="navActions"><button class="btn primary small" onclick="loadAll()">Refresh Orders</button></div>
+        <div>
+          <h3>Orders</h3>
+          <p>Compact cards for daily order management. Expand any order for full details, invoice and privacy tools.</p>
+        </div>
       </div>
+
       <div class="cardBody">
         <div class="searchRow">
           <input id="orderSearch" placeholder="Search name, phone, email, order ID, tracking code..." oninput="renderOrders()">
-          <select id="orderStatusFilter" onchange="renderOrders()">
-            <option value="all">All Statuses</option>
-            <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
-            <option value="InProgress">In Progress</option>
-            <option value="Ready">Ready for Pickup</option>
-            <option value="Completed">Completed</option>
-            <option value="Cancelled">Cancelled</option>
+
+          <select id="dateFilter" onchange="renderOrders()">
+            <option value="all">All Dates</option>
+            <option value="today">Needed Today</option>
+            <option value="tomorrow">Needed Tomorrow</option>
+            <option value="week">Needed This Week</option>
           </select>
+
           <select id="orderTypeFilter" onchange="renderOrders()">
-            <option value="all">Pickup + Delivery</option><option>Pickup</option><option>Delivery</option>
+            <option value="all">Pickup + Delivery</option>
+            <option>Pickup</option>
+            <option>Delivery</option>
           </select>
+
           <select id="archiveFilter" onchange="renderOrders()">
-            <option value="active">Active Only</option><option value="archived">Archived Only</option><option value="all">Active + Archived</option>
+            <option value="active">Active Only</option>
+            <option value="archived">Archived Only</option>
+            <option value="all">Active + Archived</option>
           </select>
+
           <select id="orderSort" onchange="renderOrders()">
-            <option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="needed_soon">Needed date soonest</option><option value="needed_late">Needed date latest</option><option value="status">Status A-Z</option><option value="total_high">Total high to low</option><option value="total_low">Total low to high</option>
+            <option value="needed_soon">Needed date soonest</option>
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="needed_late">Needed date latest</option>
+            <option value="status">Status A-Z</option>
+            <option value="total_high">Total high to low</option>
+            <option value="total_low">Total low to high</option>
           </select>
         </div>
-        <div id="ordersList" class="list"><div class="loading">Loading orders...</div></div>
+
+        <div id="ordersList" class="list">
+          <div class="loading">Loading orders...</div>
+        </div>
       </div>
     </section>
   </main>
@@ -201,21 +820,32 @@
 <script>
   const SUPABASE_URL = "https://rdpynngsjhzirxwzrxdd.supabase.co";
   const SUPABASE_KEY = "sb_publishable_oPaplUdywtmujaMjyyzHTQ_6fqthIzu";
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true
+    }
+  });
 
   const ORDER_STATUSES = [
     { value:"Pending", label:"Pending" },
     { value:"Confirmed", label:"Confirmed" },
     { value:"InProgress", label:"In Progress" },
-    { value:"Ready", label:"Ready for Pickup" },
+    { value:"Ready", label:"Ready" },
     { value:"Completed", label:"Completed" },
     { value:"Cancelled", label:"Cancelled" }
   ];
 
   const $ = id => document.getElementById(id);
+
   let currentUser = null;
   let orders = [];
   let orderItems = [];
+  let activeStage = "active";
+  let openingAdmin = false;
+
   let siteSettings = {
     brand_name:"Siffat Cakes",
     whatsapp_number:"",
@@ -231,37 +861,91 @@
   initAuth();
 
   async function initAuth(){
-    const { data } = await supabaseClient.auth.getSession();
-    if(data.session?.user){ currentUser = data.session.user; await verifyAndOpen(); } else showLogin();
-    supabaseClient.auth.onAuthStateChange(async (_event, session) => {
-      if(session?.user){ currentUser = session.user; await verifyAndOpen(); } else { currentUser = null; showLogin(); }
-    });
+    try{
+      const { data } = await supabaseClient.auth.getSession();
+
+      if(data.session?.user){
+        currentUser = data.session.user;
+        await verifyAndOpen();
+      }else{
+        showLogin();
+      }
+
+      supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+        if(session?.user){
+          currentUser = session.user;
+          await verifyAndOpen();
+        }else{
+          currentUser = null;
+          showLogin();
+        }
+      });
+    }catch(err){
+      console.error(err);
+      showLogin();
+    }
   }
 
   async function loginAdmin(){
     const email = $("loginEmail").value.trim();
     const password = $("loginPassword").value;
-    if(!email || !password) return showToast("Enter admin email and password.", true);
+
+    if(!email || !password){
+      showToast("Enter admin email and password.", true);
+      return;
+    }
+
     const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-    if(error) return showToast(error.message, true);
+
+    if(error){
+      showToast(error.message, true);
+      return;
+    }
+
     showToast("Logged in.");
   }
 
-  async function logoutAdmin(){ await supabaseClient.auth.signOut(); showToast("Signed out."); }
-  function showLogin(){ $("loginScreen").style.display = "grid"; $("app").classList.remove("show"); }
-
-  async function verifyAndOpen(){
-    const { data, error } = await supabaseClient.rpc("is_admin");
-    if(error || data !== true){ await supabaseClient.auth.signOut(); showToast("This user is not added as admin.", true); return; }
-    $("loginScreen").style.display = "none";
-    $("app").classList.add("show");
-    $("adminEmailText").textContent = currentUser.email || "Admin";
-    await loadAll();
+  async function logoutAdmin(){
+    await supabaseClient.auth.signOut();
+    showToast("Signed out.");
   }
 
-  async function loadAll(){
+  function showLogin(){
+    $("loginScreen").style.display = "grid";
+    $("app").classList.remove("show");
+  }
+
+  async function verifyAndOpen(){
+    if(openingAdmin) return;
+    openingAdmin = true;
+
     try{
-      showToast("Loading orders...");
+      const { data, error } = await supabaseClient.rpc("is_admin");
+
+      if(error || data !== true){
+        await supabaseClient.auth.signOut();
+        showToast("This user is not added as admin.", true);
+        return;
+      }
+
+      $("loginScreen").style.display = "none";
+      $("app").classList.add("show");
+      $("adminEmailText").textContent = currentUser?.email || "Admin";
+
+      await loadAll(false);
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Admin verification failed.", true);
+      showLogin();
+    }finally{
+      openingAdmin = false;
+    }
+  }
+
+  async function loadAll(showMessage = true){
+    try{
+      if(showMessage) showToast("Loading orders...");
+
       const [settingsRes, ordersRes, itemsRes] = await Promise.all([
         supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
         supabaseClient.from("orders").select("*").order("created_at", { ascending:false }),
@@ -275,70 +959,127 @@
       siteSettings = {...siteSettings, ...(settingsRes.data || {})};
       orders = ordersRes.data || [];
       orderItems = itemsRes.data || [];
+
       renderAll();
-      showToast("Orders loaded.");
+
+      if(showMessage) showToast("Orders loaded.");
     }catch(err){
       console.error(err);
       showToast(err.message || "Failed to load orders.", true);
     }
   }
 
-  function renderAll(){ renderStats(); renderOrders(); }
+  function renderAll(){
+    renderStats();
+    renderOrders();
+  }
 
-  function renderStats(){
-    const basis = $("revenueBasis")?.value || "non_cancelled";
-    const active = orders.filter(o => !truthy(o.archived));
-    const visibleRevenueOrders = active.filter(o => {
-      if(normalizeStatus(o.status) === normalizeStatus("Cancelled")) return false;
-      if(basis === "completed" && normalizeStatus(o.status) !== normalizeStatus("Completed")) return false;
-      return Number(o.estimated_total || 0) > 0;
+  function setStage(stage){
+    activeStage = stage;
+
+    document.querySelectorAll(".stageBtn").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.stage === stage);
     });
 
-    const now = new Date();
-    const thisMonthRevenue = sumOrders(visibleRevenueOrders.filter(o => isSameMonth(o.created_at, now)));
-    const thisYearRevenue = sumOrders(visibleRevenueOrders.filter(o => isSameYear(o.created_at, now)));
-    const lifetimeRevenue = sumOrders(visibleRevenueOrders);
-    const completedRevenue = sumOrders(active.filter(o => normalizeStatus(o.status) === normalizeStatus("Completed") && Number(o.estimated_total || 0) > 0));
-    const pendingAmount = sumOrders(active.filter(o => ["pending","confirmed","inprogress","ready"].includes(normalizeStatus(o.status))));
-    const cancelledAmount = sumOrders(active.filter(o => normalizeStatus(o.status) === normalizeStatus("Cancelled")));
-    const avgOrder = visibleRevenueOrders.length ? lifetimeRevenue / visibleRevenueOrders.length : 0;
+    renderOrders();
+  }
+
+  function renderStats(){
+    const active = orders.filter(o => !truthy(o.archived));
+
+    const pending = countStatus(active,"Pending");
+    const confirmed = countStatus(active,"Confirmed");
+    const progress = countStatus(active,"InProgress");
+    const ready = countStatus(active,"Ready");
+    const completed = countStatus(active,"Completed");
+    const cancelled = countStatus(active,"Cancelled");
+
+    const todayCount = active.filter(o => isToday(o.needed_date) && !isFinalStatus(o.status)).length;
+    const tomorrowCount = active.filter(o => isTomorrow(o.needed_date) && !isFinalStatus(o.status)).length;
+    const weekCount = active.filter(o => isThisWeek(o.needed_date) && !isFinalStatus(o.status)).length;
     const quoteOrders = active.filter(order => isQuoteOrder(order)).length;
 
     $("statsGrid").innerHTML = `
-      <div class="stat green"><b>${money(thisMonthRevenue)}</b><span>This Month Revenue</span></div>
-      <div class="stat green"><b>${money(thisYearRevenue)}</b><span>This Year Revenue</span></div>
-      <div class="stat green"><b>${money(lifetimeRevenue)}</b><span>Lifetime Revenue</span></div>
-      <div class="stat blue"><b>${money(completedRevenue)}</b><span>Completed Revenue</span></div>
-      <div class="stat"><b>${money(avgOrder)}</b><span>Average Order</span></div>
-      <div class="stat orange"><b>${money(pendingAmount)}</b><span>Pending / Active Value</span></div>
-      <div class="stat"><b>${active.length}</b><span>Active Orders</span></div>
-      <div class="stat orange"><b>${countStatus(active,"Pending")}</b><span>Pending</span></div>
-      <div class="stat blue"><b>${countStatus(active,"Confirmed")}</b><span>Confirmed</span></div>
-      <div class="stat"><b>${countStatus(active,"InProgress")}</b><span>In Progress</span></div>
-      <div class="stat"><b>${quoteOrders}</b><span>Quote / $0 Orders</span></div>
-      <div class="stat red"><b>${money(cancelledAmount)}</b><span>Cancelled Value</span></div>
+      <div class="stat orange"><b>${pending}</b><span>Pending</span></div>
+      <div class="stat blue"><b>${confirmed}</b><span>Confirmed</span></div>
+      <div class="stat"><b>${progress}</b><span>In Progress</span></div>
+      <div class="stat green"><b>${ready}</b><span>Ready / Delivery</span></div>
+      <div class="stat green"><b>${completed}</b><span>Completed</span></div>
+      <div class="stat red"><b>${cancelled}</b><span>Cancelled</span></div>
+      <div class="stat"><b>${todayCount}</b><span>Needed Today</span></div>
+      <div class="stat"><b>${tomorrowCount}</b><span>Needed Tomorrow</span></div>
+      <div class="stat"><b>${weekCount}</b><span>This Week Active</span></div>
+      <div class="stat"><b>${quoteOrders}</b><span>Quote Orders</span></div>
+      <div class="stat"><b>${active.length}</b><span>Total Active</span></div>
+      <div class="stat"><b>${orders.length}</b><span>All Orders</span></div>
     `;
   }
 
   function renderOrders(){
     const box = $("ordersList");
+
     const search = ($("orderSearch")?.value || "").trim().toLowerCase();
-    const statusFilter = $("orderStatusFilter")?.value || "all";
+    const dateFilter = $("dateFilter")?.value || "all";
     const typeFilter = $("orderTypeFilter")?.value || "all";
     const archiveFilter = $("archiveFilter")?.value || "active";
-    const sort = $("orderSort")?.value || "newest";
+    const sort = $("orderSort")?.value || "needed_soon";
 
     let rows = [...orders];
-    if(archiveFilter === "active") rows = rows.filter(o => !truthy(o.archived));
-    if(archiveFilter === "archived") rows = rows.filter(o => truthy(o.archived));
-    if(statusFilter !== "all") rows = rows.filter(o => normalizeStatus(o.status) === normalizeStatus(statusFilter));
-    if(typeFilter !== "all") rows = rows.filter(o => String(o.delivery_type || "").toLowerCase() === typeFilter.toLowerCase());
-    if(search){
-      rows = rows.filter(o => `${o.id || ""} ${getTrackingCode(o)} ${o.customer_name || ""} ${o.customer_phone || ""} ${o.customer_email || ""} ${o.needed_date || ""}`.toLowerCase().includes(search));
+
+    if(archiveFilter === "active"){
+      rows = rows.filter(o => !truthy(o.archived));
     }
 
-    rows.sort((a,b)=>sortOrders(a,b,sort));
-    if(!rows.length){ box.innerHTML = `<div class="loading">No orders found.</div>`; return; }
+    if(archiveFilter === "archived"){
+      rows = rows.filter(o => truthy(o.archived));
+    }
+
+    if(activeStage === "active"){
+      rows = rows.filter(o => !isFinalStatus(o.status));
+    }else if(activeStage !== "all"){
+      rows = rows.filter(o => normalizeStatus(o.status) === normalizeStatus(activeStage));
+    }
+
+    if(typeFilter !== "all"){
+      rows = rows.filter(o => String(o.delivery_type || "").toLowerCase() === typeFilter.toLowerCase());
+    }
+
+    if(dateFilter === "today"){
+      rows = rows.filter(o => isToday(o.needed_date));
+    }
+
+    if(dateFilter === "tomorrow"){
+      rows = rows.filter(o => isTomorrow(o.needed_date));
+    }
+
+    if(dateFilter === "week"){
+      rows = rows.filter(o => isThisWeek(o.needed_date));
+    }
+
+    if(search){
+      rows = rows.filter(o => {
+        const combined = `
+          ${o.id || ""}
+          ${getTrackingCode(o)}
+          ${o.customer_name || ""}
+          ${o.customer_phone || ""}
+          ${o.customer_email || ""}
+          ${o.needed_date || ""}
+          ${o.delivery_type || ""}
+          ${o.status || ""}
+        `.toLowerCase();
+
+        return combined.includes(search);
+      });
+    }
+
+    rows.sort((a,b) => sortOrders(a,b,sort));
+
+    if(!rows.length){
+      box.innerHTML = `<div class="loading">No orders found.</div>`;
+      return;
+    }
+
     box.innerHTML = rows.map(renderOrderRow).join("");
   }
 
@@ -350,36 +1091,80 @@
     const hasQuote = isQuoteOrder(order);
     const isArchived = truthy(order.archived);
     const customerDeleted = truthy(order.customer_data_deleted);
-    const safeStatus = toDbStatus(order.status || "Pending");
-    const statusClass = escapeClass(safeStatus);
+    const dbStatus = toDbStatus(order.status || "Pending");
+    const displayStatus = getDisplayStatusLabel(order, dbStatus);
+    const statusClass = escapeClass(dbStatus);
     const trackLink = getTrackLink(trackingCode);
 
     return `
       <div class="orderCard" id="order-${escapeAttr(id)}">
         <div class="orderTop" onclick="toggleOrder('${escapeJs(id)}')">
           <div>
-            <h4>${customerDeleted ? "Deleted Customer" : escapeHtml(order.customer_name || "Customer")} · ${hasQuote ? "Quote" : money(order.estimated_total)} ${isArchived ? "· Archived" : ""}</h4>
+            <h4>
+              ${customerDeleted ? "Deleted Customer" : escapeHtml(order.customer_name || "Customer")}
+              · ${hasQuote ? "Quote" : money(order.estimated_total)}
+              ${isArchived ? "· Archived" : ""}
+            </h4>
+
             <p>
               ${customerDeleted ? "Customer data removed" : `${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}`}<br>
-              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
+              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}
+              · ${escapeHtml(order.delivery_type || "")}<br>
               Order ID: ${escapeHtml(shortId)} · Tracking: ${escapeHtml(trackingCode)}
             </p>
-            <div class="pillRow"><span class="pill">${items.length} item(s)</span><span class="pill">${escapeHtml(order.delivery_type || "No type")}</span><span class="pill">${formatDateTime(order.created_at)}</span></div>
+
+            <div class="pillRow">
+              <span class="pill">${items.length} item(s)</span>
+              <span class="pill">${escapeHtml(order.delivery_type || "No type")}</span>
+              <span class="pill">Created ${formatDateTime(order.created_at)}</span>
+            </div>
           </div>
-          <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;" onclick="event.stopPropagation()">
-            <span class="status ${statusClass}">${escapeHtml(formatStatusLabel(order.status || "Pending"))}</span>
+
+          <div class="orderRight" onclick="event.stopPropagation()">
+            <span class="status ${statusClass}">${escapeHtml(displayStatus)}</span>
             <button class="btn small" onclick="toggleOrder('${escapeJs(id)}')">Details</button>
           </div>
         </div>
+
+        <div class="quickActions" onclick="event.stopPropagation()">
+          ${renderQuickActions(order)}
+        </div>
+
         <div class="orderBody">
           <div class="formGrid">
             <div class="field">
               <label>Status</label>
-              <select id="status-${escapeAttr(id)}">${ORDER_STATUSES.map(s => `<option value="${escapeHtml(s.value)}" ${normalizeStatus(order.status)===normalizeStatus(s.value)?"selected":""}>${escapeHtml(s.label)}</option>`).join("")}</select>
+              <select id="status-${escapeAttr(id)}">
+                ${ORDER_STATUSES.map(s => `
+                  <option value="${escapeHtml(s.value)}" ${normalizeStatus(order.status) === normalizeStatus(s.value) ? "selected" : ""}>
+                    ${escapeHtml(getDisplayStatusLabel(order, s.value))}
+                  </option>
+                `).join("")}
+              </select>
             </div>
-            <div class="field"><label>Tracking Code</label><input id="tracking-${escapeAttr(id)}" value="${escapeHtml(trackingCode)}"></div>
-            <div class="field"><label>Estimated Total</label><input id="total-${escapeAttr(id)}" type="number" step="0.01" value="${Number(order.estimated_total || 0)}"></div>
-            <div class="field full"><label>Admin Note</label><textarea id="note-${escapeAttr(id)}" placeholder="Private admin note...">${escapeHtml(order.admin_note || "")}</textarea></div>
+
+            <div class="field">
+              <label>Tracking Code</label>
+              <input id="tracking-${escapeAttr(id)}" value="${escapeHtml(trackingCode)}">
+            </div>
+
+            <div class="field">
+              <label>Estimated Total</label>
+              <input id="total-${escapeAttr(id)}" type="number" step="0.01" value="${Number(order.estimated_total || 0)}">
+            </div>
+
+            <div class="field full">
+              <label>Admin Note</label>
+              <textarea id="note-${escapeAttr(id)}" placeholder="Private admin note...">${escapeHtml(order.admin_note || "")}</textarea>
+            </div>
+          </div>
+
+          <div class="sectionTitle">Main Actions</div>
+          <div class="pillRow">
+            <button class="btn primary small" onclick="saveOrderChanges('${escapeJs(id)}', false)">Save Only</button>
+            <button class="btn green small" onclick="saveOrderChanges('${escapeJs(id)}', true)">Save + WhatsApp</button>
+            <button class="btn small" onclick="whatsappCustomer('${escapeJs(id)}')">WhatsApp Current Status</button>
+            <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print Invoice</button>
           </div>
 
           <div class="miniGrid">
@@ -390,142 +1175,429 @@
                 <b>Phone:</b> ${customerDeleted ? "Removed" : escapeHtml(order.customer_phone || "")}<br>
                 <b>Email:</b> ${customerDeleted ? "Removed" : escapeHtml(order.customer_email || "")}<br>
                 <b>Delivery Type:</b> ${escapeHtml(order.delivery_type || "")}<br>
-                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}
+                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
+                <b>Address:</b> ${escapeHtml(order.address || "")} ${order.city ? "· " + escapeHtml(order.city) : ""} ${order.postal_code ? "· " + escapeHtml(order.postal_code) : ""}<br>
+                <b>Order Note:</b> ${escapeHtml(order.order_note || "")}
               </div>
             </div>
+
             <div>
               <div class="sectionTitle">Tracking Link</div>
               <input class="copyBox" id="tracklink-${escapeAttr(id)}" readonly value="${escapeHtml(trackLink)}">
+
               <div class="pillRow">
                 <button class="btn small" onclick="copyField('tracklink-${escapeJs(id)}')">Copy Link</button>
                 <a class="btn small" href="${escapeHtml(trackLink)}" target="_blank">Open Track</a>
+                <button class="btn small" onclick="copyWhatsAppMessage('${escapeJs(id)}')">Copy Original WhatsApp</button>
               </div>
             </div>
           </div>
 
           <div class="sectionTitle">Items</div>
-          <div class="orderItems">${items.length ? items.map(renderOrderItem).join("") : `<div class="loading">No items found for this order.</div>`}</div>
+          <div class="orderItems">
+            ${items.length ? items.map(renderOrderItem).join("") : `<div class="loading">No items found for this order.</div>`}
+          </div>
 
-          <div class="sectionTitle">Actions</div>
-          <div class="pillRow">
-            <button class="btn primary small" onclick="saveOrderChanges('${escapeJs(id)}')">Save Status / Note / Total</button>
-            <button class="btn small" onclick="whatsappCustomer('${escapeJs(id)}')">WhatsApp Customer</button>
-            <button class="btn small" onclick="copyWhatsAppMessage('${escapeJs(id)}')">Copy Original WhatsApp</button>
-            <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print Invoice</button>
-            ${isArchived ? `<button class="btn green small" onclick="archiveOrder('${escapeJs(id)}', false)">Unarchive</button>` : `<button class="btn orange small" onclick="archiveOrder('${escapeJs(id)}', true)">Archive</button>`}
+          <div class="toolBox">
+            <b>Extra Tools</b>
+            <div class="pillRow">
+              ${isArchived
+                ? `<button class="btn green small" onclick="archiveOrder('${escapeJs(id)}', false)">Unarchive</button>`
+                : `<button class="btn orange small" onclick="archiveOrder('${escapeJs(id)}', true)">Archive</button>`
+              }
+            </div>
           </div>
 
           <div class="dangerZone">
-            <b>Delete / privacy tools</b>
+            <b>Delete / Privacy Tools</b>
             <div class="pillRow">
               <button class="btn red small" onclick="anonymizeOrder('${escapeJs(id)}')">Delete Customer Data</button>
               <button class="btn red small" onclick="permanentDeleteOrder('${escapeJs(id)}')">Permanent Delete Order</button>
             </div>
-            <p class="hint" style="margin-top:8px;">Customer data deletion removes personal info but keeps the order record for business totals. Permanent delete removes order + items.</p>
+            <p class="hint" style="margin-top:8px;">
+              Customer data deletion removes personal info but keeps the order record. Permanent delete removes order + items.
+            </p>
           </div>
         </div>
-      </div>`;
+      </div>
+    `;
+  }
+
+  function renderQuickActions(order){
+    const id = String(order.id);
+    const status = normalizeStatus(order.status);
+    const readyLabel = getReadyLabel(order);
+
+    if(status === "pending"){
+      return `
+        <span class="nextHint">Next: Confirm order</span>
+        <button class="btn primary small" onclick="quickUpdateOrder('${escapeJs(id)}','Confirmed',false)">Confirm</button>
+        <button class="btn green small" onclick="quickUpdateOrder('${escapeJs(id)}','Confirmed',true)">Confirm + WhatsApp</button>
+        <button class="btn red small" onclick="quickUpdateOrder('${escapeJs(id)}','Cancelled',true)">Cancel + WhatsApp</button>
+      `;
+    }
+
+    if(status === "confirmed"){
+      return `
+        <span class="nextHint">Next: Start preparing</span>
+        <button class="btn primary small" onclick="quickUpdateOrder('${escapeJs(id)}','InProgress',false)">Start Preparing</button>
+        <button class="btn green small" onclick="quickUpdateOrder('${escapeJs(id)}','InProgress',true)">Start + WhatsApp</button>
+      `;
+    }
+
+    if(status === "inprogress"){
+      return `
+        <span class="nextHint">Next: ${escapeHtml(readyLabel)}</span>
+        <button class="btn primary small" onclick="quickUpdateOrder('${escapeJs(id)}','Ready',false)">${escapeHtml(readyLabel)}</button>
+        <button class="btn green small" onclick="quickUpdateOrder('${escapeJs(id)}','Ready',true)">${escapeHtml(readyLabel)} + WhatsApp</button>
+      `;
+    }
+
+    if(status === "ready"){
+      return `
+        <span class="nextHint">Next: Complete order</span>
+        <button class="btn primary small" onclick="quickUpdateOrder('${escapeJs(id)}','Completed',false)">Complete</button>
+        <button class="btn green small" onclick="quickUpdateOrder('${escapeJs(id)}','Completed',true)">Complete + WhatsApp</button>
+      `;
+    }
+
+    if(status === "completed"){
+      return `
+        <span class="nextHint">Completed</span>
+        <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print Invoice</button>
+      `;
+    }
+
+    if(status === "cancelled"){
+      return `
+        <span class="nextHint">Cancelled</span>
+        <button class="btn small" onclick="quickUpdateOrder('${escapeJs(id)}','Pending',false)">Reopen as Pending</button>
+      `;
+    }
+
+    return `
+      <span class="nextHint">Choose a status in details</span>
+      <button class="btn small" onclick="toggleOrder('${escapeJs(id)}')">Open Details</button>
+    `;
   }
 
   function renderOrderItem(item){
     const info = parseJson(item.product_snapshot || item.quick_product_snapshot || item.snapshot_json || item.addons_json || null);
     const isQuick = isQuickOrderItem(item);
+
     if(isQuick){
-      return `<div class="orderItem"><b>${escapeHtml(item.cake_name || item.product_name || info.name || "Quick Dessert")}</b><br><b>Type:</b> Quick Dessert<br><b>Category:</b> ${escapeHtml(info.categoryName || info.category || item.option_name || "")}<br><b>Variant:</b> ${escapeHtml(info.variant || item.flavour_name || "")}<br><b>Quantity:</b> ${item.quantity || 1}<br><b>Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}<br><b>Notes:</b> ${escapeHtml(item.special_notes || "")}</div>`;
+      return `
+        <div class="orderItem">
+          <b>${escapeHtml(item.cake_name || item.product_name || info.name || "Quick Dessert")}</b><br>
+          <b>Type:</b> Quick Dessert<br>
+          <b>Category:</b> ${escapeHtml(info.categoryName || info.category || item.option_name || "")}<br>
+          <b>Variant:</b> ${escapeHtml(info.variant || item.flavour_name || "")}<br>
+          <b>Quantity:</b> ${item.quantity || 1}<br>
+          <b>Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}<br>
+          <b>Notes:</b> ${escapeHtml(item.special_notes || "")}
+        </div>
+      `;
     }
-    return `<div class="orderItem"><b>${escapeHtml(item.cake_name || "Cake")}</b><br><b>Type:</b> Custom Cake<br><b>Size:</b> ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""}<br><b>Flavour:</b> ${escapeHtml(item.flavour_name || "")}<br><b>Option:</b> ${escapeHtml(item.option_name || "")}<br><b>Quantity:</b> ${item.quantity || 1}<br><b>Message on Cake:</b> ${escapeHtml(item.message_on_cake || "")}<br><b>Special Notes:</b> ${escapeHtml(item.special_notes || "")}<br><b>Add-ons:</b> ${formatAddons(item.addons_json)}<br><b>Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}</div>`;
+
+    return `
+      <div class="orderItem">
+        <b>${escapeHtml(item.cake_name || "Cake")}</b><br>
+        <b>Type:</b> Custom Cake<br>
+        <b>Size:</b> ${escapeHtml(item.size_name || "")} ${item.servings ? "· " + escapeHtml(item.servings) : ""}<br>
+        <b>Flavour:</b> ${escapeHtml(item.flavour_name || "")}<br>
+        <b>Option:</b> ${escapeHtml(item.option_name || "")}<br>
+        <b>Quantity:</b> ${item.quantity || 1}<br>
+        <b>Message on Cake:</b> ${escapeHtml(item.message_on_cake || "")}<br>
+        <b>Special Notes:</b> ${escapeHtml(item.special_notes || "")}<br>
+        <b>Add-ons:</b> ${formatAddons(item.addons_json)}<br>
+        <b>Total:</b> ${Number(item.estimated_item_total || 0) === 0 ? "Quote" : money(item.estimated_item_total)}
+      </div>
+    `;
   }
 
-  async function saveOrderChanges(id){
-    const status = toDbStatus($("status-" + id).value);
-    const admin_note = $("note-" + id).value.trim();
-    const tracking_code = ($("tracking-" + id).value || "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
-    const estimated_total = Number($("total-" + id)?.value || 0);
+  async function quickUpdateOrder(id, status, withWhatsapp){
+    const statusEl = $("status-" + id);
 
-    showToast("Saving order update...");
+    if(statusEl){
+      statusEl.value = status;
+    }
 
-    let { error } = await supabaseClient.rpc("admin_update_order", {
-      p_order_id:id,
-      p_status:status,
-      p_admin_note:admin_note,
-      p_tracking_code:tracking_code,
-      p_estimated_total:estimated_total
-    });
+    await saveOrderChanges(id, withWhatsapp, status);
+  }
 
-    if(error && String(error.message || "").includes("Could not find the function")){
-      const oldRpc = await supabaseClient.rpc("admin_update_order", {
+  async function saveOrderChanges(id, withWhatsapp = false, forcedStatus = ""){
+    const order = orders.find(o => String(o.id) === String(id));
+
+    if(!order){
+      showToast("Order not found.", true);
+      return;
+    }
+
+    let whatsappTab = null;
+
+    if(withWhatsapp){
+      whatsappTab = window.open("about:blank", "_blank");
+
+      if(whatsappTab){
+        whatsappTab.document.write(`
+          <html>
+            <head>
+              <title>Preparing WhatsApp...</title>
+              <style>
+                body{
+                  margin:0;
+                  min-height:100vh;
+                  display:grid;
+                  place-items:center;
+                  background:#fff7ff;
+                  color:#640D6B;
+                  font-family:Arial,sans-serif;
+                  text-align:center;
+                }
+                .box{
+                  padding:22px;
+                  border:1px solid rgba(100,13,107,.16);
+                  border-radius:22px;
+                  background:white;
+                  max-width:420px;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="box">
+                <h2>Preparing WhatsApp message...</h2>
+                <p>Please wait while the order status is saved.</p>
+              </div>
+            </body>
+          </html>
+        `);
+        whatsappTab.document.close();
+      }
+    }
+
+    const status = toDbStatus(forcedStatus || $("status-" + id)?.value || order.status || "Pending");
+    const admin_note = $("note-" + id)?.value.trim() || "";
+    const tracking_code = ($("tracking-" + id)?.value || getTrackingCode(order)).trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
+    const estimated_total = Number($("total-" + id)?.value || order.estimated_total || 0);
+
+    showToast(withWhatsapp ? "Saving and preparing WhatsApp..." : "Saving order update...");
+
+    try{
+      let result = await supabaseClient.rpc("admin_update_order", {
         p_order_id:id,
         p_status:status,
         p_admin_note:admin_note,
-        p_tracking_code:tracking_code
+        p_tracking_code:tracking_code,
+        p_estimated_total:estimated_total
       });
-      error = oldRpc.error;
-    }
 
-    if(error){
-      console.warn("admin_update_order RPC failed, trying direct update:", error.message || error);
-      const fallbackPayload = { status, estimated_total };
-      const direct = await supabaseClient.from("orders").update(fallbackPayload).eq("id", id);
-      if(direct.error){
-        return showToast("Order update failed. Use the new SQL status fix first. " + (error.message || direct.error.message), true);
+      if(result.error && shouldTryOldAdminUpdate(result.error)){
+        result = await supabaseClient.rpc("admin_update_order", {
+          p_order_id:id,
+          p_status:status,
+          p_admin_note:admin_note,
+          p_tracking_code:tracking_code
+        });
       }
-      showToast("Status/total saved only. Run SQL to enable tracking notes/history.", true);
+
+      if(result.error){
+        console.warn("admin_update_order RPC failed, trying direct update:", result.error.message || result.error);
+
+        const direct = await supabaseClient
+          .from("orders")
+          .update({
+            status,
+            estimated_total
+          })
+          .eq("id", id);
+
+        if(direct.error){
+          throw new Error("Order update failed. Run latest SQL setup if tracking/history is not saving. " + (result.error.message || direct.error.message));
+        }
+      }
+
+      if(withWhatsapp){
+        openStatusWhatsApp(order, status, tracking_code, whatsappTab);
+      }
+
+      await loadAll(false);
+
+      showToast(withWhatsapp ? "Order saved. WhatsApp opened." : "Order saved.");
+    }catch(err){
+      console.error(err);
+
+      if(whatsappTab && !whatsappTab.closed){
+        whatsappTab.close();
+      }
+
+      showToast(err.message || "Order update failed.", true);
+    }
+  }
+
+  function shouldTryOldAdminUpdate(error){
+    const msg = String(error?.message || "").toLowerCase();
+    return msg.includes("could not find the function") || msg.includes("pgrst202") || msg.includes("function");
+  }
+
+  function openStatusWhatsApp(order, status, trackingCode, tab = null){
+    const phone = normalizePhone(order.customer_phone || "");
+
+    if(!phone){
+      if(tab && !tab.closed) tab.close();
+      showToast("Customer phone number missing.", true);
+      return;
     }
 
-    await loadAll();
-    showToast("Order updated.");
+    const label = getDisplayStatusLabel(order, status);
+    const name = order.customer_name || "there";
+    const trackLink = getTrackLink(trackingCode);
+    const neededText = `${formatDate(order.needed_date)}${order.needed_time ? " at " + order.needed_time : ""}`;
+
+    const message = buildStatusMessage(name, label, trackingCode, trackLink, neededText, order);
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    if(tab && !tab.closed){
+      tab.location.href = url;
+    }else{
+      window.open(url, "_blank");
+    }
+  }
+
+  function buildStatusMessage(name, label, trackingCode, trackLink, neededText, order){
+    const cleanName = String(name || "").trim() || "there";
+    const deliveryType = order.delivery_type || "order";
+
+    if(normalizeStatus(label) === "cancelled"){
+      return `Hi ${cleanName}, your Siffat Cakes order ${trackingCode} has been cancelled. Please message us if you have any questions.`;
+    }
+
+    if(normalizeStatus(label) === "completed"){
+      return `Hi ${cleanName}, your Siffat Cakes order ${trackingCode} is completed. Thank you for ordering with us.`;
+    }
+
+    if(normalizeStatus(label) === "readyforpickup"){
+      return `Hi ${cleanName}, your Siffat Cakes order ${trackingCode} is ready for pickup. Needed date: ${neededText}. Track here: ${trackLink}`;
+    }
+
+    if(normalizeStatus(label) === "outfordelivery"){
+      return `Hi ${cleanName}, your Siffat Cakes order ${trackingCode} is out for delivery / ready for delivery update. Needed date: ${neededText}. Track here: ${trackLink}`;
+    }
+
+    return `Hi ${cleanName}, your Siffat Cakes ${deliveryType} order ${trackingCode} status is now: ${label}. Needed date: ${neededText}. Track here: ${trackLink}`;
   }
 
   async function archiveOrder(id, archive){
     if(!confirm(archive ? "Archive this order?" : "Unarchive this order?")) return;
-    const { error } = await supabaseClient.rpc("admin_archive_order", { p_order_id:id, p_archived:archive });
-    if(error) return showToast("Archive needs SQL setup: " + error.message, true);
-    await loadAll();
+
+    const { error } = await supabaseClient.rpc("admin_archive_order", {
+      p_order_id:id,
+      p_archived:archive
+    });
+
+    if(error){
+      showToast("Archive needs SQL setup: " + error.message, true);
+      return;
+    }
+
+    await loadAll(false);
     showToast(archive ? "Order archived." : "Order unarchived.");
   }
 
   async function anonymizeOrder(id){
     if(!confirm("Delete customer personal data from this order? This keeps order totals but removes name, phone, email and address fields.")) return;
-    const { error } = await supabaseClient.rpc("admin_anonymize_order", { p_order_id:id });
-    if(error) return showToast("Customer data delete needs SQL setup: " + error.message, true);
-    await loadAll();
+
+    const { error } = await supabaseClient.rpc("admin_anonymize_order", {
+      p_order_id:id
+    });
+
+    if(error){
+      showToast("Customer data delete needs SQL setup: " + error.message, true);
+      return;
+    }
+
+    await loadAll(false);
     showToast("Customer data deleted.");
   }
 
   async function permanentDeleteOrder(id){
     if(!confirm("Permanently delete this order and all its items? This cannot be undone.")) return;
-    const { error } = await supabaseClient.rpc("admin_delete_order", { p_order_id:id });
+
+    const { error } = await supabaseClient.rpc("admin_delete_order", {
+      p_order_id:id
+    });
+
     if(error){
       const itemsDelete = await supabaseClient.from("order_items").delete().eq("order_id", id);
-      if(itemsDelete.error) return showToast(itemsDelete.error.message, true);
+
+      if(itemsDelete.error){
+        showToast(itemsDelete.error.message, true);
+        return;
+      }
+
       const orderDelete = await supabaseClient.from("orders").delete().eq("id", id);
-      if(orderDelete.error) return showToast(orderDelete.error.message, true);
+
+      if(orderDelete.error){
+        showToast(orderDelete.error.message, true);
+        return;
+      }
     }
-    await loadAll();
+
+    await loadAll(false);
     showToast("Order permanently deleted.");
   }
 
   function whatsappCustomer(id){
     const order = orders.find(o => String(o.id) === String(id));
-    if(!order) return;
+
+    if(!order){
+      showToast("Order not found.", true);
+      return;
+    }
+
     const phone = normalizePhone(order.customer_phone || "");
-    if(!phone) return showToast("Customer phone number missing.", true);
-    const msg = `Hi ${order.customer_name || ""}, your Siffat Cakes order status is: ${formatStatusLabel(order.status || "Pending")}. Track here: ${getTrackLink(getTrackingCode(order))}`;
+
+    if(!phone){
+      showToast("Customer phone number missing.", true);
+      return;
+    }
+
+    const trackingCode = getTrackingCode(order);
+    const label = getDisplayStatusLabel(order, order.status || "Pending");
+    const msg = buildStatusMessage(order.customer_name || "", label, trackingCode, getTrackLink(trackingCode), `${formatDate(order.needed_date)}${order.needed_time ? " at " + order.needed_time : ""}`, order);
+
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
   function copyWhatsAppMessage(id){
     const order = orders.find(o => String(o.id) === String(id));
-    if(!order || !order.whatsapp_message) return showToast("No original WhatsApp message found.", true);
-    navigator.clipboard.writeText(order.whatsapp_message).then(()=>showToast("WhatsApp message copied.")).catch(()=>showToast("Could not copy message.", true));
+
+    if(!order || !order.whatsapp_message){
+      showToast("No original WhatsApp message found.", true);
+      return;
+    }
+
+    navigator.clipboard.writeText(order.whatsapp_message)
+      .then(() => showToast("WhatsApp message copied."))
+      .catch(() => showToast("Could not copy message.", true));
   }
 
   function printOrder(id){
     const order = orders.find(o => String(o.id) === String(id));
-    if(!order) return showToast("Order not found.", true);
+
+    if(!order){
+      showToast("Order not found.", true);
+      return;
+    }
+
     const items = orderItems.filter(item => String(item.order_id) === String(id));
     const win = window.open("", "_blank");
-    if(!win){ showToast("Popup blocked. Allow popups to print invoice.", true); return; }
+
+    if(!win){
+      showToast("Popup blocked. Allow popups to print invoice.", true);
+      return;
+    }
+
     win.document.write(buildInvoiceHtml(order, items));
     win.document.close();
     win.focus();
@@ -535,14 +1607,15 @@
     const brand = siteSettings.brand_name || "Siffat Cakes";
     const logo = siteSettings.logo_url || "";
     const shortId = String(order.id || "").slice(0,8).toUpperCase();
-    const orderSubtotal = Number(order.subtotal ?? order.estimated_subtotal ?? 0);
-    const calculatedSubtotal = items.reduce((sum,item)=>sum + Number(item.estimated_item_total || 0), 0);
+
+    const calculatedSubtotal = items.reduce((sum,item) => sum + Number(item.estimated_item_total || 0), 0);
     const estimatedTotal = Number(order.estimated_total || 0);
-    const finalSubtotal = orderSubtotal || calculatedSubtotal || estimatedTotal;
-    const delivery = Number(order.delivery_fee ?? siteSettings.default_delivery_fee ?? 0);
+    const finalSubtotal = calculatedSubtotal || estimatedTotal;
+    const delivery = Number(order.delivery_fee ?? 0);
     const savedTax = Number(order.hst_amount ?? order.tax_amount ?? order.hst ?? 0);
     const hstRate = Number(siteSettings.hst_rate ?? 13);
     const shouldChargeHst = truthy(siteSettings.charge_hst) || savedTax > 0;
+
     let tax = savedTax;
 
     if(!tax && shouldChargeHst && finalSubtotal > 0){
@@ -550,6 +1623,7 @@
     }
 
     let finalTotal = estimatedTotal;
+
     if(shouldChargeHst){
       finalTotal = finalSubtotal + delivery + tax;
     }else if(!finalTotal){
@@ -564,17 +1638,41 @@
   <style>
     *{box-sizing:border-box}
     body{margin:0;background:#f5eef6;color:#1d141f;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.45}
-    .page{width:210mm;min-height:297mm;margin:0 auto;background:white;padding:16mm;}
+    .page{width:210mm;min-height:297mm;margin:0 auto;background:white;padding:16mm}
     .printBtn{position:fixed;right:18px;top:18px;border:0;border-radius:999px;background:#640D6B;color:white;padding:11px 16px;font-weight:800;box-shadow:0 12px 28px rgba(100,13,107,.25);cursor:pointer}
     .top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;border-bottom:2px solid #640D6B;padding-bottom:16px;margin-bottom:16px}
-    .brand{display:flex;gap:12px;align-items:center}.logo{width:54px;height:54px;border-radius:16px;background:#640D6B;color:#fff;display:grid;place-items:center;font-size:25px;overflow:hidden}.logo img{width:100%;height:100%;object-fit:cover}.brand h1{margin:0;color:#640D6B;font-size:23px;letter-spacing:-.04em}.brand p{margin:4px 0 0;color:#725a76;font-size:12px}.invoiceTitle{text-align:right}.invoiceTitle h2{margin:0;color:#640D6B;font-size:26px;letter-spacing:-.05em}.invoiceTitle p{margin:5px 0 0;color:#725a76;font-size:12px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}.box{border:1px solid rgba(100,13,107,.18);background:#fff9ff;border-radius:14px;padding:12px}.box h3{margin:0 0 8px;color:#640D6B;font-size:12px;text-transform:uppercase;letter-spacing:.05em}.box p{margin:0 0 3px}.muted{color:#725a76}
-    table{width:100%;border-collapse:collapse}.items{border:1px solid rgba(100,13,107,.18);border-radius:14px;overflow:hidden}th{background:#640D6B;color:white;text-align:left;padding:10px;font-size:12px}td{border-top:1px solid rgba(100,13,107,.12);padding:10px;vertical-align:top}td:last-child,th:last-child{text-align:right}.itemName{font-weight:700;color:#1d141f}.itemMeta{margin-top:4px;color:#725a76;font-size:11px;line-height:1.42}.totals{margin-left:auto;width:280px;margin-top:14px;border:1px solid rgba(100,13,107,.18);border-radius:14px;overflow:hidden}.totals div{display:flex;justify-content:space-between;padding:9px 12px;border-top:1px solid rgba(100,13,107,.10)}.totals div:first-child{border-top:0}.totals .grand{background:#640D6B;color:white;font-weight:800;font-size:15px}.thanks{margin-top:18px;padding:12px;border-radius:14px;background:#fff9ff;border:1px solid rgba(100,13,107,.18);color:#725a76;font-size:12px}.footer{margin-top:18px;border-top:1px solid rgba(100,13,107,.16);padding-top:12px;display:flex;justify-content:space-between;gap:14px;color:#725a76;font-size:11px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:54px;height:54px;border-radius:16px;background:#640D6B;color:#fff;display:grid;place-items:center;font-size:25px;overflow:hidden}
+    .logo img{width:100%;height:100%;object-fit:cover}
+    .brand h1{margin:0;color:#640D6B;font-size:23px;letter-spacing:-.04em}
+    .brand p{margin:4px 0 0;color:#725a76;font-size:12px}
+    .invoiceTitle{text-align:right}
+    .invoiceTitle h2{margin:0;color:#640D6B;font-size:26px;letter-spacing:-.05em}
+    .invoiceTitle p{margin:5px 0 0;color:#725a76;font-size:12px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    .box{border:1px solid rgba(100,13,107,.18);background:#fff9ff;border-radius:14px;padding:12px}
+    .box h3{margin:0 0 8px;color:#640D6B;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+    .box p{margin:0 0 3px}
+    .muted{color:#725a76}
+    table{width:100%;border-collapse:collapse}
+    .items{border:1px solid rgba(100,13,107,.18);border-radius:14px;overflow:hidden}
+    th{background:#640D6B;color:white;text-align:left;padding:10px;font-size:12px}
+    td{border-top:1px solid rgba(100,13,107,.12);padding:10px;vertical-align:top}
+    td:last-child,th:last-child{text-align:right}
+    .itemName{font-weight:700;color:#1d141f}
+    .itemMeta{margin-top:4px;color:#725a76;font-size:11px;line-height:1.42}
+    .totals{margin-left:auto;width:280px;margin-top:14px;border:1px solid rgba(100,13,107,.18);border-radius:14px;overflow:hidden}
+    .totals div{display:flex;justify-content:space-between;padding:9px 12px;border-top:1px solid rgba(100,13,107,.10)}
+    .totals div:first-child{border-top:0}
+    .totals .grand{background:#640D6B;color:white;font-weight:800;font-size:15px}
+    .thanks{margin-top:18px;padding:12px;border-radius:14px;background:#fff9ff;border:1px solid rgba(100,13,107,.18);color:#725a76;font-size:12px}
+    .footer{margin-top:18px;border-top:1px solid rgba(100,13,107,.16);padding-top:12px;display:flex;justify-content:space-between;gap:14px;color:#725a76;font-size:11px}
     @media print{body{background:white}.page{width:auto;min-height:auto;margin:0;padding:0}.printBtn{display:none}.top,.box,.items,.totals,.thanks{break-inside:avoid}}
   </style>
 </head>
 <body>
 <button class="printBtn" onclick="window.print()">Print / Save PDF</button>
+
 <main class="page">
   <section class="top">
     <div class="brand">
@@ -585,6 +1683,7 @@
         <p>${escapeHtml(siteSettings.business_hours || "")}</p>
       </div>
     </div>
+
     <div class="invoiceTitle">
       <h2>Invoice</h2>
       <p><b>Order:</b> ${escapeHtml(shortId)}</p>
@@ -599,9 +1698,10 @@
       <p class="muted">${order.customer_data_deleted ? "Customer data removed" : escapeHtml(order.customer_phone || "")}</p>
       <p class="muted">${order.customer_data_deleted ? "" : escapeHtml(order.customer_email || "")}</p>
     </div>
+
     <div class="box">
       <h3>Order</h3>
-      <p><b>Status:</b> ${escapeHtml(formatStatusLabel(order.status || "Pending"))}</p>
+      <p><b>Status:</b> ${escapeHtml(getDisplayStatusLabel(order, order.status || "Pending"))}</p>
       <p><b>Needed:</b> ${escapeHtml(formatDate(order.needed_date))} ${order.needed_time ? escapeHtml(order.needed_time) : ""}</p>
       <p><b>Type:</b> ${escapeHtml(order.delivery_type || "")}</p>
     </div>
@@ -609,8 +1709,16 @@
 
   <section class="items">
     <table>
-      <thead><tr><th>Item</th><th>Qty</th><th>Total</th></tr></thead>
-      <tbody>${items.length ? items.map(renderInvoiceItem).join("") : `<tr><td colspan="3">No items found.</td></tr>`}</tbody>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${items.length ? items.map(renderInvoiceItem).join("") : `<tr><td colspan="3">No items found.</td></tr>`}
+      </tbody>
     </table>
   </section>
 
@@ -621,8 +1729,14 @@
     <div class="grand"><span>Total</span><b>${finalTotal ? money(finalTotal) : "Quote"}</b></div>
   </section>
 
-  <section class="thanks">Thank you for ordering from ${escapeHtml(brand)}. Invoice total includes HST when tax is enabled in website settings.</section>
-  <section class="footer"><span>${escapeHtml(brand)}</span><span>${escapeHtml(siteSettings.whatsapp_number || "")}</span></section>
+  <section class="thanks">
+    Thank you for ordering from ${escapeHtml(brand)}.
+  </section>
+
+  <section class="footer">
+    <span>${escapeHtml(brand)}</span>
+    <span>${escapeHtml(siteSettings.whatsapp_number || "")}</span>
+  </section>
 </main>
 </body>
 </html>`;
@@ -634,63 +1748,265 @@
     const name = item.cake_name || item.product_name || info.name || (isQuick ? "Dessert" : "Custom Cake");
     const qty = Number(item.quantity || 1);
     const total = Number(item.estimated_item_total || 0);
+
     const meta = isQuick
       ? [info.categoryName || info.category || item.option_name, info.variant || item.flavour_name].filter(Boolean).join(" · ")
       : [item.size_name, item.flavour_name, item.option_name, item.message_on_cake ? "Message: " + item.message_on_cake : ""].filter(Boolean).join(" · ");
-    return `<tr><td><div class="itemName">${escapeHtml(name)}</div>${meta ? `<div class="itemMeta">${escapeHtml(meta)}</div>` : ""}</td><td>${qty}</td><td>${total ? money(total) : "Quote"}</td></tr>`;
+
+    return `
+      <tr>
+        <td>
+          <div class="itemName">${escapeHtml(name)}</div>
+          ${meta ? `<div class="itemMeta">${escapeHtml(meta)}</div>` : ""}
+        </td>
+        <td>${qty}</td>
+        <td>${total ? money(total) : "Quote"}</td>
+      </tr>
+    `;
   }
 
-  function toggleOrder(id){ const el = $("order-" + id); if(el) el.classList.toggle("open"); }
-  function getTrackingCode(order){ return String(order.tracking_code || String(order.id || "").replaceAll("-","").slice(0,10)).toUpperCase(); }
-  function getTrackLink(code){ return `${location.origin}${location.pathname.replace(/[^/]+$/, "track.html")}?code=${encodeURIComponent(code)}`; }
+  function toggleOrder(id){
+    const el = $("order-" + id);
+
+    if(el){
+      el.classList.toggle("open");
+    }
+  }
+
+  function getTrackingCode(order){
+    return String(order.tracking_code || String(order.id || "").replaceAll("-","").slice(0,10)).toUpperCase();
+  }
+
+  function getTrackLink(code){
+    return `${location.origin}${location.pathname.replace(/[^/]+$/, "track.html")}?code=${encodeURIComponent(code)}`;
+  }
+
+  function getReadyLabel(order){
+    return String(order.delivery_type || "").toLowerCase() === "delivery"
+      ? "Out for Delivery"
+      : "Ready for Pickup";
+  }
+
+  function getDisplayStatusLabel(order,statusValue){
+    const db = toDbStatus(statusValue);
+
+    if(db === "Ready"){
+      return getReadyLabel(order);
+    }
+
+    const found = ORDER_STATUSES.find(s => s.value === db);
+
+    return found ? found.label : db;
+  }
 
   function toDbStatus(value){
     const s = normalizeStatus(value);
+
     if(s === "pending") return "Pending";
     if(s === "confirmed") return "Confirmed";
     if(s === "inprogress") return "InProgress";
     if(s === "ready" || s === "readyforpickup" || s === "outfordelivery") return "Ready";
     if(s === "completed") return "Completed";
     if(s === "cancelled" || s === "canceled") return "Cancelled";
+
     return "Pending";
   }
 
-  function formatStatusLabel(value){
-    const db = toDbStatus(value);
-    const found = ORDER_STATUSES.find(s => s.value === db);
-    return found ? found.label : db;
-  }
-
   function sortOrders(a,b,sort){
-    if(sort === "oldest") return String(a.created_at||"").localeCompare(String(b.created_at||""));
-    if(sort === "needed_soon") return String(a.needed_date||"9999-99-99").localeCompare(String(b.needed_date||"9999-99-99"));
-    if(sort === "needed_late") return String(b.needed_date||"").localeCompare(String(a.needed_date||""));
-    if(sort === "status") return formatStatusLabel(a.status||"").localeCompare(formatStatusLabel(b.status||""));
-    if(sort === "total_high") return Number(b.estimated_total||0)-Number(a.estimated_total||0);
-    if(sort === "total_low") return Number(a.estimated_total||0)-Number(b.estimated_total||0);
-    return String(b.created_at||"").localeCompare(String(a.created_at||""));
+    if(sort === "oldest"){
+      return String(a.created_at || "").localeCompare(String(b.created_at || ""));
+    }
+
+    if(sort === "needed_soon"){
+      return String(a.needed_date || "9999-99-99").localeCompare(String(b.needed_date || "9999-99-99"));
+    }
+
+    if(sort === "needed_late"){
+      return String(b.needed_date || "").localeCompare(String(a.needed_date || ""));
+    }
+
+    if(sort === "status"){
+      return getDisplayStatusLabel(a,a.status || "").localeCompare(getDisplayStatusLabel(b,b.status || ""));
+    }
+
+    if(sort === "total_high"){
+      return Number(b.estimated_total || 0) - Number(a.estimated_total || 0);
+    }
+
+    if(sort === "total_low"){
+      return Number(a.estimated_total || 0) - Number(b.estimated_total || 0);
+    }
+
+    return String(b.created_at || "").localeCompare(String(a.created_at || ""));
   }
 
-  function sumOrders(rows){ return rows.reduce((sum,o)=>sum+Number(o.estimated_total || 0),0); }
-  function countStatus(rows,status){ return rows.filter(o => normalizeStatus(o.status) === normalizeStatus(status)).length; }
-  function isQuoteOrder(order){ const items = orderItems.filter(item => String(item.order_id) === String(order.id)); return Number(order.estimated_total || 0) === 0 || items.some(item => Number(item.estimated_item_total || 0) === 0); }
-  function isSameMonth(value, now){ const d = new Date(value); return !Number.isNaN(d.getTime()) && d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth(); }
-  function isSameYear(value, now){ const d = new Date(value); return !Number.isNaN(d.getTime()) && d.getFullYear() === now.getFullYear(); }
-  function isQuickOrderItem(item){ const raw = String(item.product_type || item.item_type || item.type || "").toLowerCase(); return raw.includes("quick") || raw.includes("dessert") || !!item.quick_product_id || !!item.quick_product_snapshot; }
-  function parseJson(value){ if(!value) return {}; if(typeof value === "object") return value; try{ return JSON.parse(value); }catch{ return {}; } }
-  function formatAddons(value){ const data=parseJson(value); if(Array.isArray(data)) return data.map(x=>escapeHtml(x.name||x)).join(", ") || "None"; return "None"; }
-  function normalizeStatus(s){ return String(s||"").toLowerCase().replace(/[^a-z]/g,""); }
-  function truthy(v){ return v === true || v === "true" || v === 1 || v === "1"; }
-  function money(value){ const currency = siteSettings.currency || "$"; const n=Number(value||0); return currency + n.toFixed(2).replace(".00",""); }
-  function formatDate(value){ if(!value) return "No date"; const d=new Date(value + "T00:00:00"); return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}); }
-  function formatDateTime(value){ if(!value) return ""; const d=new Date(value); return Number.isNaN(d.getTime()) ? value : d.toLocaleString(); }
-  function normalizePhone(value){ return String(value||"").replace(/[^\d]/g,""); }
-  function copyField(id){ const el=$(id); if(!el) return; navigator.clipboard.writeText(el.value).then(()=>showToast("Copied.")); }
-  function escapeHtml(value){ return String(value ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-  function escapeAttr(value){ return escapeHtml(value); }
-  function escapeJs(value){ return String(value ?? "").replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll('"','\\"'); }
-  function escapeClass(value){ return String(value || "").replace(/[^a-zA-Z0-9_-]/g,""); }
-  function showToast(message,isError=false){ const toast=$("toast"); toast.textContent=message; toast.style.background=isError?"var(--red)":"var(--purple)"; toast.classList.add("show"); clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>toast.classList.remove("show"),4200); }
+  function countStatus(rows,status){
+    return rows.filter(o => normalizeStatus(o.status) === normalizeStatus(status)).length;
+  }
+
+  function isFinalStatus(status){
+    const s = normalizeStatus(status);
+    return s === "completed" || s === "cancelled";
+  }
+
+  function isQuoteOrder(order){
+    const items = orderItems.filter(item => String(item.order_id) === String(order.id));
+    return Number(order.estimated_total || 0) === 0 || items.some(item => Number(item.estimated_item_total || 0) === 0);
+  }
+
+  function isQuickOrderItem(item){
+    const raw = String(item.product_type || item.item_type || item.type || "").toLowerCase();
+    return raw.includes("quick") || raw.includes("dessert") || !!item.quick_product_id || !!item.quick_product_snapshot;
+  }
+
+  function parseJson(value){
+    if(!value) return {};
+    if(typeof value === "object") return value;
+
+    try{
+      return JSON.parse(value);
+    }catch{
+      return {};
+    }
+  }
+
+  function formatAddons(value){
+    const data = parseJson(value);
+
+    if(Array.isArray(data)){
+      return data.map(x => escapeHtml(x.name || x)).join(", ") || "None";
+    }
+
+    return "None";
+  }
+
+  function normalizeStatus(s){
+    return String(s || "").toLowerCase().replace(/[^a-z]/g,"");
+  }
+
+  function truthy(v){
+    return v === true || v === "true" || v === 1 || v === "1";
+  }
+
+  function money(value){
+    const currency = siteSettings.currency || "$";
+    const n = Number(value || 0);
+    return currency + n.toFixed(2).replace(".00","");
+  }
+
+  function todayDate(){
+    const d = new Date();
+    return toYmd(d);
+  }
+
+  function tomorrowDate(){
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return toYmd(d);
+  }
+
+  function toYmd(date){
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2,"0");
+    const d = String(date.getDate()).padStart(2,"0");
+    return `${y}-${m}-${d}`;
+  }
+
+  function isToday(value){
+    return String(value || "") === todayDate();
+  }
+
+  function isTomorrow(value){
+    return String(value || "") === tomorrowDate();
+  }
+
+  function isThisWeek(value){
+    if(!value) return false;
+
+    const d = new Date(value + "T00:00:00");
+    const now = new Date();
+    const end = new Date();
+
+    end.setDate(now.getDate() + 7);
+    d.setHours(0,0,0,0);
+    now.setHours(0,0,0,0);
+    end.setHours(23,59,59,999);
+
+    return d >= now && d <= end;
+  }
+
+  function formatDate(value){
+    if(!value) return "No date";
+
+    const d = new Date(value + "T00:00:00");
+
+    return Number.isNaN(d.getTime())
+      ? value
+      : d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+  }
+
+  function formatDateTime(value){
+    if(!value) return "";
+
+    const d = new Date(value);
+
+    return Number.isNaN(d.getTime())
+      ? value
+      : d.toLocaleString();
+  }
+
+  function normalizePhone(value){
+    return String(value || "").replace(/[^\d]/g,"");
+  }
+
+  function copyField(id){
+    const el = $(id);
+
+    if(!el) return;
+
+    navigator.clipboard.writeText(el.value)
+      .then(() => showToast("Copied."))
+      .catch(() => showToast("Could not copy.", true));
+  }
+
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function escapeAttr(value){
+    return escapeHtml(value);
+  }
+
+  function escapeJs(value){
+    return String(value ?? "")
+      .replaceAll("\\","\\\\")
+      .replaceAll("'","\\'")
+      .replaceAll('"','\\"');
+  }
+
+  function escapeClass(value){
+    return String(value || "").replace(/[^a-zA-Z0-9_-]/g,"");
+  }
+
+  function showToast(message,isError = false){
+    const toast = $("toast");
+
+    toast.textContent = message;
+    toast.style.background = isError ? "var(--red)" : "var(--purple)";
+    toast.classList.add("show");
+
+    clearTimeout(showToast.timer);
+
+    showToast.timer = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 4200);
+  }
 </script>
+
 </body>
 </html>
