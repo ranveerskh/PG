@@ -24,7 +24,7 @@
       --orange:#b54708;
       --blue:#175cd3;
       --soft:#fff7ff;
-      --ink:#1d141f;
+      --dark:#1d141f;
     }
 
     *{
@@ -51,6 +51,7 @@
 
     button,input,select,textarea{font:inherit}
     button{border:0;cursor:pointer}
+    button:disabled{cursor:not-allowed}
     a{color:inherit;text-decoration:none}
 
     .wrap{
@@ -73,6 +74,7 @@
       align-items:center;
       justify-content:space-between;
       gap:12px;
+      padding:8px 0;
     }
 
     .brand{
@@ -83,8 +85,8 @@
     }
 
     .logo{
-      width:42px;
-      height:42px;
+      width:44px;
+      height:44px;
       border-radius:50%;
       display:grid;
       place-items:center;
@@ -101,6 +103,7 @@
       width:100%;
       height:100%;
       object-fit:cover;
+      display:block;
       background:#fff;
     }
 
@@ -112,7 +115,7 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      max-width:340px;
+      max-width:360px;
     }
 
     .brand p{
@@ -120,7 +123,7 @@
       color:var(--muted);
       font-size:11px;
       white-space:nowrap;
-      max-width:360px;
+      max-width:380px;
       overflow:hidden;
       text-overflow:ellipsis;
     }
@@ -158,7 +161,6 @@
 
     .btn:disabled{
       opacity:.55;
-      cursor:not-allowed;
       transform:none!important;
     }
 
@@ -191,6 +193,12 @@
       background:rgba(23,92,211,.08);
       border-color:rgba(23,92,211,.20);
       color:var(--blue);
+    }
+
+    .btn.dark{
+      background:rgba(29,20,31,.08);
+      border-color:rgba(29,20,31,.14);
+      color:var(--dark);
     }
 
     .btn.small{
@@ -324,19 +332,35 @@
       display:grid;
       grid-template-columns:repeat(6,1fr);
       gap:10px;
-      margin-bottom:14px;
+      margin-bottom:12px;
     }
 
-    .stat{
+    .statBtn{
       border:1px solid var(--line);
       background:rgba(255,255,255,.92);
       border-radius:20px;
       padding:14px;
       box-shadow:var(--shadow2);
       min-width:0;
+      text-align:left;
+      transition:.18s ease;
+      min-height:84px;
     }
 
-    .stat b{
+    .statBtn:hover{
+      transform:translateY(-2px);
+      border-color:rgba(100,13,107,.28);
+      background:#fff7ff;
+    }
+
+    .statBtn.active{
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      color:#fff;
+      border-color:rgba(100,13,107,.38);
+      box-shadow:0 14px 28px rgba(100,13,107,.22);
+    }
+
+    .statBtn b{
       display:block;
       color:var(--purple);
       font-size:25px;
@@ -346,58 +370,54 @@
       text-overflow:ellipsis;
     }
 
-    .stat span{
+    .statBtn span{
       display:block;
       margin-top:5px;
       color:var(--muted);
       font-size:12px;
-      font-weight:750;
+      font-weight:850;
       line-height:1.25;
     }
 
-    .stat.green b{color:var(--green)}
-    .stat.orange b{color:var(--orange)}
-    .stat.red b{color:var(--red)}
-    .stat.blue b{color:var(--blue)}
+    .statBtn.green b{color:var(--green)}
+    .statBtn.orange b{color:var(--orange)}
+    .statBtn.red b{color:var(--red)}
+    .statBtn.blue b{color:var(--blue)}
 
-    .stageTabs{
-      display:flex;
-      gap:8px;
-      overflow:auto;
-      padding-bottom:6px;
-      scrollbar-width:none;
-    }
-
-    .stageTabs::-webkit-scrollbar{
-      display:none;
-    }
-
-    .stageBtn{
-      flex:0 0 auto;
-      min-height:40px;
-      padding:9px 13px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--muted);
-      font-weight:1000;
-      font-size:13px;
-      box-shadow:0 8px 18px rgba(100,13,107,.04);
-      white-space:nowrap;
-    }
-
-    .stageBtn.active{
+    .statBtn.active b,
+    .statBtn.active span{
       color:#fff;
-      border-color:rgba(100,13,107,.30);
-      background:linear-gradient(135deg,var(--purple),var(--purple2));
-      box-shadow:0 12px 26px rgba(100,13,107,.18);
+    }
+
+    .activeFilterLine{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    .filterPill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border:1px solid rgba(100,13,107,.20);
+      background:#fff7ff;
+      color:var(--purple);
+      padding:7px 10px;
+      border-radius:999px;
+      font-weight:1000;
+      font-size:12px;
     }
 
     .searchRow{
-      display:flex;
+      display:grid;
+      grid-template-columns:minmax(260px,1fr) 160px 160px 160px 190px auto;
       gap:8px;
       margin-bottom:12px;
-      flex-wrap:wrap;
+      align-items:center;
     }
 
     .searchRow input,
@@ -410,16 +430,30 @@
       padding:0 13px;
       outline:none;
       box-shadow:0 8px 18px rgba(100,13,107,.035);
+      width:100%;
+      min-width:0;
     }
 
-    .searchRow input{
-      flex:1;
-      min-width:220px;
+    .reportGrid{
+      display:grid;
+      grid-template-columns:160px 160px 160px 160px 1fr;
+      gap:8px;
+      align-items:end;
+    }
+
+    .reportGrid .field{
+      margin-bottom:0;
+    }
+
+    .customDates{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
     }
 
     .list{
       display:grid;
-      gap:10px;
+      gap:9px;
     }
 
     .loading{
@@ -440,7 +474,7 @@
       opacity:0;
       pointer-events:none;
       z-index:200;
-      max-width:min(680px,calc(100% - 24px));
+      max-width:min(740px,calc(100% - 24px));
       background:var(--purple);
       color:#fff;
       border-radius:999px;
@@ -472,20 +506,26 @@
     .status.InProgress{color:#4a5fd0}
     .status.Ready,.status.ReadyForPickup,.status.OutForDelivery,.status.Completed{color:var(--green)}
     .status.Cancelled{color:var(--red)}
+    .status.Deleted{color:var(--red);background:rgba(180,35,24,.08);border-color:rgba(180,35,24,.18)}
 
     .orderCard{
       border:1px solid var(--line);
       background:#fff;
-      border-radius:22px;
+      border-radius:20px;
       overflow:hidden;
       box-shadow:0 8px 18px rgba(100,13,107,.035);
     }
 
+    .orderCard.deleted{
+      border-color:rgba(180,35,24,.22);
+      background:rgba(180,35,24,.025);
+    }
+
     .orderTop{
       padding:13px;
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
       align-items:flex-start;
       cursor:pointer;
       border-bottom:1px solid transparent;
@@ -499,38 +539,12 @@
       font-size:15px;
       margin-bottom:4px;
       letter-spacing:-.025em;
-      color:var(--ink);
     }
 
     .orderTop p{
       color:var(--muted);
       font-size:12px;
       line-height:1.45;
-    }
-
-    .orderRight{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:7px;
-    }
-
-    .quickActions{
-      padding:0 13px 13px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:7px;
-      align-items:center;
-    }
-
-    .nextHint{
-      font-size:11px;
-      color:var(--muted);
-      font-weight:850;
-      padding:7px 9px;
-      border-radius:999px;
-      background:#fff7ff;
-      border:1px solid var(--line);
     }
 
     .orderBody{
@@ -545,7 +559,7 @@
 
     .formGrid{
       display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
+      grid-template-columns:repeat(4,minmax(0,1fr));
       gap:10px;
     }
 
@@ -553,13 +567,6 @@
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:10px;
-    }
-
-    .sectionTitle{
-      color:var(--purple);
-      font-weight:1000;
-      margin:13px 0 8px;
-      font-size:13px;
     }
 
     .orderItems{
@@ -582,11 +589,19 @@
       color:var(--text);
     }
 
+    .sectionTitle{
+      color:var(--purple);
+      font-weight:1000;
+      margin:13px 0 8px;
+      font-size:13px;
+    }
+
     .pillRow{
       display:flex;
       gap:6px;
       flex-wrap:wrap;
       margin-top:8px;
+      align-items:center;
     }
 
     .pill{
@@ -599,6 +614,12 @@
       font-weight:900;
     }
 
+    .pill.strong{
+      color:var(--purple);
+      border-color:rgba(100,13,107,.20);
+      background:rgba(100,13,107,.06);
+    }
+
     .copyBox{
       width:100%;
       border:1px solid var(--line);
@@ -609,19 +630,82 @@
       color:var(--muted);
     }
 
-    .toolBox{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:18px;
-      padding:12px;
-      margin-top:12px;
+    .workflowButtons{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:8px;
     }
 
-    .toolBox b{
+    .workflowBtn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--purple);
+      border-radius:16px;
+      padding:11px 9px;
+      font-size:12px;
+      font-weight:1000;
+      transition:.18s ease;
+      min-height:44px;
+    }
+
+    .workflowBtn:hover{
+      transform:translateY(-1px);
+      background:#fff7ff;
+    }
+
+    .workflowBtn.active{
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      color:#fff;
+      border-color:rgba(100,13,107,.36);
+      box-shadow:0 12px 24px rgba(100,13,107,.18);
+    }
+
+    .auditGrid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .auditBox{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:16px;
+      padding:10px;
+      min-height:76px;
+    }
+
+    .auditBox b{
       display:block;
       color:var(--purple);
-      font-size:13px;
-      margin-bottom:8px;
+      font-size:12px;
+      margin-bottom:5px;
+    }
+
+    .auditBox span{
+      display:block;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.35;
+      overflow-wrap:anywhere;
+    }
+
+    .history{
+      display:grid;
+      gap:7px;
+    }
+
+    .historyItem{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:15px;
+      padding:9px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .historyItem b{
+      color:var(--text);
     }
 
     .dangerZone{
@@ -639,29 +723,64 @@
       margin-bottom:8px;
     }
 
-    .boardNote{
+    .deletedBox{
+      border:1px solid rgba(180,35,24,.22);
+      background:rgba(180,35,24,.06);
+      border-radius:18px;
+      padding:12px;
+      color:#7a271a;
       font-size:12px;
-      color:var(--muted);
       line-height:1.45;
-      margin-top:8px;
+      margin-bottom:12px;
     }
 
-    @media(max-width:1120px){
-      .gridStats{grid-template-columns:repeat(3,1fr)}
+    .deletedBox b{
+      color:var(--red);
+    }
+
+    .emptyExport{
+      border:1px dashed var(--line);
+      background:rgba(255,255,255,.65);
+      border-radius:18px;
+      padding:12px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+
+    @media(max-width:1240px){
+      .gridStats{
+        grid-template-columns:repeat(4,1fr);
+      }
+
+      .searchRow{
+        grid-template-columns:1fr 1fr 1fr;
+      }
+
+      .reportGrid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .formGrid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .workflowButtons{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .auditGrid{
+        grid-template-columns:repeat(2,1fr);
+      }
     }
 
     @media(max-width:920px){
-      .formGrid,
       .miniGrid{
         grid-template-columns:1fr;
       }
 
       .orderTop{
-        grid-template-columns:1fr;
-      }
-
-      .orderRight{
-        align-items:flex-start;
+        flex-direction:column;
       }
     }
 
@@ -673,7 +792,6 @@
       .nav{
         align-items:flex-start;
         flex-direction:column;
-        padding:10px 0;
       }
 
       .navActions{
@@ -684,17 +802,31 @@
       .gridStats{
         grid-template-columns:repeat(2,1fr);
       }
+
+      .searchRow,
+      .reportGrid,
+      .formGrid,
+      .auditGrid{
+        grid-template-columns:1fr;
+      }
+
+      .workflowButtons{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .brand h1{
+        max-width:250px;
+      }
     }
   </style>
 </head>
 
 <body>
-
 <section id="loginScreen" class="loginScreen">
   <div class="loginCard">
     <div class="logo" style="margin-bottom:14px;">🍰</div>
     <h2>Order Manager Login</h2>
-    <p>Login to manage customer orders, status updates, tracking links, WhatsApp updates, printing and order tools.</p>
+    <p>Login to manage customer orders, change order status, message customers, print orders, export CSV and restore deleted orders.</p>
 
     <div class="field">
       <label>Email</label>
@@ -714,16 +846,15 @@
   <header class="topbar">
     <div class="wrap nav">
       <div class="brand">
-        <div class="logo">🍰</div>
+        <div id="adminLogo" class="logo">🍰</div>
         <div>
-          <h1>Siffat Cakes Order Manager</h1>
+          <h1 id="adminBrandTitle">Siffat Cakes Order Manager</h1>
           <p id="adminEmailText">Managing orders</p>
         </div>
       </div>
 
       <div class="navActions">
         <span class="btn green small">Connected</span>
-        <a class="btn small" href="admin.html">Website Manager</a>
         <a class="btn small" href="track.html" target="_blank">Track Page</a>
         <a class="btn small" href="index.html" target="_blank">View Site</a>
         <button class="btn small" onclick="loadAll()">Refresh</button>
@@ -737,9 +868,8 @@
       <div class="cardHead">
         <div>
           <h3>Order Board</h3>
-          <p>Restaurant-style order workflow. Move orders step by step and message customers only when needed.</p>
+          <p>Restaurant-style order workflow. Click any box below to filter orders quickly.</p>
         </div>
-
         <div class="navActions">
           <button class="btn primary small" onclick="loadAll()">Refresh Orders</button>
         </div>
@@ -748,20 +878,85 @@
       <div class="cardBody">
         <div id="statsGrid" class="gridStats"></div>
 
-        <div class="stageTabs" id="stageTabs">
-          <button class="stageBtn active" data-stage="active" onclick="setStage('active')">Active Orders</button>
-          <button class="stageBtn" data-stage="Pending" onclick="setStage('Pending')">Pending</button>
-          <button class="stageBtn" data-stage="Confirmed" onclick="setStage('Confirmed')">Confirmed</button>
-          <button class="stageBtn" data-stage="InProgress" onclick="setStage('InProgress')">In Progress</button>
-          <button class="stageBtn" data-stage="Ready" onclick="setStage('Ready')">Ready / Delivery</button>
-          <button class="stageBtn" data-stage="Completed" onclick="setStage('Completed')">Completed</button>
-          <button class="stageBtn" data-stage="Cancelled" onclick="setStage('Cancelled')">Cancelled</button>
-          <button class="stageBtn" data-stage="all" onclick="setStage('all')">All Orders</button>
+        <div class="activeFilterLine">
+          <span class="filterPill" id="activeBoardFilter">Filter: Active Orders</span>
+          <span>Use <b>Save Only</b> to update silently. Use <b>Save + WhatsApp</b> only when you want to notify the customer.</span>
         </div>
+      </div>
+    </section>
 
-        <p class="boardNote">
-          Use <b>Save Only</b> to update tracking silently. Use <b>Save + WhatsApp</b> when you want to notify the customer.
-        </p>
+    <section class="card">
+      <div class="cardHead">
+        <div>
+          <h3>Reports / Print / CSV</h3>
+          <p>Export weekly, monthly, yearly or custom order data. Deleted orders are excluded unless selected.</p>
+        </div>
+        <div class="navActions">
+          <button class="btn orange small" onclick="purgeOldDeletedOrders()">Purge Deleted 30+ Days</button>
+        </div>
+      </div>
+
+      <div class="cardBody">
+        <div class="reportGrid">
+          <div class="field">
+            <label>Range</label>
+            <select id="reportRange" onchange="toggleReportCustomDates()">
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month" selected>This Month</option>
+              <option value="year">This Year</option>
+              <option value="all">All Time</option>
+              <option value="custom">Custom Dates</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Status</label>
+            <select id="reportStatus">
+              <option value="all">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="InProgress">In Progress</option>
+              <option value="Ready">Ready / Delivery</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Deleted</label>
+            <select id="reportDeleted">
+              <option value="active">Active Only</option>
+              <option value="deleted">Deleted Only</option>
+              <option value="all">Active + Deleted</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Output</label>
+            <select id="reportOutputBasis">
+              <option value="created">Use Created Date</option>
+              <option value="needed">Use Needed Date</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Actions</label>
+            <div class="navActions" style="justify-content:flex-start;">
+              <button class="btn primary small" onclick="exportOrdersCsv()">Export CSV</button>
+              <button class="btn small" onclick="printReportSummary()">Print Summary</button>
+              <button class="btn small" onclick="printReportOrders()">Print Orders</button>
+            </div>
+          </div>
+
+          <div id="customReportDates" class="field full" style="display:none;">
+            <label>Custom Date Range</label>
+            <div class="customDates">
+              <input id="reportStartDate" type="date">
+              <input id="reportEndDate" type="date">
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -769,7 +964,11 @@
       <div class="cardHead">
         <div>
           <h3>Orders</h3>
-          <p>Compact cards for daily order management. Expand any order for full details, invoice and privacy tools.</p>
+          <p>Compact cards for daily order management. Expand any order for full details, status, invoice and privacy tools.</p>
+        </div>
+        <div class="navActions">
+          <button class="btn small" onclick="clearBoardFilter()">Clear Board Filter</button>
+          <button class="btn primary small" onclick="loadAll()">Refresh Orders</button>
         </div>
       </div>
 
@@ -782,18 +981,20 @@
             <option value="today">Needed Today</option>
             <option value="tomorrow">Needed Tomorrow</option>
             <option value="week">Needed This Week</option>
+            <option value="month">Needed This Month</option>
+            <option value="year">Needed This Year</option>
           </select>
 
           <select id="orderTypeFilter" onchange="renderOrders()">
             <option value="all">Pickup + Delivery</option>
-            <option>Pickup</option>
-            <option>Delivery</option>
+            <option value="Pickup">Pickup</option>
+            <option value="Delivery">Delivery</option>
           </select>
 
-          <select id="archiveFilter" onchange="renderOrders()">
+          <select id="deletedFilter" onchange="renderOrders()">
             <option value="active">Active Only</option>
-            <option value="archived">Archived Only</option>
-            <option value="all">Active + Archived</option>
+            <option value="deleted">Deleted Only</option>
+            <option value="all">Active + Deleted</option>
           </select>
 
           <select id="orderSort" onchange="renderOrders()">
@@ -805,6 +1006,8 @@
             <option value="total_high">Total high to low</option>
             <option value="total_low">Total low to high</option>
           </select>
+
+          <button class="btn small" onclick="resetSearchFilters()">Reset</button>
         </div>
 
         <div id="ordersList" class="list">
@@ -833,21 +1036,38 @@
     { value:"Pending", label:"Pending" },
     { value:"Confirmed", label:"Confirmed" },
     { value:"InProgress", label:"In Progress" },
-    { value:"Ready", label:"Ready" },
+    { value:"Ready", label:"Ready / Delivery" },
     { value:"Completed", label:"Completed" },
     { value:"Cancelled", label:"Cancelled" }
   ];
+
+  const BOARD_FILTER_LABELS = {
+    active:"Active Orders",
+    pending:"Pending",
+    confirmed:"Confirmed",
+    inprogress:"In Progress",
+    ready:"Ready / Delivery",
+    completed:"Completed",
+    cancelled:"Cancelled",
+    today:"Needed Today",
+    tomorrow:"Needed Tomorrow",
+    week:"This Week Active",
+    quote:"Quote Orders",
+    all:"All Orders"
+  };
 
   const $ = id => document.getElementById(id);
 
   let currentUser = null;
   let orders = [];
   let orderItems = [];
-  let activeStage = "active";
+  let activityLogs = [];
+  let boardFilter = "active";
   let openingAdmin = false;
 
   let siteSettings = {
     brand_name:"Siffat Cakes",
+    tagline:"Eggless Cakes & Desserts",
     whatsapp_number:"",
     currency:"$",
     address:"",
@@ -878,6 +1098,12 @@
         }else{
           currentUser = null;
           showLogin();
+        }
+      });
+
+      window.addEventListener("focus", () => {
+        if($("app").classList.contains("show")){
+          loadAll(false);
         }
       });
     }catch(err){
@@ -946,20 +1172,24 @@
     try{
       if(showMessage) showToast("Loading orders...");
 
-      const [settingsRes, ordersRes, itemsRes] = await Promise.all([
+      const [settingsRes, ordersRes, itemsRes, logsRes] = await Promise.all([
         supabaseClient.from("site_settings").select("*").eq("id", 1).maybeSingle(),
         supabaseClient.from("orders").select("*").order("created_at", { ascending:false }),
-        supabaseClient.from("order_items").select("*").order("created_at", { ascending:true })
+        supabaseClient.from("order_items").select("*").order("created_at", { ascending:true }),
+        supabaseClient.from("order_activity_log").select("*").order("created_at", { ascending:false })
       ]);
 
       if(settingsRes.error) console.warn(settingsRes.error.message);
       if(ordersRes.error) throw ordersRes.error;
       if(itemsRes.error) throw itemsRes.error;
+      if(logsRes.error) console.warn("Activity log load issue:", logsRes.error.message);
 
       siteSettings = {...siteSettings, ...(settingsRes.data || {})};
       orders = ordersRes.data || [];
       orderItems = itemsRes.data || [];
+      activityLogs = logsRes.error ? [] : (logsRes.data || []);
 
+      applyBranding();
       renderAll();
 
       if(showMessage) showToast("Orders loaded.");
@@ -969,111 +1199,87 @@
     }
   }
 
+  function applyBranding(){
+    const brand = siteSettings.brand_name || "Siffat Cakes";
+    $("adminBrandTitle").textContent = brand + " Order Manager";
+
+    if(siteSettings.logo_url){
+      $("adminLogo").innerHTML = `<img src="${escapeHtml(cacheBustImage(siteSettings.logo_url))}" alt="${escapeHtml(brand)}" onerror="this.parentElement.textContent='🍰'">`;
+    }else{
+      $("adminLogo").textContent = "🍰";
+    }
+  }
+
   function renderAll(){
     renderStats();
     renderOrders();
   }
 
-  function setStage(stage){
-    activeStage = stage;
+  function renderStats(){
+    const activeOrders = orders.filter(o => !isDeleted(o));
+    const allOrders = orders;
+    const today = getDateKey(new Date());
+    const tomorrow = getDateKey(addDays(new Date(), 1));
 
-    document.querySelectorAll(".stageBtn").forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.stage === stage);
-    });
+    const stats = [
+      { key:"pending", label:"Pending", count:countStatus(activeOrders,"Pending"), tone:"orange" },
+      { key:"confirmed", label:"Confirmed", count:countStatus(activeOrders,"Confirmed"), tone:"blue" },
+      { key:"inprogress", label:"In Progress", count:countStatus(activeOrders,"InProgress"), tone:"" },
+      { key:"ready", label:"Ready / Delivery", count:countStatus(activeOrders,"Ready"), tone:"green" },
+      { key:"completed", label:"Completed", count:countStatus(activeOrders,"Completed"), tone:"green" },
+      { key:"cancelled", label:"Cancelled", count:countStatus(activeOrders,"Cancelled"), tone:"red" },
+      { key:"today", label:"Needed Today", count:activeOrders.filter(o => o.needed_date === today).length, tone:"orange" },
+      { key:"tomorrow", label:"Needed Tomorrow", count:activeOrders.filter(o => o.needed_date === tomorrow).length, tone:"blue" },
+      { key:"week", label:"This Week Active", count:activeOrders.filter(o => isThisWeek(o.needed_date) && !isFinalStatus(o.status)).length, tone:"" },
+      { key:"quote", label:"Quote Orders", count:activeOrders.filter(o => isQuoteOrder(o)).length, tone:"orange" },
+      { key:"active", label:"Total Active", count:activeOrders.length, tone:"green" },
+      { key:"all", label:"All Orders", count:allOrders.length, tone:"" }
+    ];
 
+    $("statsGrid").innerHTML = stats.map(stat => `
+      <button class="statBtn ${stat.tone} ${boardFilter === stat.key ? "active" : ""}" onclick="setBoardFilter('${stat.key}')">
+        <b>${escapeHtml(stat.count)}</b>
+        <span>${escapeHtml(stat.label)}</span>
+      </button>
+    `).join("");
+
+    $("activeBoardFilter").textContent = "Filter: " + (BOARD_FILTER_LABELS[boardFilter] || "Active Orders");
+  }
+
+  function setBoardFilter(filter){
+    boardFilter = filter || "active";
+
+    if(filter === "all"){
+      $("deletedFilter").value = "all";
+    }else if(filter === "cancelled"){
+      $("deletedFilter").value = "active";
+    }else{
+      $("deletedFilter").value = "active";
+    }
+
+    renderStats();
     renderOrders();
   }
 
-  function renderStats(){
-    const active = orders.filter(o => !truthy(o.archived));
+  function clearBoardFilter(){
+    boardFilter = "active";
+    renderStats();
+    renderOrders();
+  }
 
-    const pending = countStatus(active,"Pending");
-    const confirmed = countStatus(active,"Confirmed");
-    const progress = countStatus(active,"InProgress");
-    const ready = countStatus(active,"Ready");
-    const completed = countStatus(active,"Completed");
-    const cancelled = countStatus(active,"Cancelled");
-
-    const todayCount = active.filter(o => isToday(o.needed_date) && !isFinalStatus(o.status)).length;
-    const tomorrowCount = active.filter(o => isTomorrow(o.needed_date) && !isFinalStatus(o.status)).length;
-    const weekCount = active.filter(o => isThisWeek(o.needed_date) && !isFinalStatus(o.status)).length;
-    const quoteOrders = active.filter(order => isQuoteOrder(order)).length;
-
-    $("statsGrid").innerHTML = `
-      <div class="stat orange"><b>${pending}</b><span>Pending</span></div>
-      <div class="stat blue"><b>${confirmed}</b><span>Confirmed</span></div>
-      <div class="stat"><b>${progress}</b><span>In Progress</span></div>
-      <div class="stat green"><b>${ready}</b><span>Ready / Delivery</span></div>
-      <div class="stat green"><b>${completed}</b><span>Completed</span></div>
-      <div class="stat red"><b>${cancelled}</b><span>Cancelled</span></div>
-      <div class="stat"><b>${todayCount}</b><span>Needed Today</span></div>
-      <div class="stat"><b>${tomorrowCount}</b><span>Needed Tomorrow</span></div>
-      <div class="stat"><b>${weekCount}</b><span>This Week Active</span></div>
-      <div class="stat"><b>${quoteOrders}</b><span>Quote Orders</span></div>
-      <div class="stat"><b>${active.length}</b><span>Total Active</span></div>
-      <div class="stat"><b>${orders.length}</b><span>All Orders</span></div>
-    `;
+  function resetSearchFilters(){
+    $("orderSearch").value = "";
+    $("dateFilter").value = "all";
+    $("orderTypeFilter").value = "all";
+    $("deletedFilter").value = "active";
+    $("orderSort").value = "needed_soon";
+    boardFilter = "active";
+    renderAll();
   }
 
   function renderOrders(){
     const box = $("ordersList");
-
-    const search = ($("orderSearch")?.value || "").trim().toLowerCase();
-    const dateFilter = $("dateFilter")?.value || "all";
-    const typeFilter = $("orderTypeFilter")?.value || "all";
-    const archiveFilter = $("archiveFilter")?.value || "active";
-    const sort = $("orderSort")?.value || "needed_soon";
-
-    let rows = [...orders];
-
-    if(archiveFilter === "active"){
-      rows = rows.filter(o => !truthy(o.archived));
-    }
-
-    if(archiveFilter === "archived"){
-      rows = rows.filter(o => truthy(o.archived));
-    }
-
-    if(activeStage === "active"){
-      rows = rows.filter(o => !isFinalStatus(o.status));
-    }else if(activeStage !== "all"){
-      rows = rows.filter(o => normalizeStatus(o.status) === normalizeStatus(activeStage));
-    }
-
-    if(typeFilter !== "all"){
-      rows = rows.filter(o => String(o.delivery_type || "").toLowerCase() === typeFilter.toLowerCase());
-    }
-
-    if(dateFilter === "today"){
-      rows = rows.filter(o => isToday(o.needed_date));
-    }
-
-    if(dateFilter === "tomorrow"){
-      rows = rows.filter(o => isTomorrow(o.needed_date));
-    }
-
-    if(dateFilter === "week"){
-      rows = rows.filter(o => isThisWeek(o.needed_date));
-    }
-
-    if(search){
-      rows = rows.filter(o => {
-        const combined = `
-          ${o.id || ""}
-          ${getTrackingCode(o)}
-          ${o.customer_name || ""}
-          ${o.customer_phone || ""}
-          ${o.customer_email || ""}
-          ${o.needed_date || ""}
-          ${o.delivery_type || ""}
-          ${o.status || ""}
-        `.toLowerCase();
-
-        return combined.includes(search);
-      });
-    }
-
-    rows.sort((a,b) => sortOrders(a,b,sort));
+    let rows = getFilteredOrders();
 
     if(!rows.length){
       box.innerHTML = `<div class="loading">No orders found.</div>`;
@@ -1083,63 +1289,151 @@
     box.innerHTML = rows.map(renderOrderRow).join("");
   }
 
+  function getFilteredOrders(){
+    const search = ($("orderSearch")?.value || "").trim().toLowerCase();
+    const dateFilter = $("dateFilter")?.value || "all";
+    const typeFilter = $("orderTypeFilter")?.value || "all";
+    const deletedFilter = $("deletedFilter")?.value || "active";
+    const sort = $("orderSort")?.value || "needed_soon";
+
+    let rows = [...orders];
+
+    if(deletedFilter === "active") rows = rows.filter(o => !isDeleted(o));
+    if(deletedFilter === "deleted") rows = rows.filter(o => isDeleted(o));
+
+    rows = applyBoardFilter(rows, boardFilter);
+
+    if(typeFilter !== "all"){
+      rows = rows.filter(o => String(o.delivery_type || "").toLowerCase() === typeFilter.toLowerCase());
+    }
+
+    if(dateFilter !== "all"){
+      rows = rows.filter(o => dateMatches(o.needed_date, dateFilter));
+    }
+
+    if(search){
+      rows = rows.filter(o => {
+        const text = [
+          o.id,
+          getTrackingCode(o),
+          o.customer_name,
+          o.customer_phone,
+          o.customer_email,
+          o.needed_date,
+          o.status,
+          o.delivery_type,
+          o.last_updated_by_email,
+          o.confirmed_by_email,
+          o.prepared_by_email,
+          o.ready_by_email,
+          o.completed_by_email,
+          o.cancelled_by_email
+        ].join(" ").toLowerCase();
+
+        return text.includes(search);
+      });
+    }
+
+    rows.sort((a,b)=>sortOrders(a,b,sort));
+    return rows;
+  }
+
+  function applyBoardFilter(rows, filter){
+    if(!filter || filter === "active"){
+      return rows.filter(o => !isDeleted(o));
+    }
+
+    if(filter === "all"){
+      return rows;
+    }
+
+    if(filter === "pending") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "pending");
+    if(filter === "confirmed") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "confirmed");
+    if(filter === "inprogress") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "inprogress");
+    if(filter === "ready") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "ready");
+    if(filter === "completed") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "completed");
+    if(filter === "cancelled") return rows.filter(o => !isDeleted(o) && normalizeStatus(o.status) === "cancelled");
+    if(filter === "today") return rows.filter(o => !isDeleted(o) && o.needed_date === getDateKey(new Date()));
+    if(filter === "tomorrow") return rows.filter(o => !isDeleted(o) && o.needed_date === getDateKey(addDays(new Date(),1)));
+    if(filter === "week") return rows.filter(o => !isDeleted(o) && isThisWeek(o.needed_date) && !isFinalStatus(o.status));
+    if(filter === "quote") return rows.filter(o => !isDeleted(o) && isQuoteOrder(o));
+
+    return rows;
+  }
+
   function renderOrderRow(order){
     const id = String(order.id);
     const items = orderItems.filter(item => String(item.order_id) === id);
+    const logs = activityLogs.filter(log => String(log.order_id) === id);
     const shortId = id.slice(0,8).toUpperCase();
     const trackingCode = getTrackingCode(order);
     const hasQuote = isQuoteOrder(order);
-    const isArchived = truthy(order.archived);
+    const deleted = isDeleted(order);
     const customerDeleted = truthy(order.customer_data_deleted);
     const dbStatus = toDbStatus(order.status || "Pending");
-    const displayStatus = getDisplayStatusLabel(order, dbStatus);
-    const statusClass = escapeClass(dbStatus);
+    const statusClass = deleted ? "Deleted" : escapeClass(dbStatus);
     const trackLink = getTrackLink(trackingCode);
+    const deletedInfo = getDeletedInfo(order);
 
     return `
-      <div class="orderCard" id="order-${escapeAttr(id)}">
+      <div class="orderCard ${deleted ? "deleted" : ""}" id="order-${escapeAttr(id)}">
         <div class="orderTop" onclick="toggleOrder('${escapeJs(id)}')">
           <div>
             <h4>
               ${customerDeleted ? "Deleted Customer" : escapeHtml(order.customer_name || "Customer")}
               · ${hasQuote ? "Quote" : money(order.estimated_total)}
-              ${isArchived ? "· Archived" : ""}
+              ${deleted ? " · Deleted" : ""}
             </h4>
 
             <p>
               ${customerDeleted ? "Customer data removed" : `${escapeHtml(order.customer_phone || "")}${order.customer_email ? " · " + escapeHtml(order.customer_email) : ""}`}<br>
-              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}
-              · ${escapeHtml(order.delivery_type || "")}<br>
+              Needed: ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""} · ${escapeHtml(order.delivery_type || "")}<br>
               Order ID: ${escapeHtml(shortId)} · Tracking: ${escapeHtml(trackingCode)}
+              ${order.last_updated_by_email ? `<br>Last updated by: ${escapeHtml(order.last_updated_by_email)} ${order.last_updated_at ? "· " + escapeHtml(formatDateTime(order.last_updated_at)) : ""}` : ""}
             </p>
 
             <div class="pillRow">
               <span class="pill">${items.length} item(s)</span>
               <span class="pill">${escapeHtml(order.delivery_type || "No type")}</span>
               <span class="pill">Created ${formatDateTime(order.created_at)}</span>
+              ${hasQuote ? `<span class="pill strong">Quote Required</span>` : ""}
+              ${deleted ? `<span class="pill strong">Deleted ${deletedInfo.daysText}</span>` : ""}
             </div>
           </div>
 
-          <div class="orderRight" onclick="event.stopPropagation()">
-            <span class="status ${statusClass}">${escapeHtml(displayStatus)}</span>
+          <div style="display:flex;gap:7px;align-items:flex-end;flex-direction:column;" onclick="event.stopPropagation()">
+            <span class="status ${statusClass}">${deleted ? "Deleted" : escapeHtml(formatStatusLabel(order.status || "Pending"))}</span>
             <button class="btn small" onclick="toggleOrder('${escapeJs(id)}')">Details</button>
           </div>
         </div>
 
-        <div class="quickActions" onclick="event.stopPropagation()">
-          ${renderQuickActions(order)}
-        </div>
-
         <div class="orderBody">
+          ${deleted ? renderDeletedNotice(order) : ""}
+
+          <div class="sectionTitle">Fast Status Buttons</div>
+          <div class="workflowButtons" id="workflow-${escapeAttr(id)}">
+            ${ORDER_STATUSES.map(s => `
+              <button class="workflowBtn ${normalizeStatus(dbStatus) === normalizeStatus(s.value) ? "active" : ""}" onclick="selectStatus('${escapeJs(id)}','${escapeJs(s.value)}')">
+                ${escapeHtml(s.label)}
+              </button>
+            `).join("")}
+          </div>
+
+          <div class="sectionTitle">Save / Notify</div>
+          <div class="pillRow">
+            <button class="btn primary small" onclick="saveOrderChanges('${escapeJs(id)}', false)">Save Only</button>
+            <button class="btn green small" onclick="saveOrderChanges('${escapeJs(id)}', true)">Save + WhatsApp</button>
+            <button class="btn small" onclick="whatsappCustomer('${escapeJs(id)}')">WhatsApp Customer</button>
+            <button class="btn small" onclick="copyWhatsAppMessage('${escapeJs(id)}')">Copy Original WhatsApp</button>
+            <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print Order</button>
+          </div>
+
+          <div class="sectionTitle">Order Controls</div>
           <div class="formGrid">
             <div class="field">
               <label>Status</label>
-              <select id="status-${escapeAttr(id)}">
-                ${ORDER_STATUSES.map(s => `
-                  <option value="${escapeHtml(s.value)}" ${normalizeStatus(order.status) === normalizeStatus(s.value) ? "selected" : ""}>
-                    ${escapeHtml(getDisplayStatusLabel(order, s.value))}
-                  </option>
-                `).join("")}
+              <select id="status-${escapeAttr(id)}" onchange="updateWorkflowHighlight('${escapeJs(id)}')">
+                ${ORDER_STATUSES.map(s => `<option value="${escapeHtml(s.value)}" ${normalizeStatus(order.status)===normalizeStatus(s.value)?"selected":""}>${escapeHtml(s.label)}</option>`).join("")}
               </select>
             </div>
 
@@ -1153,18 +1447,15 @@
               <input id="total-${escapeAttr(id)}" type="number" step="0.01" value="${Number(order.estimated_total || 0)}">
             </div>
 
+            <div class="field">
+              <label>Order Type</label>
+              <input value="${escapeHtml(order.delivery_type || "")}" readonly>
+            </div>
+
             <div class="field full">
               <label>Admin Note</label>
               <textarea id="note-${escapeAttr(id)}" placeholder="Private admin note...">${escapeHtml(order.admin_note || "")}</textarea>
             </div>
-          </div>
-
-          <div class="sectionTitle">Main Actions</div>
-          <div class="pillRow">
-            <button class="btn primary small" onclick="saveOrderChanges('${escapeJs(id)}', false)">Save Only</button>
-            <button class="btn green small" onclick="saveOrderChanges('${escapeJs(id)}', true)">Save + WhatsApp</button>
-            <button class="btn small" onclick="whatsappCustomer('${escapeJs(id)}')">WhatsApp Current Status</button>
-            <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print Invoice</button>
           </div>
 
           <div class="miniGrid">
@@ -1174,23 +1465,28 @@
                 <b>Name:</b> ${customerDeleted ? "Deleted Customer" : escapeHtml(order.customer_name || "")}<br>
                 <b>Phone:</b> ${customerDeleted ? "Removed" : escapeHtml(order.customer_phone || "")}<br>
                 <b>Email:</b> ${customerDeleted ? "Removed" : escapeHtml(order.customer_email || "")}<br>
-                <b>Delivery Type:</b> ${escapeHtml(order.delivery_type || "")}<br>
-                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
-                <b>Address:</b> ${escapeHtml(order.address || "")} ${order.city ? "· " + escapeHtml(order.city) : ""} ${order.postal_code ? "· " + escapeHtml(order.postal_code) : ""}<br>
-                <b>Order Note:</b> ${escapeHtml(order.order_note || "")}
+                <b>Address:</b> ${customerDeleted ? "Removed" : escapeHtml(buildAddress(order) || "No address")}<br>
+                <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}
               </div>
             </div>
 
             <div>
               <div class="sectionTitle">Tracking Link</div>
               <input class="copyBox" id="tracklink-${escapeAttr(id)}" readonly value="${escapeHtml(trackLink)}">
-
               <div class="pillRow">
                 <button class="btn small" onclick="copyField('tracklink-${escapeJs(id)}')">Copy Link</button>
                 <a class="btn small" href="${escapeHtml(trackLink)}" target="_blank">Open Track</a>
-                <button class="btn small" onclick="copyWhatsAppMessage('${escapeJs(id)}')">Copy Original WhatsApp</button>
               </div>
             </div>
+          </div>
+
+          <div class="sectionTitle">Admin Responsibility / History</div>
+          <div class="auditGrid">
+            ${renderAuditBox("Confirmed", order.confirmed_by_email, order.confirmed_at)}
+            ${renderAuditBox("Prepared", order.prepared_by_email, order.prepared_at)}
+            ${renderAuditBox("Ready", order.ready_by_email, order.ready_at)}
+            ${renderAuditBox("Completed", order.completed_by_email, order.completed_at)}
+            ${renderAuditBox("Cancelled", order.cancelled_by_email, order.cancelled_at)}
           </div>
 
           <div class="sectionTitle">Items</div>
@@ -1198,24 +1494,27 @@
             ${items.length ? items.map(renderOrderItem).join("") : `<div class="loading">No items found for this order.</div>`}
           </div>
 
-          <div class="toolBox">
-            <b>Extra Tools</b>
-            <div class="pillRow">
-              ${isArchived
-                ? `<button class="btn green small" onclick="archiveOrder('${escapeJs(id)}', false)">Unarchive</button>`
-                : `<button class="btn orange small" onclick="archiveOrder('${escapeJs(id)}', true)">Archive</button>`
-              }
-            </div>
+          <div class="sectionTitle">Activity Log</div>
+          <div class="history">
+            ${logs.length ? logs.slice(0,12).map(renderHistoryItem).join("") : `<div class="historyItem">No activity log yet. New saves will appear here.</div>`}
           </div>
 
           <div class="dangerZone">
-            <b>Delete / Privacy Tools</b>
+            <b>Deleted / Privacy Tools</b>
             <div class="pillRow">
-              <button class="btn red small" onclick="anonymizeOrder('${escapeJs(id)}')">Delete Customer Data</button>
-              <button class="btn red small" onclick="permanentDeleteOrder('${escapeJs(id)}')">Permanent Delete Order</button>
+              ${deleted
+                ? `
+                  <button class="btn green small" onclick="restoreDeletedOrder('${escapeJs(id)}')">Restore Order</button>
+                  <button class="btn red small" ${deletedInfo.canDelete ? "" : "disabled"} onclick="permanentDeleteOrder('${escapeJs(id)}')">Permanent Delete</button>
+                `
+                : `
+                  <button class="btn orange small" onclick="softDeleteOrder('${escapeJs(id)}')">Move to Deleted 30 Days</button>
+                  <button class="btn red small" onclick="anonymizeOrder('${escapeJs(id)}')">Delete Customer Data</button>
+                `
+              }
             </div>
             <p class="hint" style="margin-top:8px;">
-              Customer data deletion removes personal info but keeps the order record. Permanent delete removes order + items.
+              Deleted orders stay recoverable for 30 days. Permanent delete is only available after the recovery period.
             </p>
           </div>
         </div>
@@ -1223,61 +1522,44 @@
     `;
   }
 
-  function renderQuickActions(order){
-    const id = String(order.id);
-    const status = normalizeStatus(order.status);
-    const readyLabel = getReadyLabel(order);
-
-    if(status === "pending"){
-      return `
-        <span class="nextHint">Next: Confirm order</span>
-        <button class="btn primary small" onclick="quickUpdateOrder('${escapeJs(id)}','Confirmed',false)">Confirm</button>
-        <button class="btn green small" onclick="quickUpdateOrder('${escapeJs(id)}','Confirmed',true)">Confirm + WhatsApp</button>
-        <button class="btn red small" onclick="quickUpdateOrder('${escapeJs(id)}','Cancelled',true)">Cancel + WhatsApp</button>
-      `;
-    }
-
-    if(status === "confirmed"){
-      return `
-        <span class="nextHint">Next: Start preparing</span>
-        <button class="btn primary small" onclick="quickUpdateOrder('${escapeJs(id)}','InProgress',false)">Start Preparing</button>
-        <button class="btn green small" onclick="quickUpdateOrder('${escapeJs(id)}','InProgress',true)">Start + WhatsApp</button>
-      `;
-    }
-
-    if(status === "inprogress"){
-      return `
-        <span class="nextHint">Next: ${escapeHtml(readyLabel)}</span>
-        <button class="btn primary small" onclick="quickUpdateOrder('${escapeJs(id)}','Ready',false)">${escapeHtml(readyLabel)}</button>
-        <button class="btn green small" onclick="quickUpdateOrder('${escapeJs(id)}','Ready',true)">${escapeHtml(readyLabel)} + WhatsApp</button>
-      `;
-    }
-
-    if(status === "ready"){
-      return `
-        <span class="nextHint">Next: Complete order</span>
-        <button class="btn primary small" onclick="quickUpdateOrder('${escapeJs(id)}','Completed',false)">Complete</button>
-        <button class="btn green small" onclick="quickUpdateOrder('${escapeJs(id)}','Completed',true)">Complete + WhatsApp</button>
-      `;
-    }
-
-    if(status === "completed"){
-      return `
-        <span class="nextHint">Completed</span>
-        <button class="btn small" onclick="printOrder('${escapeJs(id)}')">Print Invoice</button>
-      `;
-    }
-
-    if(status === "cancelled"){
-      return `
-        <span class="nextHint">Cancelled</span>
-        <button class="btn small" onclick="quickUpdateOrder('${escapeJs(id)}','Pending',false)">Reopen as Pending</button>
-      `;
-    }
+  function renderDeletedNotice(order){
+    const info = getDeletedInfo(order);
 
     return `
-      <span class="nextHint">Choose a status in details</span>
-      <button class="btn small" onclick="toggleOrder('${escapeJs(id)}')">Open Details</button>
+      <div class="deletedBox">
+        <b>This order is in Deleted.</b><br>
+        Deleted by: ${escapeHtml(order.deleted_by_email || "Unknown admin")}<br>
+        Deleted at: ${escapeHtml(formatDateTime(order.deleted_at))}<br>
+        Permanent delete available: ${escapeHtml(formatDateTime(order.deleted_until || ""))}<br>
+        ${info.canDelete ? "This order can now be permanently deleted." : `Recovery time left: ${escapeHtml(info.daysText)}.`}
+      </div>
+    `;
+  }
+
+  function renderAuditBox(label, email, date){
+    return `
+      <div class="auditBox">
+        <b>${escapeHtml(label)}</b>
+        <span>${email ? escapeHtml(email) : "Not recorded yet"}</span>
+        <span>${date ? escapeHtml(formatDateTime(date)) : ""}</span>
+      </div>
+    `;
+  }
+
+  function renderHistoryItem(log){
+    const oldStatus = log.old_status ? formatStatusLabel(log.old_status) : "";
+    const newStatus = log.new_status ? formatStatusLabel(log.new_status) : "";
+    const statusText = oldStatus && newStatus && oldStatus !== newStatus
+      ? `${oldStatus} → ${newStatus}`
+      : newStatus || oldStatus || "";
+
+    return `
+      <div class="historyItem">
+        <b>${escapeHtml(toTitle(log.action_type || "Update"))}${statusText ? " · " + escapeHtml(statusText) : ""}</b><br>
+        ${log.admin_email ? `Admin: ${escapeHtml(log.admin_email)}<br>` : ""}
+        ${log.note ? `Note: ${escapeHtml(log.note)}<br>` : ""}
+        ${log.created_at ? escapeHtml(formatDateTime(log.created_at)) : ""}
+      </div>
     `;
   }
 
@@ -1315,114 +1597,101 @@
     `;
   }
 
-  async function quickUpdateOrder(id, status, withWhatsapp){
-    const statusEl = $("status-" + id);
+  function selectStatus(id, status){
+    const select = $("status-" + id);
+    if(!select) return;
 
-    if(statusEl){
-      statusEl.value = status;
-    }
-
-    await saveOrderChanges(id, withWhatsapp, status);
+    select.value = toDbStatus(status);
+    updateWorkflowHighlight(id);
   }
 
-  async function saveOrderChanges(id, withWhatsapp = false, forcedStatus = ""){
-    const order = orders.find(o => String(o.id) === String(id));
+  function updateWorkflowHighlight(id){
+    const select = $("status-" + id);
+    const wrap = $("workflow-" + id);
+    if(!select || !wrap) return;
 
-    if(!order){
-      showToast("Order not found.", true);
-      return;
-    }
+    const selected = normalizeStatus(select.value);
+    wrap.querySelectorAll(".workflowBtn").forEach(btn => {
+      const txt = normalizeStatus(btn.textContent);
+      const isActive =
+        (selected === "pending" && txt.includes("pending")) ||
+        (selected === "confirmed" && txt.includes("confirmed")) ||
+        (selected === "inprogress" && txt.includes("progress")) ||
+        (selected === "ready" && txt.includes("ready")) ||
+        (selected === "completed" && txt.includes("completed")) ||
+        (selected === "cancelled" && txt.includes("cancelled"));
+
+      btn.classList.toggle("active", isActive);
+    });
+  }
+
+  async function saveOrderChanges(id, notifyCustomer){
+    const order = orders.find(o => String(o.id) === String(id));
+    if(!order) return showToast("Order not found.", true);
+
+    const status = toDbStatus($("status-" + id).value);
+    const admin_note = $("note-" + id).value.trim();
+    const tracking_code = ($("tracking-" + id).value || "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
+    const estimated_total = Number($("total-" + id)?.value || 0);
+    const phone = normalizePhone(order.customer_phone || "");
 
     let whatsappTab = null;
 
-    if(withWhatsapp){
+    if(notifyCustomer){
+      if(!phone){
+        showToast("Customer phone number is missing. Use Save Only.", true);
+        return;
+      }
+
       whatsappTab = window.open("about:blank", "_blank");
 
       if(whatsappTab){
-        whatsappTab.document.write(`
-          <html>
-            <head>
-              <title>Preparing WhatsApp...</title>
-              <style>
-                body{
-                  margin:0;
-                  min-height:100vh;
-                  display:grid;
-                  place-items:center;
-                  background:#fff7ff;
-                  color:#640D6B;
-                  font-family:Arial,sans-serif;
-                  text-align:center;
-                }
-                .box{
-                  padding:22px;
-                  border:1px solid rgba(100,13,107,.16);
-                  border-radius:22px;
-                  background:white;
-                  max-width:420px;
-                }
-              </style>
-            </head>
-            <body>
-              <div class="box">
-                <h2>Preparing WhatsApp message...</h2>
-                <p>Please wait while the order status is saved.</p>
-              </div>
-            </body>
-          </html>
-        `);
+        whatsappTab.document.write(`<html><body style="font-family:Arial;padding:24px;color:#640D6B;"><h3>Preparing WhatsApp...</h3><p>Saving order first.</p></body></html>`);
         whatsappTab.document.close();
       }
     }
 
-    const status = toDbStatus(forcedStatus || $("status-" + id)?.value || order.status || "Pending");
-    const admin_note = $("note-" + id)?.value.trim() || "";
-    const tracking_code = ($("tracking-" + id)?.value || getTrackingCode(order)).trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
-    const estimated_total = Number($("total-" + id)?.value || order.estimated_total || 0);
-
-    showToast(withWhatsapp ? "Saving and preparing WhatsApp..." : "Saving order update...");
-
     try{
-      let result = await supabaseClient.rpc("admin_update_order", {
+      showToast(notifyCustomer ? "Saving and preparing WhatsApp..." : "Saving order update...");
+
+      const { data, error } = await supabaseClient.rpc("admin_update_order_v2", {
         p_order_id:id,
         p_status:status,
         p_admin_note:admin_note,
         p_tracking_code:tracking_code,
-        p_estimated_total:estimated_total
+        p_estimated_total:estimated_total,
+        p_action_note: notifyCustomer ? "Saved with WhatsApp notification." : "Saved only."
       });
 
-      if(result.error && shouldTryOldAdminUpdate(result.error)){
-        result = await supabaseClient.rpc("admin_update_order", {
+      if(error) throw error;
+
+      if(notifyCustomer){
+        const updatedOrder = {
+          ...order,
+          status,
+          tracking_code:tracking_code || getTrackingCode(order),
+          estimated_total
+        };
+
+        const msg = buildStatusWhatsAppMessage(updatedOrder);
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+
+        await supabaseClient.rpc("admin_log_order_action", {
           p_order_id:id,
-          p_status:status,
-          p_admin_note:admin_note,
-          p_tracking_code:tracking_code
-        });
-      }
+          p_action_type:"whatsapp_customer_opened",
+          p_note:"Admin opened WhatsApp notification for customer.",
+          p_metadata:{ status, tracking_code:updatedOrder.tracking_code }
+        }).catch(() => {});
 
-      if(result.error){
-        console.warn("admin_update_order RPC failed, trying direct update:", result.error.message || result.error);
-
-        const direct = await supabaseClient
-          .from("orders")
-          .update({
-            status,
-            estimated_total
-          })
-          .eq("id", id);
-
-        if(direct.error){
-          throw new Error("Order update failed. Run latest SQL setup if tracking/history is not saving. " + (result.error.message || direct.error.message));
+        if(whatsappTab && !whatsappTab.closed){
+          whatsappTab.location.href = url;
+        }else{
+          window.open(url, "_blank");
         }
       }
 
-      if(withWhatsapp){
-        openStatusWhatsApp(order, status, tracking_code, whatsappTab);
-      }
-
       await loadAll(false);
-
-      showToast(withWhatsapp ? "Order saved. WhatsApp opened." : "Order saved.");
+      showToast(notifyCustomer ? "Saved. WhatsApp opened." : "Order saved.");
     }catch(err){
       console.error(err);
 
@@ -1430,143 +1699,147 @@
         whatsappTab.close();
       }
 
-      showToast(err.message || "Order update failed.", true);
+      showToast(err.message || "Order update failed. Check SQL functions.", true);
     }
   }
 
-  function shouldTryOldAdminUpdate(error){
-    const msg = String(error?.message || "").toLowerCase();
-    return msg.includes("could not find the function") || msg.includes("pgrst202") || msg.includes("function");
-  }
+  async function softDeleteOrder(id){
+    if(!confirm("Move this order to Deleted for 30 days? You can restore it during this time.")) return;
 
-  function openStatusWhatsApp(order, status, trackingCode, tab = null){
-    const phone = normalizePhone(order.customer_phone || "");
+    try{
+      const { error } = await supabaseClient.rpc("admin_soft_delete_order", {
+        p_order_id:id,
+        p_note:"Moved to Deleted from order manager."
+      });
 
-    if(!phone){
-      if(tab && !tab.closed) tab.close();
-      showToast("Customer phone number missing.", true);
-      return;
-    }
+      if(error) throw error;
 
-    const label = getDisplayStatusLabel(order, status);
-    const name = order.customer_name || "there";
-    const trackLink = getTrackLink(trackingCode);
-    const neededText = `${formatDate(order.needed_date)}${order.needed_time ? " at " + order.needed_time : ""}`;
-
-    const message = buildStatusMessage(name, label, trackingCode, trackLink, neededText, order);
-
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-    if(tab && !tab.closed){
-      tab.location.href = url;
-    }else{
-      window.open(url, "_blank");
+      await loadAll(false);
+      showToast("Order moved to Deleted for 30 days.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Could not move order to Deleted.", true);
     }
   }
 
-  function buildStatusMessage(name, label, trackingCode, trackLink, neededText, order){
-    const cleanName = String(name || "").trim() || "there";
-    const deliveryType = order.delivery_type || "order";
+  async function restoreDeletedOrder(id){
+    if(!confirm("Restore this deleted order back to active orders?")) return;
 
-    if(normalizeStatus(label) === "cancelled"){
-      return `Hi ${cleanName}, your Siffat Cakes order ${trackingCode} has been cancelled. Please message us if you have any questions.`;
+    try{
+      const { error } = await supabaseClient.rpc("admin_restore_deleted_order", {
+        p_order_id:id,
+        p_note:"Restored from Deleted."
+      });
+
+      if(error) throw error;
+
+      await loadAll(false);
+      showToast("Order restored.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Could not restore order.", true);
     }
-
-    if(normalizeStatus(label) === "completed"){
-      return `Hi ${cleanName}, your Siffat Cakes order ${trackingCode} is completed. Thank you for ordering with us.`;
-    }
-
-    if(normalizeStatus(label) === "readyforpickup"){
-      return `Hi ${cleanName}, your Siffat Cakes order ${trackingCode} is ready for pickup. Needed date: ${neededText}. Track here: ${trackLink}`;
-    }
-
-    if(normalizeStatus(label) === "outfordelivery"){
-      return `Hi ${cleanName}, your Siffat Cakes order ${trackingCode} is out for delivery / ready for delivery update. Needed date: ${neededText}. Track here: ${trackLink}`;
-    }
-
-    return `Hi ${cleanName}, your Siffat Cakes ${deliveryType} order ${trackingCode} status is now: ${label}. Needed date: ${neededText}. Track here: ${trackLink}`;
-  }
-
-  async function archiveOrder(id, archive){
-    if(!confirm(archive ? "Archive this order?" : "Unarchive this order?")) return;
-
-    const { error } = await supabaseClient.rpc("admin_archive_order", {
-      p_order_id:id,
-      p_archived:archive
-    });
-
-    if(error){
-      showToast("Archive needs SQL setup: " + error.message, true);
-      return;
-    }
-
-    await loadAll(false);
-    showToast(archive ? "Order archived." : "Order unarchived.");
-  }
-
-  async function anonymizeOrder(id){
-    if(!confirm("Delete customer personal data from this order? This keeps order totals but removes name, phone, email and address fields.")) return;
-
-    const { error } = await supabaseClient.rpc("admin_anonymize_order", {
-      p_order_id:id
-    });
-
-    if(error){
-      showToast("Customer data delete needs SQL setup: " + error.message, true);
-      return;
-    }
-
-    await loadAll(false);
-    showToast("Customer data deleted.");
   }
 
   async function permanentDeleteOrder(id){
-    if(!confirm("Permanently delete this order and all its items? This cannot be undone.")) return;
+    if(!confirm("Permanently delete this order? This cannot be undone.")) return;
 
-    const { error } = await supabaseClient.rpc("admin_delete_order", {
-      p_order_id:id
-    });
+    try{
+      const { error } = await supabaseClient.rpc("admin_permanent_delete_order", {
+        p_order_id:id
+      });
 
-    if(error){
-      const itemsDelete = await supabaseClient.from("order_items").delete().eq("order_id", id);
+      if(error) throw error;
 
-      if(itemsDelete.error){
-        showToast(itemsDelete.error.message, true);
-        return;
-      }
-
-      const orderDelete = await supabaseClient.from("orders").delete().eq("id", id);
-
-      if(orderDelete.error){
-        showToast(orderDelete.error.message, true);
-        return;
-      }
+      await loadAll(false);
+      showToast("Order permanently deleted.");
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Permanent delete failed. It may still be inside 30-day recovery.", true);
     }
+  }
 
-    await loadAll(false);
-    showToast("Order permanently deleted.");
+  async function purgeOldDeletedOrders(){
+    if(!confirm("Permanently delete all Deleted orders older than 30 days?")) return;
+
+    try{
+      const { data, error } = await supabaseClient.rpc("admin_purge_old_deleted_orders");
+
+      if(error) throw error;
+
+      await loadAll(false);
+      showToast(`Purge complete. Deleted count: ${data?.deleted_count || 0}`);
+    }catch(err){
+      console.error(err);
+      showToast(err.message || "Purge failed.", true);
+    }
+  }
+
+  async function anonymizeOrder(id){
+    if(!confirm("Delete customer personal data from this order? This keeps the order record but removes name, phone, email and address fields.")) return;
+
+    try{
+      const { error } = await supabaseClient.rpc("admin_anonymize_order", { p_order_id:id });
+
+      if(error) throw error;
+
+      await loadAll(false);
+      showToast("Customer data deleted.");
+    }catch(err){
+      console.error(err);
+      showToast("Customer data delete needs the older privacy SQL function: " + (err.message || ""), true);
+    }
   }
 
   function whatsappCustomer(id){
     const order = orders.find(o => String(o.id) === String(id));
-
-    if(!order){
-      showToast("Order not found.", true);
-      return;
-    }
+    if(!order) return;
 
     const phone = normalizePhone(order.customer_phone || "");
+    if(!phone) return showToast("Customer phone number missing.", true);
 
-    if(!phone){
-      showToast("Customer phone number missing.", true);
-      return;
+    const msg = buildStatusWhatsAppMessage(order);
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  function buildStatusWhatsAppMessage(order){
+    const status = formatStatusLabel(order.status || "Pending");
+    const trackingCode = getTrackingCode(order);
+    const trackLink = getTrackLink(trackingCode);
+    const name = order.customer_name ? ` ${order.customer_name}` : "";
+
+    let statusLine = "";
+
+    if(normalizeStatus(order.status) === "confirmed"){
+      statusLine = "Your order has been confirmed.";
+    }else if(normalizeStatus(order.status) === "inprogress"){
+      statusLine = "Your order is now being prepared.";
+    }else if(normalizeStatus(order.status) === "ready"){
+      statusLine = order.delivery_type === "Delivery"
+        ? "Your order is ready for delivery update."
+        : "Your order is ready for pickup.";
+    }else if(normalizeStatus(order.status) === "completed"){
+      statusLine = "Your order has been completed. Thank you!";
+    }else if(normalizeStatus(order.status) === "cancelled"){
+      statusLine = "Your order has been cancelled. Please contact us if you have questions.";
+    }else{
+      statusLine = "Your order request has been received and is pending review.";
     }
 
-    const trackingCode = getTrackingCode(order);
-    const label = getDisplayStatusLabel(order, order.status || "Pending");
-    const msg = buildStatusMessage(order.customer_name || "", label, trackingCode, getTrackLink(trackingCode), `${formatDate(order.needed_date)}${order.needed_time ? " at " + order.needed_time : ""}`, order);
-
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+    return [
+      `Hi${name},`,
+      "",
+      `Siffat Cakes order update: ${status}`,
+      statusLine,
+      "",
+      `Tracking Code: ${trackingCode}`,
+      `Track Order: ${trackLink}`,
+      "",
+      `Needed Date: ${order.needed_date || "Not selected"} ${order.needed_time || ""}`,
+      `Estimated Total: ${Number(order.estimated_total || 0) ? money(order.estimated_total) : "Quote / Confirm with shop"}`,
+      "",
+      "Please reply here if you have any questions."
+    ].join("\n");
   }
 
   function copyWhatsAppMessage(id){
@@ -1578,23 +1851,19 @@
     }
 
     navigator.clipboard.writeText(order.whatsapp_message)
-      .then(() => showToast("WhatsApp message copied."))
-      .catch(() => showToast("Could not copy message.", true));
+      .then(()=>showToast("WhatsApp message copied."))
+      .catch(()=>showToast("Could not copy message.", true));
   }
 
   function printOrder(id){
     const order = orders.find(o => String(o.id) === String(id));
-
-    if(!order){
-      showToast("Order not found.", true);
-      return;
-    }
+    if(!order) return showToast("Order not found.", true);
 
     const items = orderItems.filter(item => String(item.order_id) === String(id));
     const win = window.open("", "_blank");
 
     if(!win){
-      showToast("Popup blocked. Allow popups to print invoice.", true);
+      showToast("Popup blocked. Allow popups to print order.", true);
       return;
     }
 
@@ -1607,38 +1876,30 @@
     const brand = siteSettings.brand_name || "Siffat Cakes";
     const logo = siteSettings.logo_url || "";
     const shortId = String(order.id || "").slice(0,8).toUpperCase();
-
-    const calculatedSubtotal = items.reduce((sum,item) => sum + Number(item.estimated_item_total || 0), 0);
+    const calculatedSubtotal = items.reduce((sum,item)=>sum + Number(item.estimated_item_total || 0), 0);
     const estimatedTotal = Number(order.estimated_total || 0);
     const finalSubtotal = calculatedSubtotal || estimatedTotal;
     const delivery = Number(order.delivery_fee ?? 0);
     const savedTax = Number(order.hst_amount ?? order.tax_amount ?? order.hst ?? 0);
     const hstRate = Number(siteSettings.hst_rate ?? 13);
     const shouldChargeHst = truthy(siteSettings.charge_hst) || savedTax > 0;
-
     let tax = savedTax;
 
     if(!tax && shouldChargeHst && finalSubtotal > 0){
       tax = Math.round(((finalSubtotal + delivery) * hstRate / 100) * 100) / 100;
     }
 
-    let finalTotal = estimatedTotal;
-
-    if(shouldChargeHst){
-      finalTotal = finalSubtotal + delivery + tax;
-    }else if(!finalTotal){
-      finalTotal = finalSubtotal + delivery + tax;
-    }
+    let finalTotal = estimatedTotal || finalSubtotal + delivery + tax;
 
     return `<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>${escapeHtml(brand)} Invoice ${escapeHtml(shortId)}</title>
+  <title>${escapeHtml(brand)} Order ${escapeHtml(shortId)}</title>
   <style>
     *{box-sizing:border-box}
     body{margin:0;background:#f5eef6;color:#1d141f;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.45}
-    .page{width:210mm;min-height:297mm;margin:0 auto;background:white;padding:16mm}
+    .page{width:210mm;min-height:297mm;margin:0 auto;background:white;padding:16mm;}
     .printBtn{position:fixed;right:18px;top:18px;border:0;border-radius:999px;background:#640D6B;color:white;padding:11px 16px;font-weight:800;box-shadow:0 12px 28px rgba(100,13,107,.25);cursor:pointer}
     .top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;border-bottom:2px solid #640D6B;padding-bottom:16px;margin-bottom:16px}
     .brand{display:flex;gap:12px;align-items:center}
@@ -1672,7 +1933,6 @@
 </head>
 <body>
 <button class="printBtn" onclick="window.print()">Print / Save PDF</button>
-
 <main class="page">
   <section class="top">
     <div class="brand">
@@ -1683,25 +1943,25 @@
         <p>${escapeHtml(siteSettings.business_hours || "")}</p>
       </div>
     </div>
-
     <div class="invoiceTitle">
-      <h2>Invoice</h2>
+      <h2>Order</h2>
       <p><b>Order:</b> ${escapeHtml(shortId)}</p>
+      <p><b>Tracking:</b> ${escapeHtml(getTrackingCode(order))}</p>
       <p><b>Date:</b> ${escapeHtml(formatDateTime(order.created_at))}</p>
     </div>
   </section>
 
   <section class="grid">
     <div class="box">
-      <h3>Bill To</h3>
+      <h3>Customer</h3>
       <p><b>${escapeHtml(order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || "Customer"))}</b></p>
       <p class="muted">${order.customer_data_deleted ? "Customer data removed" : escapeHtml(order.customer_phone || "")}</p>
       <p class="muted">${order.customer_data_deleted ? "" : escapeHtml(order.customer_email || "")}</p>
     </div>
 
     <div class="box">
-      <h3>Order</h3>
-      <p><b>Status:</b> ${escapeHtml(getDisplayStatusLabel(order, order.status || "Pending"))}</p>
+      <h3>Order Details</h3>
+      <p><b>Status:</b> ${escapeHtml(formatStatusLabel(order.status || "Pending"))}</p>
       <p><b>Needed:</b> ${escapeHtml(formatDate(order.needed_date))} ${order.needed_time ? escapeHtml(order.needed_time) : ""}</p>
       <p><b>Type:</b> ${escapeHtml(order.delivery_type || "")}</p>
     </div>
@@ -1709,28 +1969,20 @@
 
   <section class="items">
     <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Qty</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${items.length ? items.map(renderInvoiceItem).join("") : `<tr><td colspan="3">No items found.</td></tr>`}
-      </tbody>
+      <thead><tr><th>Item</th><th>Qty</th><th>Total</th></tr></thead>
+      <tbody>${items.length ? items.map(renderInvoiceItem).join("") : `<tr><td colspan="3">No items found.</td></tr>`}</tbody>
     </table>
   </section>
 
   <section class="totals">
     <div><span>Subtotal</span><b>${finalSubtotal ? money(finalSubtotal) : "Quote"}</b></div>
     ${delivery ? `<div><span>Delivery</span><b>${money(delivery)}</b></div>` : ""}
-    ${shouldChargeHst ? `<div><span>HST (${hstRate}%)</span><b>${money(tax)}</b></div>` : (tax ? `<div><span>Tax / HST</span><b>${money(tax)}</b></div>` : "")}
+    ${shouldChargeHst ? `<div><span>HST (${hstRate}%)</span><b>${money(tax)}</b></div>` : ""}
     <div class="grand"><span>Total</span><b>${finalTotal ? money(finalTotal) : "Quote"}</b></div>
   </section>
 
   <section class="thanks">
-    Thank you for ordering from ${escapeHtml(brand)}.
+    Thank you for ordering from ${escapeHtml(brand)}. This printout is for order management and customer confirmation.
   </section>
 
   <section class="footer">
@@ -1765,12 +2017,280 @@
     `;
   }
 
+  function getReportRows(){
+    const range = $("reportRange").value;
+    const status = $("reportStatus").value;
+    const deletedMode = $("reportDeleted").value;
+    const basis = $("reportOutputBasis").value;
+
+    let rows = [...orders];
+
+    if(deletedMode === "active") rows = rows.filter(o => !isDeleted(o));
+    if(deletedMode === "deleted") rows = rows.filter(o => isDeleted(o));
+
+    if(status !== "all"){
+      rows = rows.filter(o => normalizeStatus(o.status) === normalizeStatus(status));
+    }
+
+    rows = rows.filter(order => {
+      const value = basis === "needed" ? order.needed_date : dateOnly(order.created_at);
+      return reportDateMatches(value, range);
+    });
+
+    rows.sort((a,b)=>sortOrders(a,b,"needed_soon"));
+    return rows;
+  }
+
+  function reportDateMatches(value, range){
+    if(range === "all") return true;
+    if(!value) return false;
+
+    const date = new Date(String(value).includes("T") ? value : value + "T00:00:00");
+    if(Number.isNaN(date.getTime())) return false;
+
+    const today = new Date();
+
+    if(range === "today") return getDateKey(date) === getDateKey(today);
+    if(range === "week") return isThisWeek(getDateKey(date));
+    if(range === "month") return date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth();
+    if(range === "year") return date.getFullYear() === today.getFullYear();
+
+    if(range === "custom"){
+      const start = $("reportStartDate").value;
+      const end = $("reportEndDate").value;
+
+      if(start && getDateKey(date) < start) return false;
+      if(end && getDateKey(date) > end) return false;
+
+      return true;
+    }
+
+    return true;
+  }
+
+  function toggleReportCustomDates(){
+    $("customReportDates").style.display = $("reportRange").value === "custom" ? "flex" : "none";
+  }
+
+  function exportOrdersCsv(){
+    const rows = getReportRows();
+
+    if(!rows.length){
+      showToast("No orders found for this report.", true);
+      return;
+    }
+
+    const headers = [
+      "Created At",
+      "Order ID",
+      "Tracking Code",
+      "Status",
+      "Customer Name",
+      "Phone",
+      "Email",
+      "Needed Date",
+      "Needed Time",
+      "Type",
+      "Estimated Total",
+      "Deleted At",
+      "Deleted By",
+      "Last Updated By",
+      "Confirmed By",
+      "Prepared By",
+      "Ready By",
+      "Completed By",
+      "Cancelled By"
+    ];
+
+    const csvRows = [headers];
+
+    rows.forEach(order => {
+      csvRows.push([
+        order.created_at || "",
+        order.id || "",
+        getTrackingCode(order),
+        formatStatusLabel(order.status || "Pending"),
+        order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || ""),
+        order.customer_data_deleted ? "" : (order.customer_phone || ""),
+        order.customer_data_deleted ? "" : (order.customer_email || ""),
+        order.needed_date || "",
+        order.needed_time || "",
+        order.delivery_type || "",
+        Number(order.estimated_total || 0),
+        order.deleted_at || "",
+        order.deleted_by_email || "",
+        order.last_updated_by_email || "",
+        order.confirmed_by_email || "",
+        order.prepared_by_email || "",
+        order.ready_by_email || "",
+        order.completed_by_email || "",
+        order.cancelled_by_email || ""
+      ]);
+    });
+
+    const csv = csvRows.map(row => row.map(csvCell).join(",")).join("\n");
+    const filename = `siffat-cakes-orders-${$("reportRange").value}-${getDateKey(new Date())}.csv`;
+
+    downloadTextFile(filename, csv, "text/csv;charset=utf-8");
+    showToast("CSV exported.");
+  }
+
+  function printReportSummary(){
+    const rows = getReportRows();
+    const title = getReportTitle();
+    const total = rows.reduce((sum,o)=>sum + Number(o.estimated_total || 0),0);
+    const active = rows.filter(o => !isDeleted(o)).length;
+    const deleted = rows.filter(o => isDeleted(o)).length;
+
+    const html = `
+      <!doctype html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>${escapeHtml(title)}</title>
+        <style>
+          body{font-family:Arial,sans-serif;margin:0;background:#f6eff7;color:#1d141f}
+          .page{max-width:980px;margin:0 auto;background:white;min-height:100vh;padding:28px}
+          h1{color:#640D6B;margin:0 0 6px;font-size:30px}
+          p{color:#725a76;margin:0 0 18px}
+          .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+          .box{border:1px solid rgba(100,13,107,.18);border-radius:16px;padding:14px;background:#fff7ff}
+          .box b{display:block;color:#640D6B;font-size:24px}
+          .box span{display:block;color:#725a76;font-size:12px;margin-top:4px}
+          table{width:100%;border-collapse:collapse}
+          th{background:#640D6B;color:white;text-align:left;padding:10px;font-size:12px}
+          td{border-bottom:1px solid rgba(100,13,107,.14);padding:9px;font-size:12px}
+          @media print{body{background:white}.page{padding:0}}
+        </style>
+      </head>
+      <body>
+        <main class="page">
+          <h1>${escapeHtml(title)}</h1>
+          <p>${escapeHtml(siteSettings.brand_name || "Siffat Cakes")} · Printed ${escapeHtml(new Date().toLocaleString())}</p>
+
+          <div class="grid">
+            <div class="box"><b>${rows.length}</b><span>Total Orders</span></div>
+            <div class="box"><b>${active}</b><span>Active Orders</span></div>
+            <div class="box"><b>${deleted}</b><span>Deleted Orders</span></div>
+            <div class="box"><b>${money(total)}</b><span>Estimated Total</span></div>
+          </div>
+
+          <table>
+            <thead>
+              <tr><th>Order</th><th>Customer</th><th>Status</th><th>Needed</th><th>Total</th></tr>
+            </thead>
+            <tbody>
+              ${rows.map(order => `
+                <tr>
+                  <td>${escapeHtml(String(order.id).slice(0,8).toUpperCase())}</td>
+                  <td>${escapeHtml(order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || ""))}</td>
+                  <td>${escapeHtml(isDeleted(order) ? "Deleted" : formatStatusLabel(order.status || "Pending"))}</td>
+                  <td>${escapeHtml(order.needed_date || "")}</td>
+                  <td>${escapeHtml(money(order.estimated_total))}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </main>
+        <script>window.onload = () => setTimeout(() => window.print(), 300);<\/script>
+      </body>
+      </html>
+    `;
+
+    openPrintWindow(html);
+  }
+
+  function printReportOrders(){
+    const rows = getReportRows();
+
+    if(!rows.length){
+      showToast("No orders found for this report.", true);
+      return;
+    }
+
+    const title = getReportTitle();
+
+    const html = `
+      <!doctype html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>${escapeHtml(title)}</title>
+        <style>
+          body{font-family:Arial,sans-serif;margin:0;background:#f6eff7;color:#1d141f}
+          .page{max-width:1100px;margin:0 auto;background:white;min-height:100vh;padding:28px}
+          h1{color:#640D6B;margin:0 0 6px;font-size:30px}
+          .order{break-inside:avoid;border:1px solid rgba(100,13,107,.18);border-radius:18px;padding:14px;margin:12px 0;background:#fff7ff}
+          .order h2{margin:0 0 6px;font-size:17px}
+          .meta{font-size:12px;color:#725a76;line-height:1.55}
+          .item{background:white;border:1px solid rgba(100,13,107,.14);border-radius:12px;padding:9px;margin-top:7px;font-size:12px;line-height:1.45}
+          @media print{body{background:white}.page{padding:0}.order{box-shadow:none}}
+        </style>
+      </head>
+      <body>
+        <main class="page">
+          <h1>${escapeHtml(title)}</h1>
+          <div class="meta">${escapeHtml(siteSettings.brand_name || "Siffat Cakes")} · Printed ${escapeHtml(new Date().toLocaleString())}</div>
+
+          ${rows.map(order => {
+            const items = orderItems.filter(item => String(item.order_id) === String(order.id));
+            return `
+              <section class="order">
+                <h2>${escapeHtml(order.customer_data_deleted ? "Deleted Customer" : (order.customer_name || "Customer"))} · ${escapeHtml(money(order.estimated_total))}</h2>
+                <div class="meta">
+                  Order: ${escapeHtml(String(order.id).slice(0,8).toUpperCase())} · Tracking: ${escapeHtml(getTrackingCode(order))}<br>
+                  Status: ${escapeHtml(isDeleted(order) ? "Deleted" : formatStatusLabel(order.status || "Pending"))}<br>
+                  Needed: ${escapeHtml(order.needed_date || "")} ${escapeHtml(order.needed_time || "")} · ${escapeHtml(order.delivery_type || "")}<br>
+                  Phone: ${escapeHtml(order.customer_data_deleted ? "Removed" : (order.customer_phone || ""))}
+                </div>
+                ${items.length ? items.map(renderPrintReportItem).join("") : `<div class="item">No items found.</div>`}
+              </section>
+            `;
+          }).join("")}
+        </main>
+        <script>window.onload = () => setTimeout(() => window.print(), 300);<\/script>
+      </body>
+      </html>
+    `;
+
+    openPrintWindow(html);
+  }
+
+  function renderPrintReportItem(item){
+    return `
+      <div class="item">
+        <b>${escapeHtml(item.cake_name || item.product_name || "Item")}</b><br>
+        Qty: ${escapeHtml(item.quantity || 1)} · Total: ${Number(item.estimated_item_total || 0) ? escapeHtml(money(item.estimated_item_total)) : "Quote"}<br>
+        ${item.size_name ? `Size: ${escapeHtml(item.size_name)}<br>` : ""}
+        ${item.flavour_name ? `Flavour: ${escapeHtml(item.flavour_name)}<br>` : ""}
+        ${item.message_on_cake ? `Message: ${escapeHtml(item.message_on_cake)}<br>` : ""}
+        ${item.special_notes ? `Notes: ${escapeHtml(item.special_notes)}` : ""}
+      </div>
+    `;
+  }
+
+  function getReportTitle(){
+    const range = $("reportRange").selectedOptions[0]?.textContent || "Report";
+    const status = $("reportStatus").selectedOptions[0]?.textContent || "All Statuses";
+    const deleted = $("reportDeleted").selectedOptions[0]?.textContent || "Active Only";
+    return `Siffat Cakes Orders · ${range} · ${status} · ${deleted}`;
+  }
+
+  function openPrintWindow(html){
+    const win = window.open("", "_blank");
+    if(!win){
+      showToast("Popup blocked. Allow popups to print.", true);
+      return;
+    }
+
+    win.document.write(html);
+    win.document.close();
+    win.focus();
+  }
+
   function toggleOrder(id){
     const el = $("order-" + id);
-
-    if(el){
-      el.classList.toggle("open");
-    }
+    if(el) el.classList.toggle("open");
   }
 
   function getTrackingCode(order){
@@ -1778,25 +2298,9 @@
   }
 
   function getTrackLink(code){
-    return `${location.origin}${location.pathname.replace(/[^/]+$/, "track.html")}?code=${encodeURIComponent(code)}`;
-  }
-
-  function getReadyLabel(order){
-    return String(order.delivery_type || "").toLowerCase() === "delivery"
-      ? "Out for Delivery"
-      : "Ready for Pickup";
-  }
-
-  function getDisplayStatusLabel(order,statusValue){
-    const db = toDbStatus(statusValue);
-
-    if(db === "Ready"){
-      return getReadyLabel(order);
-    }
-
-    const found = ORDER_STATUSES.find(s => s.value === db);
-
-    return found ? found.label : db;
+    const url = new URL("track.html", location.href);
+    url.searchParams.set("code", code);
+    return url.toString();
   }
 
   function toDbStatus(value){
@@ -1812,32 +2316,21 @@
     return "Pending";
   }
 
+  function formatStatusLabel(value){
+    const db = toDbStatus(value);
+    const found = ORDER_STATUSES.find(s => s.value === db);
+    return found ? found.label : db;
+  }
+
   function sortOrders(a,b,sort){
-    if(sort === "oldest"){
-      return String(a.created_at || "").localeCompare(String(b.created_at || ""));
-    }
-
-    if(sort === "needed_soon"){
-      return String(a.needed_date || "9999-99-99").localeCompare(String(b.needed_date || "9999-99-99"));
-    }
-
-    if(sort === "needed_late"){
-      return String(b.needed_date || "").localeCompare(String(a.needed_date || ""));
-    }
-
-    if(sort === "status"){
-      return getDisplayStatusLabel(a,a.status || "").localeCompare(getDisplayStatusLabel(b,b.status || ""));
-    }
-
-    if(sort === "total_high"){
-      return Number(b.estimated_total || 0) - Number(a.estimated_total || 0);
-    }
-
-    if(sort === "total_low"){
-      return Number(a.estimated_total || 0) - Number(b.estimated_total || 0);
-    }
-
-    return String(b.created_at || "").localeCompare(String(a.created_at || ""));
+    if(sort === "oldest") return String(a.created_at||"").localeCompare(String(b.created_at||""));
+    if(sort === "newest") return String(b.created_at||"").localeCompare(String(a.created_at||""));
+    if(sort === "needed_soon") return String(a.needed_date||"9999-99-99").localeCompare(String(b.needed_date||"9999-99-99"));
+    if(sort === "needed_late") return String(b.needed_date||"").localeCompare(String(a.needed_date||""));
+    if(sort === "status") return formatStatusLabel(a.status||"").localeCompare(formatStatusLabel(b.status||""));
+    if(sort === "total_high") return Number(b.estimated_total||0)-Number(a.estimated_total||0);
+    if(sort === "total_low") return Number(a.estimated_total||0)-Number(b.estimated_total||0);
+    return String(a.needed_date||"9999-99-99").localeCompare(String(b.needed_date||"9999-99-99"));
   }
 
   function countStatus(rows,status){
@@ -1854,6 +2347,94 @@
     return Number(order.estimated_total || 0) === 0 || items.some(item => Number(item.estimated_item_total || 0) === 0);
   }
 
+  function isDeleted(order){
+    return !!order.deleted_at;
+  }
+
+  function getDeletedInfo(order){
+    const until = order.deleted_until ? new Date(order.deleted_until) : null;
+    const now = new Date();
+
+    if(!until || Number.isNaN(until.getTime())){
+      return { canDelete:false, daysText:"unknown" };
+    }
+
+    const ms = until.getTime() - now.getTime();
+
+    if(ms <= 0){
+      return { canDelete:true, daysText:"0 days left" };
+    }
+
+    const days = Math.ceil(ms / (1000 * 60 * 60 * 24));
+    return { canDelete:false, daysText:`${days} day${days === 1 ? "" : "s"} left` };
+  }
+
+  function dateMatches(value, filter){
+    if(!value) return false;
+
+    const today = getDateKey(new Date());
+    const tomorrow = getDateKey(addDays(new Date(),1));
+
+    if(filter === "today") return value === today;
+    if(filter === "tomorrow") return value === tomorrow;
+    if(filter === "week") return isThisWeek(value);
+    if(filter === "month"){
+      const d = new Date(value + "T00:00:00");
+      const now = new Date();
+      return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+    }
+    if(filter === "year"){
+      const d = new Date(value + "T00:00:00");
+      const now = new Date();
+      return d.getFullYear() === now.getFullYear();
+    }
+
+    return true;
+  }
+
+  function isThisWeek(value){
+    if(!value) return false;
+
+    const d = new Date(value + "T00:00:00");
+    if(Number.isNaN(d.getTime())) return false;
+
+    const now = new Date();
+    const start = startOfWeek(now);
+    const end = addDays(start, 6);
+
+    return d >= start && d <= end;
+  }
+
+  function startOfWeek(date){
+    const d = new Date(date);
+    d.setHours(0,0,0,0);
+    const day = d.getDay();
+    const diff = d.getDate() - day;
+    d.setDate(diff);
+    return d;
+  }
+
+  function addDays(date, days){
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+
+  function getDateKey(date){
+    const d = new Date(date);
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${day}`;
+  }
+
+  function dateOnly(value){
+    if(!value) return "";
+    const d = new Date(value);
+    if(Number.isNaN(d.getTime())) return "";
+    return getDateKey(d);
+  }
+
   function isQuickOrderItem(item){
     const raw = String(item.product_type || item.item_type || item.type || "").toLowerCase();
     return raw.includes("quick") || raw.includes("dessert") || !!item.quick_product_id || !!item.quick_product_snapshot;
@@ -1862,26 +2443,29 @@
   function parseJson(value){
     if(!value) return {};
     if(typeof value === "object") return value;
-
-    try{
-      return JSON.parse(value);
-    }catch{
-      return {};
-    }
+    try{ return JSON.parse(value); }catch{ return {}; }
   }
 
   function formatAddons(value){
     const data = parseJson(value);
 
     if(Array.isArray(data)){
-      return data.map(x => escapeHtml(x.name || x)).join(", ") || "None";
+      return data.map(x=>escapeHtml(x.name || x)).join(", ") || "None";
     }
 
     return "None";
   }
 
+  function buildAddress(order){
+    return [
+      order.address,
+      order.city,
+      order.postal_code
+    ].filter(Boolean).join(", ");
+  }
+
   function normalizeStatus(s){
-    return String(s || "").toLowerCase().replace(/[^a-z]/g,"");
+    return String(s||"").toLowerCase().replace(/[^a-z]/g,"");
   }
 
   function truthy(v){
@@ -1894,52 +2478,10 @@
     return currency + n.toFixed(2).replace(".00","");
   }
 
-  function todayDate(){
-    const d = new Date();
-    return toYmd(d);
-  }
-
-  function tomorrowDate(){
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    return toYmd(d);
-  }
-
-  function toYmd(date){
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2,"0");
-    const d = String(date.getDate()).padStart(2,"0");
-    return `${y}-${m}-${d}`;
-  }
-
-  function isToday(value){
-    return String(value || "") === todayDate();
-  }
-
-  function isTomorrow(value){
-    return String(value || "") === tomorrowDate();
-  }
-
-  function isThisWeek(value){
-    if(!value) return false;
-
-    const d = new Date(value + "T00:00:00");
-    const now = new Date();
-    const end = new Date();
-
-    end.setDate(now.getDate() + 7);
-    d.setHours(0,0,0,0);
-    now.setHours(0,0,0,0);
-    end.setHours(23,59,59,999);
-
-    return d >= now && d <= end;
-  }
-
   function formatDate(value){
     if(!value) return "No date";
 
     const d = new Date(value + "T00:00:00");
-
     return Number.isNaN(d.getTime())
       ? value
       : d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
@@ -1949,24 +2491,56 @@
     if(!value) return "";
 
     const d = new Date(value);
-
-    return Number.isNaN(d.getTime())
-      ? value
-      : d.toLocaleString();
+    return Number.isNaN(d.getTime()) ? value : d.toLocaleString();
   }
 
   function normalizePhone(value){
-    return String(value || "").replace(/[^\d]/g,"");
+    return String(value||"").replace(/[^\d]/g,"");
   }
 
   function copyField(id){
     const el = $(id);
-
     if(!el) return;
 
     navigator.clipboard.writeText(el.value)
-      .then(() => showToast("Copied."))
-      .catch(() => showToast("Could not copy.", true));
+      .then(()=>showToast("Copied."))
+      .catch(()=>showToast("Could not copy.", true));
+  }
+
+  function csvCell(value){
+    const text = String(value ?? "");
+    return `"${text.replaceAll('"','""')}"`;
+  }
+
+  function downloadTextFile(filename, text, type){
+    const blob = new Blob([text], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+      a.remove();
+    }, 300);
+  }
+
+  function cacheBustImage(url){
+    const clean = String(url || "");
+    if(!clean) return clean;
+    if(!clean.includes("supabase.co/storage")) return clean;
+    const sep = clean.includes("?") ? "&" : "?";
+    return `${clean}${sep}v=${Date.now()}`;
+  }
+
+  function toTitle(value){
+    return String(value || "")
+      .replaceAll("_"," ")
+      .replaceAll("-"," ")
+      .replace(/\b\w/g, char => char.toUpperCase());
   }
 
   function escapeHtml(value){
@@ -1986,27 +2560,26 @@
     return String(value ?? "")
       .replaceAll("\\","\\\\")
       .replaceAll("'","\\'")
-      .replaceAll('"','\\"');
+      .replaceAll('"','\\"')
+      .replaceAll("\n","\\n")
+      .replaceAll("\r","");
   }
 
   function escapeClass(value){
     return String(value || "").replace(/[^a-zA-Z0-9_-]/g,"");
   }
 
-  function showToast(message,isError = false){
+  function showToast(message,isError=false){
     const toast = $("toast");
-
     toast.textContent = message;
     toast.style.background = isError ? "var(--red)" : "var(--purple)";
     toast.classList.add("show");
 
     clearTimeout(showToast.timer);
-
     showToast.timer = setTimeout(() => {
       toast.classList.remove("show");
     }, 4200);
   }
 </script>
-
 </body>
 </html>
