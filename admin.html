@@ -1627,18 +1627,6 @@ async function initAuth(){
       }
     }, 0);
   });
-
-  document.addEventListener("visibilitychange", () => {
-    if(!document.hidden && adminVerifiedOnce){
-      loadAll(false);
-    }
-  });
-
-  window.addEventListener("focus", () => {
-    if(adminVerifiedOnce){
-      loadAll(false);
-    }
-  });
 }
 
 async function bootAdminAuth(){
@@ -3535,31 +3523,6 @@ function countCurrentImageReferences(url){
   });
 
   return count;
-}
-
-function getImageUsage(url){
-  const usage = [];
-
-  if(siteSettings.logo_url === url) usage.push("Logo");
-  if(siteSettings.hero_image_url === url) usage.push("Hero");
-
-  categories.forEach(item => {
-    if(item.image_url === url) usage.push("Occasion");
-  });
-
-  cakes.forEach(item => {
-    if(item.image_url === url) usage.push("Cake");
-  });
-
-  quickProducts.forEach(item => {
-    if(item.image_url === url) usage.push("Dessert");
-  });
-
-  homepageMenuCards.forEach(item => {
-    if(item.image_url === url) usage.push("Homepage Menu");
-  });
-
-  return [...new Set(usage)];
 }
 
 function previewImageFromInput(inputId,previewId){
