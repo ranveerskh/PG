@@ -100,6 +100,14 @@ flex:0 0 auto;
 border:2px solid rgba(255,255,255,.85);
 }
 
+.logo img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+background:#fff;
+}
+
 .app{display:none}
 .app.show{display:block}
 
@@ -207,6 +215,12 @@ border-color:rgba(181,71,8,.20);
 color:var(--orange);
 }
 
+.btn.blue{
+background:rgba(23,92,211,.08);
+border-color:rgba(23,92,211,.20);
+color:var(--blue);
+}
+
 .btn.small{
 min-height:34px;
 padding:7px 10px;
@@ -261,6 +275,7 @@ border-radius:24px;
 box-shadow:var(--shadow2);
 overflow:hidden;
 min-width:0;
+margin-bottom:14px;
 }
 
 .cardHead{
@@ -270,6 +285,7 @@ display:flex;
 align-items:flex-start;
 justify-content:space-between;
 gap:12px;
+flex-wrap:wrap;
 }
 
 .cardHead h3{
@@ -302,6 +318,7 @@ background:rgba(255,255,255,.92);
 border-radius:20px;
 padding:14px;
 box-shadow:var(--shadow2);
+min-width:0;
 }
 
 .stat b{
@@ -309,6 +326,9 @@ display:block;
 color:var(--purple);
 font-size:25px;
 letter-spacing:-.06em;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
 }
 
 .stat span{
@@ -317,7 +337,13 @@ margin-top:5px;
 color:var(--muted);
 font-size:12px;
 font-weight:750;
+line-height:1.28;
 }
+
+.stat.green b{color:var(--green)}
+.stat.red b{color:var(--red)}
+.stat.orange b{color:var(--orange)}
+.stat.blue b{color:var(--blue)}
 
 .layout2{
 display:grid;
@@ -669,6 +695,7 @@ white-space:nowrap;
 .status.InProgress{color:#4a5fd0}
 .status.Ready,.status.Completed{color:var(--green)}
 .status.Cancelled{color:var(--red)}
+.status.Deleted{color:var(--red)}
 
 .loading{
 padding:22px;
@@ -688,7 +715,7 @@ transform:translateX(-50%) translateY(20px);
 opacity:0;
 pointer-events:none;
 z-index:200;
-max-width:min(560px,calc(100% - 24px));
+max-width:min(650px,calc(100% - 24px));
 background:var(--purple);
 color:#fff;
 border-radius:999px;
@@ -772,13 +799,92 @@ color:#fff;
 scroll-margin-top:150px;
 }
 
+.maintenanceGrid{
+display:grid;
+grid-template-columns:1fr 370px;
+gap:14px;
+align-items:start;
+}
+
+.ownerNotice{
+border:1px solid rgba(180,35,24,.20);
+background:rgba(180,35,24,.06);
+color:#7a271a;
+border-radius:18px;
+padding:12px;
+font-size:12px;
+font-weight:850;
+line-height:1.5;
+margin-bottom:12px;
+}
+
+.progressShell{
+height:14px;
+border-radius:999px;
+border:1px solid var(--line);
+background:#fff;
+overflow:hidden;
+}
+
+.progressFill{
+height:100%;
+width:0%;
+background:linear-gradient(135deg,var(--purple),var(--purple2));
+transition:.2s ease;
+}
+
+.reportGrid{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:10px;
+}
+
+.reportBox{
+border:1px solid var(--line);
+background:#fff;
+border-radius:18px;
+padding:12px;
+box-shadow:0 8px 18px rgba(100,13,107,.035);
+}
+
+.reportBox b{
+display:block;
+color:var(--purple);
+font-size:18px;
+letter-spacing:-.04em;
+}
+
+.reportBox span{
+display:block;
+margin-top:5px;
+font-size:11px;
+color:var(--muted);
+font-weight:850;
+}
+
+.deletedDanger{
+border:1px solid rgba(180,35,24,.20);
+background:rgba(180,35,24,.05);
+border-radius:18px;
+padding:12px;
+margin-top:10px;
+}
+
+.deletedDanger b{
+display:block;
+color:var(--red);
+font-size:13px;
+margin-bottom:8px;
+}
+
 @media(max-width:1120px){
 .gridStats{
 grid-template-columns:repeat(3,1fr);
 }
 
 .layout2,
-.setupGrid{
+.setupGrid,
+.maintenanceGrid{
 grid-template-columns:1fr;
 }
 }
@@ -803,7 +909,8 @@ justify-content:flex-start;
 grid-template-columns:repeat(2,1fr);
 }
 
-.formGrid{
+.formGrid,
+.reportGrid{
 grid-template-columns:1fr;
 }
 
@@ -832,7 +939,7 @@ width:100%;
 
 <section id="loginScreen" class="loginScreen">
 <div class="loginCard">
-<div class="logo" style="margin-bottom:14px;">🍰</div>
+<div id="loginLogo" class="logo" style="margin-bottom:14px;">🍰</div>
 <h2>Admin Login</h2>
 <p id="loginIntroText">Checking admin session...</p>
 
@@ -849,7 +956,7 @@ width:100%;
 <button class="btn primary block" onclick="loginAdmin()">Login</button>
 
 <p class="hint" style="margin-top:12px;">
-This email must exist in Supabase Authentication and its User ID must be added to the admin_users table.
+This page is for owner/admin website management. Daily employee order work should stay in Order Manager.
 </p>
 </div>
 </section>
@@ -858,7 +965,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <header class="topbar">
 <div class="wrap nav">
 <div class="brand">
-<div class="logo">🍰</div>
+<div id="adminLogo" class="logo">🍰</div>
 <div>
 <h1>Siffat Cakes Website Manager</h1>
 <p id="adminEmailText">Managing website</p>
@@ -882,6 +989,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <button class="tabBtn" data-tab="products" onclick="showTab('products')">Products</button>
 <button class="tabBtn" data-tab="setup" onclick="showTab('setup')">Cake Setup</button>
 <button class="tabBtn" data-tab="settings" onclick="showTab('settings')">Website Settings</button>
+<button class="tabBtn" data-tab="maintenance" onclick="showTab('maintenance')">Maintenance</button>
 </div>
 
 <section id="dashboardPanel" class="panel active">
@@ -891,8 +999,8 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <div class="card">
 <div class="cardHead">
 <div>
-<h3>Clean Admin Flow</h3>
-<p>Admin is separated by purpose so it does not become messy.</p>
+<h3>Owner Admin Flow</h3>
+<p>Website Manager is for owner controls. Employees should use Order Manager only.</p>
 </div>
 </div>
 
@@ -911,7 +1019,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <div class="compactTop">
 <div class="compactMain">
 <div class="itemTitle">Homepage Menu</div>
-<div class="itemMeta">Homepage card images save separately and now load on index.html.</div>
+<div class="itemMeta">Homepage card images save separately and load on index.html.</div>
 </div>
 </div>
 </div>
@@ -919,8 +1027,8 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <div class="compactItem open">
 <div class="compactTop">
 <div class="compactMain">
-<div class="itemTitle">Cake Setup</div>
-<div class="itemMeta">Sizes, flavours, options, add-ons and occasions stay separate.</div>
+<div class="itemTitle">Maintenance</div>
+<div class="itemMeta">Owner can review deleted orders, restore them, export CSV and check photo usage.</div>
 </div>
 </div>
 </div>
@@ -928,8 +1036,8 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <div class="compactItem open">
 <div class="compactTop">
 <div class="compactMain">
-<div class="itemTitle">Order Manager</div>
-<div class="itemMeta">Daily order work is separated into orders-admin.html so the website manager stays clean.</div>
+<div class="itemTitle">Deleted Orders Safety</div>
+<div class="itemMeta">Deleted orders are visible here for 30 days before permanent cleanup.</div>
 </div>
 </div>
 </div>
@@ -940,8 +1048,8 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <div class="card">
 <div class="cardHead">
 <div>
-<h3>Recent Orders</h3>
-<p>Latest customer requests. Full management opens separately.</p>
+<h3>Recent Active Orders</h3>
+<p>Deleted orders are hidden here and moved to Maintenance.</p>
 </div>
 <a class="btn small" href="orders-admin.html">Open Order Manager</a>
 </div>
@@ -1043,7 +1151,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 
 <img id="productImagePreview" class="imagePreview" alt="Preview">
-<div class="hint">Max 1 MB. When replacing a saved product image, the old Supabase image is deleted after saving.</div>
+<div class="hint">Max 1 MB. Image count limit: 500 client photos max.</div>
 </div>
 </div>
 
@@ -1216,7 +1324,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 <button class="btn small" type="button" onclick="clearImageField('occasionImage','occasionImagePreview','occasionImageFile')">Clear</button>
 </div>
 <img id="occasionImagePreview" class="imagePreview" alt="Preview">
-<div class="hint">Max 1 MB. When replacing a saved occasion image, the old Supabase image is deleted after saving.</div>
+<div class="hint">Max 1 MB. Image count limit: 500 client photos max.</div>
 </div>
 </div>
 
@@ -1418,7 +1526,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 
 <img id="setLogoPreview" class="imagePreview" alt="Logo preview">
-<div class="hint">Max 1 MB. Old saved logo image is deleted after saving if replaced.</div>
+<div class="hint">Max 1 MB. Image count limit: 500 client photos max.</div>
 </div>
 </div>
 
@@ -1436,7 +1544,7 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 
 <img id="setHeroPreview" class="imagePreview" alt="Hero preview">
-<div class="hint">Max 1 MB. Old saved hero image is deleted after saving if replaced.</div>
+<div class="hint">Max 1 MB. Image count limit: 500 client photos max.</div>
 </div>
 </div>
 
@@ -1530,6 +1638,126 @@ This email must exist in Supabase Authentication and its User ID must be added t
 </div>
 </section>
 
+<section id="maintenancePanel" class="panel">
+<div class="ownerNotice">
+<b>Owner Maintenance Area:</b> Deleted orders are shown here so employees cannot quietly delete customer orders. Keep this page for owner/admin use only.
+</div>
+
+<div class="maintenanceGrid">
+<div>
+<div class="card">
+<div class="cardHead">
+<div>
+<h3>Deleted Orders</h3>
+<p>Deleted orders stay here for 30 days. Owner can restore or permanently delete them.</p>
+</div>
+<div class="itemActions">
+<button class="btn small" onclick="renderMaintenance()">Refresh</button>
+<button class="btn orange small" onclick="purgeOldDeletedOrders()">Purge 30+ Days</button>
+</div>
+</div>
+<div class="cardBody">
+<div class="searchRow">
+<input id="deletedSearch" placeholder="Search deleted orders..." oninput="renderDeletedOrders()">
+<select id="deletedSort" onchange="renderDeletedOrders()">
+<option value="newest">Newest deleted first</option>
+<option value="oldest">Oldest deleted first</option>
+<option value="days_left">Fewest days left</option>
+<option value="total_high">Total high to low</option>
+</select>
+</div>
+<div id="deletedOrdersList" class="list"></div>
+</div>
+</div>
+
+<div class="card">
+<div class="cardHead">
+<div>
+<h3>Reports / CSV Export</h3>
+<p>Owner reports are here, not in employee Order Manager.</p>
+</div>
+</div>
+<div class="cardBody">
+<div class="searchRow">
+<select id="reportRange" onchange="renderReportSummary()">
+<option value="this_week">This Week</option>
+<option value="this_month" selected>This Month</option>
+<option value="this_year">This Year</option>
+<option value="lifetime">Lifetime</option>
+</select>
+<select id="reportIncludeDeleted" onchange="renderReportSummary()">
+<option value="active">Active orders only</option>
+<option value="with_deleted">Include deleted orders</option>
+<option value="deleted_only">Deleted orders only</option>
+</select>
+</div>
+
+<div id="reportSummary" class="reportGrid"></div>
+
+<div class="itemActions" style="margin-top:12px;justify-content:flex-start;">
+<button class="btn primary small" onclick="exportOrdersCSV()">Export Orders CSV</button>
+<button class="btn small" onclick="exportProductsCSV()">Export Products CSV</button>
+<button class="btn small" onclick="printReportSummary()">Print Report</button>
+</div>
+</div>
+</div>
+</div>
+
+<div>
+<div class="card">
+<div class="cardHead">
+<div>
+<h3>Photo Usage Limit</h3>
+<p>Client photo limit: 500 images max.</p>
+</div>
+</div>
+<div class="cardBody">
+<div id="storageStats"></div>
+</div>
+</div>
+
+<div class="card">
+<div class="cardHead">
+<div>
+<h3>Maintenance Notes</h3>
+<p>Simple rules to keep the system clean.</p>
+</div>
+</div>
+<div class="cardBody">
+<div class="list">
+<div class="compactItem open">
+<div class="compactTop">
+<div class="compactMain">
+<div class="itemTitle">Deleted Orders</div>
+<div class="itemMeta">Review deleted orders here weekly so nothing disappears silently.</div>
+</div>
+</div>
+</div>
+
+<div class="compactItem open">
+<div class="compactTop">
+<div class="compactMain">
+<div class="itemTitle">Photo Limit</div>
+<div class="itemMeta">Keep total customer photos under 500 for this client setup.</div>
+</div>
+</div>
+</div>
+
+<div class="compactItem open">
+<div class="compactTop">
+<div class="compactMain">
+<div class="itemTitle">Reports</div>
+<div class="itemMeta">Export CSV monthly or yearly before clearing old orders.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
 </main>
 </div>
 
@@ -1542,7 +1770,6 @@ const STORAGE_BUCKET = "cake-images";
 
 const MAX_UPLOAD_MB = 1;
 const CLIENT_PHOTO_LIMIT = 500;
-const STORAGE_LIMIT_BYTES = 1024 * 1024 * 1024;
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth:{
@@ -1868,6 +2095,7 @@ async function loadAll(showMessage = true){
 }
 
 function renderAll(){
+  applyAdminLogo();
   renderStats();
   renderRecentOrders();
   fillSettingsForm();
@@ -1875,6 +2103,23 @@ function renderAll(){
   renderHomepageMenuCards();
   renderProducts();
   renderSetupLists();
+  renderMaintenance();
+}
+
+function applyAdminLogo(){
+  const logoUrl = siteSettings.logo_url || "";
+  const brand = siteSettings.brand_name || "Siffat Cakes";
+
+  ["adminLogo","loginLogo"].forEach(id => {
+    const el = $(id);
+    if(!el) return;
+
+    if(logoUrl){
+      el.innerHTML = `<img src="${escapeHtml(addCacheBustToImageUrl(logoUrl))}" alt="${escapeHtml(brand)}" onerror="this.parentElement.textContent='🍰'">`;
+    }else{
+      el.textContent = "🍰";
+    }
+  });
 }
 
 function showTab(tab){
@@ -1887,6 +2132,10 @@ function showTab(tab){
   });
 
   $(tab + "Panel").classList.add("active");
+
+  if(tab === "maintenance"){
+    renderMaintenance();
+  }
 }
 
 function openPanel(id){
@@ -1902,28 +2151,49 @@ function toggleCompact(id){
   if(el) el.classList.toggle("open");
 }
 
+function getActiveOrders(){
+  return orders.filter(order => !isDeletedOrder(order));
+}
+
+function getDeletedOrders(){
+  return orders.filter(order => isDeletedOrder(order));
+}
+
+function isDeletedOrder(order){
+  return truthy(order.is_deleted) || truthy(order.deleted) || truthy(order.is_deleted_order) || !!order.deleted_at;
+}
+
+function truthy(value){
+  return value === true || value === "true" || value === 1 || value === "1";
+}
+
 function renderStats(){
-  const statusCount = (status) => orders.filter(o => o.status === status).length;
-  const quoteCount = orders.filter(order => {
+  const activeOrders = getActiveOrders();
+  const deletedOrders = getDeletedOrders();
+
+  const statusCount = (status) => activeOrders.filter(o => normalizeStatus(o.status) === normalizeStatus(status)).length;
+  const quoteCount = activeOrders.filter(order => {
     const items = orderItems.filter(item => item.order_id === order.id);
-    return items.some(item => Number(item.estimated_item_total || 0) === 0);
+    return Number(order.estimated_total || 0) === 0 || items.some(item => Number(item.estimated_item_total || 0) === 0);
   }).length;
 
   $("statsGrid").innerHTML = `
-    <div class="stat"><b>${orders.length}</b><span>Total Orders</span></div>
-    <div class="stat"><b>${statusCount("Pending")}</b><span>Pending Orders</span></div>
+    <div class="stat"><b>${activeOrders.length}</b><span>Active Orders</span></div>
+    <div class="stat orange"><b>${statusCount("Pending")}</b><span>Pending Orders</span></div>
     <div class="stat"><b>${cakes.length + quickProducts.length}</b><span>Total Products</span></div>
     <div class="stat"><b>${categories.length}</b><span>Cake Occasions</span></div>
-    <div class="stat"><b>${homepageMenuCards.length}</b><span>Homepage Cards</span></div>
-    <div class="stat"><b>${quoteCount}</b><span>Quote Required</span></div>
+    <div class="stat blue"><b>${homepageMenuCards.length}</b><span>Homepage Cards</span></div>
+    <div class="stat orange"><b>${quoteCount}</b><span>Quote Required</span></div>
+    <div class="stat red"><b>${deletedOrders.length}</b><span>Deleted Orders</span></div>
+    <div class="stat green"><b>${getUniqueImageUrls().length}/${CLIENT_PHOTO_LIMIT}</b><span>Photo Usage</span></div>
   `;
 }
 
 function renderRecentOrders(){
-  const recent = orders.slice(0,5);
+  const recent = getActiveOrders().slice(0,5);
 
   if(!recent.length){
-    $("recentOrdersList").innerHTML = `<div class="loading">No orders yet.</div>`;
+    $("recentOrdersList").innerHTML = `<div class="loading">No active orders yet.</div>`;
     return;
   }
 
@@ -2014,6 +2284,7 @@ async function saveSettings(){
     await deleteOldSupabaseImageIfReplaced(oldHeroUrl, payload.hero_image_url);
 
     fillSettingsForm();
+    applyAdminLogo();
     showToast("Settings saved.");
   }catch(err){
     console.error(err);
@@ -2197,6 +2468,7 @@ async function saveHomepageMenuCard(slug, oldImageUrl = ""){
 
     renderHomepageMenuCards();
     renderStats();
+    renderMaintenance();
 
     showToast("Homepage menu card saved.");
   }catch(err){
@@ -2213,6 +2485,10 @@ async function uploadHomepageMenuImage(slug){
 
   const file = fileInput.files?.[0];
   if(!file) return showToast("Choose an image first.", true);
+
+  if(getUniqueImageUrls().length >= CLIENT_PHOTO_LIMIT){
+    return showToast(`Photo limit reached. Maximum ${CLIENT_PHOTO_LIMIT} images allowed for this client.`, true);
+  }
 
   if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
     return showToast("Only JPG, PNG or WEBP images are allowed.", true);
@@ -3216,6 +3492,550 @@ async function deleteAddon(id){
   showToast("Add-on deleted.");
 }
 
+function renderMaintenance(){
+  renderDeletedOrders();
+  renderReportSummary();
+  renderStorageStats();
+}
+
+function renderDeletedOrders(){
+  const box = $("deletedOrdersList");
+  if(!box) return;
+
+  const search = ($("deletedSearch")?.value || "").trim().toLowerCase();
+  const sort = $("deletedSort")?.value || "newest";
+
+  let rows = getDeletedOrders();
+
+  if(search){
+    rows = rows.filter(order => {
+      const text = [
+        order.id,
+        order.tracking_code,
+        order.customer_name,
+        order.customer_phone,
+        order.customer_email,
+        order.deleted_by_admin_email,
+        order.delete_reason,
+        order.status,
+        order.previous_status
+      ].join(" ").toLowerCase();
+
+      return text.includes(search);
+    });
+  }
+
+  rows.sort((a,b) => sortDeletedOrders(a,b,sort));
+
+  if(!rows.length){
+    box.innerHTML = `<div class="loading">No deleted orders found. Good — nothing hidden here.</div>`;
+    return;
+  }
+
+  box.innerHTML = rows.map(order => {
+    const id = String(order.id);
+    const domId = "deleted-" + id;
+    const deletedAt = order.deleted_at || order.updated_at || order.created_at;
+    const daysLeft = getDeletedDaysLeft(deletedAt);
+    const total = Number(order.estimated_total || 0);
+    const items = orderItems.filter(item => String(item.order_id) === id);
+    const deletedBy = order.deleted_by_admin_email || order.deleted_by || order.updated_by_admin_email || "Unknown admin";
+    const reason = order.delete_reason || order.deleted_reason || "No reason saved";
+    const previousStatus = order.previous_status || order.status || "Pending";
+
+    return `
+      <div class="compactItem" id="${escapeAttr(domId)}">
+        <div class="compactTop" onclick="toggleCompact('${escapeJs(domId)}')">
+          <div class="compactMain">
+            <div class="itemTitle">${escapeHtml(order.customer_name || "Deleted Customer")} · ${total ? money(total) : "Quote"}</div>
+            <div class="itemMeta">
+              Order ID: ${escapeHtml(id.slice(0,8).toUpperCase())} · Tracking: ${escapeHtml(getTrackingCode(order))}<br>
+              Deleted by: ${escapeHtml(deletedBy)}<br>
+              Deleted: ${formatDateTime(deletedAt)} · ${daysLeft > 0 ? daysLeft + " days left" : "Ready for purge"}
+            </div>
+            <div class="tags">
+              <span class="tag">Previous: ${escapeHtml(formatStatusLabel(previousStatus))}</span>
+              <span class="tag">${items.length} item(s)</span>
+              <span class="tag">${escapeHtml(order.delivery_type || "No type")}</span>
+            </div>
+          </div>
+          <div class="itemActions" onclick="event.stopPropagation()">
+            <span class="status Deleted">Deleted</span>
+            <button class="btn green small" onclick="restoreDeletedOrder('${escapeJs(id)}')">Restore</button>
+          </div>
+        </div>
+
+        <div class="compactDetails">
+          <b>Customer:</b> ${escapeHtml(order.customer_name || "No name")}<br>
+          <b>Phone:</b> ${escapeHtml(order.customer_phone || "No phone")}<br>
+          <b>Email:</b> ${escapeHtml(order.customer_email || "No email")}<br>
+          <b>Needed:</b> ${formatDate(order.needed_date)} ${order.needed_time ? escapeHtml(order.needed_time) : ""}<br>
+          <b>Deleted by:</b> ${escapeHtml(deletedBy)}<br>
+          <b>Reason:</b> ${escapeHtml(reason)}<br>
+          <b>Previous Status:</b> ${escapeHtml(formatStatusLabel(previousStatus))}<br>
+          <b>Items:</b> ${items.length ? items.map(item => escapeHtml(item.cake_name || item.product_name || "Item")).join(", ") : "No items found"}
+
+          <div class="deletedDanger">
+            <b>Permanent delete area</b>
+            <div class="itemActions" style="justify-content:flex-start;">
+              <button class="btn green small" onclick="restoreDeletedOrder('${escapeJs(id)}')">Restore Order</button>
+              <button class="btn red small" onclick="permanentDeleteOrder('${escapeJs(id)}')">Permanent Delete</button>
+            </div>
+            <div class="hint" style="margin-top:8px;">Permanent delete removes the order and its order items. Use only after exporting/reporting if needed.</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function sortDeletedOrders(a,b,sort){
+  if(sort === "oldest"){
+    return String(a.deleted_at || a.updated_at || a.created_at || "").localeCompare(String(b.deleted_at || b.updated_at || b.created_at || ""));
+  }
+
+  if(sort === "days_left"){
+    return getDeletedDaysLeft(a.deleted_at || a.updated_at || a.created_at) - getDeletedDaysLeft(b.deleted_at || b.updated_at || b.created_at);
+  }
+
+  if(sort === "total_high"){
+    return Number(b.estimated_total || 0) - Number(a.estimated_total || 0);
+  }
+
+  return String(b.deleted_at || b.updated_at || b.created_at || "").localeCompare(String(a.deleted_at || a.updated_at || a.created_at || ""));
+}
+
+function getDeletedDaysLeft(deletedAt){
+  if(!deletedAt) return 30;
+
+  const deletedDate = new Date(deletedAt);
+  if(Number.isNaN(deletedDate.getTime())) return 30;
+
+  const now = new Date();
+  const diffMs = now.getTime() - deletedDate.getTime();
+  const usedDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  return Math.max(0, 30 - usedDays);
+}
+
+async function restoreDeletedOrder(id){
+  const order = orders.find(o => String(o.id) === String(id));
+  if(!order) return showToast("Order not found.", true);
+
+  const statusToRestore = order.previous_status || "Pending";
+
+  if(!confirm("Restore this deleted order back to active orders?")) return;
+
+  try{
+    const payload = {
+      is_deleted:false,
+      deleted_at:null,
+      deleted_by_admin_id:null,
+      deleted_by_admin_email:null,
+      delete_reason:null,
+      status:statusToRestore
+    };
+
+    const { error } = await supabaseClient
+      .from("orders")
+      .update(payload)
+      .eq("id", id);
+
+    if(error) throw error;
+
+    await loadAll(false);
+    showToast("Order restored.");
+  }catch(err){
+    console.error(err);
+    showToast("Restore failed. Make sure deleted-order columns exist in Supabase. " + (err.message || ""), true);
+  }
+}
+
+async function permanentDeleteOrder(id){
+  if(!confirm("Permanently delete this order and all its items? This cannot be undone.")) return;
+
+  try{
+    const itemsDelete = await supabaseClient.from("order_items").delete().eq("order_id", id);
+    if(itemsDelete.error) throw itemsDelete.error;
+
+    const orderDelete = await supabaseClient.from("orders").delete().eq("id", id);
+    if(orderDelete.error) throw orderDelete.error;
+
+    await loadAll(false);
+    showToast("Order permanently deleted.");
+  }catch(err){
+    console.error(err);
+    showToast(err.message || "Permanent delete failed.", true);
+  }
+}
+
+async function purgeOldDeletedOrders(){
+  const oldDeleted = getDeletedOrders().filter(order => {
+    const deletedAt = order.deleted_at || order.updated_at || order.created_at;
+    return getDeletedDaysLeft(deletedAt) <= 0;
+  });
+
+  if(!oldDeleted.length){
+    showToast("No deleted orders older than 30 days.");
+    return;
+  }
+
+  if(!confirm(`Permanently delete ${oldDeleted.length} deleted order(s) older than 30 days?`)) return;
+
+  try{
+    showToast("Purging old deleted orders...");
+
+    for(const order of oldDeleted){
+      await supabaseClient.from("order_items").delete().eq("order_id", order.id);
+      await supabaseClient.from("orders").delete().eq("id", order.id);
+    }
+
+    await loadAll(false);
+    showToast("Old deleted orders purged.");
+  }catch(err){
+    console.error(err);
+    showToast(err.message || "Purge failed.", true);
+  }
+}
+
+function renderReportSummary(){
+  const box = $("reportSummary");
+  if(!box) return;
+
+  const rows = getOrdersForReport();
+  const total = sumOrders(rows);
+  const activeCount = rows.filter(o => !isDeletedOrder(o)).length;
+  const deletedCount = rows.filter(o => isDeletedOrder(o)).length;
+  const quoteCount = rows.filter(o => Number(o.estimated_total || 0) === 0).length;
+  const completedCount = rows.filter(o => normalizeStatus(o.status) === normalizeStatus("Completed")).length;
+  const avg = rows.length ? total / rows.length : 0;
+
+  box.innerHTML = `
+    <div class="reportBox"><b>${rows.length}</b><span>Total Orders</span></div>
+    <div class="reportBox"><b>${activeCount}</b><span>Active Orders</span></div>
+    <div class="reportBox"><b>${deletedCount}</b><span>Deleted Orders</span></div>
+    <div class="reportBox"><b>${completedCount}</b><span>Completed</span></div>
+    <div class="reportBox"><b>${quoteCount}</b><span>Quote / $0</span></div>
+    <div class="reportBox"><b>${money(total)}</b><span>Estimated Total</span></div>
+    <div class="reportBox"><b>${money(avg)}</b><span>Average Order</span></div>
+  `;
+}
+
+function getOrdersForReport(){
+  const range = $("reportRange")?.value || "this_month";
+  const include = $("reportIncludeDeleted")?.value || "active";
+
+  let rows = [...orders];
+
+  if(include === "active") rows = rows.filter(o => !isDeletedOrder(o));
+  if(include === "deleted_only") rows = rows.filter(o => isDeletedOrder(o));
+
+  rows = rows.filter(order => isOrderInRange(order, range));
+
+  return rows;
+}
+
+function isOrderInRange(order, range){
+  if(range === "lifetime") return true;
+
+  const date = new Date(order.created_at || order.needed_date || "");
+  if(Number.isNaN(date.getTime())) return false;
+
+  const now = new Date();
+
+  if(range === "this_week"){
+    const start = new Date(now);
+    start.setDate(now.getDate() - now.getDay());
+    start.setHours(0,0,0,0);
+
+    const end = new Date(start);
+    end.setDate(start.getDate() + 7);
+
+    return date >= start && date < end;
+  }
+
+  if(range === "this_month"){
+    return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
+  }
+
+  if(range === "this_year"){
+    return date.getFullYear() === now.getFullYear();
+  }
+
+  return true;
+}
+
+function exportOrdersCSV(){
+  const rows = getOrdersForReport();
+
+  const csvRows = rows.map(order => ({
+    order_id:order.id,
+    short_id:String(order.id || "").slice(0,8).toUpperCase(),
+    tracking_code:getTrackingCode(order),
+    created_at:order.created_at || "",
+    needed_date:order.needed_date || "",
+    needed_time:order.needed_time || "",
+    customer_name:order.customer_name || "",
+    customer_phone:order.customer_phone || "",
+    customer_email:order.customer_email || "",
+    delivery_type:order.delivery_type || "",
+    city:order.city || "",
+    postal_code:order.postal_code || "",
+    status:order.status || "",
+    estimated_total:Number(order.estimated_total || 0),
+    is_deleted:isDeletedOrder(order) ? "Yes" : "No",
+    deleted_at:order.deleted_at || "",
+    deleted_by_admin_email:order.deleted_by_admin_email || "",
+    delete_reason:order.delete_reason || "",
+    admin_note:order.admin_note || ""
+  }));
+
+  downloadCSV(csvRows, `siffat-orders-${getDateStamp()}.csv`);
+}
+
+function exportProductsCSV(){
+  const rows = [
+    ...cakes.map(item => ({
+      type:"customizable_cake",
+      id:item.id,
+      name:item.name,
+      category:"",
+      variant:"",
+      price:item.starting_price,
+      price_type:item.price_type,
+      active:item.is_active,
+      featured:item.is_featured,
+      image_url:item.image_url
+    })),
+    ...quickProducts.map(item => ({
+      type:"quick_dessert",
+      id:item.id,
+      name:item.name,
+      category:item.category,
+      variant:item.variant,
+      price:item.price,
+      price_type:item.price_type,
+      active:item.is_active,
+      featured:item.is_featured,
+      image_url:item.image_url
+    }))
+  ];
+
+  downloadCSV(rows, `siffat-products-${getDateStamp()}.csv`);
+}
+
+function printReportSummary(){
+  const rows = getOrdersForReport();
+  const total = sumOrders(rows);
+  const win = window.open("", "_blank");
+
+  if(!win){
+    showToast("Popup blocked. Allow popups to print report.", true);
+    return;
+  }
+
+  win.document.write(`
+    <!doctype html>
+    <html>
+    <head>
+    <title>Siffat Cakes Report</title>
+    <style>
+      body{font-family:Arial,sans-serif;padding:24px;color:#1d141f}
+      h1{color:#640D6B}
+      table{width:100%;border-collapse:collapse;margin-top:16px}
+      th,td{border:1px solid #ddd;padding:8px;text-align:left;font-size:12px}
+      th{background:#640D6B;color:white}
+      .top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+      .box{border:1px solid #ddd;border-radius:12px;padding:12px;margin-top:12px}
+      button{position:fixed;right:18px;top:18px;background:#640D6B;color:white;border:0;border-radius:999px;padding:10px 14px;font-weight:800}
+      @media print{button{display:none}}
+    </style>
+    </head>
+    <body>
+    <button onclick="window.print()">Print</button>
+    <div class="top">
+      <div>
+        <h1>Siffat Cakes Report</h1>
+        <p>Generated: ${escapeHtml(new Date().toLocaleString())}</p>
+      </div>
+      <div class="box">
+        <b>Total Orders:</b> ${rows.length}<br>
+        <b>Estimated Total:</b> ${money(total)}
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Customer</th>
+          <th>Needed</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Deleted</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map(order => `
+          <tr>
+            <td>${escapeHtml(String(order.id || "").slice(0,8).toUpperCase())}</td>
+            <td>${escapeHtml(order.customer_name || "")}<br>${escapeHtml(order.customer_phone || "")}</td>
+            <td>${escapeHtml(order.needed_date || "")} ${escapeHtml(order.needed_time || "")}</td>
+            <td>${escapeHtml(order.status || "")}</td>
+            <td>${money(order.estimated_total)}</td>
+            <td>${isDeletedOrder(order) ? "Yes" : "No"}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+    </body>
+    </html>
+  `);
+
+  win.document.close();
+  win.focus();
+}
+
+function downloadCSV(rows, filename){
+  if(!rows.length){
+    showToast("No rows to export.", true);
+    return;
+  }
+
+  const headers = Object.keys(rows[0]);
+  const lines = [
+    headers.join(","),
+    ...rows.map(row => headers.map(header => csvCell(row[header])).join(","))
+  ];
+
+  const blob = new Blob([lines.join("\n")], { type:"text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+
+  showToast("CSV exported.");
+}
+
+function csvCell(value){
+  const text = String(value ?? "");
+  return `"${text.replaceAll('"','""')}"`;
+}
+
+function getDateStamp(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+
+function sumOrders(rows){
+  return rows.reduce((sum, order) => sum + Number(order.estimated_total || 0), 0);
+}
+
+function renderStorageStats(){
+  const box = $("storageStats");
+  if(!box) return;
+
+  const urls = getUniqueImageUrls();
+  const used = urls.length;
+  const remaining = Math.max(0, CLIENT_PHOTO_LIMIT - used);
+  const percent = Math.min(100, Math.round((used / CLIENT_PHOTO_LIMIT) * 100));
+
+  box.innerHTML = `
+    <div class="gridStats" style="grid-template-columns:repeat(2,1fr);margin-bottom:12px;">
+      <div class="stat green"><b>${used}</b><span>Images Used</span></div>
+      <div class="stat blue"><b>${remaining}</b><span>Images Remaining</span></div>
+    </div>
+
+    <div class="progressShell">
+      <div class="progressFill" style="width:${percent}%;"></div>
+    </div>
+
+    <div class="hint" style="margin-top:10px;">
+      ${used}/${CLIENT_PHOTO_LIMIT} image URLs are currently used across logo, hero, homepage cards, cake occasions, cakes and quick desserts.
+    </div>
+
+    <div class="deletedDanger" style="${used >= CLIENT_PHOTO_LIMIT ? "" : "display:none;"}">
+      <b>Photo limit reached</b>
+      Delete unused product/category photos or reuse existing image links before uploading more.
+    </div>
+
+    <div class="itemActions" style="justify-content:flex-start;margin-top:12px;">
+      <button class="btn small" onclick="copyImageUsageList()">Copy Image List</button>
+    </div>
+  `;
+}
+
+function getUniqueImageUrls(){
+  const urls = [];
+
+  [
+    siteSettings.logo_url,
+    siteSettings.hero_image_url
+  ].forEach(url => {
+    if(url) urls.push(url);
+  });
+
+  categories.forEach(item => {
+    if(item.image_url) urls.push(item.image_url);
+  });
+
+  cakes.forEach(item => {
+    if(item.image_url) urls.push(item.image_url);
+  });
+
+  quickProducts.forEach(item => {
+    if(item.image_url) urls.push(item.image_url);
+  });
+
+  homepageMenuCards.forEach(item => {
+    if(item.image_url) urls.push(item.image_url);
+  });
+
+  return [...new Set(urls.filter(Boolean))];
+}
+
+function copyImageUsageList(){
+  const urls = getUniqueImageUrls();
+
+  if(!urls.length){
+    showToast("No image URLs found.", true);
+    return;
+  }
+
+  navigator.clipboard.writeText(urls.join("\n"))
+    .then(() => showToast("Image URL list copied."))
+    .catch(() => showToast("Could not copy image list.", true));
+}
+
+function getTrackingCode(order){
+  return String(order.tracking_code || String(order.id || "").replaceAll("-","").slice(0,10)).toUpperCase();
+}
+
+function formatStatusLabel(status){
+  const s = normalizeStatus(status);
+
+  if(s === "pending") return "Pending";
+  if(s === "confirmed") return "Confirmed";
+  if(s === "inprogress") return "In Progress";
+  if(s === "ready") return "Ready";
+  if(s === "readyforpickup") return "Ready";
+  if(s === "completed") return "Completed";
+  if(s === "cancelled" || s === "canceled") return "Cancelled";
+
+  return status || "Pending";
+}
+
+function normalizeStatus(status){
+  return String(status || "").toLowerCase().replace(/[^a-z]/g,"");
+}
+
 async function uploadAndSet(fileInputId,targetInputId,previewId,folder){
   const fileInput = $(fileInputId);
   const targetInput = $(targetInputId);
@@ -3234,6 +4054,13 @@ async function uploadAndSet(fileInputId,targetInputId,previewId,folder){
   if(!file){
     setUploadStatus(fileInputId, "Choose an image first.", true);
     showToast("Choose an image first.", true);
+    return;
+  }
+
+  if(getUniqueImageUrls().length >= CLIENT_PHOTO_LIMIT){
+    const msg = `Photo limit reached. Maximum ${CLIENT_PHOTO_LIMIT} images allowed for this client.`;
+    setUploadStatus(fileInputId, msg, true);
+    showToast(msg, true);
     return;
   }
 
@@ -3296,6 +4123,8 @@ async function uploadAndSet(fileInputId,targetInputId,previewId,folder){
       setUploadStatus(fileInputId, saveResult.message || "Image uploaded. Now click Save to store it.", false, true);
       showToast(saveResult.message || "Image uploaded. Now click Save.");
     }
+
+    renderMaintenance();
   }catch(err){
     console.error(err);
     const msg = err.message || "Image upload failed. Check Supabase Storage bucket/policies.";
@@ -3395,6 +4224,7 @@ async function autoSaveUploadedImage(targetInputId,newUrl,oldUrl){
 
     await deleteOldSupabaseImageIfReplaced(oldUrl || "", newUrl);
     fillSettingsForm();
+    applyAdminLogo();
 
     return { saved:true, message: field === "logo_url" ? "Logo uploaded and saved." : "Hero image uploaded and saved." };
   }
@@ -3598,6 +4428,18 @@ function formatDate(value){
   }
 }
 
+function formatDateTime(value){
+  if(!value) return "Not available";
+
+  try{
+    const d = new Date(value);
+    if(Number.isNaN(d.getTime())) return value;
+    return d.toLocaleString();
+  }catch{
+    return value;
+  }
+}
+
 function normalizePhone(value){
   return String(value || "").replace(/[^\d]/g,"");
 }
@@ -3623,6 +4465,7 @@ function escapeJs(value){
   return String(value ?? "")
     .replaceAll("\\","\\\\")
     .replaceAll("'","\\'")
+    .replaceAll('"','\\"')
     .replaceAll("\n","\\n")
     .replaceAll("\r","");
 }
@@ -3678,7 +4521,7 @@ function showToast(message,isError = false){
   clearTimeout(window.__toastTimer);
   window.__toastTimer = setTimeout(() => {
     toast.classList.remove("show");
-  }, 2600);
+  }, 3200);
 }
 </script>
 
